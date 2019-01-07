@@ -1,0 +1,9 @@
+name: oid
+version: 0.1.0
+
+authors:
+  - Holden Omans <holden.omans@gmail.com>
+
+crystal: 0.27.0
+
+license: MIT
