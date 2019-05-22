@@ -1,0 +1,23 @@
+module: RayLib
+generators:
+  crystal:
+    output: src/ext/raylib_binding.cr
+
+<<: config/enums.yml
+
+macros:
+  "(MAX_TOUCH_POINTS|MAX_SHADER_LOCATIONS|MAX_MATERIAL_MAPS)":
+    map_as: Constant
+    flags: false
+    destination: "::"
+
+parser:
+  files:
+    - raylib.h
+  includes:
+    - "%"
+    - "%/raylib/src/"
+    - /usr/local/Cellar/llvm@5/5.0.2_1/include/c++/v1
+    - /usr/local/Cellar/llvm@5/5.0.2_1/lib/clang/5.0.2/include
+
+library: "%/src/raylib/src/libraylib.a"
