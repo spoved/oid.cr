@@ -1,0 +1,28 @@
+"Window(.*)":
+  name: "\\1"
+  destination: Window
+"(.*)Window":
+  name: "\\1"
+  destination: Window
+"IsWindow(.*)":
+  name: "\\1?"
+  destination: Window
+ToggleFullscreen: "Window"
+"(Get)Window(.*)":
+  name: "\\1_\\2"
+  destination: Window
+"Get(Screen|Monitor)(.*)":
+  name: "\\1_\\2"
+  destination: Window
+"SetWindow(Icon|Title|Monitor)":
+  name: "\\1="
+  destination: Window
+"SetWindow(.*)":
+  name: "set_\\1"
+  destination: Window
+SetTargetFPS:
+  name: target_fps=
+  destination: Window
+"Get(FPS|FrameTime|Time)":
+  name: "\\1"
+  destination: Window

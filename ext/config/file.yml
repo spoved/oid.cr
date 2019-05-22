@@ -1,0 +1,34 @@
+FileExists:
+  name: exists?
+  destination: File
+IsFileExtension:
+  name: extension?
+  destination: File
+GetExtension:
+  name: extension
+  destination: File
+GetFile(Name.*):
+  name: "\\1"
+  destination: File
+GetDirectoryPath:
+  name: dir_path
+  destination: File
+GetWorkingDirectory:
+  name: pwd
+  destination: File
+IsFileDropped:
+  name: file_dropped?
+  destination: File
+GetDroppedFiles:
+  name: dropped_files
+  destination: File
+ClearDroppedFiles:
+  destination: File
+GetFileModTime:
+  name: mod_time
+  destination: File
+Storage(Save|Load)Value:
+  name: "\\1_value"
+  destination: File
+OpenURL:
+  destination: File

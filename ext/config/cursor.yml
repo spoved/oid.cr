@@ -1,0 +1,5 @@
+"(.*)Cursor":
+  destination: "Cursor"
+"IsCursorHidden":
+  name: cursor_hidden?
+  destination: "Cursor"

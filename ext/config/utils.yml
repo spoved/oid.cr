@@ -1,0 +1,29 @@
+GetMouseRay:
+  name: mouse_ray
+  destination: Utils
+GetWorldToScreen:
+  name: world_to_screen
+  destination: Utils
+GetCameraMatrix:
+  name: camera_matrix
+  destination: Utils
+ColorToInt:
+  name: color_to_int
+  destination: Utils
+ColorNormalize:
+  name: color_normalize
+  destination: Utils
+Color(To|From)HSV:
+  name: "color_\\1_hsv"
+  destination: Utils
+GetColor:
+  name: color_from_hex
+  destination: Utils
+Fade:
+  name: fade_to
+  destination: Utils
+TakeScreenshot:
+  destination: Utils
+GetRandomValue:
+  name: random_value
+  destination: Utils
