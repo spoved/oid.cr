@@ -42,50 +42,8 @@ types:
   <<: config/types.yml
 
 functions:
-  # <<: config/functions/camera.yml
-  # <<: config/functions/cursor.yml
-  # <<: config/functions/draw.yml
-  # <<: config/functions/file.yml
-  # <<: config/functions/font.yml
-  # <<: config/functions/gamepad.yml
-  # <<: config/functions/image.yml
-  # <<: config/functions/key.yml
-  # <<: config/functions/model.yml
-  # <<: config/functions/mouse.yml
-  # <<: config/functions/render_texture.yml
-  # <<: config/functions/texture.yml
-  # <<: config/functions/touch.yml
-  # <<: config/functions/utils.yml
-  # <<: config/functions/window.yml
   ".*":
     destination: "::"
-  # GetClipboardText:
-  #   name: clipboard_text
-  #   destination: "::"
-  # SetClipboardText:
-  #   name: clipboard_text=
-  #   destination: "::"
-  # ClearBackground:
-  #   destination: "::"
-  # "^(Begin|End)Drawing$":
-  #   name: "\\1_drawing"
-  #   destination: "::"
-  # "^(Begin|End)Mode([2-3])D$":
-  #   name: "\\1_mode_\\2d"
-  #   destination: "::"
-  # "^(Begin|End)TextureMode$":
-  #   name: "\\1_texture_mode"
-  #   destination: "::"
-  # SetConfigFlags:
-  #   name: config_flags
-  #   destination: "::"
-  # "^SetTraceLog(Level|Exit)$":
-  #   name: "trace_log_\\1="
-  #   destination: "::"
-  # TraceLog:
-  #   name: trace_log
-  #   destination: "::"
-
 macros:
   <<: config/macros.yml
 
