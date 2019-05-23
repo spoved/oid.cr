@@ -1,4 +1,4 @@
-require "ext/*"
+require "./ext/raylib/*"
 
 # TODO: Write documentation for `Oid`
 module Oid

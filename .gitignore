@@ -8,4 +8,4 @@
 # Dependencies will be locked in application that uses them
 /shard.lock
 
-src/ext/raylib_binding.cr
+src/ext/raylib/binding.cr

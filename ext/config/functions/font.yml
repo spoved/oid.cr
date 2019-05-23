@@ -9,7 +9,7 @@ ExportFontAsCode:
 UnloadFont:
   name: unload
   destination: Font
-"GetFont(Data.*)":
+"GetFont(.*)":
   name: "\\1"
   destination: Font
 "^Font(.+)$":

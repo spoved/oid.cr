@@ -9,8 +9,6 @@ crystal: 0.28.0
 license: MIT
 
 dependencies:
-  cray:
-    gitlab: zatherz/cray
   bindgen:
     github: kalinon/bindgen
     branch: osx

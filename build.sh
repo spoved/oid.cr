@@ -47,3 +47,4 @@ fi
 cd_root
 
 crystal tool format
+crystal docs

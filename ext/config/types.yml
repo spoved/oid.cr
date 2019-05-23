@@ -1,0 +1,219 @@
+"char *":
+  builtin: true
+  crystal_type: "String"
+"void (int, const char *, __va_list_tag *)": { ignore: true }
+"void ()": { ignore: true }
+"void (void *)": { ignore: true }
+"void *":
+  builtin: true
+  crystal_type: "Void*"
+"unsigned char":
+  builtin: true
+  crystal_type: UInt8
+"unsigned int":
+  builtin: true
+  crystal_type: LibC::UInt
+"unsigned int":
+  builtin: true
+  crystal_type: "LibC::UInt"
+"unsigned int [7]":
+  builtin: true
+  crystal_type: "LibC::UInt[7]"
+"unsigned int [2]":
+  builtin: true
+  crystal_type: "LibC::UInt[2]"
+"float [4]":
+  builtin: true
+  crystal_type: "LibC::Float[4]"
+"int [32]":
+  builtin: true
+  crystal_type: "LibC::Int[32]"
+"char [32]":
+  builtin: true
+  crystal_type: "LibC::Char[32]"
+Color:
+  generate_binding: false
+  generate_wrapper: false
+  copy_structure: true
+  pass_by: Value
+  kind: Struct
+CLITERAL:
+  alias_for: Color
+Vector2:
+  generate_binding: false
+  generate_wrapper: false
+  copy_structure: true
+  pass_by: Value
+  kind: Struct
+Vector3:
+  generate_binding: false
+  generate_wrapper: false
+  copy_structure: true
+  pass_by: Value
+  kind: Struct
+Vector4:
+  generate_binding: false
+  generate_wrapper: false
+  copy_structure: true
+  pass_by: Value
+  kind: Struct
+Quaternion:
+  alias_for: Vector4
+Matrix:
+  generate_binding: false
+  generate_wrapper: false
+  copy_structure: true
+  pass_by: Value
+  kind: Struct
+Rectangle:
+  generate_binding: false
+  generate_wrapper: false
+  copy_structure: true
+  pass_by: Value
+  kind: Struct
+Image:
+  generate_binding: false
+  generate_wrapper: false
+  copy_structure: true
+  pass_by: Value
+  kind: Struct
+Texture2D:
+  generate_binding: false
+  generate_wrapper: false
+  copy_structure: true
+  pass_by: Value
+  kind: Struct
+Texture:
+  alias_for: Texture2D
+# TextureCubemap:
+#   alias_for: Texture2D
+RenderTexture2D:
+  generate_binding: false
+  generate_wrapper: false
+  copy_structure: true
+  pass_by: Value
+  kind: Struct
+NPatchInfo:
+  generate_binding: false
+  generate_wrapper: false
+  copy_structure: true
+  pass_by: Value
+  kind: Struct
+CharInfo:
+  generate_binding: false
+  generate_wrapper: false
+  copy_structure: true
+  pass_by: Value
+  kind: Struct
+Font:
+  generate_binding: false
+  generate_wrapper: false
+  copy_structure: true
+  pass_by: Value
+  kind: Struct
+SpriteFont:
+  alias_for: Font
+Camera3D:
+  generate_binding: false
+  generate_wrapper: false
+  copy_structure: true
+  pass_by: Value
+  kind: Struct
+# Camera:
+#   alias_for: Camera3D
+Camera2D:
+  generate_binding: false
+  generate_wrapper: false
+  copy_structure: true
+  pass_by: Value
+  kind: Struct
+Mesh:
+  generate_binding: false
+  generate_wrapper: false
+  copy_structure: true
+  pass_by: Value
+  kind: Struct
+Shader:
+  generate_binding: false
+  generate_wrapper: false
+  copy_structure: true
+  pass_by: Value
+  kind: Struct
+MaterialMap:
+  generate_binding: false
+  generate_wrapper: false
+  copy_structure: true
+  pass_by: Value
+  kind: Struct
+Material:
+  generate_binding: false
+  generate_wrapper: false
+  copy_structure: true
+  pass_by: Value
+  kind: Struct
+Transform:
+  generate_binding: false
+  generate_wrapper: false
+  copy_structure: true
+  pass_by: Value
+  kind: Struct
+BoneInfo:
+  generate_binding: false
+  generate_wrapper: false
+  copy_structure: true
+  pass_by: Value
+  kind: Struct
+Model:
+  generate_binding: false
+  generate_wrapper: false
+  copy_structure: true
+  pass_by: Value
+  kind: Struct
+ModelAnimation:
+  generate_binding: false
+  generate_wrapper: false
+  copy_structure: true
+  pass_by: Value
+  kind: Struct
+Ray:
+  generate_binding: false
+  generate_wrapper: false
+  copy_structure: true
+  pass_by: Value
+  kind: Struct
+RayHitInfo:
+  generate_binding: false
+  generate_wrapper: false
+  copy_structure: true
+  pass_by: Value
+  kind: Struct
+BoundingBox:
+  generate_binding: false
+  generate_wrapper: false
+  copy_structure: true
+  pass_by: Value
+  kind: Struct
+Wave:
+  generate_binding: false
+  generate_wrapper: false
+  copy_structure: true
+  pass_by: Value
+  kind: Struct
+Sound:
+  generate_binding: false
+  generate_wrapper: false
+  copy_structure: true
+  pass_by: Value
+  kind: Struct
+AudioStream:
+  generate_binding: false
+  generate_wrapper: false
+  copy_structure: true
+  pass_by: Value
+  kind: Struct
+VrDeviceInfo:
+  generate_binding: false
+  generate_wrapper: false
+  copy_structure: true
+  pass_by: Value
+  kind: Struct

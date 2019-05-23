@@ -7,6 +7,9 @@
 "IsWindow(.*)":
   name: "\\1?"
   destination: Window
+Window(ShouldClose):
+  name: "\\1?"
+  destination: Window
 ToggleFullscreen: "Window"
 "(Get)Window(.*)":
   name: "\\1_\\2"
