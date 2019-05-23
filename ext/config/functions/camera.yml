@@ -1,0 +1,5 @@
+"SetCamera(.*)":
+  destination: Camera
+"UpdateCamera":
+  name: update
+  destination: Camera

@@ -27,3 +27,5 @@ TakeScreenshot:
 GetRandomValue:
   name: random_value
   destination: Utils
+OpenURL:
+  destination: Utils

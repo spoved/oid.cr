@@ -1,0 +1,15 @@
+"IsGamepad(.*)":
+  name: "\\1?"
+  destination: Gamepad
+GetGamepadName:
+  name: name
+  destination: Gamepad
+GetGamepadButtonPressed:
+  name: button_pressed
+  destination: Gamepad
+GetGamepadAxisCount:
+  name: axis_count
+  destination: Gamepad
+GetGamepadAxisMovement:
+  name: axis_movement
+  destination: Gamepad

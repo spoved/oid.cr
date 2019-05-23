@@ -1,0 +1,23 @@
+"^(Load|Export)Texture$":
+  destination: Texture
+"^LoadTexture(.+)$":
+  name: "load_\\1"
+  destination: Texture
+ExportTextureAsCode:
+  name: export_as_code
+  destination: Texture
+UnloadTexture:
+  name: unload
+  destination: Texture
+"GetTexture(Data.*)":
+  name: "\\1"
+  destination: Texture
+"^Texture(.+)$":
+  name: "\\1"
+  destination: Texture
+"^GenTexture(.+)$":
+  name: "gen_\\1"
+  destination: Texture
+"^SetTexture(.+)":
+  name: "set_\\1"
+  destination: Texture

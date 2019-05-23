@@ -1,0 +1,31 @@
+"^(Load|Export)Font$":
+  destination: Font
+"^LoadFont(.+)$":
+  name: "load_\\1"
+  destination: Font
+ExportFontAsCode:
+  name: export_as_code
+  destination: Font
+UnloadFont:
+  name: unload
+  destination: Font
+"GetFont(Data.*)":
+  name: "\\1"
+  destination: Font
+"^Font(.+)$":
+  name: "\\1"
+  destination: Font
+"^GenFont(.+)$":
+  name: "gen_\\1"
+  destination: Font
+"^SetFont(.+)":
+  name: "set_\\1"
+  destination: Font
+MeasureText:
+  destination: Font
+MeasureTextEx:
+  destination: Font
+GetGlyphIndex:
+  destination: Font
+GetNextCodepoint:
+  destination: Font

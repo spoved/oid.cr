@@ -30,5 +30,3 @@ GetFileModTime:
 Storage(Save|Load)Value:
   name: "\\1_value"
   destination: File
-OpenURL:
-  destination: File

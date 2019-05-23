@@ -1,0 +1,23 @@
+"^(Load|Export)Image$":
+  destination: Image
+"^LoadImage(.+)$":
+  name: "load_\\1"
+  destination: Image
+ExportImageAsCode:
+  name: export_as_code
+  destination: Image
+UnloadImage:
+  name: unload
+  destination: Image
+"GetImage(Data.*)":
+  name: "\\1"
+  destination: Image
+"^Image(.+)$":
+  name: "\\1"
+  destination: Image
+"^GenImage(.+)$":
+  name: "gen_\\1"
+  destination: Image
+"^SetImage(.+)":
+  name: "set_\\1"
+  destination: Image

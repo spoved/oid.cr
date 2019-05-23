@@ -1,0 +1,23 @@
+"^(Load|Export)Mesh$":
+  destination: Mesh
+"^LoadMesh(.+)$":
+  name: "load_\\1"
+  destination: Mesh
+ExportMeshAsCode:
+  name: export_as_code
+  destination: Mesh
+UnloadMesh:
+  name: unload
+  destination: Mesh
+"GetMesh(Data.*)":
+  name: "\\1"
+  destination: Mesh
+"^Mesh(.+)$":
+  name: "\\1"
+  destination: Mesh
+"^GenMesh(.+)$":
+  name: "gen_\\1"
+  destination: Mesh
+"^SetMesh(.+)":
+  name: "set_\\1"
+  destination: Mesh

@@ -1,0 +1,10 @@
+"GetTouch(.*)":
+  destination: Touch
+"GetTouch(X|Y)":
+  name: "pos_\\1"
+  destination: Touch
+"GetGesture(.*)":
+  destination: "Touch::Gesture"
+SetGesturesEnabled:
+  name: "enabled="
+  destination: "Touch::Gesture"

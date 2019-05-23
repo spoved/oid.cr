@@ -1,0 +1,23 @@
+"^(Load|Export)Model$":
+  destination: Model
+"^LoadModel(.+)$":
+  name: "load_\\1"
+  destination: Model
+ExportModelAsCode:
+  name: export_as_code
+  destination: Model
+UnloadModel:
+  name: unload
+  destination: Model
+"GetModel(Data.*)":
+  name: "\\1"
+  destination: Model
+"^Model(.+)$":
+  name: "\\1"
+  destination: Model
+"^GenModel(.+)$":
+  name: "gen_\\1"
+  destination: Model
+"^SetModel(.+)":
+  name: "set_\\1"
+  destination: Model

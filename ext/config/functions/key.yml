@@ -1,0 +1,9 @@
+"IsKey(.*)":
+  name: "\\1?"
+  destination: Key
+GetKeyPressed:
+  name: pressed
+  destination: Key
+SetExitKey:
+  name: "exit_key="
+  destination: Key

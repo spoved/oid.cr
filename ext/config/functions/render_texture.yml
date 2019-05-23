@@ -1,0 +1,23 @@
+"^(Load|Export)RenderTexture$":
+  destination: RenderTexture
+"^LoadRenderTexture(.+)$":
+  name: "load_\\1"
+  destination: RenderTexture
+ExportRenderTextureAsCode:
+  name: export_as_code
+  destination: RenderTexture
+UnloadRenderTexture:
+  name: unload
+  destination: RenderTexture
+"GetRenderTexture(Data.*)":
+  name: "\\1"
+  destination: RenderTexture
+"^RenderTexture(.+)$":
+  name: "\\1"
+  destination: RenderTexture
+"^GenRenderTexture(.+)$":
+  name: "gen_\\1"
+  destination: RenderTexture
+"^SetRenderTexture(.+)":
+  name: "set_\\1"
+  destination: RenderTexture

@@ -7,38 +7,50 @@ generators:
 <<: config/enums.yml
 
 functions:
-  <<: config/window.yml
-  <<: config/utils.yml
-  <<: config/cursor.yml
-  <<: config/file.yml
-  "GetClipboardText":
+  <<: config/functions/camera.yml
+  <<: config/functions/cursor.yml
+  <<: config/functions/draw.yml
+  <<: config/functions/file.yml
+  <<: config/functions/font.yml
+  <<: config/functions/gamepad.yml
+  <<: config/functions/image.yml
+  <<: config/functions/key.yml
+  <<: config/functions/model.yml
+  <<: config/functions/mouse.yml
+  <<: config/functions/render_texture.yml
+  <<: config/functions/texture.yml
+  <<: config/functions/touch.yml
+  <<: config/functions/utils.yml
+  <<: config/functions/window.yml
+
+  GetClipboardText:
     name: clipboard_text
     destination: "::"
-  "SetClipboardText":
+  SetClipboardText:
     name: clipboard_text=
     destination: "::"
   ClearBackground:
     destination: "::"
-  "(Begin|End)Drawing":
+  "^(Begin|End)Drawing$":
     name: "\\1_drawing"
     destination: "::"
-  "(Begin|End)Mode([2-3])D":
+  "^(Begin|End)Mode([2-3])D$":
     name: "\\1_mode_\\2d"
     destination: "::"
-  "(Begin|End)TextureMode":
+  "^(Begin|End)TextureMode$":
     name: "\\1_texture_mode"
     destination: "::"
   SetConfigFlags:
     name: config_flags
     destination: "::"
-  SetTraceLog(Level|Exit):
+  "^SetTraceLog(Level|Exit)$":
     name: "trace_log_\\1="
     destination: "::"
   TraceLog:
     name: trace_log
     destination: "::"
 macros:
-  "(MAX_TOUCH_POINTS|MAX_SHADER_LOCATIONS|MAX_MATERIAL_MAPS)":
+  "^(MAX_TOUCH_POINTS|MAX_SHADER_LOCATIONS|MAX_MATERIAL_MAPS)$":
     map_as: Constant
     flags: false
     destination: "::"

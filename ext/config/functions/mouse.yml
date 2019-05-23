@@ -1,0 +1,14 @@
+"IsMouseButton(.*)":
+  name: "\\1?"
+  destination: Mouse
+"GetMouse(X|Y)":
+  name: "pos_\\1"
+  destination: Mouse
+"GetMouse(.*)":
+  destination: Mouse
+"SetMouse(.*)":
+  name: "set_\\1"
+  destination: Mouse
+GetMouseWheelMove:
+  name: wheel_move
+  destination: Mouse

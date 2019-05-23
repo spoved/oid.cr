@@ -1,0 +1,11 @@
+"^Draw(.+)$":
+  destination: Draw
+SetShapesTexture:
+  name: "shapes_texture"
+  destination: Draw
+"CheckCollision(.*)":
+  name: "collision_\\1?"
+  destination: Draw
+GetCollisionRec:
+  name: "collision_rec"
+  destination: Draw
