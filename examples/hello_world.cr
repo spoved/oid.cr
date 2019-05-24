@@ -2,11 +2,13 @@ require "../src/oid"
 
 RayLib.set_config_flags(RayLib::Enum::Config::WindowResizable.value.to_u8)
 RayLib.init_window 640, 480, "Example: hello_world"
+
 TEXT = "Hello, world!"
 
 while !RayLib.window_should_close
   RayLib.begin_drawing
-  RayLib.clear_background RayLib::Color::LIME
+
+  RayLib.clear_background RayLib::Color::WHITE
 
   w = RayLib.get_screen_width
   h = RayLib.get_screen_height
@@ -27,6 +29,7 @@ while !RayLib.window_should_close
     spacing,
     RayLib::Color::BLACK
   )
+
   RayLib.end_drawing
 end
 
