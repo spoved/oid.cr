@@ -4,11 +4,23 @@ version: 0.1.0
 authors:
   - Holden Omans <holden.omans@gmail.com>
 
-crystal: 0.28.0
+crystal: 0.30.1
 
 license: MIT
 
 dependencies:
+  spoved:
+    github: spoved/spoved.cr
+  entitas:
+    github: spoved/entitas.cr
   bindgen:
     github: kalinon/bindgen
     branch: osx
+development_dependencies:
+  sentry:
+    github: samueleaton/sentry
+    branch: master
+  coverage:
+    github: anykeyh/crystal-coverage
+  ameba:
+    github: veelenga/ameba
