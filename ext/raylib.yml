@@ -1,70 +1,41 @@
 module: RayLib
 
+# library: "%/{RAY_LIB_LIB}"
+library: "-lraylib"
+
 generators:
   crystal:
     output: src/ext/raylib/binding.cr
 
 <<: config/enums.yml
-
-classes:
-  Color: Color
-  Vector2: Vector2
-  Vector3: Vector3
-  Vector4: Vector4
-  Matrix: Matrix
-  Rectangle: Rectangle
-  Image: Image
-  Texture2D: Texture2D
-  RenderTexture2D: RenderTexture2D
-  NPatchInfo: NPatchInfo
-  CharInfo: CharInfo
-  Font: Font
-  SpriteFont: SpriteFont
-  Camera3D: Camera3D
-  Camera2D: Camera2D
-  Mesh: Mesh
-  Shader: Shader
-  MaterialMap: MaterialMap
-  Material: Material
-  Transform: Transform
-  BoneInfo: BoneInfo
-  Model: Model
-  ModelAnimation: ModelAnimation
-  Ray: Ray
-  RayHitInfo: RayHitInfo
-  BoundingBox: BoundingBox
-  Wave: Wave
-  Sound: Sound
-  AudioStream: AudioStream
-  VrDeviceInfo: VrDeviceInfo
-
-types:
-  <<: config/types.yml
+<<: config/classes.yml
+<<: config/macros.yml
+<<: config/find_paths.yml
+<<: config/types.yml
 
 functions:
   ".*":
     destination: "::"
-    
-macros:
-  <<: config/macros.yml
 
 parser:
+  if_BINDGEN_CLANG_BIN_isnt_:
+    binary: "./{BINDGEN_CLANG_BIN}"
+  flags:
+    - "-x"
+    - "c++"
+    - "-std=c++11"
+
   files:
     - raylib.h
-
   includes:
     - "%"
     - "%/raylib/src/"
-    - /usr/local/Cellar/llvm@5/5.0.2_1/include/c++/v1
-    - /usr/local/Cellar/llvm@5/5.0.2_1/lib/clang/5.0.2/include
-
-  flags: [ "-x", "c++", "-std=c++11" ]
-
+    - "{LLVM_INCLUDES}"
   defines:
     - __STDC_CONSTANT_MACROS
     - __STDC_LIMIT_MACROS
     - PLATFORM_DESKTOP
     - GRAPHICS_API_OPENGL_33
     - GL_SILENCE_DEPRECATION
-
-library: "-lraylib"
+    - __LLVM_VERSION_${LLVM_VERSION}
+    - __OS_TYPE_${OS_TYPE}
