@@ -15,7 +15,7 @@ dependencies:
     github: spoved/entitas.cr
   bindgen:
     github: kalinon/bindgen
-    branch: osx
+    branch: cmake
 development_dependencies:
   sentry:
     github: samueleaton/sentry
