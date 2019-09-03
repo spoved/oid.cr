@@ -38,6 +38,10 @@ add_custom_target(format ALL
   COMMAND ${crystal_bin} tool format ${PROJECT_SOURCE_DIR}/src
 )
 
+add_custom_target(docs ALL
+  COMMAND ${crystal_bin} docs ./lib/entitas/src/entitas.cr ./src/oid.cr
+)
+
 add_custom_target(bindings ALL
   COMMAND ${bindgen_tool} ${PROJECT_SOURCE_DIR}/ext/raylib.yml
   DEPENDS shards glfw_objlib glfw raylib_static bindgen

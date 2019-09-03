@@ -1,4 +1,13 @@
 require "../src/oid"
 
-window = Oid::Window.new(640, 480, "Test App")
-window.start
+Oid.new_window(title: "Test Window")
+
+spawn do
+  Oid.window.start
+end
+
+while Oid.window.visable?
+  Fiber.yield
+end
+
+Oid.global_context.destroy_all_entities

@@ -13,6 +13,7 @@ dependencies:
     github: spoved/spoved.cr
   entitas:
     github: spoved/entitas.cr
+    branch: master
   bindgen:
     github: kalinon/bindgen
     branch: cmake
