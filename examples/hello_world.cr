@@ -1,36 +1,75 @@
 require "../src/oid"
 
-RayLib.set_config_flags(RayLib::Enum::Config::WindowResizable.value.to_u8)
-RayLib.init_window 640, 480, "Example: hello_world"
+# RayLib.set_config_flags(RayLib::Enum::Config::WindowResizable.value.to_u8)
+
+Oid.new_window(title: "Example: hello_world")
 
 TEXT = "Hello, world!"
 
-while !RayLib.window_should_close
-  RayLib.begin_drawing
+class Renderer
+  spoved_logger
 
-  RayLib.clear_background RayLib::Color::WHITE
+  MOVE_SIZE = 25
 
-  w = RayLib.get_screen_width
-  h = RayLib.get_screen_height
+  property offset = 0
+  property forward = true
 
-  font_size = (Math.min(w, h) * 0.2).to_f32
-  spacing = (font_size/10).to_f32
+  property window : Oid::Window
+  property vector : RayLib::Binding::Vector2 = RayLib::Binding::Vector2.new(x: 0, y: 0)
 
-  text_size = RayLib.measure_text_ex(RayLib.get_font_default, TEXT, font_size, spacing)
+  def initialize(@window); end
 
-  x = w/2.0 - text_size.x/2.0
-  y = h/2.0 - text_size.y/2.0
+  def do_stuff
+    font_size = (Math.min(self.window.screen_w, self.window.screen_h) * 0.2).to_f32
+    spacing = (font_size/10).to_f32
 
-  RayLib.draw_text_ex(
-    RayLib.get_font_default,
-    TEXT,
-    RayLib::Binding::Vector2.new(x: x, y: y),
-    font_size,
-    spacing,
-    RayLib::Color::BLACK
-  )
+    text_size = RayLib.measure_text_ex(
+      RayLib.get_font_default,
+      TEXT,
+      font_size,
+      spacing
+    )
 
-  RayLib.end_drawing
+    # logger.debug("forward: #{self.forward} offset: #{self.offset}")
+
+    if self.offset < MOVE_SIZE && self.forward
+      self.offset += 1
+    elsif self.offset == MOVE_SIZE
+      self.forward = false
+      self.offset -= 1
+    elsif self.offset == 0
+      self.forward = true
+      self.offset += 1
+    else
+      self.offset -= 1
+    end
+
+    self.vector.x = self.window.screen_w/2.0 - text_size.x/2.0
+    self.vector.y = self.window.screen_h/2.0 - text_size.y/2.0 - self.offset
+
+    RayLib.draw_text_ex(
+      RayLib.get_font_default,
+      TEXT,
+      self.vector,
+      font_size,
+      spacing,
+      RayLib::Color::BLACK
+    )
+  end
 end
 
-RayLib.close_window
+renderer = Renderer.new(Oid.window)
+
+# Start window fiber
+spawn do
+  Oid.window.start do
+    renderer.do_stuff
+  end
+end
+
+# Yield to the window
+while Oid.window.visable?
+  Fiber.yield
+end
+
+Oid.global_context.destroy_all_entities

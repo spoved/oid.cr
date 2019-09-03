@@ -3,7 +3,7 @@ require "../src/oid"
 Oid.new_window(title: "Test Window")
 
 spawn do
-  Oid.window.start
+  Oid.window.start { Fiber.yield }
 end
 
 while Oid.window.visable?
