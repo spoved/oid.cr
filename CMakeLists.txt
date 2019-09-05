@@ -39,7 +39,12 @@ add_custom_target(format ALL
 )
 
 add_custom_target(docs ALL
-  COMMAND ${crystal_bin} docs ./lib/entitas/src/entitas.cr ./src/oid.cr
+  COMMAND ${crystal_bin} docs ./lib/entitas/src/entitas.cr ./src/oid.cr ./examples/tut_01/controller.cr
+)
+
+add_custom_target(example
+  COMMAND ${crystal_bin} run examples/tut_01/controller.cr --error-trace
+  DEPENDS docs
 )
 
 add_custom_target(bindings ALL

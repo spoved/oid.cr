@@ -1,10 +1,13 @@
 require "../src/oid"
+require "./tut_01/controller"
 
 # RayLib.set_config_flags(RayLib::Enum::Config::WindowResizable.value.to_u8)
 
 Oid.new_window(title: "Example: hello_world")
 
 TEXT = "Hello, world!"
+
+controller = GameController.new
 
 class Renderer
   spoved_logger
@@ -62,7 +65,10 @@ renderer = Renderer.new(Oid.window)
 
 # Start window fiber
 spawn do
+  controller.start
+
   Oid.window.start do
+    controller.update
     renderer.do_stuff
   end
 end

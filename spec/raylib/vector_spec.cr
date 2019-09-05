@@ -1,6 +1,6 @@
 require "../spec_helper"
 
-describe RayLib::Binding::Vector2 do
+describe RayLib::Vector2 do
   it "can be cast via pointer" do
     vect = RayLib::Vector2.new(x: 10, y: 2)
     vect.x.should eq 10
@@ -19,7 +19,22 @@ describe RayLib::Binding::Vector2 do
     bvect = RayLib::Binding::Vector2.new(x: 10, y: 3)
     vect = RayLib::Vector2.new(unwrap: pointerof(bvect))
     vect.should be_a RayLib::Vector2
+  end
 
-    puts vect.to_unsafe
+  it "can be converted to a Vector3" do
+    vect = RayLib::Vector2.new(x: 10, y: 2)
+    vect.should be_a RayLib::Vector2
+    vect.to_v3.should be_a RayLib::Vector3
+    vect.to_v3.z.should eq 0
+  end
+
+  it "can be subtracted" do
+    vect = RayLib::Vector2.new(x: 1, y: 2)
+    vect2 = RayLib::Vector2.new(x: 6, y: 5)
+
+    new_vect = vect - vect2
+    new_vect.x.should eq -5.0
+    new_vect.y.should eq -3.0
+    puts new_vect
   end
 end

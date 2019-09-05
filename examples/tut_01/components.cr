@@ -45,16 +45,21 @@ class RightMouse < Entitas::Component
 end
 
 @[Context(Input)]
+class MouseUp < Entitas::Component
+  prop :position, RayLib::Vector2
+end
+
+@[Context(Input)]
 class MouseDown < Entitas::Component
   prop :position, RayLib::Vector2
 end
 
 @[Context(Input)]
-class MousePosition < Entitas::Component
+class MouseReleased < Entitas::Component
   prop :position, RayLib::Vector2
 end
 
 @[Context(Input)]
-class MouseUp < Entitas::Component
+class MousePressed < Entitas::Component
   prop :position, RayLib::Vector2
 end

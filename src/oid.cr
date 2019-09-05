@@ -14,7 +14,7 @@ module Oid
   end
 
   def window?
-    self.global_context.window?
+    self.global_context.has_window?
   end
 
   def window
