@@ -5,7 +5,7 @@ library: "-lraylib"
 
 generators:
   crystal:
-    output: src/ext/raylib/binding.cr
+    output: src/raylib/binding/binding.cr
 
 <<: config/enums.yml
 <<: config/classes.yml

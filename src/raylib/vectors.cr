@@ -1,6 +1,7 @@
-require "./binding"
-
 module RayLib
+  struct Vector2
+  end
+
   struct Vector3
     # Shorthand for writing Vector3.new(x: 0, y: 1, z: 0).
     def self.up
@@ -48,15 +49,9 @@ module RayLib
     def self.zero
       Vector4.new(x: 0, y: 0, z: 0, w: 0)
     end
-    #
-    # def self.new
-    #   Vector3.new(0, 0, 0, 0)
-    # end
-    #
-    # def self.new(angle : Float32, vector : Vector3)
-    #   Vector3.new(x: vector.x, y: vector.y, z: vector.z, w: angle)
-    # end
-    #
-    # def initialize(@x : Float32, @y : Float32, @z : Float32, @w : Float32); end
+
+    def self.new(angle : Float32, vector : Vector3)
+      Vector3.new(x: vector.x, y: vector.y, z: vector.z, w: angle)
+    end
   end
 end

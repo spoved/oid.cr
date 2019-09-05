@@ -33,188 +33,188 @@ types:
     builtin: true
     crystal_type: "LibC::Char[32]"
   Color:
-    generate_binding: false
-    generate_wrapper: false
     copy_structure: true
-    pass_by: Value
+    generate_binding: true
+    generate_wrapper: false
     kind: Struct
+    crystal_type: Color
   CLITERAL:
     alias_for: Color
   Vector2:
-    generate_binding: false
-    generate_wrapper: false
     copy_structure: true
-    pass_by: Value
+    generate_binding: true
+    generate_wrapper: false
     kind: Struct
+    crystal_type: Vector2
   Vector3:
-    generate_binding: false
-    generate_wrapper: false
     copy_structure: true
-    pass_by: Value
+    generate_binding: true
+    generate_wrapper: false
     kind: Struct
+    crystal_type: Vector3
   Vector4:
-    generate_binding: false
-    generate_wrapper: false
     copy_structure: true
-    pass_by: Value
+    generate_binding: true
+    generate_wrapper: false
     kind: Struct
+    crystal_type: Vector4
   Quaternion:
     alias_for: Vector4
   Matrix:
-    generate_binding: false
-    generate_wrapper: false
     copy_structure: true
-    pass_by: Value
+    generate_binding: true
+    generate_wrapper: false
     kind: Struct
+    crystal_type: Matrix
   Rectangle:
-    generate_binding: false
-    generate_wrapper: false
     copy_structure: true
-    pass_by: Value
+    generate_binding: true
+    generate_wrapper: false
     kind: Struct
+    crystal_type: Rectangle
   Image:
-    generate_binding: false
-    generate_wrapper: false
     copy_structure: true
-    pass_by: Value
+    generate_binding: true
+    generate_wrapper: false
     kind: Struct
+    crystal_type: Image
   Texture2D:
-    generate_binding: false
-    generate_wrapper: false
     copy_structure: true
-    pass_by: Value
+    generate_binding: true
+    generate_wrapper: false
     kind: Struct
+    crystal_type: Texture2D
   Texture:
     alias_for: Texture2D
   # TextureCubemap:
   #   alias_for: Texture2D
   RenderTexture2D:
-    generate_binding: false
-    generate_wrapper: false
     copy_structure: true
-    pass_by: Value
+    generate_binding: true
+    generate_wrapper: false
     kind: Struct
+    crystal_type: RenderTexture2D
   NPatchInfo:
-    generate_binding: false
-    generate_wrapper: false
     copy_structure: true
-    pass_by: Value
+    generate_binding: true
+    generate_wrapper: false
     kind: Struct
+    crystal_type: NPatchInfo
   CharInfo:
-    generate_binding: false
-    generate_wrapper: false
     copy_structure: true
-    pass_by: Value
+    generate_binding: true
+    generate_wrapper: false
     kind: Struct
+    crystal_type: CharInfo
   Font:
-    generate_binding: false
-    generate_wrapper: false
     copy_structure: true
-    pass_by: Value
+    generate_binding: true
+    generate_wrapper: false
     kind: Struct
+    crystal_type: Font
   SpriteFont:
     alias_for: Font
   Camera3D:
-    generate_binding: false
-    generate_wrapper: false
     copy_structure: true
-    pass_by: Value
+    generate_binding: true
+    generate_wrapper: false
     kind: Struct
+    crystal_type: Camera3D
   # Camera:
   #   alias_for: Camera3D
   Camera2D:
-    generate_binding: false
-    generate_wrapper: false
     copy_structure: true
-    pass_by: Value
+    generate_binding: true
+    generate_wrapper: false
     kind: Struct
+    crystal_type: Camera2D
   Mesh:
-    generate_binding: false
-    generate_wrapper: false
     copy_structure: true
-    pass_by: Value
+    generate_binding: true
+    generate_wrapper: false
     kind: Struct
+    crystal_type: Mesh
   Shader:
-    generate_binding: false
-    generate_wrapper: false
     copy_structure: true
-    pass_by: Value
+    generate_binding: true
+    generate_wrapper: false
     kind: Struct
+    crystal_type: Shader
   MaterialMap:
-    generate_binding: false
-    generate_wrapper: false
     copy_structure: true
-    pass_by: Value
+    generate_binding: true
+    generate_wrapper: false
     kind: Struct
+    crystal_type: MaterialMap
   Material:
-    generate_binding: false
-    generate_wrapper: false
     copy_structure: true
-    pass_by: Value
+    generate_binding: true
+    generate_wrapper: false
     kind: Struct
+    crystal_type: Material
   Transform:
-    generate_binding: false
-    generate_wrapper: false
     copy_structure: true
-    pass_by: Value
+    generate_binding: true
+    generate_wrapper: false
     kind: Struct
+    crystal_type: Transform
   BoneInfo:
-    generate_binding: false
-    generate_wrapper: false
     copy_structure: true
-    pass_by: Value
+    generate_binding: true
+    generate_wrapper: false
     kind: Struct
+    crystal_type: BoneInfo
   Model:
-    generate_binding: false
-    generate_wrapper: false
     copy_structure: true
-    pass_by: Value
+    generate_binding: true
+    generate_wrapper: false
     kind: Struct
+    crystal_type: Model
   ModelAnimation:
-    generate_binding: false
-    generate_wrapper: false
     copy_structure: true
-    pass_by: Value
+    generate_binding: true
+    generate_wrapper: false
     kind: Struct
+    crystal_type: ModelAnimation
   Ray:
-    generate_binding: false
-    generate_wrapper: false
     copy_structure: true
-    pass_by: Value
+    generate_binding: true
+    generate_wrapper: false
     kind: Struct
+    crystal_type: Ray
   RayHitInfo:
-    generate_binding: false
-    generate_wrapper: false
     copy_structure: true
-    pass_by: Value
+    generate_binding: true
+    generate_wrapper: false
     kind: Struct
+    crystal_type: RayHitInfo
   BoundingBox:
-    generate_binding: false
-    generate_wrapper: false
     copy_structure: true
-    pass_by: Value
-    kind: Struct
+    generate_binding: true
+    generate_wrapper: false
+    kind: struct
+    crystal_type: BoundingBox
   Wave:
-    generate_binding: false
-    generate_wrapper: false
     copy_structure: true
-    pass_by: Value
+    generate_binding: true
+    generate_wrapper: false
     kind: Struct
+    crystal_type: Wave
   Sound:
-    generate_binding: false
-    generate_wrapper: false
     copy_structure: true
-    pass_by: Value
+    generate_binding: true
+    generate_wrapper: false
     kind: Struct
+    crystal_type: Sound
   AudioStream:
-    generate_binding: false
-    generate_wrapper: false
     copy_structure: true
-    pass_by: Value
+    generate_binding: true
+    generate_wrapper: false
     kind: Struct
+    crystal_type: AudioStream
   VrDeviceInfo:
-    generate_binding: false
-    generate_wrapper: false
     copy_structure: true
-    pass_by: Value
+    generate_binding: true
+    generate_wrapper: false
     kind: Struct
+    crystal_type: VrDeviceInfo

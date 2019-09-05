@@ -1,4 +1,4 @@
-require "../ext/raylib/colors"
+require "../raylib/color"
 
 @[Component::Unique]
 @[Context(Global)]

@@ -15,7 +15,7 @@ class Renderer
   property forward = true
 
   property window : Oid::Window
-  property vector : RayLib::Binding::Vector2 = RayLib::Binding::Vector2.new(x: 0, y: 0)
+  property vector : RayLib::Vector2 = RayLib::Vector2.new(x: 0, y: 0)
 
   def initialize(@window); end
 
@@ -44,8 +44,8 @@ class Renderer
       self.offset -= 1
     end
 
-    self.vector.x = self.window.screen_w/2.0 - text_size.x/2.0
-    self.vector.y = self.window.screen_h/2.0 - text_size.y/2.0 - self.offset
+    self.vector.x = (self.window.screen_w/2.0 - text_size.x/2.0).to_f32
+    self.vector.y = (self.window.screen_h/2.0 - text_size.y/2.0 - self.offset).to_f32
 
     RayLib.draw_text_ex(
       RayLib.get_font_default,

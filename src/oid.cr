@@ -1,5 +1,5 @@
 require "entitas"
-require "./ext/raylib/*"
+require "./raylib"
 require "./oid/*"
 
 module Oid
