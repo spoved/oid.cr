@@ -25,7 +25,7 @@ endif()
 
 if(NOT EXISTS ${bindgen_tool})
   find_program(bindgen_tool bindgen
-    PATHS: ${PROJECT_SOURCE_DIR}/bin
+    PATHS: ${PROJECT_SOURCE_DIR}/lib/bindgen/bin
   )
   message(STATUS "Found bindgen tool exec: ${bindgen_tool}")
 endif()

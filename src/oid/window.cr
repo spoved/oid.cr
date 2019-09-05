@@ -1,14 +1,14 @@
-require "./color"
+require "../ext/raylib/colors"
 
 @[Component::Unique]
 @[Context(Global)]
 class Oid::Window
   spoved_logger
 
-  define_property :x, Int32, default: 800
-  define_property :y, Int32, default: 600
-  define_property :title, String, default: "Oid Window"
-  define_property :background_color, Oid::Color, default: Oid::Colors::WHITE
+  prop :x, Int32, default: 800
+  prop :y, Int32, default: 600
+  prop :title, String, default: "Oid Window"
+  prop :background_color, RayLib::Color, default: RayLib::Color::WHITE
 
   # Initialize window and OpenGL context
   def open
