@@ -95,8 +95,8 @@ class ViewSystems < Entitas::Feature
     @name = "View Systems"
 
     add AddViewSystem.new(contexts)
+    add RenderSpriteSystem.new(contexts)
     add RenderPositionSystem.new(contexts)
     add RenderDirectionSystem.new(contexts)
-    add RenderSpriteSystem.new(contexts)
   end
 end

@@ -29,42 +29,54 @@ class EmitInputSystem
     self.right_mouse_entity = context.right_mouse_entity
   end
 
+  def get_mouse(button)
+    {
+      down:     RayLib.is_mouse_button_down(button),
+      up:       RayLib.is_mouse_button_up(button),
+      pressed:  RayLib.is_mouse_button_pressed(button),
+      released: RayLib.is_mouse_button_released(button),
+    }
+  end
+
   def execute
     position = RayLib.get_mouse_position
 
+    left_mouse = get_mouse(0)
+    right_mouse = get_mouse(1)
+
     # Left button
 
-    if RayLib.is_mouse_button_down(0)
+    if left_mouse[:down]
       left_mouse_entity.replace_mouse_down(position: position)
     end
 
-    if RayLib.is_mouse_button_up(0)
+    if left_mouse[:up]
       left_mouse_entity.replace_mouse_up(position: position)
     end
 
-    if RayLib.is_mouse_button_pressed(0)
+    if left_mouse[:pressed]
       left_mouse_entity.replace_mouse_pressed(position: position)
     end
 
-    if RayLib.is_mouse_button_released(0)
+    if left_mouse[:released]
       left_mouse_entity.replace_mouse_released(position: position)
     end
 
     # Right button
 
-    if RayLib.is_mouse_button_down(1)
+    if right_mouse[:down]
       right_mouse_entity.replace_mouse_down(position: position)
     end
 
-    if RayLib.is_mouse_button_up(1)
+    if right_mouse[:up]
       right_mouse_entity.replace_mouse_up(position: position)
     end
 
-    if RayLib.is_mouse_button_pressed(1)
+    if right_mouse[:pressed]
       right_mouse_entity.replace_mouse_pressed(position: position)
     end
 
-    if RayLib.is_mouse_button_released(1)
+    if right_mouse[:released]
       right_mouse_entity.replace_mouse_released(position: position)
     end
   end
@@ -79,11 +91,11 @@ class CreateMoverSystem < Entitas::ReactiveSystem
   end
 
   def get_trigger(context : Entitas::Context) : Entitas::ICollector
-    context.create_collector(InputMatcher.all_of(InputMatcher.right_mouse, InputMatcher.mouse_down))
+    context.create_collector(InputMatcher.all_of(InputMatcher.right_mouse, InputMatcher.mouse_pressed))
   end
 
   def filter(entity : InputEntity)
-    entity.has_mouse_down? && !entity.mouse_down.position.nil?
+    entity.has_mouse_pressed? && !entity.mouse_pressed.position.nil?
   end
 
   def execute(entities : Array(Entitas::IEntity))
@@ -93,7 +105,7 @@ class CreateMoverSystem < Entitas::ReactiveSystem
       mover = game_context.create_entity
       mover.is_mover = true
       mover.add_position(
-        value: e.mouse_down.position
+        value: e.mouse_pressed.position
       )
 
       mover.add_direction(
@@ -116,11 +128,11 @@ class CommandMoveSystem < Entitas::ReactiveSystem
   end
 
   def get_trigger(context : Entitas::Context) : Entitas::ICollector
-    context.create_collector(InputMatcher.all_of(InputMatcher.right_mouse, InputMatcher.mouse_down))
+    context.create_collector(InputMatcher.all_of(InputMatcher.left_mouse, InputMatcher.mouse_down))
   end
 
   def filter(entity : InputEntity)
-    entity.has_mouse_down? && !entity.mouse_down.position.nil?
+    entity.has_mouse_pressed? && !entity.mouse_pressed.position.nil?
   end
 
   def execute(entities : Array(Entitas::IEntity))

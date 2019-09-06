@@ -7,5 +7,6 @@ class GameController < Entitas::Controller
       .add(InputSystems.new(contexts))
       .add(MovementSystems.new(contexts))
       .add(ViewSystems.new(contexts))
+      .add(RenderSystems.new(contexts))
   end
 end
