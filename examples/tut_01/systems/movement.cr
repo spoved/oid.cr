@@ -7,6 +7,7 @@ class MoveSystem
   getter game_context : GameContext
   getter moves : Entitas::Group(GameEntity)
   getter move_completes : Entitas::Group(GameEntity)
+  getter speed = 4f32
 
   def initialize(contexts)
     @game_context = contexts.game
@@ -17,6 +18,8 @@ class MoveSystem
   def execute
     self.moves.each do |e|
       dir = e.move.target.as(RayLib::Vector2) - e.position.value.as(RayLib::Vector2)
+      pos = e.position.value.as(RayLib::Vector2)
+      new_pos = pos + dir.normalize * self.speed
     end
   end
 

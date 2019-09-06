@@ -83,7 +83,7 @@ class CreateMoverSystem < Entitas::ReactiveSystem
   end
 
   def filter(entity : InputEntity)
-    entity.has_mouse_down?
+    entity.has_mouse_down? && !entity.mouse_down.position.nil?
   end
 
   def execute(entities : Array(Entitas::IEntity))
@@ -92,7 +92,9 @@ class CreateMoverSystem < Entitas::ReactiveSystem
 
       mover = game_context.create_entity
       mover.is_mover = true
-      mover.add_position(position: e.mouse_down.position)
+      mover.add_position(
+        value: e.mouse_down.position
+      )
 
       mover.add_direction(
         value: Random.new.rand(0..360).to_f32
@@ -118,7 +120,7 @@ class CommandMoveSystem < Entitas::ReactiveSystem
   end
 
   def filter(entity : InputEntity)
-    entity.has_mouse_down?
+    entity.has_mouse_down? && !entity.mouse_down.position.nil?
   end
 
   def execute(entities : Array(Entitas::IEntity))
@@ -127,7 +129,9 @@ class CommandMoveSystem < Entitas::ReactiveSystem
       ms = movers.get_entities
       return if ms.size <= 0
 
-      ms.sample.replace_move(position: e.mouse_down.position)
+      ms.sample.replace_move(
+        target: e.mouse_down.position
+      )
     end
   end
 end

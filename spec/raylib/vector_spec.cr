@@ -35,6 +35,17 @@ describe RayLib::Vector2 do
     new_vect = vect - vect2
     new_vect.x.should eq -5.0
     new_vect.y.should eq -3.0
-    puts new_vect
+  end
+
+  it "can be added" do
+    new_vect = RayLib::Vector2.new(1, 2) + RayLib::Vector2.new(6, 5)
+    new_vect.x.should eq 7.0
+    new_vect.y.should eq 7.0
+  end
+
+  it "can be divided" do
+    new_vect = RayLib::Vector2.new(1, 2) / RayLib::Vector2.new(6, 5)
+    new_vect.x.should eq 0.16666667f32
+    new_vect.y.should eq 0.4f32
   end
 end

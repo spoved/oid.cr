@@ -5,6 +5,21 @@ module RayLib
       Vector2.new(x: 0, y: 0)
     end
 
+    # Returns the length of this vector
+    def magnitude
+      Math.sqrt(self.x * self.x + self.y * self.y)
+    end
+
+    # Returns this vector with a magnitude of 1
+    def normalize
+      m = self.magnitude
+      if m > 0
+        Vector2.new(x: self.x/m, y: self.y/m)
+      else
+        self
+      end
+    end
+
     # Convert `Vector2` to a `Vector3`
     #
     # ```
@@ -21,6 +36,29 @@ module RayLib
     # ```
     def -(value)
       Vector2.new(x: self.x - value.x, y: self.y - value.y)
+    end
+
+    # Adds two vectors.
+    #
+    # ```
+    # Vector2.new(1, 2) + Vector2.new(6, 5) # => RayLib::Vector2(@x=7.0, @y=7.0)
+    # ```
+    def +(value)
+      Vector2.new(x: self.x + value.x, y: self.y + value.y)
+    end
+
+    # Divides a vector by a number.
+    #
+    # ```
+    # Vector2.new(1, 2) / Vector2.new(6, 5) # => RayLib::Vector2(@x=7.0, @y=7.0)
+    # ```
+    def /(value)
+      Vector2.new(x: self.x / value.x, y: self.y / value.y)
+    end
+
+    # Multiplies a vector by a number.
+    def *(value)
+      Vector2.new(x: self.x * value, y: self.y * value)
     end
   end
 
