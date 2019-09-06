@@ -5,6 +5,7 @@ class RenderSystem
 
   getter context : Entitas::IContext
   getter group : Entitas::IGroup
+  getter textures : Hash(String, RayLib::Texture2D) = Hash(String, RayLib::Texture2D).new
 
   def initialize(contexts : Contexts)
     @context = contexts.game
@@ -18,23 +19,25 @@ class RenderSystem
   end
 
   def render(entity : GameEntity)
-    font_size = (Math.min(Oid.window.screen_w, Oid.window.screen_h) * 0.02).to_f32
-    spacing = (font_size/10).to_f32
+    sprite_name = entity.sprite.name.as(String)
 
-    text_size = RayLib.measure_text_ex(
-      RayLib.get_font_default,
-      entity.sprite.name.as(String),
-      font_size,
-      spacing
-    )
+    unless textures[sprite_name]?
+      image_path = File.join(
+        ASSET_PATH,
+        entity.sprite.name.as(String)
+      )
 
-    RayLib.draw_text_ex(
-      RayLib.get_font_default,
-      entity.sprite.name.as(String),
-      entity.view.game_object.as(Oid::GameObject).transform.position.to_v2,
-      font_size,
-      spacing,
-      RayLib::Color::BLACK
+      textures[sprite_name] = RayLib.load_texture(image_path)
+    end
+
+    position = entity.view.game_object.as(Oid::GameObject).transform.position.to_v2
+
+    RayLib.draw_texture_ex(
+      textures[sprite_name],
+      position,
+      0f32,
+      0.1f32,
+      RayLib::Color::WHITE
     )
   end
 end

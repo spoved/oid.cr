@@ -13,7 +13,6 @@ end
 @[Context(Game)]
 class View < Entitas::Component
   prop :game_object, Oid::GameObject
-  # TODO public GameObject gameObject;
 end
 
 @[Context(Game)]

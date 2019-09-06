@@ -112,7 +112,7 @@ class CreateMoverSystem < Entitas::ReactiveSystem
         value: Random.new.rand(0..360).to_f32
       )
 
-      mover.add_sprite(name: "Bee")
+      mover.add_sprite(name: "Bee.png")
     end
   end
 end

@@ -82,10 +82,11 @@ class RenderDirectionSystem < Entitas::ReactiveSystem
       if e.direction.value.nil?
         raise "No direction value for #{e}"
       end
+
       ang = e.direction.value.as(Float32)
 
-      e.view.game_object.as(Oid::GameObject)
-        .transform.rotation = RayLib::Quaternion.new(ang - 90, RayLib::Vector3.forward)
+      go = e.view.game_object.as(Oid::GameObject)
+      go.transform.rotation = RayLib::Quaternion.new(ang - 90, RayLib::Vector3.forward)
     end
   end
 end

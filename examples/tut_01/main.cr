@@ -1,7 +1,8 @@
 require "../../src/oid"
 require "./controller"
 
-# RayLib.set_config_flags(RayLib::Enum::Config::WindowResizable.value.to_u8)
+# IMAGE_PATH = File.join(__DIR__, "Bee.png")
+ASSET_PATH = __DIR__
 
 Oid.new_window(title: "Example: tut_01")
 
