@@ -36,8 +36,7 @@ class RenderSpriteSystem < Entitas::ReactiveSystem
 
   def execute(entities : Array(Entitas::IEntity))
     entities.each do |e|
-      # TODO: Load the sprite into GameObject
-      puts e.as(GameEntity).sprite.name
+      e = e.as(GameEntity)
     end
   end
 end
@@ -57,8 +56,9 @@ class RenderPositionSystem < Entitas::ReactiveSystem
 
   def execute(entities : Array(Entitas::IEntity))
     entities.each do |e|
-      e.as(GameEntity).view.game_object.as(Oid::GameObject)
-        .transform.position = e.as(GameEntity).position.value.as(RayLib::Vector2)
+      e = e.as(GameEntity)
+      go = e.view.game_object.as(Oid::GameObject)
+      go.transform.position = e.position.value.as(RayLib::Vector2)
     end
   end
 end
@@ -95,8 +95,8 @@ class ViewSystems < Entitas::Feature
     @name = "View Systems"
 
     add AddViewSystem.new(contexts)
-    add RenderSpriteSystem.new(contexts)
     add RenderPositionSystem.new(contexts)
     add RenderDirectionSystem.new(contexts)
+    add RenderSpriteSystem.new(contexts)
   end
 end
