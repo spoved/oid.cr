@@ -2,9 +2,16 @@ require "./transform"
 
 module Oid
   class GameObject
-    getter transform : Transform = Transform.new
+    getter transform : Oid::Transform
     getter name : String
 
-    def initialize(@name); end
+    def self.new(name : String)
+      instance = Oid::GameObject.allocate
+      instance.initialize(name, Oid::Transform.new(instance))
+      instance
+    end
+
+    private def initialize(@name, @transform)
+    end
   end
 end
