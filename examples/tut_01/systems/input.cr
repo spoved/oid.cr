@@ -139,7 +139,8 @@ class CommandMoveSystem < Entitas::ReactiveSystem
     entities.each do |e|
       e = e.as(InputEntity)
       ms = movers.get_entities
-      return if ms.size <= 0
+
+      return if ms.empty?
 
       ms.sample.replace_move(
         target: e.mouse_down.position

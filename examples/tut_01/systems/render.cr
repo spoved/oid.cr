@@ -30,12 +30,14 @@ class RenderSystem
       textures[sprite_name] = RayLib.load_texture(image_path)
     end
 
-    position = entity.view.game_object.as(Oid::GameObject).transform.position.to_v2
+    trans = entity.view.game_object.as(Oid::GameObject).transform
+    position = trans.position.to_v2
+    rotation = entity.direction.value
 
     RayLib.draw_texture_ex(
       textures[sprite_name],
       position,
-      0f32,
+      rotation.as(Float32),
       0.1f32,
       RayLib::Color::WHITE
     )

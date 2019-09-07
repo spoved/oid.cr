@@ -1,13 +1,15 @@
 require "../components"
 
 class MoveSystem
+  spoved_logger
+
   include Entitas::Systems::CleanupSystem
   include Entitas::Systems::ExecuteSystem
 
   getter game_context : GameContext
   getter moves : Entitas::Group(GameEntity)
   getter move_completes : Entitas::Group(GameEntity)
-  getter speed = 4f32
+  getter speed = 0.5f32
 
   def initialize(contexts)
     @game_context = contexts.game
@@ -19,18 +21,26 @@ class MoveSystem
     self.moves.each do |e|
       dir = e.move.target.as(RayLib::Vector2) - e.position.value.as(RayLib::Vector2)
       pos = e.position.value.as(RayLib::Vector2)
-      new_pos = pos + dir.normalize * self.speed
-      e.replace_position(value: new_pos)
-
-      # Rad2Deg = 360 / (PI * 2)
-      angle = Math.atan2(dir.y, dir.x) * (360 / (Math::PI * 2))
-      e.replace_direction(value: angle)
-
+      target_pos = e.move.target.as(RayLib::Vector2)
+      cur_pos = e.position.value.as(RayLib::Vector2)
+      dir = target_pos - cur_pos
       dist = dir.magnitude
 
-      if dist <= 0.5f32
+      rel_speed = (self.speed * Oid::Time.delta_time.to_f32)
+
+      if dist <= rel_speed
+        e.replace_position(value: target_pos)
         e.remove_move
         e.is_move_complete = true
+      else
+        new_pos = cur_pos + dir.normalize * rel_speed
+
+        logger.warn (new_pos - cur_pos).magnitude
+
+        e.replace_position(value: new_pos)
+
+        angle = Math.atan2(dir.y, dir.x) * Oid::Math.rad2deg
+        e.replace_direction(value: angle)
       end
     end
   end
