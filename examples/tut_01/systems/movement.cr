@@ -21,8 +21,10 @@ class MoveSystem
     self.moves.each do |e|
       dir = e.move.target.as(RayLib::Vector2) - e.position.value.as(RayLib::Vector2)
       pos = e.position.value.as(RayLib::Vector2)
+
       target_pos = e.move.target.as(RayLib::Vector2)
       cur_pos = e.position.value.as(RayLib::Vector2)
+
       dir = target_pos - cur_pos
       dist = dir.magnitude
 
@@ -34,9 +36,6 @@ class MoveSystem
         e.is_move_complete = true
       else
         new_pos = cur_pos + dir.normalize * rel_speed
-
-        logger.warn (new_pos - cur_pos).magnitude
-
         e.replace_position(value: new_pos)
 
         angle = Math.atan2(dir.y, dir.x) * Oid::Math.rad2deg

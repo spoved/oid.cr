@@ -43,7 +43,7 @@ add_custom_target(docs ALL
 )
 
 add_custom_target(example
-  COMMAND ${crystal_bin} run examples/tut_01/controller.cr --error-trace -Ddisable_logging
+  COMMAND ${crystal_bin} run examples/tut_01/controller.cr --error-trace
   DEPENDS docs
 )
 
