@@ -1,4 +1,6 @@
 require "../components"
+require "../../../src/oid/utils/time"
+require "../../../src/oid/utils/math"
 
 class MoveSystem
   spoved_logger
