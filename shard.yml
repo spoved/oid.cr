@@ -17,6 +17,8 @@ dependencies:
   bindgen:
     github: kalinon/bindgen
     branch: cmake
+  habitat:
+    github: luckyframework/habitat
 development_dependencies:
   sentry:
     github: samueleaton/sentry

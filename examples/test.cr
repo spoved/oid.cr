@@ -32,7 +32,7 @@ class CreateMoverSystem < Entitas::ReactiveSystem
         value: Random.new.rand(0..360).to_f32
       )
 
-      mover.add_texture(name: "examples/tut_01/Bee.png")
+      mover.add_texture(name: "tut_01/Bee.png")
     end
   end
 end
@@ -78,7 +78,10 @@ create_controller Game, [
   CommandMoveSystem,
 ]
 
-RayLib.set_target_fps(60)
+Oid::Config.configure do |settings|
+  settings.asset_dir = __DIR__
+  settings.enable_mouse = true
+end
 
 Oid.new_window(title: "Test")
 

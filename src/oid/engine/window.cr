@@ -1,4 +1,5 @@
 require "../../raylib/color"
+require "../config"
 
 module Oid
   # The `Oid::Window` class is the main viewport of your application/game.
@@ -17,8 +18,8 @@ module Oid
   class Window
     spoved_logger
 
-    prop :x, Int32, default: 800
-    prop :y, Int32, default: 600
+    prop :x, Int32, default: Oid::Config.settings.resolution[:x]
+    prop :y, Int32, default: Oid::Config.settings.resolution[:y]
     prop :title, String, default: "Oid Window"
     prop :background_color, RayLib::Color, default: RayLib::Color::WHITE
 
@@ -28,7 +29,12 @@ module Oid
     def open
       @to_string_cache = nil
       logger.info("activating window", self)
+      RayLib.set_target_fps(Oid::Config.settings.target_fps)
+      RayLib.hide_cursor unless Oid::Config.settings.show_cursor
+
       RayLib.init_window(x, y, title)
+
+      RayLib.toggle_fullscreen if Oid::Config.settings.fullscreen
     end
 
     # Check if KEY_ESCAPE pressed or Close icon pressed
@@ -70,6 +76,7 @@ module Oid
     # Hide the window
     def hide
       logger.info("hide window", self)
+      RayLib.toggle_fullscreen if Oid::Config.settings.fullscreen
       RayLib.hide_window
     end
 

@@ -25,7 +25,7 @@ module Oid
 
         unless textures[name]?
           image_path = File.join(
-            ".",
+            Oid::Config.settings.asset_dir,
             entity.texture.name
           )
 

@@ -95,19 +95,23 @@ module Oid
       end
 
       def execute
-        position = RayLib.get_mouse_position
+        if Oid::Config.settings.enable_mouse
+          position = RayLib.get_mouse_position
 
-        # Left button
-        emit_mouse(left_mouse_entity, position, get_mouse_state(0))
+          # Left button
+          emit_mouse(left_mouse_entity, position, get_mouse_state(0))
 
-        # Right button
-        emit_mouse(right_mouse_entity, position, get_mouse_state(1))
+          # Right button
+          emit_mouse(right_mouse_entity, position, get_mouse_state(1))
+        end
 
-        {% begin %}
-          {% for key in RayLib::Enum::Key.constants %}
-            emit_key(keyboard_entity, position, get_key_state(RayLib::Enum::Key::{{key.id}}))
+        if Oid::Config.settings.enable_keyboard
+          {% begin %}
+            {% for key in RayLib::Enum::Key.constants %}
+              emit_key(keyboard_entity, position, get_key_state(RayLib::Enum::Key::{{key.id}}))
+            {% end %}
           {% end %}
-        {% end %}
+        end
       end
     end
   end
