@@ -13,10 +13,10 @@ types:
     crystal_type: UInt8
   "unsigned int":
     builtin: true
-    crystal_type: LibC::UInt
+    crystal_type: Int32
   "unsigned int":
     builtin: true
-    crystal_type: "LibC::UInt"
+    crystal_type: Int32
   "unsigned int [7]":
     builtin: true
     crystal_type: "LibC::UInt[7]"

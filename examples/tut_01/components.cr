@@ -12,7 +12,7 @@ end
 
 @[Context(Game)]
 class View < Entitas::Component
-  prop :actor, Oid::Actor
+  prop :actor, Oid::IActor
 end
 
 @[Context(Game)]

@@ -8,8 +8,7 @@ Oid.new_window(title: "Example: tut_01")
 
 controller = GameController.new
 
-class GameActor
-  include Oid::Actor
+class GameActor < Oid::Actor
 end
 
 # Start window fiber

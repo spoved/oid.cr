@@ -2,7 +2,7 @@ require "spec"
 require "../src/oid"
 
 class CustomActor
-  include Oid::Actor
+  include Oid::IActor
 
   getter transform : Oid::Transform
   getter name : String

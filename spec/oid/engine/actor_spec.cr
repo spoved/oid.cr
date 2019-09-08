@@ -1,10 +1,10 @@
 require "../../spec_helper"
 
-describe Oid::Actor do
+describe Oid::IActor do
   describe "when initialized" do
     it "has name" do
       actor = CustomActor.new("My Actor")
-      actor.should be_a Oid::Actor
+      actor.should be_a Oid::IActor
       actor.should be_a CustomActor
       actor.name.should eq "My Actor"
     end

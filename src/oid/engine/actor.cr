@@ -1,9 +1,9 @@
 require "./transform"
 
 module Oid
-  module Actor
-    getter transform : Oid::Transform
-    getter name : String
+  module IActor
+    abstract def name : String
+    abstract def transform : Oid::Transform
 
     macro included
       private def initialize(@name, @transform)

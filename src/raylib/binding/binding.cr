@@ -153,7 +153,7 @@ module RayLib
     end
 
     struct Texture2D
-      id : LibC::UInt
+      id : Int32
       width : Int32
       height : Int32
       mipmaps : Int32
@@ -161,7 +161,7 @@ module RayLib
     end
 
     struct RenderTexture2D
-      id : LibC::UInt
+      id : Int32
       texture : Texture2D
       depth : Texture2D
       depth_texture : Bool
@@ -221,12 +221,12 @@ module RayLib
       anim_normals : Float32
       bone_ids : Int32
       bone_weights : Float32
-      vao_id : LibC::UInt
+      vao_id : Int32
       vbo_id : LibC::UInt[7]
     end
 
     struct Shader
-      id : LibC::UInt
+      id : Int32
       locs : LibC::Int[32]
     end
 
@@ -290,27 +290,27 @@ module RayLib
     end
 
     struct Wave
-      sample_count : LibC::UInt
-      sample_rate : LibC::UInt
-      sample_size : LibC::UInt
-      channels : LibC::UInt
+      sample_count : Int32
+      sample_rate : Int32
+      sample_size : Int32
+      channels : Int32
       data : Void*
     end
 
     struct Sound
       audio_buffer : Void*
-      source : LibC::UInt
-      buffer : LibC::UInt
+      source : Int32
+      buffer : Int32
       format : Int32
     end
 
     struct AudioStream
-      sample_rate : LibC::UInt
-      sample_size : LibC::UInt
-      channels : LibC::UInt
+      sample_rate : Int32
+      sample_size : Int32
+      channels : Int32
       audio_buffer : Void*
       format : Int32
-      source : LibC::UInt
+      source : Int32
       buffers : LibC::UInt[2]
     end
 
@@ -463,7 +463,7 @@ module RayLib
     fun bg____GetTouchX_STATIC_ = GetTouchX : Int32
     fun bg____GetTouchY_STATIC_ = GetTouchY : Int32
     fun bg____GetTouchPosition_STATIC_int = GetTouchPosition(index : Int32) : Vector2
-    fun bg____SetGesturesEnabled_STATIC_unsigned_int = SetGesturesEnabled(gesture_flags : LibC::UInt) : Void
+    fun bg____SetGesturesEnabled_STATIC_unsigned_int = SetGesturesEnabled(gesture_flags : Int32) : Void
     fun bg____IsGestureDetected_STATIC_int = IsGestureDetected(gesture : Int32) : Bool
     fun bg____GetGestureDetected_STATIC_ = GetGestureDetected : Int32
     fun bg____GetTouchPointsCount_STATIC_ = GetTouchPointsCount : Int32
@@ -601,8 +601,8 @@ module RayLib
     fun bg____GetGlyphIndex_STATIC_Font_int = GetGlyphIndex(font : Font, character : Int32) : Int32
     fun bg____GetNextCodepoint_STATIC_const_char_X_int_X = GetNextCodepoint(text : UInt8*, count : Int32*) : Int32
     fun bg____TextIsEqual_STATIC_const_char_X_const_char_X = TextIsEqual(text1 : UInt8*, text2 : UInt8*) : Bool
-    fun bg____TextLength_STATIC_const_char_X = TextLength(text : UInt8*) : LibC::UInt
-    fun bg____TextCountCodepoints_STATIC_const_char_X = TextCountCodepoints(text : UInt8*) : LibC::UInt
+    fun bg____TextLength_STATIC_const_char_X = TextLength(text : UInt8*) : Int32
+    fun bg____TextCountCodepoints_STATIC_const_char_X = TextCountCodepoints(text : UInt8*) : Int32
     fun bg____TextFormat_STATIC_const_char_X_ = TextFormat(text : UInt8*, ...) : UInt8*
     fun bg____TextSubtext_STATIC_const_char_X_int_int = TextSubtext(text : UInt8*, position : Int32, length : Int32) : UInt8*
     fun bg____TextReplace_STATIC_char_X_const_char_X_const_char_X = TextReplace(text : UInt8*, replace : UInt8*, by : UInt8*) : UInt8*
@@ -744,7 +744,7 @@ module RayLib
     fun bg____SetMusicLoopCount_STATIC_Music_int = SetMusicLoopCount(music : MusicData*, count : Int32) : Void
     fun bg____GetMusicTimeLength_STATIC_Music = GetMusicTimeLength(music : MusicData*) : Float32
     fun bg____GetMusicTimePlayed_STATIC_Music = GetMusicTimePlayed(music : MusicData*) : Float32
-    fun bg____InitAudioStream_STATIC_unsigned_int_unsigned_int_unsigned_int = InitAudioStream(sample_rate : LibC::UInt, sample_size : LibC::UInt, channels : LibC::UInt) : AudioStream
+    fun bg____InitAudioStream_STATIC_unsigned_int_unsigned_int_unsigned_int = InitAudioStream(sample_rate : Int32, sample_size : Int32, channels : Int32) : AudioStream
     fun bg____UpdateAudioStream_STATIC_AudioStream_const_void_X_int = UpdateAudioStream(stream : AudioStream, data : Void*, samples_count : Int32) : Void
     fun bg____CloseAudioStream_STATIC_AudioStream = CloseAudioStream(stream : AudioStream) : Void
     fun bg____IsAudioBufferProcessed_STATIC_AudioStream = IsAudioBufferProcessed(stream : AudioStream) : Bool
@@ -1189,7 +1189,7 @@ module RayLib
     Vector2.new(unwrap: Binding.bg____GetTouchPosition_STATIC_int(index))
   end
 
-  def self.set_gestures_enabled(gesture_flags : LibC::UInt) : Void
+  def self.set_gestures_enabled(gesture_flags : Int32) : Void
     Binding.bg____SetGesturesEnabled_STATIC_unsigned_int(gesture_flags)
   end
 
@@ -1741,11 +1741,11 @@ module RayLib
     Binding.bg____TextIsEqual_STATIC_const_char_X_const_char_X(text1, text2)
   end
 
-  def self.text_length(text : String) : LibC::UInt
+  def self.text_length(text : String) : Int32
     Binding.bg____TextLength_STATIC_const_char_X(text)
   end
 
-  def self.text_count_codepoints(text : String) : LibC::UInt
+  def self.text_count_codepoints(text : String) : Int32
     Binding.bg____TextCountCodepoints_STATIC_const_char_X(text)
   end
 
@@ -2313,7 +2313,7 @@ module RayLib
     Binding.bg____GetMusicTimePlayed_STATIC_Music(music)
   end
 
-  def self.init_audio_stream(sample_rate : LibC::UInt, sample_size : LibC::UInt, channels : LibC::UInt) : AudioStream
+  def self.init_audio_stream(sample_rate : Int32, sample_size : Int32, channels : Int32) : AudioStream
     AudioStream.new(unwrap: Binding.bg____InitAudioStream_STATIC_unsigned_int_unsigned_int_unsigned_int(sample_rate, sample_size, channels))
   end
 
@@ -2358,7 +2358,7 @@ module RayLib
   end
 
   module Enum
-    enum Key : LibC::UInt
+    enum Key : Int32
       Apostrophe   =  39
       Comma        =  44
       Minus        =  45
@@ -2465,7 +2465,7 @@ module RayLib
       KpEnter      = 335
       KpEqual      = 336
     end
-    enum Config : LibC::UInt
+    enum Config : Int32
       ShowLogo          =   1
       FullscreenMode    =   2
       WindowResizable   =   4
@@ -2475,7 +2475,7 @@ module RayLib
       Msaa4xHint        =  32
       VsyncHint         =  64
     end
-    enum TraceLog : LibC::UInt
+    enum TraceLog : Int32
       All     = 0
       Trace   = 1
       Debug   = 2
@@ -2487,7 +2487,7 @@ module RayLib
     end
 
     module Android
-      enum Key : LibC::UInt
+      enum Key : Int32
         Back       =  4
         Menu       = 82
         VolumeUp   = 24
@@ -2496,7 +2496,7 @@ module RayLib
     end
 
     module Mouse
-      enum Key : LibC::UInt
+      enum Key : Int32
         LeftButton   = 0
         RightButton  = 1
         MiddleButton = 2
@@ -2504,13 +2504,13 @@ module RayLib
     end
 
     module Gamepad
-      enum Number : LibC::UInt
+      enum Number : Int32
         Player1 = 0
         Player2 = 1
         Player3 = 2
         Player4 = 3
       end
-      enum Button : LibC::UInt
+      enum Button : Int32
         Unknown        =  0
         LeftFaceUp     =  1
         LeftFaceRight  =  2
@@ -2530,7 +2530,7 @@ module RayLib
         LeftThumb      = 16
         RightThumb     = 17
       end
-      enum Axis : LibC::UInt
+      enum Axis : Int32
         Unknown      = 0
         LeftX        = 1
         LeftY        = 2
@@ -2542,7 +2542,7 @@ module RayLib
     end
 
     module Shader
-      enum Location : LibC::UInt
+      enum Location : Int32
         VertexPosition   =  0
         VertexTexcoord01 =  1
         VertexTexcoord02 =  2
@@ -2571,7 +2571,7 @@ module RayLib
       end
 
       module UniformData
-        enum Type : LibC::UInt
+        enum Type : Int32
           Float     = 0
           Vec2      = 1
           Vec3      = 2
@@ -2587,7 +2587,7 @@ module RayLib
 
     module Material
       module Map
-        enum Type : LibC::UInt
+        enum Type : Int32
           Albedo     =  0
           Metalness  =  1
           Normal     =  2
@@ -2604,7 +2604,7 @@ module RayLib
     end
 
     module Pixel
-      enum Format : LibC::UInt
+      enum Format : Int32
         UncompressedGrayscale    =  1
         UncompressedGrayAlpha    =  2
         UncompressedR5g6b5       =  3
@@ -2631,7 +2631,7 @@ module RayLib
 
     module Texture
       module Filter
-        enum Mode : LibC::UInt
+        enum Mode : Int32
           Point          = 0
           Bilinear       = 1
           Trilinear      = 2
@@ -2642,7 +2642,7 @@ module RayLib
       end
 
       module Wrap
-        enum Mode : LibC::UInt
+        enum Mode : Int32
           Repeat       = 0
           Clamp        = 1
           MirrorRepeat = 2
@@ -2652,7 +2652,7 @@ module RayLib
     end
 
     module Cubemap
-      enum Layout : LibC::UInt
+      enum Layout : Int32
         AutoDetect       = 0
         LineVertical     = 1
         LineHorizontal   = 2
@@ -2663,7 +2663,7 @@ module RayLib
     end
 
     module Font
-      enum Type : LibC::UInt
+      enum Type : Int32
         Default = 0
         Bitmap  = 1
         Sdf     = 2
@@ -2671,7 +2671,7 @@ module RayLib
     end
 
     module Blend
-      enum Mode : LibC::UInt
+      enum Mode : Int32
         Alpha      = 0
         Additive   = 1
         Multiplied = 2
@@ -2679,7 +2679,7 @@ module RayLib
     end
 
     module Gesture
-      enum Type : LibC::UInt
+      enum Type : Int32
         None       =   0
         Tap        =   1
         Doubletap  =   2
@@ -2695,21 +2695,21 @@ module RayLib
     end
 
     module Camera
-      enum Mode : LibC::UInt
+      enum Mode : Int32
         Custom      = 0
         Free        = 1
         Orbital     = 2
         FirstPerson = 3
         ThirdPerson = 4
       end
-      enum Type : LibC::UInt
+      enum Type : Int32
         Perspective  = 0
         Orthographic = 1
       end
     end
 
     module NPatch
-      enum Type : LibC::UInt
+      enum Type : Int32
         Digit9PATCH           = 0
         Digit3PATCHVERTICAL   = 1
         Digit3PATCHHORIZONTAL = 2

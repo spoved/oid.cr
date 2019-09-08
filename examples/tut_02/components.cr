@@ -10,5 +10,5 @@ end
 
 @[Context(Game, Input, Ui)]
 class View < Entitas::Component
-  prop :actor, Oid::Actor
+  prop :actor, Oid::IActor
 end

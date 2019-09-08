@@ -19,7 +19,7 @@ describe Oid::Transform do
 
     it "has an actor" do
       trans = new_trans
-      trans.actor.should be_a Oid::Actor
+      trans.actor.should be_a Oid::IActor
     end
   end
 

@@ -57,7 +57,7 @@ class RenderPositionSystem < Entitas::ReactiveSystem
   def execute(entities : Array(Entitas::IEntity))
     entities.each do |e|
       e = e.as(GameEntity)
-      go = e.view.actor.as(Oid::Actor)
+      go = e.view.actor.as(Oid::IActor)
       go.transform.position = e.position.value.as(RayLib::Vector2)
     end
   end
@@ -85,7 +85,7 @@ class RenderDirectionSystem < Entitas::ReactiveSystem
 
       ang = e.direction.value.as(Float32)
 
-      go = e.view.actor.as(Oid::Actor)
+      go = e.view.actor.as(Oid::IActor)
       go.transform.rotation = RayLib::Quaternion.new(ang - 90, RayLib::Vector3.forward)
     end
   end

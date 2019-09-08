@@ -30,7 +30,7 @@ class RenderSystem
       textures[sprite_name] = RayLib.load_texture(image_path)
     end
 
-    trans = entity.view.actor.as(Oid::Actor).transform
+    trans = entity.view.actor.as(Oid::IActor).transform
     position = trans.position.to_v2
     rotation = entity.direction.value
 
