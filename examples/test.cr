@@ -81,6 +81,8 @@ create_controller Game, [
 Oid::Config.configure do |settings|
   settings.asset_dir = __DIR__
   settings.enable_mouse = true
+  settings.enable_keyboard = true
+  settings.show_fps = true
 end
 
 Oid.new_window(title: "Test")

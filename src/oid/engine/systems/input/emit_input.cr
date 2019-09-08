@@ -48,6 +48,16 @@ module Oid
         }
       end
 
+      private def get_key_state(key : Int32)
+        {
+          key:      key,
+          down:     RayLib.is_key_down(key),
+          up:       RayLib.is_key_up(key),
+          pressed:  RayLib.is_key_pressed(key),
+          released: RayLib.is_key_released(key),
+        }
+      end
+
       private def get_key_state(key : RayLib::Enum::Key)
         {
           key:      key,
@@ -106,11 +116,10 @@ module Oid
         end
 
         if Oid::Config.settings.enable_keyboard
-          {% begin %}
-            {% for key in RayLib::Enum::Key.constants %}
-              emit_key(keyboard_entity, position, get_key_state(RayLib::Enum::Key::{{key.id}}))
-            {% end %}
-          {% end %}
+          key = RayLib.get_key_pressed?
+          unless key.nil?
+            keyboard_entity.replace_key_pressed(value: key, position: position)
+          end
         end
       end
     end

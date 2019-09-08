@@ -90,6 +90,10 @@ module Oid
     private def pre_render
       RayLib.begin_drawing
       RayLib.clear_background(self.background_color)
+
+      if Oid::Config.settings.show_fps
+        RayLib.draw_fps(0, 0)
+      end
     end
 
     # :nodoc:
