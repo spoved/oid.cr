@@ -1,4 +1,4 @@
-require "../raylib/color"
+require "../../raylib/color"
 
 module Oid
   # The `Oid::Window` class is the main viewport of your application/game.
@@ -22,8 +22,11 @@ module Oid
     prop :title, String, default: "Oid Window"
     prop :background_color, RayLib::Color, default: RayLib::Color::WHITE
 
+    @to_string_cache : String? = nil
+
     # Initialize window and OpenGL context
     def open
+      @to_string_cache = nil
       logger.info("activating window", self)
       RayLib.init_window(x, y, title)
     end
@@ -114,7 +117,11 @@ module Oid
 
     # :nodoc:
     def to_s(io)
-      io << "Oid::Window(" << self.title << ")"
+      if @to_string_cache.nil?
+        @to_string_cache = "Oid::Window(#{self.title}, x: #{self.x}, y: #{self.y})"
+      end
+
+      io << @to_string_cache
     end
   end
 end

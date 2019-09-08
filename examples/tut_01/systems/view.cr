@@ -15,7 +15,7 @@ class AddViewSystem < Entitas::ReactiveSystem
 
   def execute(entities : Array(Entitas::IEntity))
     entities.each do |e|
-      go = Oid::Actor.new("Game View")
+      go = GameActor.new("Game View")
       e.as(GameEntity).add_view(actor: go)
     end
   end

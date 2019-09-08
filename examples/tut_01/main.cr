@@ -8,6 +8,10 @@ Oid.new_window(title: "Example: tut_01")
 
 controller = GameController.new
 
+class GameActor
+  include Oid::Actor
+end
+
 # Start window fiber
 spawn do
   controller.start

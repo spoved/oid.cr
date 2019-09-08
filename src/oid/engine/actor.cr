@@ -1,17 +1,19 @@
 require "./transform"
 
 module Oid
-  class Actor
+  module Actor
     getter transform : Oid::Transform
     getter name : String
 
-    def self.new(name : String)
-      instance = Oid::Actor.allocate
-      instance.initialize(name, Oid::Transform.new(instance))
-      instance
-    end
+    macro included
+      private def initialize(@name, @transform)
+      end
 
-    private def initialize(@name, @transform)
+      def self.new(name : String)
+        instance = {{@type.id}}.allocate
+        instance.initialize(name, Oid::Transform.new(instance))
+        instance
+      end
     end
   end
 end

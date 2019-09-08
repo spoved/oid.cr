@@ -20,7 +20,7 @@ end
 class MultiAddViewSystem < Entitas::MultiReactiveSystem
   spoved_logger
 
-  private property top_view_container : Oid::Transform = Oid::Actor.new("Views").transform
+  private property top_view_container : Oid::Transform = GameActor.new("Views").transform
   private property view_containers : Hash(String, Oid::Transform) = Hash(String, Oid::Transform).new
   private property _contexts : Contexts
 
@@ -29,8 +29,8 @@ class MultiAddViewSystem < Entitas::MultiReactiveSystem
 
     contexts.all_contexts.each do |ctx|
       ctx_name = ctx.info.name
-      ctx_view_container = Oid::Actor.new("#{ctx_name} Views").transform
-      ctx_view_container.set_parent(top_view_container)
+      ctx_view_container = GameActor.new("#{ctx_name} Views").transform
+      ctx_view_container.parent = top_view_container
       view_containers[ctx_name] = ctx_view_container
     end
 
@@ -53,7 +53,7 @@ class MultiAddViewSystem < Entitas::MultiReactiveSystem
     entities.each do |e|
       e = e.as(IViewableEntity)
       ctx_name = e.context_info.name
-      actor = Oid::Actor.new("#{ctx_name} View")
+      actor = GameActor.new("#{ctx_name} View")
       e.add_view(actor: actor)
       # go.link(e, _contexts.get_context_by_name(ctx_name))
       e.is_assign_view = false
