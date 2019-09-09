@@ -101,7 +101,7 @@ module Oid
       RayLib.clear_background(self.background_color)
 
       if Oid::Config.settings.show_fps
-        RayLib.draw_fps(0, 0)
+        RayLib.draw_fps(10, 10)
       end
     end
 

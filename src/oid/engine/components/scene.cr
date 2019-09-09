@@ -19,6 +19,21 @@ class Actor < Entitas::Component
   def create_trans : Oid::Transform
     Oid::Transform.new
   end
+
+  # TODO: Need a better way to abstract this
+  def draw(entity)
+    trans = entity.actor.transform
+    position = trans.position.to_v2
+    rotation = entity.direction.value
+
+    RayLib.draw_texture_ex(
+      entity.texture.value,
+      position,
+      rotation,
+      0.1f32,
+      RayLib::Color::WHITE
+    )
+  end
 end
 
 #########################
@@ -37,6 +52,7 @@ end
 class Texture < Entitas::Component
   prop :name, String
   prop :path, String
+  prop :value, RayLib::Texture2D
 end
 
 #########################

@@ -1,9 +1,11 @@
+require "./modules/*"
 require "./transform"
 
 module Oid
   module IActor
+    include Oid::Renderable
+
     abstract def name : String
-    abstract def transform : Oid::Transform
 
     macro included
       private def initialize(@name, @transform)

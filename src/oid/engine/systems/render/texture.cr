@@ -20,7 +20,7 @@ module Oid
         end
       end
 
-      def render(entity : SceneEntity)
+      private def create_texture(entity : SceneEntity)
         name = entity.texture.name
 
         unless textures[name]?
@@ -31,18 +31,12 @@ module Oid
 
           textures[name] = RayLib.load_texture(image_path)
         end
+        textures[name]
+      end
 
-        trans = entity.actor.transform
-        position = trans.position.to_v2
-        rotation = entity.direction.value
-
-        RayLib.draw_texture_ex(
-          textures[name],
-          position,
-          rotation,
-          0.1f32,
-          RayLib::Color::WHITE
-        )
+      def render(entity : SceneEntity)
+        entity.texture.value = create_texture(entity)
+        entity.actor.draw(entity)
       end
     end
   end
