@@ -8,7 +8,7 @@ module Oid
       setting resolution : NamedTuple(x: Int32, y: Int32) = {x: 800, y: 600}
       setting fullscreen : Bool = false
 
-      setting target_fps : Int32 = 120
+      setting target_fps : Int32 = 0
       setting show_fps : Bool = false
 
       setting enable_keyboard : Bool = false

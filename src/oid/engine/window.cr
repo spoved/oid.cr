@@ -29,12 +29,17 @@ module Oid
     def open
       @to_string_cache = nil
       logger.info("activating window", self)
-      RayLib.set_target_fps(Oid::Config.settings.target_fps)
-      RayLib.hide_cursor unless Oid::Config.settings.show_cursor
 
+      if Oid::Config.settings.target_fps > 0
+        RayLib.set_target_fps(Oid::Config.settings.target_fps)
+      end
+
+      RayLib.hide_cursor unless Oid::Config.settings.show_cursor
       RayLib.init_window(x, y, title)
 
-      RayLib.toggle_fullscreen if Oid::Config.settings.fullscreen
+      if Oid::Config.settings.fullscreen
+        RayLib.toggle_fullscreen
+      end
     end
 
     # Check if KEY_ESCAPE pressed or Close icon pressed
@@ -76,7 +81,11 @@ module Oid
     # Hide the window
     def hide
       logger.info("hide window", self)
-      RayLib.toggle_fullscreen if Oid::Config.settings.fullscreen
+
+      if Oid::Config.settings.fullscreen
+        RayLib.toggle_fullscreen
+      end
+
       RayLib.hide_window
     end
 
