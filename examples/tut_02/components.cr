@@ -1,14 +1,13 @@
 require "../../src/oid"
 
-@[Context(Game, Input, Ui)]
+@[Context(Scene, Input, Ui)]
 class Destroyed < Entitas::Component
 end
 
-@[Context(Game, Input, Ui)]
+@[Context(Scene, Input, Ui)]
 class AssignView < Entitas::Component
 end
 
-@[Context(Game, Input, Ui)]
+@[Context(Scene, Input, Ui)]
 class View < Entitas::Component
-  prop :actor, Oid::IActor
 end

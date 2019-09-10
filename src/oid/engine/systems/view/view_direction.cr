@@ -12,7 +12,7 @@ module Oid
       end
 
       def filter(entity : SceneEntity)
-        entity.has_direction? && entity.has_view? && entity.has_actor?
+        entity.has_direction? && entity.has_view?
       end
 
       def execute(entities : Array(Entitas::IEntity))
@@ -25,7 +25,7 @@ module Oid
 
           ang = e.direction.value.as(Float32)
 
-          e.actor.transform.rotation = RayLib::Quaternion.new(ang - 90, RayLib::Vector3.forward)
+          e.transform.rotation = RayLib::Quaternion.new(ang - 90, RayLib::Vector3.forward)
         end
       end
     end

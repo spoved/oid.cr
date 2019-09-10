@@ -19,13 +19,7 @@ module Oid
       def execute(entities : Array(Entitas::IEntity))
         entities.each do |e|
           e = e.as(SceneEntity)
-
-          unless e.has_actor?
-            e.add_actor(name: "Scene View")
-            e.actor.transform = Oid::Transform.new(e.actor)
-          end
-
-          e.actor.transform.position = e.position.value.as(RayLib::Vector2)
+          e.transform.position = e.position.value.as(RayLib::Vector2)
         end
       end
     end

@@ -11,7 +11,7 @@ module Oid
 
       def initialize(contexts : Contexts)
         @context = contexts.scene
-        @group = @context.get_group(SceneMatcher.all_of(View, Texture, Actor))
+        @group = @context.get_group(SceneMatcher.all_of(View, Texture))
       end
 
       def execute
@@ -35,8 +35,12 @@ module Oid
       end
 
       def render(entity : SceneEntity)
-        entity.texture.value = create_texture(entity)
-        entity.actor.draw(entity)
+        unless entity.texture.value?
+          entity.texture.value = create_texture(entity)
+          entity.texture.scale = 0.1f32
+        end
+
+        entity.draw
       end
     end
   end

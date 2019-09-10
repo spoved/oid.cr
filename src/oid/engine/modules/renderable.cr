@@ -4,6 +4,6 @@ module Oid
   module Renderable
     include Transformable
 
-    abstract def draw(entity)
+    abstract def draw
   end
 end

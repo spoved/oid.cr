@@ -5,7 +5,7 @@ module IDistroyableEntity
   include Destroyed::Helper
 end
 
-class GameEntity < Entitas::Entity
+class SceneEntity < Entitas::Entity
   include IDistroyableEntity
 end
 
@@ -22,7 +22,7 @@ class MultiDestroySystem < Entitas::MultiReactiveSystem
 
   def get_trigger(contexts : ::Contexts) : Array(Entitas::ICollector)
     [
-      contexts.game.create_collector(GameMatcher.destroyed),
+      contexts.scene.create_collector(SceneMatcher.destroyed),
       contexts.input.create_collector(InputMatcher.destroyed),
       contexts.ui.create_collector(InputMatcher.destroyed),
     ] of Entitas::ICollector

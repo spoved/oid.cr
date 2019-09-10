@@ -2,19 +2,24 @@ require "./modules/*"
 require "./transform"
 
 module Oid
-  module IActor
+  module Actor
     include Oid::Renderable
 
-    abstract def name : String
+    @transform : Oid::Transform = Oid::Transform.new
 
-    macro included
-      private def initialize(@name, @transform)
-      end
+    def transform : Oid::Transform
+      @transform
+    end
 
-      def self.new(name : String)
-        instance = {{@type.id}}.allocate
-        instance.initialize(name, Oid::Transform.new(instance))
-        instance
+    def draw
+      if self.texture?
+        RayLib.draw_texture_ex(
+          self.texture.value,
+          self.transform.position.to_v2,
+          self.direction.value,
+          self.texture.scale,
+          RayLib::Color::WHITE
+        )
       end
     end
   end

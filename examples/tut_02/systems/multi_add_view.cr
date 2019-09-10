@@ -3,9 +3,10 @@ require "../components"
 module IViewableEntity
   include Entitas::IEntity
   include Destroyed::Helper
+  include Oid::Actor
 end
 
-class GameEntity < Entitas::Entity
+class SceneEntity < Entitas::Entity
   include IViewableEntity
 end
 
@@ -20,7 +21,7 @@ end
 class MultiAddViewSystem < Entitas::MultiReactiveSystem
   spoved_logger
 
-  private property top_view_container : Oid::Transform = GameActor.new("Views").transform
+  private property top_view_container : Oid::Transform = Oid::Transform.new
   private property view_containers : Hash(String, Oid::Transform) = Hash(String, Oid::Transform).new
   private property _contexts : Contexts
 
@@ -28,10 +29,12 @@ class MultiAddViewSystem < Entitas::MultiReactiveSystem
     @_contexts = contexts
 
     contexts.all_contexts.each do |ctx|
-      ctx_name = ctx.info.name
-      ctx_view_container = GameActor.new("#{ctx_name} Views").transform
-      ctx_view_container.parent = top_view_container
-      view_containers[ctx_name] = ctx_view_container
+      if ctx.is_a?(SceneContext) || ctx.is_a?(InputContext) || ctx.is_a?(UiContext)
+        ctx_name = ctx.info.name
+        ctx_view_container = ctx.create_entity.as(IViewableEntity).transform
+        ctx_view_container.parent = top_view_container
+        view_containers[ctx_name] = ctx_view_container
+      end
     end
 
     super
@@ -39,7 +42,7 @@ class MultiAddViewSystem < Entitas::MultiReactiveSystem
 
   def get_trigger(contexts : ::Contexts) : Array(Entitas::ICollector)
     [
-      contexts.game.create_collector(GameMatcher.assign_view),
+      contexts.scene.create_collector(SceneMatcher.assign_view),
       contexts.input.create_collector(InputMatcher.assign_view),
       contexts.ui.create_collector(InputMatcher.assign_view),
     ] of Entitas::ICollector
@@ -53,9 +56,7 @@ class MultiAddViewSystem < Entitas::MultiReactiveSystem
     entities.each do |e|
       e = e.as(IViewableEntity)
       ctx_name = e.context_info.name
-      actor = GameActor.new("#{ctx_name} View")
-      e.add_view(actor: actor)
-      # go.link(e, _contexts.get_context_by_name(ctx_name))
+      e.add_view
       e.is_assign_view = false
     end
   end
