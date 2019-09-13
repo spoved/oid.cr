@@ -1,4 +1,8 @@
+require "json"
+
 private macro raylib_converter
+  include JSON::Serializable
+
   {% name = @type.name.gsub(/RayLib::/, "") %}
 
   def self.new(unwrap : ::Pointer(Binding::{{name}}))

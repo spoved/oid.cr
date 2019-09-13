@@ -1,5 +1,9 @@
+require "json"
+
 module RayLib
   struct Color
+    include JSON::Serializable
+
     LIGHTGRAY  = RayLib::Color.new(r: 200, g: 200, b: 200, a: 255)
     GRAY       = RayLib::Color.new(r: 130, g: 130, b: 130, a: 255)
     DARKGRAY   = RayLib::Color.new(r: 80, g: 80, b: 80, a: 255)

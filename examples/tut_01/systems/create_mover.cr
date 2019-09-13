@@ -28,6 +28,7 @@ class CreateMoverSystem < Entitas::ReactiveSystem
         value: Random.new.rand(0..360).to_f32
       )
 
+      mover.add_assign_view
       mover.add_texture(name: "Bee.png")
     end
   end

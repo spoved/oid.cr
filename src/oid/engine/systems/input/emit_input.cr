@@ -5,6 +5,7 @@ module Oid
     class EmitInput
       include Entitas::Systems::InitializeSystem
       include Entitas::Systems::ExecuteSystem
+      include Entitas::Systems::CleanupSystem
 
       protected property context : InputContext
       protected setter left_mouse_entity : InputEntity? = nil
@@ -117,10 +118,25 @@ module Oid
 
         if Oid::Config.settings.enable_keyboard
           key = RayLib.get_key_pressed?
+
           unless key.nil?
             keyboard_entity.replace_key_pressed(value: key, position: position)
           end
         end
+      end
+
+      def cleanup
+        # left_mouse_entity.del_mouse_down if left_mouse_entity.mouse_down?
+        # left_mouse_entity.del_mouse_up if left_mouse_entity.mouse_up?
+        # left_mouse_entity.del_mouse_pressed if left_mouse_entity.mouse_pressed?
+        # left_mouse_entity.del_mouse_released if left_mouse_entity.mouse_released?
+
+        # right_mouse_entity.del_mouse_down if right_mouse_entity.mouse_down?
+        # right_mouse_entity.del_mouse_up if right_mouse_entity.mouse_up?
+        # right_mouse_entity.del_mouse_pressed if right_mouse_entity.mouse_pressed?
+        # right_mouse_entity.del_mouse_released if right_mouse_entity.mouse_released?
+
+        keyboard_entity.def_key_pressed if keyboard_entity.key_pressed?
       end
     end
   end

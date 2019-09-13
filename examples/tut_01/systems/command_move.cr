@@ -23,7 +23,8 @@ class CommandMoveSystem < Entitas::ReactiveSystem
 
       return if ms.empty?
 
-      ms.sample.replace_move(
+      entity = ms.sample
+      entity.replace_move(
         target: e.mouse_down.position
       )
     end

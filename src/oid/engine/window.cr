@@ -108,6 +108,7 @@ module Oid
     # :nodoc:
     private def post_render
       RayLib.end_drawing
+      Fiber.yield
     end
 
     def render

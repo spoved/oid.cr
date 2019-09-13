@@ -1,6 +1,7 @@
 require "../src/oid"
 
 create_controller Game, [
+  MultiSystems,
   InputSystems,
   MovementSystems,
   RenderSystems,

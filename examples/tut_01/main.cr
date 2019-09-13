@@ -6,11 +6,14 @@ Oid::Config.configure do |settings|
   settings.enable_mouse = true
   settings.enable_keyboard = true
   settings.show_fps = true
+  settings.target_fps = 120
 end
 
 Oid.new_window(title: "Example: tut_01")
 
 controller = GameController.new
+
+controller.start_server
 
 # Start window fiber
 spawn do

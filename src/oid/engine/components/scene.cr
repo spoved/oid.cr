@@ -9,14 +9,6 @@ class Stage < Entitas::Component
 end
 
 #########################
-# View components
-#########################
-
-@[Context(Scene)]
-class View < Entitas::Component
-end
-
-#########################
 # Render components
 #########################
 
