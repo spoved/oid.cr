@@ -136,7 +136,7 @@ module Oid
         # right_mouse_entity.del_mouse_pressed if right_mouse_entity.mouse_pressed?
         # right_mouse_entity.del_mouse_released if right_mouse_entity.mouse_released?
 
-        keyboard_entity.def_key_pressed if keyboard_entity.key_pressed?
+        # keyboard_entity.def_key_pressed if keyboard_entity.key_pressed?
       end
     end
   end
