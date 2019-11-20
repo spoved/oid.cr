@@ -1,6 +1,6 @@
 module Oid
   module Service
-    module Input
+    module Config
     end
   end
 end

@@ -1,3 +1,7 @@
-module Oid::Services::Logger
-  abstract def log(msg : String)
+module Oid
+  module Service
+    module Logger
+      abstract def log(msg : String)
+    end
+  end
 end

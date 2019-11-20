@@ -1,6 +1,6 @@
 module Oid
   module Service
-    module Input
+    module Time
     end
   end
 end
