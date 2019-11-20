@@ -42,7 +42,7 @@ macro register_services
     end
 
     def init
-      self.context.replace_{{service_name.id}}_service(@service)
+      self.context.replace_{{service_name.id}}_service(instance: @service)
     end
   end
   {% end %}
@@ -51,10 +51,16 @@ macro register_services
   class ServiceRegistrationSystems < Entitas::Feature
     def initialize(contexts : Contexts, services : ::Services)
       @name = "ServiceRegistrationSystems"
+
       {% for service in services %}
       {% service_name = service.stringify.downcase %}
       unless services.{{service_name.id}}.nil?
-        add(::Register{{service.id}}ServiceSystem.new(contexts, services.{{service_name.id}}))
+        add(
+          ::Register{{service.id}}ServiceSystem.new(
+            contexts,
+            services.{{service_name.id}}.as(Oid::Service::{{service.id}})
+          )
+        )
       end
       {% end %}
     end

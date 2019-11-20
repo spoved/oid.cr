@@ -1,3 +1,5 @@
+require "entitas"
+
 module Oid
   module Controller
   end

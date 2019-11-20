@@ -11,6 +11,18 @@ class DebugLogService
   end
 end
 
-services = Services.new(
-  logger: DebugLogService.new
-)
+class GameController < Entitas::Controller
+  getter services = Services.new(
+    logger: DebugLogService.new
+  )
+
+  def create_systems(contexts : Contexts)
+    Entitas::Feature.new("Systems")
+      .add(ServiceRegistrationSystems.new(contexts, services))
+  end
+end
+
+controller = GameController.new
+controller.start
+
+controller.update
