@@ -8,5 +8,11 @@ module Oid
     def rad2deg
       (360 / (::Math::PI * 2))
     end
+
+    def deg2rad(deg)
+      deg * ::Math::PI / 180.0
+    end
   end
 end
+
+require "./math/*"
