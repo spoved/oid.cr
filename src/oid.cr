@@ -1,3 +1,2 @@
-# require "entitas"
+require "./ext/*"
 require "./oid/*"
-# require "./raylib"

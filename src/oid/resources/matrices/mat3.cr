@@ -1,5 +1,5 @@
 module Oid
-  module Math
+  module Matrix
     # 3D matrix
     # [x0, x1, x2,
     #  y0, y1, y2,

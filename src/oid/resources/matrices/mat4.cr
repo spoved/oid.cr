@@ -1,5 +1,5 @@
 module Oid
-  module Math
+  module Matrix
     # 4D matrix
     # [x0, x1, x2, x3,
     #  y0, y1, y2, y3,
@@ -109,7 +109,7 @@ module Oid
       end
 
       def rotate_x(deg : Float64)
-        rad = Oid::Math.deg2rad deg
+        rad = ::Math.deg2rad deg
         cos = ::Math.cos rad
         sin = ::Math.sin rad
         self * Mat4.new(
@@ -121,7 +121,7 @@ module Oid
       end
 
       def rotate_y(deg : Float64)
-        rad = Oid::Math.deg2rad deg
+        rad = ::Math.deg2rad deg
         cos = ::Math.cos rad
         sin = ::Math.sin rad
         self * Mat4.new(
@@ -133,7 +133,7 @@ module Oid
       end
 
       def rotate_z(deg : Float64)
-        rad = Oid::Math.deg2rad deg
+        rad = ::Math.deg2rad deg
         cos = ::Math.cos rad
         sin = ::Math.sin rad
         self * Mat4.new(

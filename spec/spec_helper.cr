@@ -1,8 +1,8 @@
 require "spec"
 require "../src/oid"
 
-alias Mat3=Oid::Math::Mat3
-alias Mat4=Oid::Math::Mat4
+alias Mat3=Oid::Matrix::Mat3
+alias Mat4=Oid::Matrix::Mat4
 alias Vec2 = Oid::Vector2
 alias Vec3 = Oid::Vector3
 alias Vec4 = Oid::Vector4
