@@ -1,6 +1,7 @@
 require "math"
 
 module Oid
+  # Representation of 3D vector
   struct Vector3
     include Oid::Vector
 
