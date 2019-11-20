@@ -14,7 +14,7 @@ module Oid
       {@x, @y, @z}
     end
 
-    def initialize(@x, @y, @z : Float64)
+    def initialize(@x, @y, @z)
     end
 
     # Initializes vector with `x`, `y`, and `z`

@@ -1,5 +1,37 @@
 require "../spec_helper"
 
+describe Oid do
+  it "converts Quaternion and Euler angles" do
+    ea = Vec3.new(1.0, 2.0, Math::PI)
+    q = Q.from_euler(ea)
+    q.to_euler.should eq(ea)
+  end
+
+  it "constructs Vector3 from angle and magnitude" do
+    vec = Vec3.new(1.0, 2.0, 3.0)
+    new_vec = Vec3.new(vec.angle, vec.magnitude)
+
+    new_vec.mag.should be_close(vec.mag, 0.00000001)
+    new_vec.x.should be_close(vec.x, 0.00000001)
+    new_vec.y.should be_close(vec.y, 0.00000001)
+    new_vec.z.should be_close(vec.z, 0.00000001)
+
+    # Vec3.new(vec.angle, vec.magnitude).should eq(vec)
+  end
+
+  it "rotates Vector3" do
+    v0 = Vec3.new(1.0, 2.0, 3.0)
+    v1 = Vec3.new(-1.0, 2.0, -3.0)
+    new_vec = v0.rotate(Vec3.new(0.0, Math::PI, 0.0))
+      .rotate(Vec3.new(0.0, -Math::PI, 0.0))
+
+    new_vec.mag.should be_close(v0.mag, 0.00000001)
+    new_vec.x.should be_close(v0.x, 0.00000001)
+    new_vec.y.should be_close(v0.y, 0.00000001)
+    new_vec.z.should be_close(v0.z, 0.00000001)
+  end
+end
+
 describe Oid::Vector2 do
   it "can be subtracted" do
     vect = Oid::Vector2.new(x: 1, y: 2)
@@ -49,10 +81,8 @@ describe Oid::Vector2 do
   it "parses" do
     Vec2.parse("10.1, -3.4").should eq(vec2(10.1, -3.4))
   end
-end
 
-describe Oid::Vector2 do
-  it "works" do
+  it "CrystalEdge tests" do
     vec1 = Vec2.new(1.0, 2.0)
     vec2 = Vec2.new(3.0, 4.0)
     vsum = Vec2.new(4.0, 6.0)
@@ -83,7 +113,7 @@ describe Oid::Vector2 do
 end
 
 describe Oid::Vector3 do
-  it "works" do
+  it "CrystalEdge tests" do
     vec1 = Vec3.zero
     vec2 = Vec3.new(3.0, 4.0, 0.0)
     (vec1 == vec2).should eq(false)
@@ -139,7 +169,7 @@ describe Oid::Vector3 do
 end
 
 describe Oid::Vector4 do
-  it "passes Vector4 tests" do
+  it "CrystalEdge tests" do
     vec1 = Vec4.zero
     vec2 = Vec4.new(1.0, 2.0, 3.0, 4.0)
     vec3 = vec2.clone
@@ -180,7 +210,7 @@ describe Oid::Vector4 do
 end
 
 describe Oid::Quaternion do
-  it "works" do
+  it "CrystalEdge tests" do
     q1 = Q.new(1.0, 1.0, 1.0, 1.0)
     q2 = Q.new(-1.0, -1.0, -1.0, 1.0)
     q3 = Q.new(1.0, 1.0, 1.0, -1.0)
