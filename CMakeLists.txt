@@ -39,7 +39,7 @@ add_custom_target(format ALL
 )
 
 add_custom_target(docs ALL
-  COMMAND ${crystal_bin} docs ./lib/entitas/src/entitas.cr ./src/oid.cr ./examples/tut_01/controller.cr
+  COMMAND rm -rf ./docs/* && ${crystal_bin} docs ./lib/entitas/src/entitas.cr ./src/oid.cr
 )
 
 add_custom_target(example

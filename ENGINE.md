@@ -11,3 +11,50 @@
 **Input**: Outside input to the simulation, usually via limited access to parts of the game logic e.g. controller / keyboard / mouse input, network input.
 
 ## Architecture
+
+### Service Modules
+
+All services should extend `Oid::Service`
+
+- ai
+- application
+- config
+- input
+- logger
+- physics
+- time
+- view
+
+Example of creating a service module
+
+```crystal
+# Define a service and extend the service module
+class DebugLogService
+  include Oid::Service::Logger
+  spoved_logger
+
+  def log(msg : String)
+    logger.info(msg)
+  end
+end
+
+# Register the service by creating a helper class that has a reference to each service in it
+register_services(
+  {
+    name:    :logger,
+    service: DebugLogService,
+  }
+)
+
+# Create the services class
+services = Services.new(
+  logger: DebugLogService.new
+)
+```
+
+### Controller Modules
+
+All services should extend `Oid::Controller`
+
+- physics
+- view
