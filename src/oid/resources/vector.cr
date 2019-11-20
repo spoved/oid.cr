@@ -1,5 +1,9 @@
 module Oid
   module Vector
+    macro included
+      include JSON::Serializable
+    end
+
     abstract def values
     abstract def zero!
 

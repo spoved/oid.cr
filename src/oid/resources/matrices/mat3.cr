@@ -5,6 +5,8 @@ module Oid
     #  y0, y1, y2,
     #  z0, z1, z2]
     struct Mat3
+      include JSON::Serializable
+
       getter x0, x1, x2, y0, y1, y2, z0, z1, z2
 
       def initialize(@x0 : Float64, @x1 : Float64, @x2 : Float64,

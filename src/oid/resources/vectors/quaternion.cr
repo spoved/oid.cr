@@ -3,8 +3,9 @@ require "./vector3"
 
 module Oid
   struct Quaternion
-    getter x, y, z, w
-    setter x, y, z, w
+    include JSON::Serializable
+
+    property x, y, z, w
 
     @x : Float64
     @y : Float64
