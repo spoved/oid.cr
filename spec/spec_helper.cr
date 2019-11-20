@@ -6,7 +6,7 @@ alias Mat4=Oid::Matrix::Mat4
 alias Vec2 = Oid::Vector2
 alias Vec3 = Oid::Vector3
 alias Vec4 = Oid::Vector4
-
+alias Q = Oid::Quaternion
 
 # convenience function for creating Vec2
 def vec2(x : Float64 = 0.0, y : Float64 = 0.0)

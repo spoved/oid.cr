@@ -32,6 +32,14 @@ TODO: Write development instructions here
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create a new Pull Request
 
+## Credit
+
+Vector logic/code:
+
+https://github.com/ajselvig/crystal_vector_math
+https://github.com/garnet-engine/math
+https://github.com/unn4m3d/crystaledge
+
 ## Contributors
 
 - [Holden Omans](https://github.com/your-github-user) - creator and maintainer

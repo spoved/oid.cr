@@ -178,3 +178,14 @@ describe Oid::Vector4 do
     vec4(1.0, 2.0, 3.0, 2.0).to_v3.should eq(vec3(0.5, 1.0, 1.5))
   end
 end
+
+describe Oid::Quaternion do
+  it "works" do
+    q1 = Q.new(1.0, 1.0, 1.0, 1.0)
+    q2 = Q.new(-1.0, -1.0, -1.0, 1.0)
+    q3 = Q.new(1.0, 1.0, 1.0, -1.0)
+    q1.conjugate.should eq(q2)
+    (-(q1.conjugate)).should eq(q3)
+    (q2 + q3).should eq(Q.zero)
+  end
+end
