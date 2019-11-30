@@ -39,11 +39,11 @@ add_custom_target(format ALL
 )
 
 add_custom_target(docs ALL
-  COMMAND rm -rf ./docs/* && ${crystal_bin} docs ./lib/entitas/src/entitas.cr ./src/oid.cr
+  COMMAND rm -rf ./docs/* && ${crystal_bin} docs ./lib/entitas/src/entitas.cr ./src/oid.cr ./src/raylib.cr
 )
 
 add_custom_target(example
-  COMMAND ${crystal_bin} run examples/tut_01/controller.cr --error-trace
+  COMMAND ${crystal_bin} run examples/tut_01/controller.cr --error-trace --exclude-warnings /usr/local/Cellar/crystal
   DEPENDS docs
 )
 

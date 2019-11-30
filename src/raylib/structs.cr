@@ -216,7 +216,7 @@ module RayLib
 
   struct MaterialMap
     property texture : Texture2D
-    property color : Color
+    property color : RayLib::Binding::Color
     property value : Float32
 
     def initialize(@texture, @color, @value); end

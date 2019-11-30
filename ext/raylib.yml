@@ -1,6 +1,7 @@
 module: RayLib
 
 # library: "%/{RAY_LIB_LIB}"
+# library: "-lraylib -L%/ext/raylib/src/libraylib.a -lglfw3 -L%/ext/raylib/src/external/glfw/src/"
 library: "-lraylib"
 
 generators:

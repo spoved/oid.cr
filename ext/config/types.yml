@@ -37,7 +37,7 @@ types:
     generate_binding: true
     generate_wrapper: false
     kind: Struct
-    crystal_type: Color
+    # crystal_type: Color
   CLITERAL:
     alias_for: Color
   Vector2:
