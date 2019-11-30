@@ -15,14 +15,17 @@ class RayLib::Application < Oid::Application
     RayLib.init_window(screen_w, screen_h, title)
     RayLib.set_target_fps(target_fps)
     yield
+    RayLib.trace_log(RayLib::Enum::TraceLog::Info.value, "RayLib::Application - End Init")
   end
 
   def update(&block)
+    # RayLib.trace_log(RayLib::Enum::TraceLog::Debug.value, "RayLib::Application - Starting Update")
     yield
+    # RayLib.trace_log(RayLib::Enum::TraceLog::Debug.value, "RayLib::Application - End Update")
   end
 
   def draw(&block)
-    RayLib.trace_log(RayLib::Enum::TraceLog::Debug.value, "RayLib::Application - Starting Draw")
+    # RayLib.trace_log(RayLib::Enum::TraceLog::Debug.value, "RayLib::Application - Starting Draw")
     RayLib.begin_drawing
 
     RayLib.clear_background(Oid::Color::WHITE.to_unsafe)
@@ -31,16 +34,20 @@ class RayLib::Application < Oid::Application
     yield
 
     RayLib.end_drawing
+    # RayLib.trace_log(RayLib::Enum::TraceLog::Debug.value, "RayLib::Application - End Draw")
   end
 
   def cleanup(&block)
     RayLib.trace_log(RayLib::Enum::TraceLog::Info.value, "RayLib::Application - Starting Cleanup")
     yield
+    RayLib.trace_log(RayLib::Enum::TraceLog::Info.value, "RayLib::Application - End Cleanup")
   end
 
   def exit
     RayLib.trace_log(RayLib::Enum::TraceLog::Info.value, "RayLib::Application - Starting Exit")
+
     RayLib.trace_log(RayLib::Enum::TraceLog::Info.value, "RayLib::Application - Closing window!!!!")
     RayLib.close_window
+    RayLib.trace_log(RayLib::Enum::TraceLog::Info.value, "RayLib::Application - End Exit")
   end
 end
