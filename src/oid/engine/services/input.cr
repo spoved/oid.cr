@@ -17,6 +17,9 @@ module Oid
       # Detect if a key is NOT being pressed
       abstract def key_up?(key) : Bool
 
+      # Get latest key pressed
+      abstract def latest_key_pressed? : Oid::Enum::Key?
+
       # # Input-related functions: mouse
 
       # Detect if a mouse button has been pressed once

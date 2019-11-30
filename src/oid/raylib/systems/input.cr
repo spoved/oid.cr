@@ -17,6 +17,15 @@ class RayLib::InputSystem
     RayLib.is_key_up(key)
   end
 
+  def latest_key_pressed? : Oid::Enum::Key?
+    key = RayLib.get_key_pressed?
+    if key.nil?
+      nil
+    else
+      Oid::Enum::Key.new(key.value)
+    end
+  end
+
   def mouse_button_pressed?(button) : Bool
     RayLib.is_mouse_button_pressed(button)
   end
@@ -42,7 +51,8 @@ class RayLib::InputSystem
   end
 
   def mouse_position : Oid::Vector2
-    RayLib.get_mouse_position
+    pos = RayLib.get_mouse_position
+    Oid::Vector2.new(x: pos.x, y: pos.y)
   end
 
   def touch_x : Float64
@@ -54,6 +64,7 @@ class RayLib::InputSystem
   end
 
   def touch_position : Oid::Vector2
-    RayLib.get_touch_position
+    pos = RayLib.get_touch_position
+    Oid::Vector2.new(x: pos.x, y: pos.y)
   end
 end

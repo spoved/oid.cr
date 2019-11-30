@@ -12,10 +12,23 @@ class DebugLogService
   end
 end
 
+class ConfigService
+  include Oid::Service::Config
+
+  def enable_mouse? : Bool
+    true
+  end
+
+  def enable_keyboard? : Bool
+    false
+  end
+end
+
 class GameController < Entitas::Controller
   getter services = Services.new(
     logger: DebugLogService.new,
     input: RayLib::InputSystem.new,
+    config: ConfigService.new,
   )
 
   def create_systems(contexts : Contexts)
