@@ -3,15 +3,6 @@ require "../src/oid/raylib/systems"
 require "spoved"
 require "entitas"
 
-class DebugLogService
-  include Oid::Service::Logger
-  spoved_logger
-
-  def log(msg : String)
-    logger.info(msg)
-  end
-end
-
 class ConfigService
   include Oid::Service::Config
 
@@ -26,7 +17,7 @@ end
 
 class GameController < Entitas::Controller
   getter services = Services.new(
-    logger: DebugLogService.new,
+    logger: RayLib::LoggerSystem.new,
     input: RayLib::InputSystem.new,
     config: ConfigService.new,
   )
