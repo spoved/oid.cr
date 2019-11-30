@@ -1,5 +1,5 @@
 require "../src/oid"
-require "../src/oid/raylib/systems"
+require "../src/oid/raylib/*"
 require "spoved"
 require "entitas"
 
@@ -31,25 +31,5 @@ end
 
 controller = GameController.new
 
-RayLib.init_window(800, 600, "TEST")
-RayLib.set_target_fps(120)
-
-spawn do
-  while !RayLib.window_should_close
-    RayLib.begin_drawing
-
-    RayLib.clear_background(Oid::Color::WHITE.to_unsafe)
-    RayLib.draw_fps(10, 10)
-
-    controller.update
-
-    RayLib.end_drawing
-  end
-end
-
-RayLib.unhide_window
-controller.start
-
-while !RayLib.window_should_close
-  Fiber.yield
-end
+app = RayLib::Application.new("TEST")
+app.start controller
