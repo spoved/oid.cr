@@ -27,12 +27,14 @@ class GameController < Entitas::Controller
     input: RayLib::InputSystem.new,
     config: ConfigService.new,
     time: RayLib::TimeSystem.new,
+    view: RayLib::ViewSystem.new,
   )
 
   def create_systems(contexts : Contexts)
     Entitas::Feature.new("Systems")
       .add(ServiceRegistrationSystems.new(contexts, services))
       .add(Oid::Systems::EmitInput.new(contexts))
+      .add(Oid::Systems::LoadAsset.new(contexts))
   end
 end
 

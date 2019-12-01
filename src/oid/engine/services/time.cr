@@ -10,10 +10,10 @@ module Oid
       abstract def fps : Int32
 
       # Returns time in seconds for last frame drawn
-      abstract def frame_time : Int32
+      abstract def frame_time : Float64
 
       # Returns elapsed time in seconds since InitWindow()
-      abstract def time : Int32
+      abstract def time : Float64
     end
   end
 end

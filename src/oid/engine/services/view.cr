@@ -7,6 +7,7 @@ module Oid
       abstract def load_asset(
         contexts : Contexts,
         entity : Entity::IEntity,
+        asset_type : Oid::Enum::AssetType,
         asset_name : String
       )
     end
