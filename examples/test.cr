@@ -43,7 +43,7 @@ controller = GameController.new
 app = RayLib::Application.new("TEST")
 app.start(
   controller: controller,
-  init_hook: ->(cont : Entitas::Controller) {
+  init_hook: ->(cont : GameController) {
     context = cont.contexts.game
     context
       .create_entity
@@ -51,5 +51,8 @@ app.start(
         name: "test.jpg",
         type: Oid::Enum::AssetType::Texture
       )
-  }
+  },
+  draw_hook: ->(cont : GameController) {
+    RayLib.draw_fps(10, 10)
+  },
 )

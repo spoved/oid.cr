@@ -29,7 +29,6 @@ class RayLib::Application < Oid::Application
     RayLib.begin_drawing
 
     RayLib.clear_background(Oid::Color::WHITE.to_unsafe)
-    RayLib.draw_fps(10, 10)
 
     yield
 
