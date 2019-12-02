@@ -41,7 +41,8 @@ end
 controller = GameController.new
 
 app = RayLib::Application.new("TEST")
-app.start(controller,
+app.start(
+  controller: controller,
   init_hook: ->(cont : Entitas::Controller) {
     context = cont.contexts.game
     context
