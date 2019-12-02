@@ -41,4 +41,14 @@ end
 controller = GameController.new
 
 app = RayLib::Application.new("TEST")
-app.start(controller)
+app.start(controller,
+  init_hook: ->(cont : Entitas::Controller) {
+    context = cont.contexts.game
+    context
+      .create_entity
+      .add_component_asset(
+        name: "test.jpg",
+        type: Oid::Enum::AssetType::Texture
+      )
+  }
+)

@@ -8,5 +8,6 @@ class RayLib::ViewSystem
     asset_name : String
   )
     # TODO FINISH
+    puts "#{asset_type} - #{asset_name}"
   end
 end

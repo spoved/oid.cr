@@ -35,7 +35,7 @@ module Oid
         entities.each do |entity|
           entity = entity.as(GameEntity)
           # call the view service to make a new view
-          view_service.load_asset(contexts, entity, entity.asset.asset_type, entity.asset.name)
+          view_service.load_asset(contexts, entity, entity.asset.type, entity.asset.name)
           # entity.replace_view view unless view.nil?
         end
       end
