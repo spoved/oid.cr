@@ -2,6 +2,7 @@ require "entitas"
 
 module Oid
   module Service
+    include JSON::Serializable
   end
 end
 

@@ -9,5 +9,7 @@ class RayLib::ViewSystem
   )
     # TODO FINISH
     puts "#{asset_type} - #{asset_name}"
+
+    contexts.game.create_entity.add_actor.add_position(Oid::Vector3.new(1.0, 1.0, 0.0))
   end
 end

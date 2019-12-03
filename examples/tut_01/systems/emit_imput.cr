@@ -75,7 +75,20 @@ module Oid
       end
 
       def cleanup
-        # TODO: Implement
+        left_mouse_entity.del_mouse_down if left_mouse_entity.mouse_down?
+        left_mouse_entity.del_mouse_up if left_mouse_entity.mouse_up?
+        left_mouse_entity.del_mouse_pressed if left_mouse_entity.mouse_pressed?
+        left_mouse_entity.del_mouse_released if left_mouse_entity.mouse_released?
+
+        right_mouse_entity.del_mouse_down if right_mouse_entity.mouse_down?
+        right_mouse_entity.del_mouse_up if right_mouse_entity.mouse_up?
+        right_mouse_entity.del_mouse_pressed if right_mouse_entity.mouse_pressed?
+        right_mouse_entity.del_mouse_released if right_mouse_entity.mouse_released?
+
+        keyboard_entity.del_key_down if keyboard_entity.key_down?
+        keyboard_entity.del_key_up if keyboard_entity.key_up?
+        keyboard_entity.del_key_pressed if keyboard_entity.key_pressed?
+        keyboard_entity.del_key_released if keyboard_entity.key_released?
       end
 
       private def get_mouse_state(button)

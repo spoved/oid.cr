@@ -1,32 +1,58 @@
 require "../../src/oid"
-require "./controller"
+require "../../src/oid/raylib/*"
+require "./components"
+require "./systems/*"
+require "./services/*"
 
-Oid::Config.configure do |settings|
-  settings.asset_dir = __DIR__
-  settings.enable_mouse = true
-  settings.enable_keyboard = true
-  settings.show_fps = true
-  settings.target_fps = 120
-end
+class ConfigService
+  include Oid::Service::Config
 
-Oid.new_window(title: "Example: tut_01")
+  def enable_mouse? : Bool
+    true
+  end
 
-controller = GameController.new
-
-controller.start_server
-
-# Start window fiber
-spawn do
-  controller.start
-
-  Oid.window.start do
-    controller.update
+  def enable_keyboard? : Bool
+    true
   end
 end
 
-# Yield to the window
-while Oid.window.visable?
-  Fiber.yield
+class ApplicationService
+  include Oid::Service::Application
+  property frame_count = 0
 end
 
-Oid.global_context.destroy_all_entities
+class GameController < Entitas::Controller
+  getter services = Services.new(
+    application: ApplicationService.new,
+    logger: RayLib::LoggerSystem.new,
+    input: RayLib::InputSystem.new,
+    config: ConfigService.new,
+    time: RayLib::TimeSystem.new,
+    view: RayLib::ViewSystem.new,
+  )
+
+  def create_systems(contexts : Contexts)
+    Entitas::Feature.new("Systems")
+      .add(ServiceRegistrationSystems.new(contexts, services))
+      .add(Game::EventSystems.new(contexts))
+      .add(Oid::Systems::EmitInput.new(contexts))
+      .add(Oid::Systems::Input.new(contexts))
+      .add(Oid::Systems::ProcessInput.new(contexts))
+  end
+end
+
+controller = GameController.new
+controller.start_server
+
+app = RayLib::Application.new("TEST")
+
+app.start(
+  controller: controller,
+  init_hook: ->(cont : GameController) {
+    context = cont.contexts.game
+  },
+  draw_hook: ->(cont : GameController) {
+    RayLib.draw_fps(10, 10)
+    Fiber.yield
+  },
+)
