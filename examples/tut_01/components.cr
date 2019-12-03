@@ -127,3 +127,13 @@ end
 class Score < Entitas::Component
   prop :value, Int32, default: 0
 end
+
+#####################
+# Config components
+
+@[Context(Config)]
+@[Component::Unique]
+class GameConfig < Entitas::Component
+  prop :board_size, Oid::Vector2
+  prop :blocker_probability, Float64, default: 0.1
+end

@@ -3,6 +3,7 @@ require "../../src/oid/raylib/*"
 require "./components"
 require "./systems/*"
 require "./services/*"
+require "./contexts_ext"
 
 class ConfigService
   include Oid::Service::Config
@@ -38,6 +39,8 @@ class GameController < Entitas::Controller
       .add(Oid::Systems::EmitInput.new(contexts))
       .add(Oid::Systems::Input.new(contexts))
       .add(Oid::Systems::ProcessInput.new(contexts))
+      .add(Oid::Systems::Board.new(contexts))
+      .add(Oid::Systems::Fall.new(contexts))
   end
 end
 
@@ -49,7 +52,6 @@ app = RayLib::Application.new("TEST")
 app.start(
   controller: controller,
   init_hook: ->(cont : GameController) {
-    context = cont.contexts.game
   },
   draw_hook: ->(cont : GameController) {
     RayLib.draw_fps(10, 10)

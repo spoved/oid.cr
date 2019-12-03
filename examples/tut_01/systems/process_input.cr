@@ -1,6 +1,7 @@
 module Oid
   module Systems
     class ProcessInput < Entitas::ReactiveSystem
+      spoved_logger
       include Entitas::Systems::ExecuteSystem
 
       protected property contexts : Contexts
@@ -21,7 +22,17 @@ module Oid
 
       def execute(entities : Array(Entitas::IEntity))
         # TODO: delete piece where input is over
-        puts entities.size unless entities.empty?
+        entity = entities.first.as(InputEntity)
+        # FIXME: Need to do correct positioning
+        pos = (entity.input.position / Oid::Vector2.new(800, 600))*10
+        e = contexts.game
+          .get_entity_index(Entitas::Contexts::PIECE_POSITION_INDEX)
+          .get_entity(Oid::Vector2.new(pos.x.to_i, pos.y.to_i))
+
+        if !e.nil? && e.interactive?
+          logger.unknown "Destroying #{e}"
+          e.destroyed = true
+        end
       end
     end
   end
