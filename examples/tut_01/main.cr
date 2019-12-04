@@ -1,5 +1,6 @@
 require "../../src/oid"
 require "../../src/oid/raylib/*"
+require "./board_logic"
 require "./components"
 require "./systems/*"
 require "./services/*"
@@ -36,6 +37,7 @@ class GameController < Entitas::Controller
     Entitas::Feature.new("Systems")
       .add(ServiceRegistrationSystems.new(contexts, services))
       .add(Game::EventSystems.new(contexts))
+      .add(Oid::Systems::LoadAsset.new(contexts))
       .add(Oid::Systems::EmitInput.new(contexts))
       .add(Oid::Systems::Input.new(contexts))
       .add(Oid::Systems::ProcessInput.new(contexts))
@@ -54,7 +56,25 @@ app.start(
   init_hook: ->(cont : GameController) {
   },
   draw_hook: ->(cont : GameController) {
-    RayLib.draw_fps(10, 10)
+    group = cont.contexts.game.get_group(
+      GameMatcher
+        .all_of(
+          GameMatcher.view,
+          GameMatcher.position,
+          GameMatcher.asset,
+        )
+        .none_of(
+          GameMatcher.destroyed
+        )
+    )
+
+    group.each do |e|
+      if e.view?
+        cont.contexts.meta.view_service.instance.render(cont.contexts, e)
+      end
+    end
     Fiber.yield
+
+    RayLib.draw_fps(10, 10)
   },
 )

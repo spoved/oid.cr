@@ -49,6 +49,8 @@ end
 
 @[Context(Game)]
 class View < Entitas::Component
+  prop :scale, Float64, default: 1.0
+  prop :rotation, Float64, default: 1.0
 end
 
 #####################

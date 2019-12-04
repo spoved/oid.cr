@@ -43,7 +43,7 @@ module Oid
               contexts.game.create_entity
                 .add_piece
                 .add_position(Oid::Vector3.new(x, y, 0))
-                .add_asset(name: "Blocker")
+                .add_asset(name: "Blocker.png", type: Oid::Enum::AssetType::Texture)
             else
               # Create a random peice
               contexts.game.create_entity
@@ -51,7 +51,7 @@ module Oid
                 .add_movable
                 .add_interactive
                 .add_position(Oid::Vector3.new(x, y, 0))
-                .add_asset(name: "Piece#{rand(6)}")
+                .add_asset(name: "Piece#{rand(6)}.png", type: Oid::Enum::AssetType::Texture)
             end
           end
         end

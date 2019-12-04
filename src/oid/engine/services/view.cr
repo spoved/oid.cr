@@ -10,6 +10,8 @@ module Oid
         asset_type : Oid::Enum::AssetType,
         asset_name : String
       )
+
+      abstract def render(contexts : Contexts, entity : Entitas::IEntity)
     end
   end
 end
