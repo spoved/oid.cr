@@ -1,20 +1,26 @@
 class RayLib::Application < Oid::Application
   property title : String
-  property screen_w : Int32
-  property screen_h : Int32
-  property target_fps : Int32
 
-  def initialize(@title : String, @screen_w : Int32 = 800, @screen_h : Int32 = 600, @target_fps : Int32 = 120); end
+  def initialize(@title : String); end
 
   def should_close? : Bool
     RayLib.window_should_close
   end
 
-  def init(&block)
-    RayLib.trace_log(RayLib::Enum::TraceLog::Info.value, "RayLib::Application - Starting Init")
-    RayLib.init_window(screen_w, screen_h, title)
-    RayLib.set_target_fps(target_fps)
+  def config(&block)
     yield
+  end
+
+  def init(&block)
+    yield
+
+    RayLib.trace_log(RayLib::Enum::TraceLog::Info.value, "RayLib::Application - Starting Init")
+    RayLib.init_window(
+      config_service.screen_w,
+      config_service.screen_h,
+      title
+    )
+    RayLib.set_target_fps(config_service.target_fps)
     RayLib.trace_log(RayLib::Enum::TraceLog::Info.value, "RayLib::Application - End Init")
   end
 
@@ -27,11 +33,8 @@ class RayLib::Application < Oid::Application
   def draw(&block)
     # RayLib.trace_log(RayLib::Enum::TraceLog::Debug.value, "RayLib::Application - Starting Draw")
     RayLib.begin_drawing
-
     RayLib.clear_background(Oid::Color::WHITE.to_unsafe)
-
     yield
-
     RayLib.end_drawing
     # RayLib.trace_log(RayLib::Enum::TraceLog::Debug.value, "RayLib::Application - End Draw")
   end

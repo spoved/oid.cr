@@ -23,16 +23,7 @@ module Oid
 
       def init
         entity = contexts.game.create_entity
-
-        unless contexts.config.game_config?
-          contexts.config
-            .create_entity
-            .add_game_config(
-              board_size: Oid::Vector2.new(10, 10)
-            )
-        end
-
-        config = contexts.config.game_config
+        config = contexts.meta.config_service.instance.settings
         entity.add_board(config.board_size)
 
         config.board_size.y.to_i.times do |y|

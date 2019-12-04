@@ -25,7 +25,6 @@ module Oid
 
             e = contexts.get_piece_with_position(contexts.game, position)
             if !e.nil? && e.movable?
-              # TODO: Move down
               move_down(e, position)
             end
           end
@@ -33,11 +32,17 @@ module Oid
       end
 
       def move_down(entity : GameEntity, position : Oid::Vector2)
-        # logger.unknown("Move down #{entity}")
-        # TODO: FINISH
         empty_row = BoardLogic.get_next_empty_row(contexts, position)
+
         if empty_row != position.y
-          entity.replace_position(Oid::Vector3.new(position.x.to_i, empty_row, 0))
+          entity.add_move(
+            target: Oid::Vector3.new(
+              x: position.x.to_i,
+              y: empty_row,
+              z: 0
+            ),
+            speed: 0.01
+          )
         end
       end
     end

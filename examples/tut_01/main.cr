@@ -3,20 +3,7 @@ require "../../src/oid/raylib/*"
 require "./board_logic"
 require "./components"
 require "./systems/*"
-require "./services/*"
 require "./contexts_ext"
-
-class ConfigService
-  include Oid::Service::Config
-
-  def enable_mouse? : Bool
-    true
-  end
-
-  def enable_keyboard? : Bool
-    true
-  end
-end
 
 class ApplicationService
   include Oid::Service::Application
@@ -28,7 +15,7 @@ class GameController < Entitas::Controller
     application: ApplicationService.new,
     logger: RayLib::LoggerSystem.new,
     input: RayLib::InputSystem.new,
-    config: ConfigService.new,
+    config: RayLib::ConfigSystem.new,
     time: RayLib::TimeSystem.new,
     view: RayLib::ViewSystem.new,
   )
@@ -43,12 +30,24 @@ class GameController < Entitas::Controller
       .add(Oid::Systems::ProcessInput.new(contexts))
       .add(Oid::Systems::Board.new(contexts))
       .add(Oid::Systems::Fall.new(contexts))
+      .add(Oid::Systems::Move.new(contexts))
   end
+end
+
+RayLib::ConfigSystem.configure do |settings|
+  settings.screen_w = 800
+  settings.screen_h = 600
+  settings.target_fps = 120
+  settings.show_fps = true
+  settings.enable_mouse = true
+  settings.enable_keyboard = true
+
+  settings.board_size = Oid::Vector2.new(10, 10)
+  settings.blocker_probability = 0.1
 end
 
 controller = GameController.new
 controller.start_server
-
 app = RayLib::Application.new("TEST")
 
 app.start(

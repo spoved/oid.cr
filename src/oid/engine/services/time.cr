@@ -14,6 +14,9 @@ module Oid
 
       # Returns elapsed time in seconds since InitWindow()
       abstract def time : Float64
+
+      # Returns the difference between `#time` and `#frame_time`
+      abstract def delta_time : Float64
     end
   end
 end

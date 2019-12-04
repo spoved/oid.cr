@@ -1,5 +1,16 @@
 module Oid
   abstract class Application
+    protected setter contexts : Contexts? = nil
+
+    def contexts : Contexts
+      raise "No contexts set" if @contexts.nil?
+      @contexts.as(Contexts)
+    end
+
+    def config_service
+      contexts.meta.config_service.instance
+    end
+
     abstract def should_close? : Bool
 
     # Window initialization and screens management
@@ -25,9 +36,11 @@ module Oid
               draw_hook : Proc(Entitas::Controller, _) = ->(cont : Entitas::Controller) {},
               cleanup_hook : Proc(Entitas::Controller, _) = ->(cont : Entitas::Controller) {},
               exit_hook : Proc(Entitas::Controller, _) = ->(cont : Entitas::Controller) {})
+      controller.start
+      self.contexts = controller.contexts
+
       # Initialization
       self.init do
-        controller.start
         init_hook.call(controller)
       end
 

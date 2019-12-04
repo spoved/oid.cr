@@ -14,6 +14,25 @@ class Position < Entitas::Component
 end
 
 @[Context(Game)]
+class Direction < Entitas::Component
+  prop :value, Float64
+end
+
+@[Context(Game)]
+class Mover < Entitas::Component
+end
+
+@[Context(Game)]
+class Move < Entitas::Component
+  prop :target, Oid::Vector3
+  prop :speed, Float64, default: 1.0
+end
+
+@[Context(Game)]
+class MoveComplete < Entitas::Component
+end
+
+@[Context(Game)]
 class Actor < Entitas::Component
 end
 
@@ -135,7 +154,22 @@ end
 
 @[Context(Config)]
 @[Component::Unique]
+class ApplicationConfig < Entitas::Component
+  prop :resolution, Oid::Vector2, default: Oid::Vector2.new(800, 600)
+  prop :show_fps, Bool, default: false
+  prop :target_fps, Int32, default: 120
+end
+
+@[Context(Config)]
+@[Component::Unique]
+class InputConfig < Entitas::Component
+  prop :enable_mouse, Bool, default: false
+  prop :enable_keyboard, Bool, default: false
+end
+
+@[Context(Config)]
+@[Component::Unique]
 class GameConfig < Entitas::Component
-  prop :board_size, Oid::Vector2
+  prop :board_size, Oid::Vector2, default: Oid::Vector2.new(10, 10)
   prop :blocker_probability, Float64, default: 0.1
 end
