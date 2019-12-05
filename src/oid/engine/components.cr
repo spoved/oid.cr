@@ -1,3 +1,3 @@
 require "entitas"
 
-# require "./components/*"
+require "./components/*"
