@@ -5,6 +5,14 @@ require "./components"
 require "./systems/*"
 require "./contexts_ext"
 
+class RayLib::ConfigSystem
+  add_settings(
+    board_size : Oid::Vector2,
+    blocker_probability : Float64,
+    asset_path : String
+  )
+end
+
 class ApplicationService
   include Oid::Service::Application
   property frame_count = 0
@@ -42,38 +50,20 @@ RayLib::ConfigSystem.configure do |settings|
   settings.enable_mouse = true
   settings.enable_keyboard = true
 
+  settings.asset_path = "examples/01/assets"
   settings.board_size = Oid::Vector2.new(10, 10)
   settings.blocker_probability = 0.1
 end
 
 controller = GameController.new
 controller.start_server
-app = RayLib::Application.new("TEST")
+app = RayLib::Application.new("Example 01")
 
 app.start(
   controller: controller,
-  init_hook: ->(cont : GameController) {
-  },
+  init_hook: ->(cont : GameController) {},
   draw_hook: ->(cont : GameController) {
-    group = cont.contexts.game.get_group(
-      GameMatcher
-        .all_of(
-          GameMatcher.view,
-          GameMatcher.position,
-          GameMatcher.asset,
-        )
-        .none_of(
-          GameMatcher.destroyed
-        )
-    )
-
-    group.each do |e|
-      if e.view?
-        cont.contexts.meta.view_service.instance.render(cont.contexts, e)
-      end
-    end
     Fiber.yield
-
     RayLib.draw_fps(10, 10)
   },
 )

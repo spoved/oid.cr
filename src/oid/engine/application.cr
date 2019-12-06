@@ -44,6 +44,13 @@ module Oid
         init_hook.call(controller)
       end
 
+      # Gather the render group
+      render_group = self.contexts.game.get_group(
+        GameMatcher
+          .all_of(GameMatcher.view, GameMatcher.position, GameMatcher.asset)
+          .none_of(GameMatcher.destroyed)
+      )
+
       # Main game loop
       while !self.should_close?
         # Update
@@ -54,6 +61,13 @@ module Oid
 
         # Draw
         self.draw do
+          # Pass each entity to the view service
+          render_group.each do |e|
+            if e.view?
+              self.contexts.meta.view_service.instance.render(self.contexts, e)
+            end
+          end
+
           draw_hook.call(controller)
         end
       end

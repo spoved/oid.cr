@@ -1,15 +1,7 @@
 require "../../src/oid"
 require "../../src/oid/raylib/*"
 require "./components"
-
-RayLib::ConfigSystem.configure do |settings|
-  settings.screen_w = 800
-  settings.screen_h = 600
-  settings.target_fps = 120
-  settings.show_fps = true
-  settings.enable_mouse = true
-  settings.enable_keyboard = true
-end
+require "./config"
 
 class ApplicationService
   include Oid::Service::Application
@@ -35,32 +27,13 @@ end
 
 controller = GameController.new
 controller.start_server
-app = RayLib::Application.new("TEST")
+app = RayLib::Application.new("Example 02")
 
 app.start(
   controller: controller,
-  init_hook: ->(cont : GameController) {
-  },
+  init_hook: ->(cont : GameController) {},
   draw_hook: ->(cont : GameController) {
-    group = cont.contexts.game.get_group(
-      GameMatcher
-        .all_of(
-          GameMatcher.view,
-          GameMatcher.position,
-          GameMatcher.asset,
-        )
-        .none_of(
-          GameMatcher.destroyed
-        )
-    )
-
-    group.each do |e|
-      if e.view?
-        cont.contexts.meta.view_service.instance.render(cont.contexts, e)
-      end
-    end
     Fiber.yield
-
     RayLib.draw_fps(10, 10)
   },
 )

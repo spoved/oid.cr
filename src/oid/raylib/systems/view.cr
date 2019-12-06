@@ -13,7 +13,9 @@ class RayLib::ViewSystem
     case asset_type
     when Oid::Enum::AssetType::Texture
       unless textures[asset_name]?
-        textures[asset_name] = RayLib.load_texture(File.join("examples/tut_01/assets", asset_name))
+        textures[asset_name] = RayLib.load_texture(
+          File.join(contexts.meta.config_service.instance.asset_path, asset_name)
+        )
       end
     end
     entity.add_component_view(scale: 0.4)

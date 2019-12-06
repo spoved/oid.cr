@@ -1,18 +1,6 @@
 class RayLib::ConfigSystem
   include Oid::Service::Config
 
-  Habitat.create do
-    setting screen_w : Int32
-    setting screen_h : Int32
-    setting target_fps : Int32
-    setting show_fps : Bool
-    setting enable_mouse : Bool
-    setting enable_keyboard : Bool
-
-    setting board_size : Oid::Vector2
-    setting blocker_probability : Float64
-  end
-
   def screen_w : Int32
     settings.screen_w
   end
@@ -35,5 +23,9 @@ class RayLib::ConfigSystem
 
   def enable_keyboard? : Bool
     settings.enable_keyboard
+  end
+
+  def asset_path : String
+    settings.asset_path
   end
 end

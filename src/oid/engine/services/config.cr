@@ -5,6 +5,21 @@ module Oid
     module Config
       include Oid::Service
 
+      macro add_settings(*args)
+        Habitat.create do
+          setting screen_w : Int32
+          setting screen_h : Int32
+          setting target_fps : Int32
+          setting show_fps : Bool
+          setting enable_mouse : Bool
+          setting enable_keyboard : Bool
+
+          {% for arg in args %}
+          setting {{arg}}
+          {% end %}
+        end
+      end
+
       def resolution : Tuple(Int32, Int32)
         {screen_w, screen_h}
       end
