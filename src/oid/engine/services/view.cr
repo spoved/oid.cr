@@ -12,6 +12,7 @@ module Oid
       )
 
       abstract def render(contexts : Contexts, entity : Entitas::IEntity)
+      abstract def render_fps
     end
   end
 end

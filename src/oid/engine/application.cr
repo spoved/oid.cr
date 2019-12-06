@@ -11,6 +11,10 @@ module Oid
       contexts.meta.config_service.instance
     end
 
+    def view_service
+      self.contexts.meta.view_service.instance
+    end
+
     abstract def should_close? : Bool
 
     # Window initialization and screens management
@@ -64,8 +68,12 @@ module Oid
           # Pass each entity to the view service
           render_group.each do |e|
             if e.view?
-              self.contexts.meta.view_service.instance.render(self.contexts, e)
+              self.view_service.render(self.contexts, e)
             end
+          end
+
+          if config_service.show_fps?
+            self.view_service.render_fps
           end
 
           draw_hook.call(controller)

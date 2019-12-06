@@ -13,7 +13,7 @@ class RayLib::ConfigSystem
     settings.target_fps
   end
 
-  def show_fps : Bool
+  def show_fps? : Bool
     settings.show_fps
   end
 

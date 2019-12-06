@@ -62,8 +62,5 @@ app = RayLib::Application.new("Example 01")
 app.start(
   controller: controller,
   init_hook: ->(cont : GameController) {},
-  draw_hook: ->(cont : GameController) {
-    Fiber.yield
-    RayLib.draw_fps(10, 10)
-  },
+  draw_hook: ->(cont : GameController) {},
 )

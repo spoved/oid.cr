@@ -30,7 +30,7 @@ module Oid
 
       abstract def target_fps : Int32
 
-      abstract def show_fps : Bool
+      abstract def show_fps? : Bool
 
       abstract def enable_mouse? : Bool
 

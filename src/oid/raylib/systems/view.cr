@@ -38,4 +38,8 @@ class RayLib::ViewSystem
       )
     end
   end
+
+  def render_fps
+    RayLib.draw_fps(10, 10)
+  end
 end
