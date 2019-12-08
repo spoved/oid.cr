@@ -31,6 +31,19 @@ app = RayLib::Application.new("Example 02")
 
 app.start(
   controller: controller,
-  init_hook: ->(cont : GameController) {},
-  draw_hook: ->(cont : GameController) {},
+  init_hook: ->(cont : GameController) {
+    player_pos = Oid::Vector3.zero
+
+    actor = cont.contexts.game
+      .create_entity
+      .add_player
+      .add_actor(
+        name: "player",
+        position: player_pos
+      )
+      .add_movable
+  },
+  draw_hook: ->(cont : GameController) {
+    RayLib.draw_rectangle(-6000, 320, 13000, 8000, Oid::Color::GRAY.to_unsafe)
+  },
 )

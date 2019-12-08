@@ -42,4 +42,15 @@ module RayLib
       )
     end
   end
+
+  struct Rectangle
+    def self.new(value : Oid::Rectangle)
+      RayLib::Rectangle.new(
+        x: value.position.x.to_f32,
+        y: value.position.y.to_f32,
+        width: value.width.to_f32,
+        height: value.height.to_f32
+      )
+    end
+  end
 end

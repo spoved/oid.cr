@@ -83,6 +83,8 @@ module Oid
           end
 
           draw_hook.call(controller)
+
+          Fiber.yield
         end
       end
 

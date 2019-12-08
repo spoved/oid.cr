@@ -5,7 +5,7 @@ example=02
 
 echo "Refreshing docs"
 rm -rf ./docs
-crystal doc ./examples/${example}/main.cr
+make docs
 
 echo "Starting example ${example}"
 crystal ./examples/${example}/main.cr ${args}

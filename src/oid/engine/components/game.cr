@@ -46,11 +46,6 @@ class Destroyed < Entitas::Component
 end
 
 @[Context(Game)]
-class Actor < Entitas::Component
-  include Oid::Actor
-end
-
-@[Context(Game)]
 @[Component::Unique]
 class Camera < Entitas::Component
   include Oid::GameObject

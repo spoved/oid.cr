@@ -12,7 +12,9 @@ module Oid
       )
 
       abstract def update_camera(camera : Oid::Camera)
+
       abstract def render(contexts : Contexts, entity : Entitas::IEntity)
+
       abstract def render_fps
     end
   end
