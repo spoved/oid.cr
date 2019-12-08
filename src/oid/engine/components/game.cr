@@ -1,3 +1,5 @@
+require "../modules"
+
 #####################
 # Game components
 
@@ -41,4 +43,21 @@ end
 @[Context(Game)]
 @[Entitas::Event(EventTarget::Self)]
 class Destroyed < Entitas::Component
+end
+
+@[Context(Game)]
+class Actor < Entitas::Component
+  include Oid::Actor
+end
+
+@[Context(Game)]
+class Camera < Entitas::Component
+  include Oid::GameObject
+  include Oid::Camera
+
+  prop :mode, Oid::Camera::Mode, default: Oid::Camera::Mode::Mode2D
+  prop :target, Oid::Vector3
+  prop :offset, Oid::Vector3
+  prop :rotation, Float64, default: 0.0
+  prop :zoom, Float64, default: 1.0
 end

@@ -1,3 +1,11 @@
-crystal ./examples/01/main.cr --exclude-warnings /usr/local/Cellar/crystal
+set -e
 
-# crystal ./examples/02/main.cr --exclude-warnings /usr/local/Cellar/crystal
+args="--exclude-warnings /usr/local/Cellar/crystal"
+example=02
+
+echo "Refreshing docs"
+rm -rf ./docs
+crystal doc ./examples/${example}/main.cr
+
+echo "Starting example ${example}"
+crystal ./examples/${example}/main.cr ${args}
