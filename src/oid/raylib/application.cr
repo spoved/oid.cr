@@ -22,6 +22,11 @@ class RayLib::Application < Oid::Application
     )
     RayLib.set_target_fps(config_service.target_fps)
     RayLib.trace_log(RayLib::Enum::TraceLog::Info.value, "RayLib::Application - End Init")
+
+    # Create initial camera
+    unless contexts.game.camera?
+      contexts.game.create_entity.add_camera(Oid::Camera2D.new)
+    end
   end
 
   def update(&block)
@@ -33,8 +38,12 @@ class RayLib::Application < Oid::Application
   def draw(&block)
     # RayLib.trace_log(RayLib::Enum::TraceLog::Debug.value, "RayLib::Application - Starting Draw")
     RayLib.begin_drawing
+    self.view_service.begin_camera_mode
     RayLib.clear_background(Oid::Color::WHITE.to_unsafe)
+
     yield
+
+    self.view_service.end_camera_mode
     RayLib.end_drawing
     # RayLib.trace_log(RayLib::Enum::TraceLog::Debug.value, "RayLib::Application - End Draw")
   end

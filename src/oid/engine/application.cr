@@ -15,6 +15,10 @@ module Oid
       self.contexts.meta.view_service.instance
     end
 
+    def camera : Oid::Camera
+      self.contexts.game.camera.value
+    end
+
     abstract def should_close? : Bool
 
     # Window initialization and screens management
@@ -61,6 +65,8 @@ module Oid
         self.update do
           controller.update
           update_hook.call(controller)
+
+          self.view_service.update_camera(self.camera)
         end
 
         # Draw

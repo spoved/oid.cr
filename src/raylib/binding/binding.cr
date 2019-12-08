@@ -327,6 +327,16 @@ module RayLib
     fun bg_Sound__CONSTRUCT_() : Sound*
     fun bg_AudioStream__CONSTRUCT_() : AudioStream*
     fun bg_VrDeviceInfo__CONSTRUCT_() : VrDeviceInfo*
+    fun bg____SetCameraMode_STATIC_Camera_int = SetCameraMode(camera : Camera*, mode : Int32) : Void
+    fun bg____SetCameraPanControl_STATIC_int = SetCameraPanControl(pan_key : Int32) : Void
+    fun bg____SetCameraAltControl_STATIC_int = SetCameraAltControl(alt_key : Int32) : Void
+    fun bg____SetCameraSmoothZoomControl_STATIC_int = SetCameraSmoothZoomControl(sz_key : Int32) : Void
+    fun bg____SetCameraMoveControls_STATIC_int_int_int_int_int_int = SetCameraMoveControls(front_key : Int32, back_key : Int32, right_key : Int32, left_key : Int32, up_key : Int32, down_key : Int32) : Void
+    fun bg____UpdateCamera_STATIC_Camera_X = UpdateCamera(camera : Camera*) : Void
+    fun bg____BeginMode2D_STATIC_Camera2D = BeginMode2D(camera : Camera2D) : Void
+    fun bg____BeginMode3D_STATIC_Camera3D = BeginMode3D(camera : Camera3D) : Void
+    fun bg____EndMode2D_STATIC_ = EndMode2D() : Void
+    fun bg____EndMode3D_STATIC_ = EndMode3D() : Void
     fun bg____InitWindow_STATIC_int_int_const_char_X = InitWindow(width : Int32, height : Int32, title : UInt8*) : Void
     fun bg____WindowShouldClose_STATIC_ = WindowShouldClose() : Bool
     fun bg____CloseWindow_STATIC_ = CloseWindow() : Void
@@ -730,6 +740,48 @@ module RayLib
   MAX_TOUCH_POINTS = 10
   MAX_SHADER_LOCATIONS = 32
   MAX_MATERIAL_MAPS = 12
+  module Camera
+    def self.mode(camera : Binding::Camera*, mode : Int32) : Void
+      Binding.bg____SetCameraMode_STATIC_Camera_int(camera, mode)
+    end
+    
+    def self.pan_control(pan_key : Int32) : Void
+      Binding.bg____SetCameraPanControl_STATIC_int(pan_key)
+    end
+    
+    def self.alt_control(alt_key : Int32) : Void
+      Binding.bg____SetCameraAltControl_STATIC_int(alt_key)
+    end
+    
+    def self.smooth_zoom_control(sz_key : Int32) : Void
+      Binding.bg____SetCameraSmoothZoomControl_STATIC_int(sz_key)
+    end
+    
+    def self.move_controls(front_key : Int32, back_key : Int32, right_key : Int32, left_key : Int32, up_key : Int32, down_key : Int32) : Void
+      Binding.bg____SetCameraMoveControls_STATIC_int_int_int_int_int_int(front_key, back_key, right_key, left_key, up_key, down_key)
+    end
+    
+    def self.update(camera : Binding::Camera*) : Void
+      Binding.bg____UpdateCamera_STATIC_Camera_X(camera)
+    end
+    
+    def self.begin_mode_2d(camera : Camera2D) : Void
+      Binding.bg____BeginMode2D_STATIC_Camera2D(camera)
+    end
+    
+    def self.begin_mode_3d(camera : Camera3D) : Void
+      Binding.bg____BeginMode3D_STATIC_Camera3D(camera)
+    end
+    
+    def self.end_mode_2d() : Void
+      Binding.bg____EndMode2D_STATIC_()
+    end
+    
+    def self.end_mode_3d() : Void
+      Binding.bg____EndMode3D_STATIC_()
+    end
+    
+  end
   def self.init_window(width : Int32, height : Int32, title : String) : Void
     Binding.bg____InitWindow_STATIC_int_int_const_char_X(width, height, title)
   end

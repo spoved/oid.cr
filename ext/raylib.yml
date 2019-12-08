@@ -15,6 +15,7 @@ generators:
 <<: config/types.yml
 
 functions:
+  <<: config/functions/camera.yml
   ".*":
     destination: "::"
 

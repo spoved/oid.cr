@@ -3,3 +3,15 @@
 "UpdateCamera":
   name: update
   destination: Camera
+BeginMode2D:
+  name: begin_mode_2d
+  destination: Camera
+BeginMode3D:
+  name: begin_mode_3d
+  destination: Camera
+EndMode2D:
+  name: end_mode_2d
+  destination: Camera
+EndMode3D:
+  name: end_mode_3d
+  destination: Camera
