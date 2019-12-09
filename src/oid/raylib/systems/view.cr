@@ -74,6 +74,14 @@ class RayLib::ViewSystem
         rotation: object.rotation.x.to_f32,
         color: object.color.to_unsafe,
       )
+    when Oid::Line
+      RayLib.draw_line(
+        start_pos_x: object.transform.x.to_i,
+        start_pos_y: object.transform.y.to_i,
+        end_pos_x: object.end_pos.x.to_i,
+        end_pos_y: object.end_pos.y.to_i,
+        color: object.color.to_unsafe,
+      )
     end
   end
 

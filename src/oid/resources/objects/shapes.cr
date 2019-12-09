@@ -16,10 +16,9 @@ module Oid
   class Line
     include Oid::Shape
 
-    property end_x : Float64
-    property end_y : Float64
+    property end_pos : Oid::Vector2
     property color : Oid::Color
 
-    def initialize(@end_x, @end_y, @color); end
+    def initialize(@end_pos, @color); end
   end
 end

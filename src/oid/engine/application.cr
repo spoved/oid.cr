@@ -74,7 +74,7 @@ module Oid
         # Draw
         self.draw do
           # Pass each entity to the view service
-          render_group.each do |e|
+          render_group.sort { |a, b| a.position.value.z <=> b.position.value.z }.each do |e|
             self.view_service.render(self.contexts, e)
           end
 

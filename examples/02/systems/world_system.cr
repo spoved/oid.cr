@@ -17,7 +17,7 @@ class WorldSystem
       .create_entity
       .add_player
       .add_actor(name: "player")
-      .add_position(value: Oid::Vector3.new(400, 300, 0))
+      .add_position(value: Oid::Vector3.new(400, 300, 100))
       .add_movable
       .add_view
 
@@ -48,6 +48,39 @@ class WorldSystem
           width: 13000.0, height: 8000.0, color: Oid::Color::GRAY
         )
       )
+
+    # Add X line
+    config_service = contexts.meta.config_service.instance
+
+    player.actor.add_object(
+      Oid::Line.new(
+        Oid::Vector2.new(
+          x: config_service.screen_w * 10,
+          y: config_service.screen_h/2,
+        ),
+        color: Oid::Color::GREEN
+      ),
+      position: Oid::Vector3.new(
+        x: -(config_service.screen_w/2) * 10,
+        y: 0.0,
+        z: 0.0
+      ),
+    )
+
+    player.actor.add_object(
+      Oid::Line.new(
+        Oid::Vector2.new(
+          x: config_service.screen_w/2,
+          y: config_service.screen_h * 10,
+        ),
+        color: Oid::Color::GREEN
+      ),
+      position: Oid::Vector3.new(
+        x: 0.0,
+        y: -(config_service.screen_h/2) * 10,
+        z: 0.0
+      ),
+    )
   end
 
   def execute
