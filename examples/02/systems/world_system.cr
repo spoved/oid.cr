@@ -12,6 +12,8 @@ class WorldSystem
   end
 
   def init
+    config_service = contexts.meta.config_service.instance
+
     # Create player
     player = contexts.game
       .create_entity
@@ -50,13 +52,11 @@ class WorldSystem
       )
 
     # Add X line
-    config_service = contexts.meta.config_service.instance
-
     player.actor.add_object(
       Oid::Line.new(
         Oid::Vector2.new(
-          x: config_service.screen_w * 10,
-          y: config_service.screen_h/2,
+          x: (config_service.screen_w * 10) - player.position.value.x,
+          y: (config_service.screen_h/2) - player.position.value.y,
         ),
         color: Oid::Color::GREEN
       ),
@@ -70,8 +70,8 @@ class WorldSystem
     player.actor.add_object(
       Oid::Line.new(
         Oid::Vector2.new(
-          x: config_service.screen_w/2,
-          y: config_service.screen_h * 10,
+          x: (config_service.screen_w/2) - player.position.value.x,
+          y: (config_service.screen_h * 10) - player.position.value.y,
         ),
         color: Oid::Color::GREEN
       ),
@@ -84,7 +84,5 @@ class WorldSystem
   end
 
   def execute
-    # Rotate by 1
-    camera = contexts.game.camera.value.as(Oid::Camera2D)
   end
 end

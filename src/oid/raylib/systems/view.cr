@@ -10,9 +10,18 @@ class RayLib::ViewSystem
 
   private property textures : Hash(String, RayLib::Texture2D) = Hash(String, RayLib::Texture2D).new
 
+  def camera2d : RayLib::Camera2D
+    self.camera.as(RayLib::Camera2D)
+  end
+
   def update_camera(value : Oid::Camera)
     case value
     when Oid::Camera2D
+      # self.camera2d.target = value.target.nil? ? Vector2.new(0.0f32, 0.0f32) : Vector2.new(value.target.as(Oid::GameObject).position)
+      # self.camera2d.offset = Vector2.new(value.offset)
+      # self.camera2d.rotation = value.rotation.x.to_f32
+      # self.camera2d.zoom = value.zoom.to_f32
+
       self.camera = RayLib::Camera2D.new(value)
     when Oid::Camera3D
       self.camera = RayLib::Camera3D.new(value)
@@ -21,12 +30,7 @@ class RayLib::ViewSystem
     end
   end
 
-  def load_asset(
-    contexts : Contexts,
-    entity : Entitas::IEntity,
-    asset_type : Oid::Enum::AssetType,
-    asset_name : String
-  )
+  def load_asset(contexts : Contexts, entity : Entitas::IEntity, asset_type : Oid::Enum::AssetType, asset_name : String)
     # TODO FINISH
     case asset_type
     when Oid::Enum::AssetType::Texture
@@ -55,14 +59,6 @@ class RayLib::ViewSystem
   private def render_actor(entity, object)
     case object
     when Oid::Rectangle
-      # RayLib.draw_rectangle(
-      #   pos_x: object.transform.x.to_i,
-      #   pos_y: object.transform.y.to_i,
-      #   width: object.width.to_i,
-      #   height: object.height.to_i,
-      #   color: object.color.to_unsafe
-      # )
-
       RayLib.draw_rectangle_pro(
         rec: RayLib::Rectangle.new(
           x: object.transform.x.to_f32,
@@ -75,11 +71,15 @@ class RayLib::ViewSystem
         color: object.color.to_unsafe,
       )
     when Oid::Line
+      end_pos = (Oid::Matrix::Mat4.unit.translate(object.parent.position) * object.end_pos.to_v3.to_v4).to_v3
+      puts "Orig: #{object.end_pos} : Transform: #{end_pos}"
+      # object.end_pos
+
       RayLib.draw_line(
         start_pos_x: object.transform.x.to_i,
         start_pos_y: object.transform.y.to_i,
-        end_pos_x: object.end_pos.x.to_i,
-        end_pos_y: object.end_pos.y.to_i,
+        end_pos_x: end_pos.x.to_i,
+        end_pos_y: end_pos.y.to_i,
         color: object.color.to_unsafe,
       )
     end

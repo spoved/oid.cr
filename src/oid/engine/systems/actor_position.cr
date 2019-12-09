@@ -1,8 +1,14 @@
 module Oid
   module Systems
     class ActorPosition < Entitas::ReactiveSystem
-      def self.new(contexts : Contexts)
-        ActorPosition.new(contexts.game)
+      spoved_logger
+
+      protected property contexts : Contexts
+      protected property context : GameContext
+
+      def initialize(@contexts)
+        @context = @contexts.game
+        @collector = get_trigger(@context)
       end
 
       def get_trigger(context : Entitas::Context) : Entitas::ICollector
@@ -17,6 +23,7 @@ module Oid
       def execute(entities : Array(Entitas::IEntity))
         entities.each do |e|
           e = e.as(GameEntity)
+          logger.debug("Oid::Systems::ActorPosition - Replacing actor position: #{e.actor.position.to_json} with: #{e.position.value.to_json}")
           e.actor.position = e.position.value
         end
       end

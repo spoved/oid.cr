@@ -7,7 +7,7 @@ module Oid
     abstract def parent : Oid::Transformable
     abstract def root : Oid::Transformable
 
-    protected def transform_position(origin)
+    private def transform_position_rel_to(origin)
       (Oid::Matrix::Mat4.unit.translate(origin) * self.position.to_v4).to_v3
     end
 
@@ -16,12 +16,12 @@ module Oid
       when Oid::Enum::Position::Static
         self.position
       when Oid::Enum::Position::Relative
-        transform_position(self.parent.as(Oid::Transformable).position)
+        transform_position_rel_to(self.parent.as(Oid::Transformable).position)
       when Oid::Enum::Position::Absolute
-        transform_position(self.root.as(Oid::Transformable).position)
+        transform_position_rel_to(self.root.as(Oid::Transformable).position)
       when Oid::Enum::Position::Fixed
         camera = Entitas::Contexts.shared_instance.game.camera.value
-        transform_position(camera.position)
+        transform_position_rel_to(camera.position)
       else
         raise "Unsuported positioning #{positioning}"
       end

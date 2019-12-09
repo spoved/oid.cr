@@ -1,10 +1,12 @@
 class InputSystem < Entitas::ReactiveSystem
   protected property contexts : Contexts
   protected property context : InputContext
+  protected property player_group : Entitas::Group(GameEntity)
 
   def initialize(@contexts)
     @context = @contexts.input
     @collector = get_trigger(@context)
+    @player_group = @contexts.game.get_group(GameMatcher.all_of(GameMatcher.actor, GameMatcher.player))
   end
 
   def get_trigger(context : Entitas::Context) : Entitas::ICollector
@@ -30,17 +32,28 @@ class InputSystem < Entitas::ReactiveSystem
       e = e.as(InputEntity)
 
       if e.mouse_wheel?
-        # camera.zoom += e.mouse_wheel.move * 0.1
+        # puts e.mouse_wheel.move
+        camera.zoom += e.mouse_wheel.move * 0.05
       elsif e.keyboard?
         case e.keyboard.key
         when Oid::Enum::Key::Right
+          # Move player right by 2
+          orig_pos = player_group.first.position.value
+          player_group.first.replace_move(
+            target: Oid::Vector3.new(x: orig_pos.x + 2, y: orig_pos.y, z: orig_pos.z)
+          )
         when Oid::Enum::Key::Left
+          # Move player left by 2
+          orig_pos = player_group.first.position.value
+          player_group.first.replace_move(
+            target: Oid::Vector3.new(x: orig_pos.x - 2, y: orig_pos.y, z: orig_pos.z)
+          )
         when Oid::Enum::Key::A
           camera.rotate_x(-1)
         when Oid::Enum::Key::S
           camera.rotate_x(1)
         when Oid::Enum::Key::R
-          # camera.zoom = 1.0
+          camera.zoom = 1.0
           camera.rotation = Oid::Vector3.zero
         else
           puts e.keyboard.key.class
@@ -62,12 +75,4 @@ class InputSystem < Entitas::ReactiveSystem
       camera.zoom = 0.1
     end
   end
-
-  # def execute
-  #   camera = contexts.game.camera.value.as(Oid::Camera2D)
-  #   input_system = contexts.meta.input_service.instance
-  # end
-  #
-  # def cleanup
-  # end
 end
