@@ -2,28 +2,22 @@ class RayLib::ViewSystem
   include Oid::Service::View
 
   private property camera : RayLib::Camera2D | RayLib::Camera3D = RayLib::Camera2D.new(
-    target: Vector2.new(
-      x: 0.0f32,
-      y: 0.0f32,
-    ),
-    offset: Vector2.new(
-      x: 0.0f32,
-      y: 0.0f32,
-    ),
+    target: Vector2.new(x: 0.0f32, y: 0.0f32),
+    offset: Vector2.new(x: 0.0f32, y: 0.0f32),
     rotation: 0.0f32,
     zoom: 1.0f32
   )
 
   private property textures : Hash(String, RayLib::Texture2D) = Hash(String, RayLib::Texture2D).new
 
-  def update_camera(camera : Oid::Camera)
-    case camera
+  def update_camera(value : Oid::Camera)
+    case value
     when Oid::Camera2D
-      self.camera = RayLib::Camera2D.new(camera)
+      self.camera = RayLib::Camera2D.new(value)
     when Oid::Camera3D
-      self.camera = RayLib::Camera3D.new(camera)
+      self.camera = RayLib::Camera3D.new(value)
     else
-      raise "Unknown camera class: #{camera.class}"
+      raise "Unknown Camera: #{value.inspect}"
     end
   end
 
@@ -42,12 +36,36 @@ class RayLib::ViewSystem
         )
       end
     end
-    entity.add_component_view(scale: 0.4)
-    # contexts.game.create_entity.add_actor.add_position(Oid::Vector3.new(1.0, 1.0, 0.0))
+    entity.add_view(scale: 0.4)
   end
 
   def render(contexts : Contexts, entity : Entitas::IEntity)
     e = entity.as(GameEntity)
+    if e.asset?
+      render_asset(e)
+    end
+
+    if e.actor?
+      e.actor.each_child do |child|
+        render_actor(e, child)
+      end
+    end
+  end
+
+  private def render_actor(entity, object : Oid::GameObject)
+    case object
+    when Oid::Rectangle
+      RayLib.draw_rectangle(
+        pos_x: object.transform.x.to_i,
+        pos_y: object.transform.y.to_i,
+        width: object.width.to_i,
+        height: object.height.to_i,
+        color: object.color.to_unsafe
+      )
+    end
+  end
+
+  private def render_asset(e)
     case e.asset.type
     when Oid::Enum::AssetType::Texture
       RayLib.draw_texture_ex(
@@ -73,6 +91,8 @@ class RayLib::ViewSystem
       RayLib::Camera.begin_mode_2d(self.camera.as(RayLib::Camera2D))
     when RayLib::Camera3D
       RayLib::Camera.begin_mode_3d(self.camera.as(RayLib::Camera3D))
+    else
+      raise "Unknown Camera: #{self.camera.inspect}"
     end
   end
 
@@ -82,6 +102,8 @@ class RayLib::ViewSystem
       RayLib::Camera.end_mode_2d
     when RayLib::Camera3D
       RayLib::Camera.end_mode_3d
+    else
+      raise "Unknown Camera: #{self.camera.inspect}"
     end
   end
 end

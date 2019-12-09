@@ -92,8 +92,8 @@ module Oid
         )
       end
 
-      def *(other : Vec4)
-        Vec4.new(
+      def *(other : Vector4)
+        Vector4.new(
           x0*other.x + x1*other.y + x2*other.z + x3*other.w,
           y0*other.x + y1*other.y + y2*other.z + y3*other.w,
           z0*other.x + z1*other.y + z2*other.z + z3*other.w,
@@ -101,7 +101,7 @@ module Oid
         )
       end
 
-      def translate(vec : Vec3)
+      def translate(vec : Vector3)
         self * Mat4.new(
           1.0, 0.0, 0.0, vec.x,
           0.0, 1.0, 0.0, vec.y,

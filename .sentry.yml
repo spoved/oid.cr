@@ -1,0 +1,34 @@
+# This file is used to override the default Sentry configuration without
+# having to specify the options on the command line.
+#
+# All configuration options in this file are optional, and will fall back
+# to the default values that Sentry determines based on your `shard.yml`.
+#
+# Options passed through the command line will override these settings.
+
+# The name of your application when displayed in log output. By default, this
+# is the app name specified in `shard.yml`.
+display_name: oid
+shard_name: oid
+
+# Set this to `true` to show configuration information when starting Sentry.
+info: true
+build: /usr/local/bin/crystal
+build_args: build ./examples/02/main.cr --exclude-warnings /usr/local/Cellar/crystal --error-trace -o ./bin/example_02
+
+# The command used to run the compiled application.
+run: ./bin/example_02
+# run: ./build.sh
+# Any additional arguments to pass to the run command. Run args may only be
+# given if the run command is a single argument.
+run_args: ''
+
+# The list of patterns of files for sentry to watch.
+watch:
+  - ./examples/**/*.cr
+  - ./spec/**/*.cr
+  - ./src/**/*.cr
+  - ./src/**/*.ecr
+
+install_shards: false
+colorize: true

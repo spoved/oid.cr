@@ -10,7 +10,6 @@ end
 class Actor < Entitas::Component
   include Oid::Actor
   prop :name, String
-  prop :position, Oid::Vector3
 end
 
 @[Context(Game)]

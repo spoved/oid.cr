@@ -2,6 +2,7 @@ require "../../src/oid"
 require "../../src/oid/raylib/*"
 require "./components"
 require "./config"
+require "./systems/*"
 
 class ApplicationService
   include Oid::Service::Application
@@ -22,6 +23,8 @@ class GameController < Entitas::Controller
     Entitas::Feature.new("Systems")
       .add(ServiceRegistrationSystems.new(contexts, services))
       .add(Game::EventSystems.new(contexts))
+      .add(OidSystems.new(contexts))
+      .add(WorldSystem.new(contexts))
   end
 end
 
@@ -31,19 +34,11 @@ app = RayLib::Application.new("Example 02")
 
 app.start(
   controller: controller,
-  init_hook: ->(cont : GameController) {
-    player_pos = Oid::Vector3.zero
-
-    actor = cont.contexts.game
-      .create_entity
-      .add_player
-      .add_actor(
-        name: "player",
-        position: player_pos
-      )
-      .add_movable
-  },
+  init_hook: ->(cont : GameController) {},
   draw_hook: ->(cont : GameController) {
-    RayLib.draw_rectangle(-6000, 320, 13000, 8000, Oid::Color::GRAY.to_unsafe)
+    # RayLib.draw_rectangle(-6000, 320, 13000, 8000, Oid::Color::GRAY.to_unsafe)
+    camera = cont.contexts.game.camera.value.as(Oid::Camera2D)
+  # Rotate by 1
+  # camera.rotation += 1.0
   },
 )

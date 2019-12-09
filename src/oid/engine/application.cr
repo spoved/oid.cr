@@ -55,7 +55,8 @@ module Oid
       # Gather the render group
       render_group = self.contexts.game.get_group(
         GameMatcher
-          .all_of(GameMatcher.view, GameMatcher.position, GameMatcher.asset)
+          .all_of(GameMatcher.view, GameMatcher.position)
+          .any_of(GameMatcher.asset, GameMatcher.actor)
           .none_of(GameMatcher.destroyed)
       )
 
@@ -66,6 +67,7 @@ module Oid
           controller.update
           update_hook.call(controller)
 
+          # Update the camera
           self.view_service.update_camera(self.camera)
         end
 
@@ -73,9 +75,7 @@ module Oid
         self.draw do
           # Pass each entity to the view service
           render_group.each do |e|
-            if e.view?
-              self.view_service.render(self.contexts, e)
-            end
+            self.view_service.render(self.contexts, e)
           end
 
           if config_service.show_fps?

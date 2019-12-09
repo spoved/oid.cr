@@ -186,5 +186,9 @@ module Oid
     def to_v2
       Vector2.new(self.x, self.y)
     end
+
+    def to_v4
+      Vector4.new(self.x, self.y, self.z, 1.0)
+    end
   end
 end
