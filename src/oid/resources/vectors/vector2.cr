@@ -34,7 +34,7 @@ module Oid
 
     # Zero vector
     def self.zero
-      return Vector2.new(0.0, 0.0)
+      Vector2.new(0.0, 0.0)
     end
 
     # Fills current vector with zero
@@ -131,7 +131,7 @@ module Oid
 
     # Finds distance between two vectors
     def distance(other : Vector2)
-      return (self - other).magnitude
+      (self - other).magnitude
     end
 
     def ==(other : Vector2)

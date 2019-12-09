@@ -27,9 +27,6 @@ module Oid
 
       def execute
         self.moves.each do |e|
-          dir = e.move.target - e.position.value
-          pos = e.position.value
-
           target_pos = e.move.target
           cur_pos = e.position.value
 

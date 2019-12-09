@@ -183,14 +183,14 @@ module Oid
 
     def self.lerp(qstart, qend : Quaternion, percent : Float64)
       if percent == 0
-        return qstart
+        qstart
       elsif percent == 1
-        return qend
+        qend
       else
         f1 = 1.0 - percent
         f2 = percent
 
-        return Quaternion.new(
+        Quaternion.new(
           f1 * qstart.x + f2 * qend.x,
           f1 * qstart.y + f2 * qend.y,
           f1 * qstart.z + f2 * qend.z,
@@ -205,22 +205,22 @@ module Oid
 
     def self.slerp(qstart, qend : Quaternion, percent : Float64)
       if percent == 0
-        return qstart
+        qstart
       elsif percent == 1
-        return qend
+        qend
       else
         dot = qstart**qend
         if dot == 0
-          return lerp(qstart, qend, percent)
+          lerp(qstart, qend, percent)
         elsif dot < 0
-          return -slerp(qstart, -qend, percent)
+          -slerp(qstart, -qend, percent)
         else
           dot = dot.clamp(-1.0, 1.0)
           theta = Math.acos(dot)
           s = Math.sin(theta)
-          f1 = Math.sin((1.0 - percent) * theta) / s
+          # f1 = Math.sin((1.0 - percent) * theta) / s
           f1 = Math.sin(percent * theta) / s
-          return Quaternion.new(
+          Quaternion.new(
             f1 * qstart.x + f2 * qend.x,
             f1 * qstart.y + f2 * qend.y,
             f1 * qstart.z + f2 * qend.z,

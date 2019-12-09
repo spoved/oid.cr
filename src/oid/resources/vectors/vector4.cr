@@ -32,7 +32,7 @@ module Oid
 
     # Zero vector
     def self.zero
-      return Vector4.new(0.0, 0.0, 0.0, 0.0)
+      Vector4.new(0.0, 0.0, 0.0, 0.0)
     end
 
     def zero!
@@ -107,7 +107,7 @@ module Oid
     end
 
     def distance(other : Vector4)
-      return (self - other).magnitude
+      (self - other).magnitude
     end
 
     def ==(other : Vector4)

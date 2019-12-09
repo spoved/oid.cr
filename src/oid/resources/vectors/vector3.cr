@@ -123,7 +123,7 @@ module Oid
     end
 
     def distance(other : Vector3)
-      return (self - other).magnitude
+      (self - other).magnitude
     end
 
     def ==(other : self)
