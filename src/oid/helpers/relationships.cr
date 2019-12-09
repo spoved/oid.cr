@@ -1,8 +1,16 @@
 module Oid
   module Helpers
     module Relationships(T)
-      getter parent : T? = nil
+      @parent : T? = nil
       private getter children : Set(T) = Set(T).new
+
+      def parent : T
+        if @parent.nil?
+          raise "No parent exists! Please check if parent exists before trying to fech parent"
+        end
+
+        @parent.as(T)
+      end
 
       # Returns the total count of children
       def children_count

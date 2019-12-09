@@ -13,6 +13,9 @@ class SpecLoggerService
   def log(msg : String)
     self.log_msg = msg
   end
+
+  def level=(value : Logger::Severity)
+  end
 end
 
 describe Oid::Service::Logger do

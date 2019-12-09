@@ -35,10 +35,5 @@ app = RayLib::Application.new("Example 02")
 app.start(
   controller: controller,
   init_hook: ->(cont : GameController) {},
-  draw_hook: ->(cont : GameController) {
-    # RayLib.draw_rectangle(-6000, 320, 13000, 8000, Oid::Color::GRAY.to_unsafe)
-    camera = cont.contexts.game.camera.value.as(Oid::Camera2D)
-  # Rotate by 1
-  # camera.rotation += 1.0
-  },
+  draw_hook: ->(cont : GameController) {},
 )

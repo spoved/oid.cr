@@ -1,8 +1,22 @@
 module Oid
   module Camera
     include JSON::Serializable
+    include Oid::Transformable
 
-    property target : Oid::GameObject? = nil
+    setter target : Oid::GameObject? = nil
+
+    def target
+      raise "Camera does not have a target!" if @target.nil?
+      @target.as(Oid::GameObject)
+    end
+
+    def parent : Oid::Transformable
+      self.target
+    end
+
+    def root : Oid::Transformable
+      self.target
+    end
 
     enum Mode
       Custom
@@ -49,7 +63,7 @@ module Oid
     property offset : Oid::Vector2
 
     # Camera rotation towards target
-    property rotation : Float64
+    property rotation : Oid::Vector3
 
     # Camera zoom
     property zoom : Float64
@@ -57,7 +71,7 @@ module Oid
     def initialize(
       @target : Oid::GameObject? = nil,
       @offset : Oid::Vector2 = Oid::Vector2.zero,
-      @rotation : Float64 = 0.0,
+      @rotation : Oid::Vector3 = Oid::Vector3.zero,
       @zoom : Float64 = 1.0
     ); end
   end

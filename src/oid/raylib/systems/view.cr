@@ -52,15 +52,27 @@ class RayLib::ViewSystem
     end
   end
 
-  private def render_actor(entity, object : Oid::GameObject)
+  private def render_actor(entity, object)
     case object
     when Oid::Rectangle
-      RayLib.draw_rectangle(
-        pos_x: object.transform.x.to_i,
-        pos_y: object.transform.y.to_i,
-        width: object.width.to_i,
-        height: object.height.to_i,
-        color: object.color.to_unsafe
+      # RayLib.draw_rectangle(
+      #   pos_x: object.transform.x.to_i,
+      #   pos_y: object.transform.y.to_i,
+      #   width: object.width.to_i,
+      #   height: object.height.to_i,
+      #   color: object.color.to_unsafe
+      # )
+
+      RayLib.draw_rectangle_pro(
+        rec: RayLib::Rectangle.new(
+          x: object.transform.x.to_f32,
+          y: object.transform.y.to_f32,
+          width: object.width.to_f32,
+          height: object.height.to_f32,
+        ),
+        origin: RayLib::Vector2.new(0, 0),
+        rotation: object.rotation.x.to_f32,
+        color: object.color.to_unsafe,
       )
     end
   end

@@ -25,7 +25,7 @@ module RayLib
       RayLib::Camera2D.new(
         target: camera.target.nil? ? Vector2.new(0.0f32, 0.0f32) : Vector2.new(camera.target.as(Oid::GameObject).position),
         offset: Vector2.new(camera.offset),
-        rotation: camera.rotation.to_f32,
+        rotation: camera.rotation.x.to_f32,
         zoom: camera.zoom.to_f32
       )
     end
