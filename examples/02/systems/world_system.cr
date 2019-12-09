@@ -85,7 +85,6 @@ class WorldSystem
 
   def execute
     # Rotate by 1
-    # camera = contexts.game.camera.value.as(Oid::Camera2D)
-    # camera.rotate_x(1)
+    camera = contexts.game.camera.value.as(Oid::Camera2D)
   end
 end

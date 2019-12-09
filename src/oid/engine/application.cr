@@ -1,6 +1,7 @@
 module Oid
   abstract class Application
     protected setter contexts : Contexts? = nil
+    @render_group : Entitas::Group(GameEntity)? = nil
 
     def contexts : Contexts
       raise "No contexts set" if @contexts.nil?
@@ -19,6 +20,15 @@ module Oid
       self.contexts.game.camera.value
     end
 
+    def render_group : Entitas::Group(GameEntity)
+      @render_group ||= self.contexts.game.get_group(
+        GameMatcher
+          .all_of(GameMatcher.view, GameMatcher.position)
+          .any_of(GameMatcher.asset, GameMatcher.actor)
+          .none_of(GameMatcher.destroyed)
+      )
+    end
+
     abstract def should_close? : Bool
 
     # Window initialization and screens management
@@ -30,6 +40,9 @@ module Oid
 
     # Draw
     abstract def draw(&block)
+
+    # Draw
+    abstract def draw_ui(&block)
 
     # De-Initialization
     # NOTE: Unload any loaded resources (texture, fonts, audio)
@@ -52,14 +65,6 @@ module Oid
         init_hook.call(controller)
       end
 
-      # Gather the render group
-      render_group = self.contexts.game.get_group(
-        GameMatcher
-          .all_of(GameMatcher.view, GameMatcher.position)
-          .any_of(GameMatcher.asset, GameMatcher.actor)
-          .none_of(GameMatcher.destroyed)
-      )
-
       # Main game loop
       while !self.should_close?
         # Update
@@ -75,17 +80,20 @@ module Oid
         self.draw do
           # Pass each entity to the view service
           render_group.sort { |a, b| a.position.value.z <=> b.position.value.z }.each do |e|
+            # render_group.each do |e|
             self.view_service.render(self.contexts, e)
           end
 
+          draw_hook.call(controller)
+        end
+
+        self.draw_ui do
           if config_service.show_fps?
             self.view_service.render_fps
           end
-
-          draw_hook.call(controller)
-
-          Fiber.yield
         end
+
+        Fiber.yield
       end
 
       # de-init

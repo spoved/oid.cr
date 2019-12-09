@@ -6,16 +6,16 @@ module Oid
       # # Input-related functions: keyboard
 
       # Detect if a key has been pressed once
-      abstract def key_pressed?(key) : Bool
+      abstract def key_pressed?(key : Oid::Enum::Key) : Bool
 
       # Detect if a key is being pressed
-      abstract def key_down?(key) : Bool
+      abstract def key_down?(key : Oid::Enum::Key) : Bool
 
       # Detect if a key has been released once
-      abstract def key_released?(key) : Bool
+      abstract def key_released?(key : Oid::Enum::Key) : Bool
 
       # Detect if a key is NOT being pressed
-      abstract def key_up?(key) : Bool
+      abstract def key_up?(key : Oid::Enum::Key) : Bool
 
       # Get latest key pressed
       abstract def latest_key_pressed? : Oid::Enum::Key?
@@ -42,6 +42,9 @@ module Oid
 
       # Returns mouse position XY
       abstract def mouse_position : Oid::Vector2
+
+      # Returns mouse wheel move
+      abstract def mouse_wheel_move : Int32
 
       # # Input-related functions: touch
 

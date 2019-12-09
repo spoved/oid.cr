@@ -4,6 +4,11 @@ require "./components"
 require "./config"
 require "./systems/*"
 
+create_feature Example, [
+  WorldSystem,
+  InputSystem,
+]
+
 class ApplicationService
   include Oid::Service::Application
   property frame_count = 0
@@ -24,7 +29,7 @@ class GameController < Entitas::Controller
       .add(ServiceRegistrationSystems.new(contexts, services))
       .add(Game::EventSystems.new(contexts))
       .add(OidSystems.new(contexts))
-      .add(WorldSystem.new(contexts))
+      .add(ExampleSystems.new(contexts))
   end
 end
 

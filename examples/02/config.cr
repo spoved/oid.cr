@@ -14,3 +14,5 @@ RayLib::ConfigSystem.configure do |settings|
 
   settings.asset_path = "examples/02/assets"
 end
+
+Oid::Systems::EmitInput.listen_for_keys(A, S, Right, Left, R)

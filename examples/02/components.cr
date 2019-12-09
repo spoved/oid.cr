@@ -19,3 +19,11 @@ end
 @[Context(Game)]
 class Movable < Entitas::Component
 end
+
+#####################
+# Input components
+
+@[Context(Input)]
+class Input < Entitas::Component
+  prop :position, Oid::Vector2
+end

@@ -1,6 +1,21 @@
 module Oid
   module Systems
     class EmitInput
+      macro listen_for_keys(*args)
+
+        class Oid::Systems::EmitInput
+          KEYS = [
+            {% for arg in args %}
+            Oid::Enum::Key::{{arg.id}},
+            {% end %}
+          ]
+
+          private def _listen_for_keys : Array(Oid::Enum::Key)
+            KEYS
+          end
+        end
+      end
+
       include Entitas::Systems::InitializeSystem
       include Entitas::Systems::ExecuteSystem
       include Entitas::Systems::CleanupSystem
@@ -13,10 +28,15 @@ module Oid
 
       protected setter left_mouse_entity : InputEntity? = nil
       protected setter right_mouse_entity : InputEntity? = nil
-      protected setter keyboard_entity : InputEntity? = nil
+      protected setter mouse_wheel_entity : InputEntity? = nil
+
+      protected getter keyboard_group : Entitas::Group(InputEntity)
 
       def initialize(@contexts)
         @context = @contexts.input
+        @keyboard_group = @contexts.input.get_group(
+          InputMatcher.all_of(InputMatcher.keyboard)
+        )
       end
 
       def left_mouse_entity : InputEntity
@@ -27,8 +47,8 @@ module Oid
         @right_mouse_entity ||= context.right_mouse_entity.as(InputEntity)
       end
 
-      def keyboard_entity : InputEntity
-        @keyboard_entity ||= context.keyboard_entity.as(InputEntity)
+      def mouse_wheel_entity : InputEntity
+        @mouse_wheel_entity ||= context.mouse_wheel_entity.as(InputEntity)
       end
 
       def config_service
@@ -48,8 +68,9 @@ module Oid
         self.left_mouse_entity = context.left_mouse_entity
         context.right_mouse = true
         self.right_mouse_entity = context.right_mouse_entity
-        context.keyboard = true
-        self.keyboard_entity = context.keyboard_entity
+        self.mouse_wheel_entity = context.create_entity.add_mouse_wheel(move: 0)
+
+        _init_keyboard_entites
       end
 
       def execute
@@ -61,13 +82,18 @@ module Oid
 
           # Right button
           emit_mouse(right_mouse_entity, position, get_mouse_state(1))
+
+          wheel_move = input_service.mouse_wheel_move
+          if wheel_move == 0 && self.mouse_wheel_entity.mouse_wheel.move == 0
+            # Do nothing
+          else
+            self.mouse_wheel_entity.replace_mouse_wheel(move: wheel_move)
+          end
         end
 
         if config_service.enable_keyboard?
-          key = input_service.latest_key_pressed?
-
-          unless key.nil?
-            keyboard_entity.replace_key_pressed(value: key, position: position)
+          keyboard_group.each do |entity|
+            emit_key(entity, position)
           end
         end
 
@@ -85,10 +111,12 @@ module Oid
         right_mouse_entity.del_mouse_pressed if right_mouse_entity.mouse_pressed?
         right_mouse_entity.del_mouse_released if right_mouse_entity.mouse_released?
 
-        keyboard_entity.del_key_down if keyboard_entity.key_down?
-        keyboard_entity.del_key_up if keyboard_entity.key_up?
-        keyboard_entity.del_key_pressed if keyboard_entity.key_pressed?
-        keyboard_entity.del_key_released if keyboard_entity.key_released?
+        keyboard_group.each do |entity|
+          entity.del_key_down if entity.key_down?
+          entity.del_key_up if entity.key_up?
+          entity.del_key_pressed if entity.key_pressed?
+          entity.del_key_released if entity.key_released?
+        end
       end
 
       private def get_mouse_state(button)
@@ -101,7 +129,7 @@ module Oid
         }
       end
 
-      private def get_key_state(key : Int32)
+      private def get_key_state(key : Oid::Enum::Key)
         {
           key:      key,
           down:     input_service.key_down?(key),
@@ -129,21 +157,38 @@ module Oid
         end
       end
 
-      private def emit_key(entity, position, state)
+      private def emit_key(entity : InputEntity, position : Oid::Vector2?)
+        key = entity.keyboard.key
+        state = get_key_state(key)
+
+        entity.replace_position(position.to_v3) unless position.nil?
+
         if state[:down]
-          entity.replace_key_down(value: state[:key], position: position)
+          entity.replace_key_down
         end
 
         if state[:up]
-          entity.replace_key_up(value: state[:key], position: position)
+          entity.replace_key_up
         end
 
         if state[:pressed]
-          entity.replace_key_pressed(value: state[:key], position: position)
+          entity.replace_key_pressed
         end
 
         if state[:released]
-          entity.replace_key_released(value: state[:key], position: position)
+          entity.replace_key_released
+        end
+      end
+
+      private def _listen_for_keys : Array(Oid::Enum::Key)
+        raise "EmitInput _listen_for_keys is undefined"
+      end
+
+      private def _init_keyboard_entites
+        KEYS.each do |key|
+          puts "Create entity for #{key}"
+          context.create_entity
+            .add_keyboard(key)
         end
       end
     end

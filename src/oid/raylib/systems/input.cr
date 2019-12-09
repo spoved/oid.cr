@@ -1,20 +1,20 @@
 class RayLib::InputSystem
   include Oid::Service::Input
 
-  def key_pressed?(key) : Bool
-    RayLib.is_key_pressed(key)
+  def key_pressed?(key : Oid::Enum::Key) : Bool
+    RayLib.is_key_pressed(key.value)
   end
 
-  def key_down?(key) : Bool
-    RayLib.is_key_down(key)
+  def key_down?(key : Oid::Enum::Key) : Bool
+    RayLib.is_key_down(key.value)
   end
 
-  def key_released?(key) : Bool
-    RayLib.is_key_released(key)
+  def key_released?(key : Oid::Enum::Key) : Bool
+    RayLib.is_key_released(key.value)
   end
 
-  def key_up?(key) : Bool
-    RayLib.is_key_up(key)
+  def key_up?(key : Oid::Enum::Key) : Bool
+    RayLib.is_key_up(key.value)
   end
 
   def latest_key_pressed? : Oid::Enum::Key?
@@ -53,6 +53,10 @@ class RayLib::InputSystem
   def mouse_position : Oid::Vector2
     pos = RayLib.get_mouse_position
     Oid::Vector2.new(x: pos.x, y: pos.y)
+  end
+
+  def mouse_wheel_move : Int32
+    RayLib.get_mouse_wheel_move
   end
 
   def touch_x : Float64

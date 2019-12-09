@@ -38,14 +38,23 @@ class RayLib::Application < Oid::Application
   def draw(&block)
     # RayLib.trace_log(RayLib::Enum::TraceLog::Debug.value, "RayLib::Application - Starting Draw")
     RayLib.begin_drawing
-    self.view_service.begin_camera_mode
     RayLib.clear_background(Oid::Color::WHITE.to_unsafe)
+
+    self.view_service.begin_camera_mode
 
     yield
 
     self.view_service.end_camera_mode
-    RayLib.end_drawing
     # RayLib.trace_log(RayLib::Enum::TraceLog::Debug.value, "RayLib::Application - End Draw")
+  end
+
+  def draw_ui(&block)
+    # RayLib.trace_log(RayLib::Enum::TraceLog::Debug.value, "RayLib::Application - Starting Draw UI")
+
+    yield
+
+    RayLib.end_drawing
+    # RayLib.trace_log(RayLib::Enum::TraceLog::Debug.value, "RayLib::Application - End Draw UI")
   end
 
   def cleanup(&block)

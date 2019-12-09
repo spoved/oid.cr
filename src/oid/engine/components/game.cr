@@ -10,12 +10,6 @@ class Asset < Entitas::Component
 end
 
 @[Context(Game)]
-@[Entitas::Event(EventTarget::Self)]
-class Position < Entitas::Component
-  prop :value, Oid::Vector3
-end
-
-@[Context(Game)]
 class Direction < Entitas::Component
   prop :value, Float64
 end
@@ -38,11 +32,6 @@ end
 class View < Entitas::Component
   prop :scale, Float64, default: 1.0
   prop :rotation, Float64, default: 1.0
-end
-
-@[Context(Game)]
-@[Entitas::Event(EventTarget::Self)]
-class Destroyed < Entitas::Component
 end
 
 @[Context(Game)]

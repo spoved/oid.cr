@@ -11,7 +11,6 @@ module Oid
 
       # Select entities with position and is an actor
       def filter(entity : GameEntity)
-        puts entity
         entity.position? && entity.actor?
       end
 
