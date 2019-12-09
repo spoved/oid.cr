@@ -17,11 +17,6 @@ class RayLib::ViewSystem
   def update_camera(value : Oid::Camera)
     case value
     when Oid::Camera2D
-      # self.camera2d.target = value.target.nil? ? Vector2.new(0.0f32, 0.0f32) : Vector2.new(value.target.as(Oid::GameObject).position)
-      # self.camera2d.offset = Vector2.new(value.offset)
-      # self.camera2d.rotation = value.rotation.x.to_f32
-      # self.camera2d.zoom = value.zoom.to_f32
-
       self.camera = RayLib::Camera2D.new(value)
     when Oid::Camera3D
       self.camera = RayLib::Camera3D.new(value)
@@ -72,7 +67,7 @@ class RayLib::ViewSystem
       )
     when Oid::Line
       end_pos = (Oid::Matrix::Mat4.unit.translate(object.parent.position) * object.end_pos.to_v3.to_v4).to_v3
-      puts "Orig: #{object.end_pos} : Transform: #{end_pos}"
+      # puts "Orig: #{object.end_pos} : Transform: #{end_pos}"
       # object.end_pos
 
       RayLib.draw_line(

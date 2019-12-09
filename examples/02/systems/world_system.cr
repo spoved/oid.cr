@@ -66,7 +66,7 @@ class WorldSystem
         z: 0.0
       ),
     )
-
+    # Add Y line
     player.actor.add_object(
       Oid::Line.new(
         Oid::Vector2.new(
@@ -81,6 +81,39 @@ class WorldSystem
         z: 0.0
       ),
     )
+
+    # Create "Buildings"
+    spacing = 0
+    100.times do |i|
+      b_rec = Oid::Rectangle.new(
+        width: Random.rand(50..200).to_f,
+        height: Random.rand(100..800).to_f,
+        color: Oid::Color.new(
+          Random.rand(200_u8..240_u8),
+          Random.rand(200_u8..240_u8),
+          Random.rand(200_u8..240_u8),
+        )
+      )
+
+      contexts.game
+        .create_entity
+        .add_actor(name: "building_#{i}")
+        .add_position(
+          Oid::Vector3.new(
+            x: -6000 + spacing,
+            y: 320 - b_rec.height,
+            z: 10
+          )
+        )
+        .add_view
+        .actor.add_object(
+          b_rec,
+          position: Oid::Vector3.new(0.0, 0.0, 0.0),
+          positioning: Oid::Enum::Position::Relative
+        )
+
+      spacing += b_rec.width.to_i
+    end
   end
 
   def execute

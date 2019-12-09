@@ -114,6 +114,8 @@ types:
     crystal_type: Font
   SpriteFont:
     alias_for: Font
+  Camera:
+    alias_for: Camera3D
   Camera3D:
     copy_structure: true
     generate_binding: true
