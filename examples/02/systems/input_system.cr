@@ -40,14 +40,25 @@ class InputSystem < Entitas::ReactiveSystem
           # Move player right by 2
           orig_pos = player_group.first.position.value
           player_group.first.replace_move(
-            target: Oid::Vector3.new(x: orig_pos.x + 2, y: orig_pos.y, z: orig_pos.z)
+            target: Oid::Vector3.new(
+              x: orig_pos.x + 2,
+              y: orig_pos.y,
+              z: orig_pos.z
+            )
           )
+          camera.offset.x = camera.offset.x - 2
         when Oid::Enum::Key::Left
           # Move player left by 2
           orig_pos = player_group.first.position.value
           player_group.first.replace_move(
-            target: Oid::Vector3.new(x: orig_pos.x - 2, y: orig_pos.y, z: orig_pos.z)
+            target: Oid::Vector3.new(
+              x: orig_pos.x - 2,
+              y: orig_pos.y,
+              z: orig_pos.z
+            )
           )
+
+          camera.offset.x = camera.offset.x + 2
         when Oid::Enum::Key::A
           camera.rotate_x(-1)
         when Oid::Enum::Key::S

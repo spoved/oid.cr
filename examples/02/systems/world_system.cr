@@ -117,5 +117,14 @@ class WorldSystem
   end
 
   def execute
+    actors.each do |entity|
+      entity = entity.as(GameEntity)
+      if entity.player?
+        # puts "Player: #{entity}"
+        # puts "Player: #{entity.actor.position.to_json}"
+        # puts "Camera: #{contexts.game.camera.value}"
+        # puts "Camera: #{contexts.game.camera.value.target.position.to_json}"
+      end
+    end
   end
 end

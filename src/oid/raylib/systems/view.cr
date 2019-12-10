@@ -67,8 +67,6 @@ class RayLib::ViewSystem
       )
     when Oid::Line
       end_pos = (Oid::Matrix::Mat4.unit.translate(object.parent.position) * object.end_pos.to_v3.to_v4).to_v3
-      # puts "Orig: #{object.end_pos} : Transform: #{end_pos}"
-      # object.end_pos
 
       RayLib.draw_line(
         start_pos_x: object.transform.x.to_i,
