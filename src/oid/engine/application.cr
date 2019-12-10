@@ -63,6 +63,10 @@ module Oid
       # Initialization
       self.init do
         init_hook.call(controller)
+
+        if self.camera.is_a?(Oid::Camera3D)
+          self.view_service.set_camera_mode(self.camera.as(Oid::Camera3D))
+        end
       end
 
       # Main game loop

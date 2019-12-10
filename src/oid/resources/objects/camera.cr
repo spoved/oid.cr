@@ -51,12 +51,16 @@ module Oid
     # Camera type: Perspective or Orthographic
     property type : Oid::Camera::Type
 
+    # Camera mode
+    property mode : Oid::Camera::Mode
+
     def initialize(
       @target : Oid::GameObject? = nil,
       @position : Oid::Vector3 = Oid::Vector3.zero,
       @rotation : Oid::Vector3 = Oid::Vector3.zero,
       @fov_y : Float64 = 50.0,
-      @type : Oid::Camera::Type = Oid::Camera::Type::Perspective
+      @type : Oid::Camera::Type = Oid::Camera::Type::Perspective,
+      @mode : Oid::Camera::Mode = Oid::Camera::Mode::Free
     ); end
   end
 

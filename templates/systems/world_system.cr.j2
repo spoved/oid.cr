@@ -20,19 +20,23 @@ class {{ name_module }}::WorldSystem
     player = contexts.game
       .create_entity
       .add_actor(name: "player")
-      .add_position(value: Oid::Vector3.new(100, 100, 100))
+      .add_position(Oid::Vector3.zero)
 
     # Create camera
     camera = contexts.game.create_entity
       .add_camera(
         {% if camera_3d %}
         value: Oid::Camera3D.new(
+          position: Oid::Vector3.new(10, 10, 10),
           target: player.actor,
+          rotation: Oid::Vector3.new(0, 1, 0),
+          fov_y: 45.0,
+          type: Oid::Camera::Type::Perspective
         )
         {% else %}
         value: Oid::Camera2D.new(
           target: player.actor,
-          offset: Oid::Vector2.new(0.0, 0.0),
+          offset: Oid::Vector2.zero,
         )
         {% endif %}
       )

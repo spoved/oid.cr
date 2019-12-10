@@ -6,17 +6,16 @@ end
 
 RayLib::ConfigSystem.configure do |settings|
   settings.screen_w = 800
-  settings.screen_h = 600
+  settings.screen_h = 450
   settings.target_fps = 120
   settings.show_fps = true
   settings.enable_mouse = true
   settings.enable_keyboard = true
 
-  settings.asset_path = "examples/02/assets"
+  settings.asset_path = "examples/03/assets"
 end
 
 Oid::Systems::EmitInput.listen_for_keys(
-
   # ////////////////////////////////////////////////////
   # TODO: Define any keys you would like to listen for here!
   # ////////////////////////////////////////////////////

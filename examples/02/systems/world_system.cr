@@ -36,6 +36,7 @@ class WorldSystem
         value: Oid::Camera2D.new(
           target: player.actor,
           offset: Oid::Vector2.new(0.0, 0.0),
+          mode: Oid::Camera::Mode::Free
         )
       )
 

@@ -14,6 +14,10 @@ class RayLib::ViewSystem
     self.camera.as(RayLib::Camera2D)
   end
 
+  def set_camera_mode(value : Oid::Camera3D)
+    RayLib.set_camera_mode(RayLib::Camera3D.new(value), value.mode.value)
+  end
+
   def update_camera(value : Oid::Camera)
     case value
     when Oid::Camera2D
@@ -74,6 +78,27 @@ class RayLib::ViewSystem
         end_pos_x: end_pos.x.to_i,
         end_pos_y: end_pos.y.to_i,
         color: object.color.to_unsafe,
+      )
+    when Oid::Cube
+      RayLib.draw_cube(
+        position: RayLib::Vector3.new(object.transform),
+        width: object.size.x.to_f32,
+        height: object.size.y.to_f32,
+        length: object.size.z.to_f32,
+        color: object.color.to_unsafe,
+      )
+    when Oid::CubeWires
+      RayLib.draw_cube_wires(
+        position: RayLib::Vector3.new(object.transform),
+        width: object.size.x.to_f32,
+        height: object.size.y.to_f32,
+        length: object.size.z.to_f32,
+        color: object.color.to_unsafe,
+      )
+    when Oid::Grid
+      RayLib.draw_grid(
+        slices: object.size,
+        spacing: object.spacing.to_f32,
       )
     end
   end
