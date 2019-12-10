@@ -8,17 +8,22 @@ crystal: 0.31.1
 
 license: MIT
 
+targets:
+  oid-cli:
+    main: src/bin/oid.cr
+
 dependencies:
   spoved:
     github: spoved/spoved.cr
   entitas:
     github: spoved/entitas.cr
     branch: master
-  bindgen:
-    github: kalinon/bindgen
-    branch: cmake
   habitat:
     github: luckyframework/habitat
+  crinja:
+    github: straight-shoota/crinja
+  admiral:
+    github: jwaldrip/admiral.cr
 development_dependencies:
   sentry:
     github: samueleaton/sentry
@@ -27,3 +32,6 @@ development_dependencies:
     github: anykeyh/crystal-coverage
   ameba:
     github: veelenga/ameba
+  bindgen:
+    github: kalinon/bindgen
+    branch: cmake
