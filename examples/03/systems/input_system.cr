@@ -24,7 +24,7 @@ class Example::InputSystem < Entitas::ReactiveSystem
   end
 
   def execute(entities : Array(Entitas::IEntity))
-    camera = contexts.game.camera.value.as(Oid::Camera2D)
+    camera = contexts.game.camera.value.as(Oid::Camera3D)
 
     entities.each do |e|
       e = e.as(InputEntity)

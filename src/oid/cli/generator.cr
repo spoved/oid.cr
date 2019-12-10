@@ -41,7 +41,8 @@ class Oid::Cli < Admiral::Command
       options = {
         "name_raw"    => arguments.name,
         "name_module" => arguments.name.camelcase,
-        "camera"      => flags.camera,
+        "camera_type" => flags.camera.upcase,
+        "camera_3d"   => flags.camera.downcase == "3d" ? true : false,
       }
 
       case flags.gfx_backend
@@ -65,6 +66,7 @@ class Oid::Cli < Admiral::Command
         "config.cr"               => "config.cr.j2",
         "components.cr"           => "components.cr.j2",
         "systems/input_system.cr" => "systems/input_system.cr.j2",
+        "systems/world_system.cr" => "systems/world_system.cr.j2",
       }
 
       templates.each do |f, t|
