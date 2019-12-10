@@ -7,12 +7,6 @@ class Player < Entitas::Component
 end
 
 @[Context(Game)]
-class Actor < Entitas::Component
-  include Oid::Actor
-  prop :name, String
-end
-
-@[Context(Game)]
 class Interactive < Entitas::Component
 end
 

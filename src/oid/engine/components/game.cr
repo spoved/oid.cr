@@ -40,3 +40,9 @@ class Camera < Entitas::Component
   include Oid::GameObject
   prop :value, Oid::Camera
 end
+
+@[Context(Game)]
+class Actor < Entitas::Component
+  include Oid::Actor
+  prop :name, String
+end

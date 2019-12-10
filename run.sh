@@ -1,7 +1,7 @@
 set -e
 
 args="--exclude-warnings /usr/local/Cellar/crystal --error-trace"
-example=02
+example=01
 
 echo "Refreshing docs"
 rm -rf ./docs

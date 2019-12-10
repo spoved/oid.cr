@@ -73,7 +73,7 @@ module Oid
           update_hook.call(controller)
 
           # Update the camera
-          self.view_service.update_camera(self.camera)
+          self.view_service.update_camera(self.camera) if self.camera.target?
         end
 
         # Draw

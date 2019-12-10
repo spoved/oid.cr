@@ -6,16 +6,24 @@ module Oid
 
       protected property contexts : Contexts
       protected property context : InputContext
+      protected property keyboard_group : Entitas::Group(InputEntity)
 
       def initialize(@contexts)
         @context = @contexts.input
+        @keyboard_group = @contexts.input.get_group(InputMatcher
+          .all_of(InputMatcher.keyboard)
+          .any_of(
+            InputMatcher.key_up,
+            InputMatcher.key_down,
+            InputMatcher.key_pressed,
+            InputMatcher.key_released
+          ))
       end
 
       def execute
         # Check keyboard
-        if context.keyboard_entity.as(InputEntity) && context.keyboard_entity.as(InputEntity).key_pressed?
-          # Check if we need to enable burst mode
-          if context.keyboard_entity.as(InputEntity).key_pressed.value == Oid::Enum::Key::B
+        keyboard_group.each do |entity|
+          if entity.keyboard.key == Oid::Enum::Key::B && entity.key_pressed?
             context.burst_mode = !context.burst_mode?
           end
         end

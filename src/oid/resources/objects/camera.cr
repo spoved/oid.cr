@@ -10,6 +10,10 @@ module Oid
       @target.as(Oid::GameObject)
     end
 
+    def target?
+      !@target.nil?
+    end
+
     def parent : Oid::Transformable
       self.target
     end

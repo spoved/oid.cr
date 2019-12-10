@@ -1,10 +1,6 @@
 #####################
 # Game components
 
-@[Context(Game)]
-class Actor < Entitas::Component
-end
-
 @[Component::Unique]
 @[Context(Game)]
 class Board < Entitas::Component

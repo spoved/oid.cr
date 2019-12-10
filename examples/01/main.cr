@@ -5,6 +5,8 @@ require "./components"
 require "./systems/*"
 require "./contexts_ext"
 
+Oid::Systems::EmitInput.listen_for_keys(B)
+
 class RayLib::ConfigSystem
   add_settings(
     board_size : Oid::Vector2,
