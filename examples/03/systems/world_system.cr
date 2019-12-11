@@ -67,6 +67,21 @@ class Example::WorldSystem
           type: Oid::Camera::Type::Perspective
         )
       )
+
+    # Create selected wires
+    selected_wires = contexts.game
+      .create_entity
+      .add_actor(name: "selected_wires")
+      .add_position(Oid::Vector3.new(0.0, 1.0, 0.0))
+
+    selected_wires.actor.add_object(
+      Oid::CubeWires.new(
+        size: Oid::Vector3.new(2.2, 2.2, 2.2),
+        color: Oid::Color::GREEN,
+      ),
+      position: Oid::Vector3.zero,
+      rotation: Oid::Vector3.zero,
+    )
   end
 
   def execute

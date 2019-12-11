@@ -21,7 +21,7 @@ class Example::UiSystem
 
     text_box = context
       .create_entity
-      .add_actor(name: "text_box")
+      .add_actor(name: "text_box_01")
       .add_position(
         Oid::Vector3.new(
           config_service.screen_w/2,
@@ -31,16 +31,39 @@ class Example::UiSystem
       )
       .add_view
 
-    text = Oid::Text.new(
-      text: "Try selecting the box with mouse!",
-      font_size: 20,
-      color: Oid::Color::DARKGRAY
-    )
-
     text_box.actor.add_object(
-      text,
+      Oid::Text.new(
+        text: "Try selecting the box with mouse!",
+        font_size: 20,
+        color: Oid::Color::DARKGRAY
+      ),
       position: Oid::Vector3.new(
         x: -160,
+        y: 0.0,
+        z: 0.0
+      ),
+      rotation: Oid::Vector3.zero,
+    )
+
+    selected_text = context
+      .create_entity
+      .add_actor(name: "text_box_02")
+      .add_position(
+        Oid::Vector3.new(
+          config_service.screen_w/2,
+          80.0,
+          0.0
+        )
+      )
+
+    selected_text.actor.add_object(
+      Oid::Text.new(
+        text: "BOX SELECTED",
+        font_size: 30,
+        color: Oid::Color::GREEN
+      ),
+      position: Oid::Vector3.new(
+        x: -110,
         y: 0.0,
         z: 0.0
       ),

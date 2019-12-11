@@ -1,10 +1,14 @@
 class Example::CollisionSystem < Entitas::ReactiveSystem
   protected property contexts : Contexts
   protected property context : GameContext
+  protected property game_actors : Entitas::Group(GameEntity)
+  protected property ui_actors : Entitas::Group(UiEntity)
 
   def initialize(@contexts)
     @context = @contexts.game
     @collector = get_trigger(@context)
+    @game_actors = @contexts.game.get_group(GameMatcher.all_of(GameMatcher.actor))
+    @ui_actors = @contexts.ui.get_group(UiMatcher.all_of(UiMatcher.actor))
   end
 
   def get_trigger(context : Entitas::Context) : Entitas::ICollector
@@ -35,6 +39,27 @@ class Example::CollisionSystem < Entitas::ReactiveSystem
         wire.color = Oid::Color::DARKGRAY
       when Oid::Color::DARKGRAY
         wire.color = Oid::Color::MAROON
+      end
+
+      # Add view to selected text and wires
+      game_actors.each do |e|
+        if e.actor.name == "selected_wires"
+          if e.view?
+            e.del_view
+          else
+            e.add_view
+          end
+        end
+      end
+
+      ui_actors.each do |e|
+        if e.actor.name == "text_box_02"
+          if e.view?
+            e.del_view
+          else
+            e.add_view
+          end
+        end
       end
 
       entity.destroyed = true
