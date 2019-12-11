@@ -36,7 +36,7 @@ class Example::WorldSystem
       .add_actor(name: "cube")
       .add_position(Oid::Vector3.new(0.0, 1.0, 0.0))
       .add_view
-
+      .add_interactive
     cube.actor.add_object(
       Oid::Cube.new(
         size: Oid::Vector3.new(2.0, 2.0, 2.0),

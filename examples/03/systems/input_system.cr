@@ -10,6 +10,10 @@ class Example::InputSystem < Entitas::ReactiveSystem
   def get_trigger(context : Entitas::Context) : Entitas::ICollector
     context.create_collector(InputMatcher
       .any_of(
+        InputMatcher.mouse_up,
+        InputMatcher.mouse_down,
+        InputMatcher.mouse_pressed,
+        InputMatcher.mouse_released,
         InputMatcher.mouse_wheel,
         InputMatcher.key_up,
         InputMatcher.key_down,
@@ -20,7 +24,8 @@ class Example::InputSystem < Entitas::ReactiveSystem
 
   # Select entities with input components
   def filter(entity : InputEntity)
-    (entity.keyboard? && (entity.key_down? || entity.key_pressed? || entity.key_released?)) || entity.mouse_wheel?
+    (entity.keyboard? && (entity.key_down? || entity.key_pressed? || entity.key_released?)) ||
+      (entity.mouse_wheel? || entity.mouse_up? || entity.mouse_down? || entity.mouse_pressed? || entity.mouse_released?)
   end
 
   def execute(entities : Array(Entitas::IEntity))
@@ -29,20 +34,15 @@ class Example::InputSystem < Entitas::ReactiveSystem
     entities.each do |e|
       e = e.as(InputEntity)
 
-      if e.mouse_wheel?
+      if e.left_mouse? && e.mouse_pressed?
+        context.create_entity
+          .add_input(e.mouse_down.position)
+      elsif e.mouse_wheel?
         # ////////////////////////////////////////////////////
         # TODO: Add logic for when mouse wheel is scrolled
         # ////////////////////////////////////////////////////
       elsif e.keyboard?
         case e.keyboard.key
-        when Oid::Enum::Key::Right
-          # ////////////////////////////////////////////////////
-          # TODO: Add logic for when right key is pressed
-          # ////////////////////////////////////////////////////
-        when Oid::Enum::Key::Left
-          # ////////////////////////////////////////////////////
-          # TODO: Add logic for when left key is pressed
-          # ////////////////////////////////////////////////////
         else
           puts "Input received from #{e.keyboard.key} !!!"
         end

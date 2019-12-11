@@ -21,6 +21,10 @@ module Oid
       self.contexts.game.camera.value
     end
 
+    def camera? : Bool
+      self.contexts.game.camera?
+    end
+
     def ui_render_group : Entitas::Group(UiEntity)
       @ui_render_group ||= self.contexts.ui.get_group(
         UiMatcher
@@ -74,7 +78,7 @@ module Oid
       self.init do
         init_hook.call(controller)
 
-        if self.camera.is_a?(Oid::Camera3D)
+        if self.camera? && self.camera.is_a?(Oid::Camera3D)
           self.view_service.set_camera_mode(self.camera.as(Oid::Camera3D))
         end
       end
@@ -87,7 +91,7 @@ module Oid
           update_hook.call(controller)
 
           # Update the camera
-          self.view_service.update_camera(self.camera) if self.camera.target?
+          self.view_service.update_camera(self.camera) if self.camera? && self.camera.target?
         end
 
         # Draw

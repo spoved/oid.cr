@@ -13,6 +13,14 @@ module Oid
           private def _listen_for_keys : Array(Oid::Enum::Key)
             KEYS
           end
+
+          private def _init_keyboard_entites
+            KEYS.each do |key|
+              puts "Create entity for #{key}"
+              context.create_entity
+                .add_keyboard(key)
+            end
+          end
         end
       end
 
@@ -185,11 +193,6 @@ module Oid
       end
 
       private def _init_keyboard_entites
-        KEYS.each do |key|
-          puts "Create entity for #{key}"
-          context.create_entity
-            .add_keyboard(key)
-        end
       end
     end
   end

@@ -10,18 +10,13 @@ RayLib::ConfigSystem.configure do |settings|
   settings.target_fps = 120
   settings.show_fps = true
   settings.enable_mouse = true
-  settings.enable_keyboard = true
+  settings.enable_keyboard = false
 
   settings.asset_path = "examples/03/assets"
 end
 
-Oid::Systems::EmitInput.listen_for_keys(
-  # ////////////////////////////////////////////////////
-  # TODO: Define any keys you would like to listen for here!
-  # ////////////////////////////////////////////////////
+# Oid::Systems::EmitInput.listen_for_keys
 
-  Right,
-  Left,
-  Up,
-  Down
-)
+# ////////////////////////////////////////////////////
+# TODO: Define any keys you would like to listen for here!
+# ////////////////////////////////////////////////////

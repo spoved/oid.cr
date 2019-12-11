@@ -11,6 +11,12 @@ license: MIT
 targets:
   oid-cli:
     main: src/bin/oid.cr
+  example_01:
+    main: examples/01/main.cr
+  example_02:
+    main: examples/02/main.cr
+  example_03:
+    main: examples/03/main.cr
 
 dependencies:
   spoved:
