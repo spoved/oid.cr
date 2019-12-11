@@ -27,6 +27,10 @@ module Oid
         !self.children.empty?
       end
 
+      def get_child(kind)
+        self.children.select { |c| c.class == kind }
+      end
+
       # :nodoc:
       # Internal method to set parent
       private def set_parent(parent : T?)

@@ -12,3 +12,10 @@ end
 class Input < Entitas::Component
   prop :position, Oid::Vector2
 end
+
+@[Context(Game, Ui)]
+class Collision
+  prop :ray, Oid::Ray
+  prop :source, Entitas::Entity
+  prop :target, Entitas::Entity
+end

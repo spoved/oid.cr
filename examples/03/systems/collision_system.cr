@@ -1,28 +1,41 @@
 class Example::CollisionSystem < Entitas::ReactiveSystem
   protected property contexts : Contexts
-  protected property context : InputContext
-  protected property game_actors : Entitas::Group(GameEntity)
+  protected property context : GameContext
 
   def initialize(@contexts)
-    @context = @contexts.input
+    @context = @contexts.game
     @collector = get_trigger(@context)
-    @game_actors = @contexts.game.get_group(GameMatcher.all_of(GameMatcher.actor, GameMatcher.interactive))
-  end
-
-  def filter(entity : InputEntity)
-    entity.input?
   end
 
   def get_trigger(context : Entitas::Context) : Entitas::ICollector
-    context.create_collector(InputMatcher.input)
+    context.create_collector(GameMatcher.collision)
   end
 
   def execute(entities : Array(Entitas::IEntity))
-    entities.each do |entity|
-      entity = entity.as(InputEntity)
+    view_service = contexts.meta.view_service.instance
+    camera = contexts.game.camera.value
 
-      # TODO: Check collision
-      puts entity.input.position
+    entities.each do |entity|
+      entity = entity.as(GameEntity)
+      actor = entity.collision.target.as(GameEntity).actor
+
+      # Change cube color
+      cube = actor.get_child(Oid::Cube).first
+      case cube.as(Oid::Cube).color
+      when Oid::Color::GRAY
+        cube.as(Oid::Cube).color = Oid::Color::RED
+      when Oid::Color::RED
+        cube.as(Oid::Cube).color = Oid::Color::GRAY
+      end
+
+      # Change wire color
+      wire = actor.get_child(Oid::CubeWires).first.as(Oid::CubeWires)
+      case wire.color
+      when Oid::Color::MAROON
+        wire.color = Oid::Color::DARKGRAY
+      when Oid::Color::DARKGRAY
+        wire.color = Oid::Color::MAROON
+      end
 
       entity.destroyed = true
     end

@@ -152,4 +152,25 @@ class RayLib::ViewSystem
       raise "Unknown Camera: #{self.camera.inspect}"
     end
   end
+
+  def get_mouse_ray(mouse_position : Oid::Vector2, camera : Oid::Camera3D) : Oid::Ray
+    ray = RayLib.get_mouse_ray(RayLib::Vector2.new(mouse_position), RayLib::Camera3D.new(camera))
+    Oid::Ray.new(
+      position: Oid::Vector3.new(ray.position.x, ray.position.y, ray.position.z),
+      direction: Oid::Vector3.new(ray.direction.x, ray.direction.y, ray.direction.z)
+    )
+  end
+
+  def check_collision_ray_box(ray : Oid::Ray, box : Oid::BoundingBox) : Bool
+    RayLib.check_collision_ray_box(
+      ray: RayLib::Ray.new(
+        position: RayLib::Vector3.new(ray.position),
+        direction: RayLib::Vector3.new(ray.direction)
+      ),
+      box: RayLib::BoundingBox.new(
+        min: RayLib::Vector3.new(box.min),
+        max: RayLib::Vector3.new(box.max)
+      )
+    )
+  end
 end

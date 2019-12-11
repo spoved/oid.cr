@@ -28,6 +28,7 @@ module Oid
 
   class Cube
     include Oid::Shape
+
     property size : Oid::Vector3
     property color : Oid::Color
 
@@ -49,5 +50,14 @@ module Oid
     property spacing : Float64
 
     def initialize(@size, @spacing); end
+  end
+
+  struct BoundingBox
+    include JSON::Serializable
+
+    property min : Oid::Vector3
+    property max : Oid::Vector3
+
+    def initialize(@min, @max); end
   end
 end

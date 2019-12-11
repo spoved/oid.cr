@@ -18,6 +18,10 @@ module Oid
       abstract def render(contexts : Contexts, entity : RenderableEntity)
 
       abstract def render_fps
+
+      abstract def get_mouse_ray(mouse_position : Oid::Vector2, camera : Oid::Camera3D) : Oid::Ray
+
+      abstract def check_collision_ray_box(ray : Oid::Ray, bounding_box : Oid::BoundingBox) : Bool
     end
   end
 end

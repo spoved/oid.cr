@@ -8,6 +8,7 @@ create_feature Example, [
   Example::InputSystem,
   Example::WorldSystem,
   Example::UiSystem,
+  Example::CollisionEmitSystem,
   Example::CollisionSystem,
 
   # ////////////////////////////////////////////////////
