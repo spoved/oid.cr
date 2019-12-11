@@ -8,6 +8,7 @@ create_feature Example, [
   Example::InputSystem,
   Example::WorldSystem,
   Example::UiSystem,
+  BoxSystem,
 
   # ////////////////////////////////////////////////////
   # TODO: Place any services created here
@@ -38,7 +39,7 @@ class GameController < Entitas::Controller
 end
 
 controller = GameController.new
-
+controller.start_server
 app = RayLib::Application.new("example")
 
 app.start(

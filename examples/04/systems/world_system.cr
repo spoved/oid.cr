@@ -15,21 +15,11 @@ class Example::WorldSystem
     # ////////////////////////////////////////////////////
     # TODO: Initialize your world here!
     # ////////////////////////////////////////////////////
-
-    # Create player
-    player = contexts.game
+    contexts.game
       .create_entity
-      .add_actor(name: "player")
-      .add_position(Oid::Vector3.zero)
-
-    # Create camera
-    camera = contexts.game.create_entity
-      .add_camera(
-
-        value: Oid::Camera2D.new(
-          target: player.actor,
-          offset: Oid::Vector2.zero,
-        )
+      .add_state(
+        pause: false,
+        collision: false
       )
   end
 

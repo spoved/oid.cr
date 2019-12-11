@@ -30,7 +30,6 @@ class Example::InputSystem < Entitas::ReactiveSystem
 
   def execute(entities : Array(Entitas::IEntity))
     camera = contexts.game.camera.value.as(Oid::Camera2D)
-
     entities.each do |e|
       e = e.as(InputEntity)
 
@@ -44,14 +43,14 @@ class Example::InputSystem < Entitas::ReactiveSystem
         # ////////////////////////////////////////////////////
       elsif e.keyboard?
         case e.keyboard.key
-        when Oid::Enum::Key::Right
-          # ////////////////////////////////////////////////////
-          # TODO: Add logic for when right key is pressed
-          # ////////////////////////////////////////////////////
-        when Oid::Enum::Key::Left
-          # ////////////////////////////////////////////////////
-          # TODO: Add logic for when left key is pressed
-          # ////////////////////////////////////////////////////
+        when Oid::Enum::Key::Space
+          if e.key_pressed?
+            if contexts.game.state.pause? && contexts.game.state.pause
+              contexts.game.state.pause = false
+            else
+              contexts.game.state.pause = true
+            end
+          end
         else
           puts "Input received from #{e.keyboard.key} !!!"
         end

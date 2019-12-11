@@ -33,9 +33,9 @@ module Oid
           dir = target_pos - cur_pos
           dist = dir.magnitude
 
-          rel_speed = (e.move.speed * time_service.delta_time)
+          rel_speed = (e.move.speed * time_service.frame_time * 100)
 
-          if dist <= rel_speed
+          if (dist <= rel_speed || dist.zero?)
             e.replace_position(value: target_pos)
             e.remove_move
             e.move_complete = true

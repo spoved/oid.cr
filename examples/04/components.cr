@@ -16,3 +16,12 @@
 # class Input < Entitas::Component
 #   prop :position, Oid::Vector2
 # end
+
+@[Context(Game)]
+@[Component::Unique]
+class State < Entitas::Component
+  prop :pause, Bool, default: false
+  prop :collision, Bool, default: false
+  prop :screen_upper_limit, Int32, default: 40
+  prop :box_a_speed, Float64, default: 4.0
+end

@@ -18,27 +18,15 @@ class Example::UiSystem
     # TODO: Initialize your Ui here!
     # ////////////////////////////////////////////////////
 
-    text_box = context
-      .create_entity
-      .add_actor(name: "text_box")
-      .add_position(
-        Oid::Vector3.new(
-          config_service.screen_w/2,
-          10.0,
-          0.0
-        )
-      )
-      .add_view
-
-    text_box.actor.add_object(
-      Oid::Text.new(
-        text: "Hello World",
-        font_size: 20,
-        color: Oid::Color::DARKGRAY
-      ),
-      position: Oid::Vector3.new(-50.0, 0.0, 0.0),
-      rotation: Oid::Vector3.zero,
-    )
+    # text_box.actor.add_object(
+    #   Oid::Text.new(
+    #     text: "Hello World",
+    #     font_size: 20,
+    #     color: Oid::Color::DARKGRAY
+    #   ),
+    #   position: Oid::Vector3.new(-50.0, 0.0, 0.0),
+    #   rotation: Oid::Vector3.zero,
+    # )
   end
 
   def execute
