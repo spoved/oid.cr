@@ -76,6 +76,8 @@ class Oid::Cli < Admiral::Command
           file << template.render(options)
         end
       end
+
+      system("crystal tool format #{p_path}")
     end
   end
 
