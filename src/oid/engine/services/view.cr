@@ -15,7 +15,7 @@ module Oid
 
       abstract def set_camera_mode(camera : Oid::Camera3D)
 
-      abstract def render(contexts : Contexts, entity : Entitas::IEntity)
+      abstract def render(contexts : Contexts, entity : RenderableEntity)
 
       abstract def render_fps
     end

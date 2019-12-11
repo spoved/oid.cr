@@ -42,8 +42,8 @@ class RayLib::ViewSystem
     entity.add_view(scale: 0.4)
   end
 
-  def render(contexts : Contexts, entity : Entitas::IEntity)
-    e = entity.as(GameEntity)
+  def render(contexts : Contexts, entity : RenderableEntity)
+    e = entity.as(RenderableEntity)
     if e.asset?
       render_asset(e)
     end
@@ -99,6 +99,14 @@ class RayLib::ViewSystem
       RayLib.draw_grid(
         slices: object.size,
         spacing: object.spacing.to_f32,
+      )
+    when Oid::Text
+      RayLib.draw_text(
+        text: object.text,
+        pos_x: object.transform.x.to_i,
+        pos_y: object.transform.y.to_i,
+        font_size: object.font_size,
+        color: object.color.to_unsafe,
       )
     end
   end

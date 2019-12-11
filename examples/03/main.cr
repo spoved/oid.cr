@@ -7,6 +7,7 @@ require "./systems/*"
 create_feature Example, [
   Example::InputSystem,
   Example::WorldSystem,
+  Example::UiSystem,
 
   # ////////////////////////////////////////////////////
   # TODO: Place any services created here

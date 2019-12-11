@@ -1,7 +1,8 @@
 module Oid
   abstract class Application
     protected setter contexts : Contexts? = nil
-    @render_group : Entitas::Group(GameEntity)? = nil
+    @game_render_group : Entitas::Group(GameEntity)? = nil
+    @ui_render_group : Entitas::Group(UiEntity)? = nil
 
     def contexts : Contexts
       raise "No contexts set" if @contexts.nil?
@@ -20,8 +21,17 @@ module Oid
       self.contexts.game.camera.value
     end
 
-    def render_group : Entitas::Group(GameEntity)
-      @render_group ||= self.contexts.game.get_group(
+    def ui_render_group : Entitas::Group(UiEntity)
+      @ui_render_group ||= self.contexts.ui.get_group(
+        UiMatcher
+          .all_of(UiMatcher.view, UiMatcher.position)
+          .any_of(UiMatcher.asset, UiMatcher.actor)
+          .none_of(UiMatcher.destroyed)
+      )
+    end
+
+    def game_render_group : Entitas::Group(GameEntity)
+      @game_render_group ||= self.contexts.game.get_group(
         GameMatcher
           .all_of(GameMatcher.view, GameMatcher.position)
           .any_of(GameMatcher.asset, GameMatcher.actor)
@@ -83,8 +93,8 @@ module Oid
         # Draw
         self.draw do
           # Pass each entity to the view service
-          render_group.sort { |a, b| a.position.value.z <=> b.position.value.z }.each do |e|
-            # render_group.each do |e|
+          game_render_group.sort { |a, b| a.position.value.z <=> b.position.value.z }.each do |e|
+            # game_render_group.each do |e|
             self.view_service.render(self.contexts, e)
           end
 
@@ -92,6 +102,13 @@ module Oid
         end
 
         self.draw_ui do
+          ui_render_group
+          # Pass each entity to the view service
+          ui_render_group.sort { |a, b| a.position.value.z <=> b.position.value.z }.each do |e|
+            # ui_render_group.each do |e|
+            self.view_service.render(self.contexts, e)
+          end
+
           if config_service.show_fps?
             self.view_service.render_fps
           end
