@@ -6,18 +6,8 @@ class BoxSystem
   protected property context : GameContext
   protected setter box_one : GameEntity? = nil
   protected setter box_two : GameEntity? = nil
-  protected setter config_service : Oid::Service::Config? = nil
-  protected setter input_service : Oid::Service::Input? = nil
 
-  def config_service : Oid::Service::Config
-    raise "Config service is not set" if @config_service.nil?
-    @config_service.as(Oid::Service::Config)
-  end
-
-  def input_service : Oid::Service::Input
-    raise "Input service is not set" if @input_service.nil?
-    @input_service.as(Oid::Service::Input)
-  end
+  include_services Config, Input
 
   def box_one : GameEntity
     raise "Box One GameEntity is not set" if @box_one.nil?
@@ -34,8 +24,7 @@ class BoxSystem
   end
 
   def init
-    @config_service = contexts.meta.config_service.instance
-    @input_service = contexts.meta.input_service.instance
+    _init_services
 
     self.box_one = context
       .create_entity
@@ -97,7 +86,7 @@ class BoxSystem
             y: self.box_one.position.value.y,
             z: 0.0
           ),
-          speed: 4.0
+          speed: context.state.box_a_speed
         )
       end
     end

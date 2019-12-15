@@ -6,18 +6,20 @@ class {{ name_module }}::UiSystem
   protected property context : UiContext
   protected property actors : Entitas::Group(UiEntity)
 
+  include_services Config
+
   def initialize(@contexts)
     @context = @contexts.ui
     @actors = @contexts.ui.get_group(UiMatcher.all_of(UiMatcher.actor))
   end
 
   def init
-    config_service = contexts.meta.config_service.instance
+    _init_services
 
     # ////////////////////////////////////////////////////
     # TODO: Initialize your Ui here!
     # ////////////////////////////////////////////////////
-    
+
     text_box = context
       .create_entity
       .add_actor(name: "text_box")

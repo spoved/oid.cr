@@ -18,11 +18,5 @@ class Example::UiSystem
   end
 
   def execute
-    actors.each do |entity|
-      entity = entity.as(UiEntity)
-      # ////////////////////////////////////////////////////
-      # TODO: Add game logic!
-      # ////////////////////////////////////////////////////
-    end
   end
 end

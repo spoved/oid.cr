@@ -5,12 +5,14 @@ class {{ name_module }}::WorldSystem
   protected property contexts : Contexts
   protected property actors : Entitas::Group(GameEntity)
 
+  include_services Config
+
   def initialize(@contexts)
     @actors = @contexts.game.get_group(GameMatcher.all_of(GameMatcher.actor))
   end
 
   def init
-    config_service = contexts.meta.config_service.instance
+    _init_services
 
     # ////////////////////////////////////////////////////
     # TODO: Initialize your world here!
