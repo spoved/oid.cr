@@ -1,6 +1,6 @@
 module Oid
   module Service
-    module ConfigService
+    module Config
       include Oid::Service
     end
   end

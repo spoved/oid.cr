@@ -1,6 +1,6 @@
 module Oid
   module Service
-    module ViewService
+    module View
       include Oid::Service
 
       # create a view from a premade asset (e.g. a prefab)

@@ -1,6 +1,6 @@
 module Oid
   module Service
-    module InputService
+    module Input
       include Oid::Service
 
       # # Input-related functions: keyboard
