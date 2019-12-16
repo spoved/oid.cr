@@ -26,7 +26,9 @@ end
 macro finished
   class ::GameContext < Entitas::Context(::GameEntity)
     def get_game_actor_with_name(name : String) : GameEntity?
-      self.get_entity_index(Entitas::Contexts::GAME_ACTOR_NAME_INDEX).get_entity(name)
+      self.get_entity_index(Entitas::Contexts::GAME_ACTOR_NAME_INDEX)
+        .as(Entitas::PrimaryEntityIndex(GameEntity, String))
+        .get_entity(name)
     end
   end
 end
