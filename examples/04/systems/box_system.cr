@@ -66,9 +66,14 @@ class BoxSystem
   end
 
   def execute
-    # if game state is not paused
-    unless context.state.pause
+    # if game state is paused
+    if context.state.pause
+      self.box_one.del_move if self.box_one.move?
+
+      # if game state is not paused
+    else
       position = input_service.mouse_position
+
       self.box_two.replace_position(
         Oid::Vector3.new(
           x: position.x - 30,

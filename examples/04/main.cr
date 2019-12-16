@@ -9,6 +9,7 @@ create_feature Example, [
   Example::WorldSystem,
   Example::UiSystem,
   BoxSystem,
+  CollisionSystem,
 
   # ////////////////////////////////////////////////////
   # TODO: Place any services created here

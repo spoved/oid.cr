@@ -161,8 +161,8 @@ class RayLib::ViewSystem
     )
   end
 
-  def check_collision_ray_box(ray : Oid::Ray, box : Oid::BoundingBox) : Bool
-    RayLib.check_collision_ray_box(
+  def check_mouse_collision(ray : Oid::Ray, box : Oid::BoundingBox) : Bool
+    RayLib.check_mouse_collision(
       ray: RayLib::Ray.new(
         position: RayLib::Vector3.new(ray.position),
         direction: RayLib::Vector3.new(ray.direction)

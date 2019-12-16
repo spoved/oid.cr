@@ -19,7 +19,8 @@ targets:
     main: examples/03/main.cr
   example_04:
     main: examples/04/main.cr
-    
+  example_05:
+    main: examples/05/main.cr
 dependencies:
   spoved:
     github: spoved/spoved.cr

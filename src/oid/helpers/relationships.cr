@@ -19,7 +19,7 @@ module Oid
 
       # Check if parent is set
       def parent? : Bool
-        !self.parent.nil?
+        !@parent.nil?
       end
 
       # Check if children are present

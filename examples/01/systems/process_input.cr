@@ -27,6 +27,7 @@ module Oid
         pos = (entity.input.position / Oid::Vector2.new(800, 600))*10
         e = contexts.game
           .get_entity_index(Entitas::Contexts::PIECE_POSITION_INDEX)
+          .as(Entitas::PrimaryEntityIndex(GameEntity, Oid::Vector2))
           .get_entity(Oid::Vector2.new(pos.x.to_i, pos.y.to_i))
 
         if !e.nil? && e.interactive?

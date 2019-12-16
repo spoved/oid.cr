@@ -29,7 +29,7 @@ class Example::CollisionEmitSystem < Entitas::ReactiveSystem
 
       # puts entity.input.position
       game_actors.each do |actor|
-        collision = view_service.check_collision_ray_box(ray, actor.actor.bounds)
+        collision = view_service.check_mouse_collision(ray, actor.actor.bounds_cube)
         if collision
           contexts.game.create_entity
             .add_collision(

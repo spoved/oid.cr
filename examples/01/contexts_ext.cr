@@ -20,7 +20,9 @@ class Entitas::Contexts
   end
 
   def get_piece_with_position(context : GameContext, position : Oid::Vector2) : GameEntity?
-    context.get_entity_index(PIECE_POSITION_INDEX).get_entity(position)
+    context.get_entity_index(PIECE_POSITION_INDEX)
+      .as(Entitas::PrimaryEntityIndex(GameEntity, Oid::Vector2))
+      .get_entity(position)
   end
 
   # def get_next_empty_row(contexts : Contexts, position : Oid::Vector2)

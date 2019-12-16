@@ -16,9 +16,17 @@ module Oid
       when Oid::Enum::Position::Static
         self.position
       when Oid::Enum::Position::Relative
-        transform_position_rel_to(self.parent.as(Oid::Transformable).position)
+        if self.parent?
+          transform_position_rel_to(self.parent.as(Oid::Transformable).position)
+        else
+          transform_position_rel_to(Oid::Vector3.zero)
+        end
       when Oid::Enum::Position::Absolute
-        transform_position_rel_to(self.root.as(Oid::Transformable).position)
+        if self.parent?
+          transform_position_rel_to(self.root.as(Oid::Transformable).position)
+        else
+          transform_position_rel_to(Oid::Vector3.zero)
+        end
       when Oid::Enum::Position::Fixed
         camera = Entitas::Contexts.shared_instance.game.camera.value
         transform_position_rel_to(camera.position)

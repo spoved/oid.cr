@@ -2072,7 +2072,7 @@ module RayLib
     Binding.bg____CheckCollisionRaySphereEx_STATIC_Ray_Vector3_float_Vector3_X(ray, sphere_position, sphere_radius, collision_point)
   end
 
-  def self.check_collision_ray_box(ray : Ray, box : BoundingBox) : Bool
+  def self.check_mouse_collision(ray : Ray, box : BoundingBox) : Bool
     Binding.bg____CheckCollisionRayBox_STATIC_Ray_BoundingBox(ray, box)
   end
 
