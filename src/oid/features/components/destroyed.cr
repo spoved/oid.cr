@@ -1,4 +1,3 @@
 @[Context(Stage)]
 @[Entitas::Event(EventTarget::Self)]
-class Destroyed < Entitas::Component
-end
+class Oid::Destroyed < Entitas::Component; end
