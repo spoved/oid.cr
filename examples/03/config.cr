@@ -12,7 +12,7 @@ RayLib::ConfigSystem.configure do |settings|
   settings.enable_mouse = true
   settings.enable_keyboard = false
 
-  settings.asset_path = "examples/03/assets"
+  settings.asset_path = ""
 end
 
 # Oid::Systems::EmitInput.listen_for_keys

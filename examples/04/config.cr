@@ -15,7 +15,7 @@ RayLib::ConfigSystem.configure do |settings|
   # ////////////////////////////////////////////////////
   # TODO: Set your asset path here
   # ////////////////////////////////////////////////////
-  settings.asset_path = "examples/02/assets"
+  settings.asset_path = ""
 end
 
 Oid::Systems::EmitInput.listen_for_keys(
