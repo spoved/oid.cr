@@ -1,0 +1,1 @@
+module Oid::Service; end
