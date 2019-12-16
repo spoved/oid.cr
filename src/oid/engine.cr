@@ -1,5 +1,6 @@
 module Oid
 end
 
-require "./engine/*"
+require "./core/*"
 require "./resources/*"
+require "./features/**"

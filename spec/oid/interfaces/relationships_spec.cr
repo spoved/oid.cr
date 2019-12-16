@@ -1,7 +1,7 @@
 require "../../spec_helper"
 
 class RelTestObj
-  include Oid::Helpers::Relationships(RelTestObj)
+  include Oid::Relationships(RelTestObj)
 end
 
 private def orphan
@@ -29,7 +29,7 @@ private def subject_tree
   {parent, child, g_child1, g_child2, gg_child}
 end
 
-describe Oid::Helpers::Relationships do
+describe Oid::Relationships do
   it "#relationship" do
     parent, child = subject
     parent.relationship_to(child).should eq :parent
@@ -38,12 +38,21 @@ describe Oid::Helpers::Relationships do
     child.relationship_to(orphan).should eq :none
   end
 
+  describe "no parent" do
+    it "raises error" do
+      child = RelTestObj.new
+      expect_raises(Exception, "No parent exists! Please check if parent exists before trying to fech parent") do
+        child.parent
+      end
+    end
+  end
+
   describe "parent" do
     it "can be set" do
       parent = RelTestObj.new
       child = RelTestObj.new
 
-      child.parent.should be_nil
+      child.parent?.should be_false
       child.parent = parent
       child.parent.should be parent
     end
@@ -63,7 +72,7 @@ describe Oid::Helpers::Relationships do
 
         child.parent.should be parent
         child.clear_parent!
-        child.parent.should be_nil
+        child.parent?.should be_false
       end
 
       it "removes self from parent" do

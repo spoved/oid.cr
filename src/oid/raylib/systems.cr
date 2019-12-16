@@ -1,2 +1,0 @@
-require "../../raylib"
-require "./systems/*"

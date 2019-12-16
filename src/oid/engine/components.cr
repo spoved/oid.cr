@@ -1,3 +1,0 @@
-require "entitas"
-
-require "./components/*"
