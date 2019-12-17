@@ -12,6 +12,8 @@ class SpecController < Entitas::Controller
     window: SpecWindowSystem.new,
   )
 
+  def initialize(@contexts); end
+
   def create_systems(contexts : Contexts)
     Entitas::Feature.new("Systems")
       .add(Oid::ServiceRegistrationSystems.new(contexts, services))

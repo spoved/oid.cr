@@ -40,9 +40,5 @@ def mat4(x0 : Float64, x1 : Float64, x2 : Float64, x3 : Float64,
 end
 
 def new_spec_controller
-  SpecController.new
-end
-
-Spec.after_each do
-  ::Contexts.shared_instance.all_contexts.each { |ctx| ctx.destroy_all_entities }
+  SpecController.new(Contexts.new)
 end
