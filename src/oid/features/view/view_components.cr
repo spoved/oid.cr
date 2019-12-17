@@ -12,3 +12,11 @@ end
 class Oid::Asset < Entitas::Component
   prop :name, String, not_nil: true
 end
+
+@[Context(Stage)]
+class Oid::AssetLoaded < Entitas::Component; end
+
+@[Context(Stage)]
+class Oid::View < Entitas::Component
+  prop :value, Oid::Controller::View
+end
