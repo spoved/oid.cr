@@ -1,4 +1,8 @@
 module Oid
+  ##############################
+  # Mouse Components
+  ##############################
+
   @[Context(Input)]
   @[Component::Unique]
   class MouseWheel < Entitas::Component
@@ -32,6 +36,10 @@ module Oid
   class MousePressed < Entitas::Component
     prop :position, Oid::Vector2
   end
+
+  ##############################
+  # Keyboard Components
+  ##############################
 
   @[Context(Input)]
   class Keyboard < Entitas::Component
