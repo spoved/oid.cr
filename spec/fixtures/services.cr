@@ -2,6 +2,14 @@ class SpecCameraSystem
   include Oid::Service::Camera
 end
 
+class SpecApplicationSystem
+  include Oid::Service::Application
+
+  def init_controller(contexts : Contexts) : Oid::Controller::Application
+    SpecApplicationController.new
+  end
+end
+
 class SpecConfigSystem
   include Oid::Service::Config
 

@@ -2,6 +2,7 @@ module Oid
   module Systems
     class WindowMangement
       include Entitas::Systems::InitializeSystem
+      include Entitas::Systems::ExecuteSystem
 
       protected property contexts : Contexts
       protected getter context : AppContext
@@ -37,6 +38,8 @@ module Oid
           window_controller.init_window(contexts, entity, config_service)
         end
       end
+
+      def execute; end
     end
   end
 end

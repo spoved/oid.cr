@@ -13,8 +13,10 @@ RAYLIB_CONFIG = {
 }
 
 class AppController < Entitas::Controller
+  private property _stop_app : Bool = false
+
   getter services : Oid::Services = Oid::Services.new(
-    # application: ApplicationService.new,
+    application: RayLib::ApplicationSystem.new,
     logger: RayLib::LoggerSystem.new,
     input: RayLib::InputSystem.new,
     config: RayLib::ConfigSystem.new(RAYLIB_CONFIG),
@@ -29,21 +31,24 @@ class AppController < Entitas::Controller
       .add(Oid::ServiceRegistrationSystems.new(contexts, services))
       .add(OidSystems.new(contexts))
   end
+
+  def window_controller
+    contexts.app.window.value
+  end
+
+  def app_controller
+    contexts.app.window.value
+  end
 end
 
 controller = AppController.new
 controller.start
 
-100.times do
+window_controller = controller.contexts.app.window.value
+
+while !window_controller.should_close?
   controller.update
   Fiber.yield
-end
-
-window = controller.contexts.app.window_entity
-window.add_destroyed
-
-10.times do
-  controller.update
 end
 
 puts "DONE"

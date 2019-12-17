@@ -2,7 +2,7 @@ require "./services"
 
 class SpecController < Entitas::Controller
   getter services : Oid::Services = Oid::Services.new(
-    # application: ApplicationService.new,
+    application: SpecApplicationSystem.new,
     logger: SpecLoggerSystem.new,
     input: SpecInputSystem.new,
     config: SpecConfigSystem.new,
@@ -85,5 +85,41 @@ class SpecWindowController
 
   def on_destroyed(entity, component : Oid::Destroyed)
     self.destroy_window
+  end
+
+  def should_close? : Bool
+    self.window_destroyed
+  end
+end
+
+class SpecApplicationController
+  include Oid::Controller::Application
+
+  def register_listeners(entity : Entitas::IEntity); end
+
+  def init_application(contexts, entity, config_service : Oid::Service::Config); end
+
+  def init(&block)
+    yield
+  end
+
+  def update(&block)
+    yield
+  end
+
+  def draw(&block)
+    yield
+  end
+
+  def draw_ui(&block)
+    yield
+  end
+
+  def cleanup(&block)
+    yield
+  end
+
+  def exit(&block)
+    yield
   end
 end

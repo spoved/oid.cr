@@ -21,6 +21,10 @@ class RayLib::WindowController
     )
   end
 
+  def should_close? : Bool
+    RayLib.window_should_close
+  end
+
   def resize_window(resolution)
   end
 

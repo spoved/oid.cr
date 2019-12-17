@@ -13,4 +13,5 @@ create_feature Oid, [
   Oid::Systems::Move,
   Oid::Systems::CameraTrack,
   Oid::Systems::MultiDestroy,
+  Oid::Systems::Application,
 ]
