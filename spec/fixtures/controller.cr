@@ -9,12 +9,12 @@ class SpecController < Entitas::Controller
     time: SpecTimeSystem.new,
     view: SpecViewSystem.new,
     camera: SpecCameraSystem.new,
+    window: SpecWindowSystem.new,
   )
 
   def create_systems(contexts : Contexts)
     Entitas::Feature.new("Systems")
       .add(Oid::ServiceRegistrationSystems.new(contexts, services))
-      .add(Stage::EventSystems.new(contexts))
       .add(OidSystems.new(contexts))
   end
 end
@@ -49,5 +49,39 @@ class SpecViewController
 
   def on_destroyed(entity, component : Oid::Destroyed)
     self.destroy_view
+  end
+end
+
+class SpecWindowController
+  include Oid::Controller::Window
+  include Oid::Destroyed::Listener
+
+  getter contexts : ::Contexts
+
+  property window_destroyed = false
+
+  def initialize(@contexts); end
+
+  def window_entity : AppEntity
+    contexts.app.window_entity
+  end
+
+  def init_window(contexts, entity, config_service : Oid::Service::Config)
+    register_listeners(self.window_entity)
+  end
+
+  def resize_window(resolution)
+  end
+
+  def destroy_window
+    self.window_destroyed = true
+  end
+
+  def register_listeners(entity : Entitas::IEntity)
+    entity.add_destroyed_listener(self)
+  end
+
+  def on_destroyed(entity, component : Oid::Destroyed)
+    self.destroy_window
   end
 end

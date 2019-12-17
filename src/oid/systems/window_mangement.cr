@@ -27,11 +27,15 @@ module Oid
       end
 
       def init
-        # Create our window entity
-        context.create_entity.add_window(window_service.init_controller(contexts))
+        if context.window_entity?
+          raise "A Window Entity already exists!"
+        else
+          # Create our window entity
+          entity = context.create_entity.add_window(window_service.init_controller(contexts))
 
-        # Initialize our window
-        window_controller.init_window(contexts, window_entity, config_service)
+          # Initialize our window
+          window_controller.init_window(contexts, entity, config_service)
+        end
       end
     end
   end

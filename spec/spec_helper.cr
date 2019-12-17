@@ -42,3 +42,7 @@ end
 def new_spec_controller
   SpecController.new
 end
+
+Spec.after_each do
+  ::Contexts.shared_instance.all_contexts.each { |ctx| ctx.destroy_all_entities }
+end

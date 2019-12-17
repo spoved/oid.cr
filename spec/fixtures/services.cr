@@ -163,3 +163,11 @@ class SpecInputSystem
     Oid::Vector2.new touch_x, touch_y
   end
 end
+
+class SpecWindowSystem
+  include Oid::Service::Window
+
+  def init_controller(contexts : Contexts) : Oid::Controller::Window
+    SpecWindowController.new(contexts)
+  end
+end
