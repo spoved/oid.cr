@@ -10,6 +10,7 @@ end
 
 @[Context(Stage)]
 class Oid::Asset < Entitas::Component
+  prop :type, Oid::Enum::AssetType, not_nil: true
   prop :name, String, not_nil: true
 end
 

@@ -13,15 +13,18 @@ shard_name: oid
 
 # Set this to `true` to show configuration information when starting Sentry.
 info: true
-build: /usr/local/bin/crystal
-build_args: build ./examples/05/main.cr --exclude-warnings /usr/local/Cellar/crystal --error-trace -o ./bin/example_05
+
+build: /usr/bin/make
+build_args: docs
+# build_args: build ./examples/05/main.cr --exclude-warnings /usr/local/Cellar/crystal --error-trace -o ./bin/example_05
 
 # The command used to run the compiled application.
-run: ./bin/example_05
+run: /usr/local/bin/crystal
+# run: ./bin/example_05
 # run: ./build.sh
 # Any additional arguments to pass to the run command. Run args may only be
 # given if the run command is a single argument.
-run_args: ''
+run_args: spec --error-trace --exclude-warnings /usr/local/Cellar/crystal
 
 # The list of patterns of files for sentry to watch.
 watch:

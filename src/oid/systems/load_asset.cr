@@ -19,7 +19,7 @@ module Oid
 
       def init
         @view_service = contexts.meta.view_service.instance
-        @context = contexts.scene
+        @context = contexts.stage
         @collector = get_trigger(context)
       end
 
