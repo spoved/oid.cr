@@ -14,6 +14,11 @@ class Oid::Asset < Entitas::Component
 end
 
 @[Context(Stage)]
+class Oid::Renderable < Entitas::Component
+  prop :value, Oid::Element
+end
+
+@[Context(Stage)]
 class Oid::AssetLoaded < Entitas::Component; end
 
 @[Context(Stage)]

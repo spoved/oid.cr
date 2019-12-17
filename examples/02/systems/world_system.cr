@@ -46,10 +46,10 @@ class WorldSystem
       .add_actor(name: "ground")
       .add_position(value: Oid::Vector3.new(-6000, 320, 0))
       .actor.add_object(
-        Oid::Rectangle.new(
-          width: 13000.0, height: 8000.0, color: Oid::Color::GRAY
-        )
+      Oid::Rectangle.new(
+        width: 13000.0, height: 8000.0, color: Oid::Color::GRAY
       )
+    )
 
     # Add X line
     player.actor.add_object(
@@ -107,10 +107,10 @@ class WorldSystem
         )
         .add_view
         .actor.add_object(
-          b_rec,
-          position: Oid::Vector3.new(0.0, 0.0, 0.0),
-          positioning: Oid::Enum::Position::Relative
-        )
+        b_rec,
+        position: Oid::Vector3.new(0.0, 0.0, 0.0),
+        positioning: Oid::Enum::Position::Relative
+      )
 
       spacing += b_rec.width.to_i
     end
