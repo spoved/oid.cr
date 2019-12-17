@@ -2,4 +2,4 @@ require "json"
 require "entitas"
 
 require "./ext/*"
-require "./oid/*"
+require "./oid/engine"

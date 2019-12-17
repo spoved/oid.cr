@@ -1,4 +1,4 @@
-require "../interfaces/event_listener"
+require "./event_listener"
 
 module Oid::Controller
   include Oid::EventListener

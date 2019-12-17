@@ -1,5 +1,3 @@
-require "../view_components"
-
 module Oid
   module Systems
     class LoadAsset < ::Entitas::ReactiveSystem
