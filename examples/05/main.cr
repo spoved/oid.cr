@@ -2,6 +2,7 @@ require "../../src/oid"
 require "../../src/oid/raylib/**"
 
 RAYLIB_CONFIG = {
+  app_name:        "Example 05",
   screen_w:        800,
   screen_h:        600,
   target_fps:      120,
@@ -26,7 +27,6 @@ class AppController < Entitas::Controller
   def create_systems(contexts : Contexts)
     Entitas::Feature.new("Systems")
       .add(Oid::ServiceRegistrationSystems.new(contexts, services))
-      .add(Stage::EventSystems.new(contexts))
       .add(OidSystems.new(contexts))
   end
 end
@@ -35,6 +35,14 @@ controller = AppController.new
 controller.start
 
 100.times do
+  controller.update
+  Fiber.yield
+end
+
+window = controller.contexts.app.window_entity
+window.add_destroyed
+
+10.times do
   controller.update
 end
 

@@ -1,5 +1,5 @@
 module Oid
-  @[Context(Stage, Input)]
+  @[Context(App, Stage, Input)]
   @[Entitas::Event(EventTarget::Self)]
   class Destroyed < Entitas::Component; end
 

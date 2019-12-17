@@ -3,7 +3,7 @@ module Oid
     module Window
       include Oid::Service
 
-      abstract def init_window(contexts : Contexts, entity : Entity::IEntity)
+      abstract def init_controller(contexts : Contexts) : Oid::Controller::Window
     end
   end
 end

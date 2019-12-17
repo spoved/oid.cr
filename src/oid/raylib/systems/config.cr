@@ -1,9 +1,22 @@
 class RayLib::ConfigSystem
   include Oid::Service::Config
 
-  getter config : NamedTuple(screen_w: Int32, screen_h: Int32, target_fps: Int32, show_fps: Bool, enable_mouse: Bool, enable_keyboard: Bool, asset_path: String)
+  getter config : NamedTuple(
+    app_name: String,
+    screen_w: Int32,
+    screen_h: Int32,
+    target_fps: Int32,
+    show_fps: Bool,
+    enable_mouse: Bool,
+    enable_keyboard: Bool,
+    asset_path: String,
+  )
 
   def initialize(@config); end
+
+  def app_name : String
+    config[:app_name]
+  end
 
   def screen_w : Int32
     config[:screen_w]

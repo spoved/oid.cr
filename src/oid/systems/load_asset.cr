@@ -8,11 +8,11 @@ module Oid
       protected setter view_service : Oid::Service::View? = nil
 
       def context
-        @context ||= contexts.stage
+        contexts.stage
       end
 
       def view_service
-        @view_service ||= contexts.meta.view_service.instance
+        contexts.meta.view_service.instance
       end
 
       def initialize(@contexts); end
