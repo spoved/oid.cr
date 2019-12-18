@@ -7,7 +7,7 @@ require "./contexts_ext"
 
 Oid::Systems::EmitInput.listen_for_keys(B)
 
-class RayLib::ConfigSystem
+class RayLib::ConfigService
   add_settings(
     board_size : Oid::Vector2,
     blocker_probability : Float64,
@@ -23,11 +23,11 @@ end
 class GameController < Entitas::Controller
   getter services = Services.new(
     application: ApplicationService.new,
-    logger: RayLib::LoggerSystem.new,
-    input: RayLib::InputSystem.new,
-    config: RayLib::ConfigSystem.new,
-    time: RayLib::TimeSystem.new,
-    view: RayLib::ViewSystem.new,
+    logger: RayLib::LoggerService.new,
+    input: RayLib::InputService.new,
+    config: RayLib::ConfigService.new,
+    time: RayLib::TimeService.new,
+    view: RayLib::ViewService.new,
   )
 
   def create_systems(contexts : Contexts)
@@ -44,7 +44,7 @@ class GameController < Entitas::Controller
   end
 end
 
-RayLib::ConfigSystem.configure do |settings|
+RayLib::ConfigService.configure do |settings|
   settings.screen_w = 800
   settings.screen_h = 600
   settings.target_fps = 120

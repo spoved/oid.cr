@@ -1,4 +1,4 @@
-class RayLib::ViewSystem
+class RayLib::ViewService
   include Oid::Service::View
 
   @[JSON::Field(ignore: true)]

@@ -1,4 +1,4 @@
-class RayLib::ApplicationSystem
+class RayLib::ApplicationService
   include Oid::Service::Application
 
   def initialize

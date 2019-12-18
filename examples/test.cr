@@ -58,11 +58,11 @@ end
 class GameController < Entitas::Controller
   getter services = Services.new(
     application: ApplicationService.new,
-    logger: RayLib::LoggerSystem.new,
-    input: RayLib::InputSystem.new,
+    logger: RayLib::LoggerService.new,
+    input: RayLib::InputService.new,
     config: ConfigService.new,
-    time: RayLib::TimeSystem.new,
-    view: RayLib::ViewSystem.new,
+    time: RayLib::TimeService.new,
+    view: RayLib::ViewService.new,
   )
 
   getter listeners : Set(Oid::EventListener) = Set(Oid::EventListener).new

@@ -1,10 +1,10 @@
-class RayLib::ConfigSystem
+class RayLib::ConfigService
   add_settings(
     asset_path : String
   )
 end
 
-RayLib::ConfigSystem.configure do |settings|
+RayLib::ConfigService.configure do |settings|
   settings.screen_w = 800
   settings.screen_h = 600
   settings.target_fps = 120

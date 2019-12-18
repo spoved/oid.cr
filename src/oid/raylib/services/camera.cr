@@ -1,3 +1,3 @@
-class RayLib::CameraSystem
+class RayLib::CameraService
   include Oid::Service::Camera
 end

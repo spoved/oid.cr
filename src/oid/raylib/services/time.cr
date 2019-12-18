@@ -1,4 +1,4 @@
-class RayLib::TimeSystem
+class RayLib::TimeService
   include Oid::Service::Time
 
   # Set target FPS (maximum)

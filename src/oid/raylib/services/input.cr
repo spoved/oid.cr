@@ -1,4 +1,4 @@
-class RayLib::InputSystem
+class RayLib::InputService
   include Oid::Service::Input
 
   def key_pressed?(key : Oid::Enum::Key) : Bool

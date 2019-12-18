@@ -1,4 +1,4 @@
-class RayLib::LoggerSystem
+class RayLib::LoggerService
   include Oid::Service::Logger
 
   def level=(value : ::Logger::Severity)

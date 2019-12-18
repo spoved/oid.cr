@@ -27,14 +27,14 @@ class AppController < Entitas::Controller
   private property _stop_app : Bool = false
 
   getter services : Oid::Services = Oid::Services.new(
-    application: RayLib::ApplicationSystem.new,
-    logger: RayLib::LoggerSystem.new,
-    input: RayLib::InputSystem.new,
-    config: RayLib::ConfigSystem.new(RAYLIB_CONFIG),
-    time: RayLib::TimeSystem.new,
-    view: RayLib::ViewSystem.new,
-    camera: RayLib::CameraSystem.new,
-    window: RayLib::WindowSystem.new
+    application: RayLib::ApplicationService.new,
+    logger: RayLib::LoggerService.new,
+    input: RayLib::InputService.new,
+    config: RayLib::ConfigService.new(RAYLIB_CONFIG),
+    time: RayLib::TimeService.new,
+    view: RayLib::ViewService.new,
+    camera: RayLib::CameraService.new,
+    window: RayLib::WindowService.new
   )
 
   def create_systems(contexts : Contexts)

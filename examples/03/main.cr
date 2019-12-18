@@ -23,11 +23,11 @@ end
 class GameController < Entitas::Controller
   getter services = Services.new(
     application: Example::ApplicationService.new,
-    logger: RayLib::LoggerSystem.new,
-    input: RayLib::InputSystem.new,
-    config: RayLib::ConfigSystem.new,
-    time: RayLib::TimeSystem.new,
-    view: RayLib::ViewSystem.new,
+    logger: RayLib::LoggerService.new,
+    input: RayLib::InputService.new,
+    config: RayLib::ConfigService.new,
+    time: RayLib::TimeService.new,
+    view: RayLib::ViewService.new,
   )
 
   def create_systems(contexts : Contexts)

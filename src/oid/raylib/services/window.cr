@@ -1,4 +1,4 @@
-class RayLib::WindowSystem
+class RayLib::WindowService
   include Oid::Service::Window
 
   def init_controller(contexts : Contexts) : Oid::Controller::Window

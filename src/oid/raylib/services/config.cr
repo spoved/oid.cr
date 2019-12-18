@@ -1,4 +1,4 @@
-class RayLib::ConfigSystem
+class RayLib::ConfigService
   include Oid::Service::Config
 
   getter config : NamedTuple(
