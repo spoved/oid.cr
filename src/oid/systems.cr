@@ -9,7 +9,7 @@ create_feature Oid, [
   Oid::EventSystems,
   Oid::Systems::WindowMangement,
   Oid::Systems::EmitInput,
-  Oid::Systems::LoadAsset,
+  Oid::Systems::AddView,
   Oid::Systems::Move,
   Oid::Systems::CameraTrack,
   Oid::Systems::MultiDestroy,

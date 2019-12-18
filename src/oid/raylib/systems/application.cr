@@ -2,16 +2,18 @@ class RayLib::ApplicationSystem
   include Oid::Service::Application
 
   def initialize
-    @draw_hook = ->draw(Oid::Controller::Application)
+    @draw_hook = ->draw(Contexts, Entitas::Group(StageEntity))
   end
 
   def init_controller(contexts : Contexts) : Oid::Controller::Application
     RayLib::ApplicationController.new(contexts)
   end
 
-  def draw(app_controller : Oid::Controller::Application)
-    app_controller.view_service.renderable_entities(app_controller.contexts).each do |e|
-      app_controller.view_service.draw(e)
+  def draw(contexts : Contexts, render_group : Entitas::Group(StageEntity))
+    render_group.each do |e|
+      if e.asset? && e.asset_loaded?
+        e.view.value.draw
+      end
     end
   end
 end

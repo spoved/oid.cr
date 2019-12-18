@@ -9,6 +9,17 @@ module Oid
 
       protected property contexts : Contexts
       protected getter context : AppContext
+      private setter render_group : Entitas::Group(StageEntity)? = nil
+
+      def renderable_entities : Entitas::Group(StageEntity)
+        @render_group ||= contexts.stage.get_group(
+          StageMatcher.all_of(
+            StageMatcher.view,
+          ).none_of(
+            StageMatcher.destroyed
+          )
+        )
+      end
 
       def initialize(@contexts)
         @context = @contexts.app
@@ -37,22 +48,22 @@ module Oid
         end
 
         application_controller.init do
-          application_service.init_hook.call(application_controller)
+          application_service.init_hook.call(contexts)
         end
       end
 
       def execute
         unless application_entity.destroyed?
           application_controller.update do
-            application_service.update_hook.call(application_controller)
+            application_service.update_hook.call(contexts)
           end
 
           application_controller.draw do
-            application_service.draw_hook.call(application_controller)
+            application_service.draw_hook.call(contexts, renderable_entities)
           end
 
           application_controller.draw_ui do
-            application_service.draw_ui_hook.call(application_controller)
+            application_service.draw_ui_hook.call(contexts)
           end
         end
 
@@ -61,11 +72,11 @@ module Oid
 
       def on_destroyed(entity, component : Oid::Destroyed)
         application_controller.cleanup do
-          application_service.cleanup_hook.call(application_controller)
+          application_service.cleanup_hook.call(contexts)
         end
 
         application_controller.exit do
-          application_service.exit_hook.call(application_controller)
+          application_service.exit_hook.call(contexts)
         end
       end
     end

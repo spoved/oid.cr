@@ -85,7 +85,7 @@ module Oid
   end
 
   @[Context(Stage)]
-  class Renderable < Entitas::Component
+  class ViewElement < Entitas::Component
     prop :value, Oid::Element
   end
 
@@ -139,8 +139,9 @@ module Oid
     include Rotation::Helper
     include Scale::Helper
     include Asset::Helper
+    include AssetLoaded::Helper
     include View::Helper
-    include Renderable::Helper
+    include ViewElement::Helper
   end
 
   module MovableEntity
