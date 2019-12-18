@@ -1,13 +1,10 @@
 class RayLib::ApplicationController
   include Oid::Controller::Application
+  include Oid::Services::Helper
 
   getter contexts : ::Contexts
 
   def initialize(@contexts); end
-
-  def config_service
-    contexts.meta.config_service.instance
-  end
 
   def init_application(contexts, entity, config_service : Oid::Service::Config)
   end

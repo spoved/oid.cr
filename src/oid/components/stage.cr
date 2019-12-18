@@ -121,3 +121,46 @@ module Oid
   @[Context(Stage)]
   class Interactive < Entitas::Component; end
 end
+
+##############################
+# Renderable
+##############################
+
+module Oid
+  module DestroyableEntity
+    include Destroyed::Helper
+  end
+
+  module ViewableEntity
+    include DestroyableEntity
+
+    include Position::Helper
+    include PositionType::Helper
+    include Rotation::Helper
+    include Scale::Helper
+    include Asset::Helper
+    include View::Helper
+    include Renderable::Helper
+  end
+
+  module MovableEntity
+    include Moveable::Helper
+    include Direction::Helper
+    include Mover::Helper
+    include Move::Helper
+    include MoveComplete::Helper
+  end
+
+  module InteractableEntity
+    include Interactive::Helper
+  end
+
+  module RenderableEntity
+    include DestroyableEntity
+    include ViewableEntity
+  end
+end
+
+class StageEntity < Entitas::Entity
+  include Oid::RenderableEntity
+end

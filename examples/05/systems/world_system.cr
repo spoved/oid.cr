@@ -39,9 +39,9 @@ class Example::WorldSystem
       if entity.actor? && entity.actor.name == "player"
         entity.replace_position(
           Oid::Vector3.new(
-            x: Random.rand(0.0...100.0),
-            y: Random.rand(0.0...100.0),
-            z: Random.rand(0.0...100.0),
+            x: 400.0,
+            y: 300.0,
+            z: 0.0,
           )
         )
       end
