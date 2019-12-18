@@ -13,7 +13,17 @@ RAYLIB_CONFIG = {
   asset_path:      "./examples/01/assets",
 }
 
+create_feature Example, [
+  Example::WorldSystem,
+
+  # ////////////////////////////////////////////////////
+  # TODO: Place any services created here
+  # ////////////////////////////////////////////////////
+]
+
 class AppController < Entitas::Controller
+  include Oid::Controller::Helper
+
   private property _stop_app : Bool = false
 
   getter services : Oid::Services = Oid::Services.new(
@@ -31,15 +41,7 @@ class AppController < Entitas::Controller
     Entitas::Feature.new("Systems")
       .add(Oid::ServiceRegistrationSystems.new(contexts, services))
       .add(OidSystems.new(contexts))
-      .add(Example::WorldSystem.new(contexts))
-  end
-
-  def window_controller
-    contexts.app.window.value
-  end
-
-  def app_controller
-    contexts.app.window.value
+      .add(ExampleSystems.new(contexts))
   end
 end
 
