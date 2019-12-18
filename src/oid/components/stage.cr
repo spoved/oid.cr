@@ -3,14 +3,14 @@ module Oid
   @[Entitas::Event(EventTarget::Self)]
   class Actor < Entitas::Component
     prop :name, String, not_nil: true, index: true
-    prop :controllers, Set(Oid::Controller), default: Set(Oid::Controller).new
+    # prop :controllers, Set(Oid::Controller), default: Set(Oid::Controller).new
   end
 
   @[Context(Stage)]
   @[Entitas::Event(EventTarget::Self)]
   class Prop < Entitas::Component
     prop :name, String, not_nil: true, index: true
-    prop :controllers, Set(Oid::Controller), default: Set(Oid::Controller).new
+    # prop :controllers, Set(Oid::Controller), default: Set(Oid::Controller).new
   end
 
   ##############################
@@ -34,7 +34,7 @@ module Oid
     end
 
     # 3d
-    prop :is_3d, Bool, default: false
+    prop :is_3d, Bool, default: (false)
     # Camera type: Perspective or Orthographic
     prop :type, Oid::Camera::Type, default: Oid::Camera::Type::Perspective
     # Camera mode

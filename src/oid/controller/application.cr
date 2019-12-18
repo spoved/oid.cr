@@ -3,6 +3,7 @@ module Oid
     module Application
       include Oid::Controller
 
+      @[JSON::Field(ignore: true)]
       getter contexts : ::Contexts
 
       abstract def init_application(contexts, entity, config_service : Oid::Service::Config)

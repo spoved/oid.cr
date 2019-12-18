@@ -6,7 +6,7 @@ class SpecApplicationSystem
   include Oid::Service::Application
 
   def init_controller(contexts : Contexts) : Oid::Controller::Application
-    SpecApplicationController.new
+    SpecApplicationController.new(contexts)
   end
 end
 

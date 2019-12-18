@@ -2,27 +2,18 @@ module Oid
   module Systems
     class Move
       include Entitas::Systems::CleanupSystem
-      include Entitas::Systems::InitializeSystem
       include Entitas::Systems::ExecuteSystem
+      include Oid::Services::Helper
 
       getter contexts : Contexts
       getter stage_context : StageContext
       getter moves : Entitas::Group(StageEntity)
       getter move_completes : Entitas::Group(StageEntity)
-      protected setter time_service : Oid::Service::Time? = nil
 
       def initialize(@contexts)
         @stage_context = @contexts.stage
         @moves = @stage_context.get_group(StageMatcher.move)
         @move_completes = @stage_context.get_group(StageMatcher.move_complete)
-      end
-
-      def init
-        @time_service = contexts.meta.time_service.instance
-      end
-
-      def time_service : Oid::Service::Time
-        @time_service ||= contexts.meta.time_service.instance
       end
 
       def execute

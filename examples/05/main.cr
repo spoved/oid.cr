@@ -1,5 +1,6 @@
 require "../../src/oid"
 require "../../src/oid/raylib/**"
+require "./systems/**"
 
 RAYLIB_CONFIG = {
   app_name:        "Example 05",
@@ -9,7 +10,7 @@ RAYLIB_CONFIG = {
   show_fps:        false,
   enable_mouse:    true,
   enable_keyboard: true,
-  asset_path:      "",
+  asset_path:      "./examples/01/assets",
 }
 
 class AppController < Entitas::Controller
@@ -30,6 +31,7 @@ class AppController < Entitas::Controller
     Entitas::Feature.new("Systems")
       .add(Oid::ServiceRegistrationSystems.new(contexts, services))
       .add(OidSystems.new(contexts))
+      .add(Example::WorldSystem.new(contexts))
   end
 
   def window_controller
@@ -43,6 +45,10 @@ end
 
 controller = AppController.new
 controller.start
+
+spawn do
+  controller.start_server
+end
 
 window_controller = controller.contexts.app.window.value
 

@@ -95,6 +95,8 @@ end
 class SpecApplicationController
   include Oid::Controller::Application
 
+  def initialize(@contexts); end
+
   def register_listeners(entity : Entitas::IEntity); end
 
   def init_application(contexts, entity, config_service : Oid::Service::Config); end

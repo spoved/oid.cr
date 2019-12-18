@@ -66,6 +66,16 @@ macro register_services
         {% end %} # end for service in services
       end
     end
+
+    module Services::Helper
+      abstract def contexts : Contexts
+      {% for service in services %}
+        {% service_name = service.stringify.downcase %}
+        def {{service_name.id}}_service : Oid::Service::{{service.id}}
+          self.contexts.meta.{{service_name.id}}_service.instance
+        end
+      {% end %}
+    end
   end
 end
 

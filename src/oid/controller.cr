@@ -1,6 +1,11 @@
 module Oid
   module Controller
-    include JSON::Serializable
+    def to_json(json : JSON::Builder)
+      json.object do
+        json.field("name", self.class.to_s)
+        json.field("type", "Controller")
+      end
+    end
   end
 end
 

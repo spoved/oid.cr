@@ -27,12 +27,10 @@ module Oid
       include Entitas::Systems::InitializeSystem
       include Entitas::Systems::ExecuteSystem
       include Entitas::Systems::CleanupSystem
+      include Oid::Services::Helper
 
       protected property contexts : Contexts
       protected property context : InputContext
-
-      protected setter config_service : Oid::Service::Config? = nil
-      protected setter input_service : Oid::Service::Input? = nil
 
       protected setter left_mouse_entity : InputEntity? = nil
       protected setter right_mouse_entity : InputEntity? = nil
@@ -59,18 +57,7 @@ module Oid
         @mouse_wheel_entity ||= context.mouse_wheel_entity.as(InputEntity)
       end
 
-      def config_service
-        @config_service ||= contexts.meta.config_service.instance
-      end
-
-      def input_service
-        @input_service ||= contexts.meta.input_service.instance
-      end
-
       def init
-        @input_service = contexts.meta.input_service.instance
-        @config_service = contexts.meta.config_service.instance
-
         # Initialize unique entities for the context
         context.left_mouse = true
         self.left_mouse_entity = context.left_mouse_entity
