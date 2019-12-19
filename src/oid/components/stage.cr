@@ -111,6 +111,7 @@ module Oid
   @[Context(Stage)]
   class ViewElement < Entitas::Component
     prop :value, Oid::Element
+    prop :origin, Oid::Enum::OriginType, default: Oid::Enum::OriginType::UpperLeft
   end
 
   ##############################

@@ -1,1 +1,3 @@
-module Oid::Element; end
+module Oid::Element
+  include JSON::Serializable
+end

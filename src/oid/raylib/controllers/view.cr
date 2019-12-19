@@ -62,41 +62,106 @@ class RayLib::ViewController
 
   def draw
     e = entity.as(Oid::RenderableEntity)
-    case e.asset.type
-    when Oid::Enum::AssetType::Texture
-      texture = view_service.textures[e.asset.name]
-      scale = e.scale.value.to_f32
-      source_rec = RayLib::Rectangle.new(
-        x: 0.0f32,
-        y: 0.0f32,
-        height: texture.height.to_f32,
-        width: texture.width.to_f32,
-      )
-      dest_rec = RayLib::Rectangle.new(
+
+    if e.view_element?
+      draw_element(e)
+    end
+
+    if e.asset?
+      draw_asset(e)
+    end
+  end
+
+  private def draw_element(e : Oid::RenderableEntity)
+    object = e.view_element.value
+    case object
+    when Oid::Element::Rectangle
+      rectangle = RayLib::Rectangle.new(
         x: e.position.value.x.to_f32,
         y: e.position.value.y.to_f32,
-        height: source_rec.height * scale,
-        width: source_rec.width * scale,
+        width: object.width.to_f32,
+        height: object.height.to_f32,
       )
-      origin = calc_asset_origin(e.asset.origin, dest_rec.height, dest_rec.width)
+      origin = calc_origin(e.view_element.origin, width: rectangle.width, height: rectangle.height)
 
-      RayLib.draw_texture_pro(
-        texture: texture,
-        # Rectangle on texture
-        source_rec: source_rec,
-        # Rectangle in the world
-        dest_rec: dest_rec,
-        # Origin in relation to dest rectangle
+      RayLib.draw_rectangle_pro(
+        rec: rectangle,
         origin: origin,
-
         rotation: e.rotation.value.magnitude.to_f32,
-        # scale: e.scale.value.to_f32,
-        tint: Oid::Color::WHITE.to_unsafe
+        color: object.color.to_unsafe,
+      )
+    when Oid::Element::Line
+      RayLib.draw_line(
+        start_pos_x: e.position.value.x.to_i,
+        start_pos_y: e.position.value.y.to_i,
+        end_pos_x: object.end_pos.x.to_i,
+        end_pos_y: object.end_pos.y.to_i,
+        color: object.color.to_unsafe,
+      )
+    when Oid::Element::Cube
+      RayLib.draw_cube(
+        position: RayLib::Vector3.new(e.position.value),
+        width: object.size.x.to_f32,
+        height: object.size.y.to_f32,
+        length: object.size.z.to_f32,
+        color: object.color.to_unsafe,
+      )
+    when Oid::Element::CubeWires
+      RayLib.draw_cube_wires(
+        position: RayLib::Vector3.new(e.position.value),
+        width: object.size.x.to_f32,
+        height: object.size.y.to_f32,
+        length: object.size.z.to_f32,
+        color: object.color.to_unsafe,
+      )
+    when Oid::Element::Grid
+      RayLib.draw_grid(
+        slices: object.size,
+        spacing: object.spacing.to_f32,
       )
     end
   end
 
-  private def calc_asset_origin(origin_type : Oid::Enum::OriginType, width : Float32, height : Float32) : RayLib::Vector2
+  private def draw_asset(e : Oid::RenderableEntity)
+    case e.asset.type
+    when Oid::Enum::AssetType::Texture
+      draw_texture(e)
+    end
+  end
+
+  private def draw_texture(e : Oid::RenderableEntity)
+    texture = view_service.textures[e.asset.name]
+    scale = e.scale.value.to_f32
+    source_rec = RayLib::Rectangle.new(
+      x: 0.0f32,
+      y: 0.0f32,
+      height: texture.height.to_f32,
+      width: texture.width.to_f32,
+    )
+    dest_rec = RayLib::Rectangle.new(
+      x: e.position.value.x.to_f32,
+      y: e.position.value.y.to_f32,
+      height: source_rec.height * scale,
+      width: source_rec.width * scale,
+    )
+    origin = calc_origin(e.asset.origin, width: dest_rec.width, height: dest_rec.height)
+
+    RayLib.draw_texture_pro(
+      texture: texture,
+      # Rectangle on texture
+      source_rec: source_rec,
+      # Rectangle in the world
+      dest_rec: dest_rec,
+      # Origin in relation to dest rectangle
+      origin: origin,
+
+      rotation: e.rotation.value.magnitude.to_f32,
+      # scale: e.scale.value.to_f32,
+      tint: Oid::Color::WHITE.to_unsafe
+    )
+  end
+
+  private def calc_origin(origin_type : Oid::Enum::OriginType, width : Float32, height : Float32) : RayLib::Vector2
     case origin_type
     when Oid::Enum::OriginType::UpperLeft
       RayLib::Vector2.new(
@@ -105,43 +170,43 @@ class RayLib::ViewController
       )
     when Oid::Enum::OriginType::UpperCenter
       RayLib::Vector2.new(
-        x: 0.0f32,
-        y: width/2,
+        x: width/2,
+        y: 0.0f32,
       )
     when Oid::Enum::OriginType::UpperRight
       RayLib::Vector2.new(
-        x: 0.0f32,
-        y: width,
+        x: width,
+        y: 0.0f32,
       )
     when Oid::Enum::OriginType::CenterLeft
       RayLib::Vector2.new(
-        x: height/2,
-        y: 0.0f32,
+        x: 0.0f32,
+        y: height/2,
       )
     when Oid::Enum::OriginType::Center
       RayLib::Vector2.new(
-        x: height/2,
-        y: width/2,
+        x: width/2,
+        y: height/2,
       )
     when Oid::Enum::OriginType::CenterRight
       RayLib::Vector2.new(
-        x: height,
-        y: width/2,
+        x: width,
+        y: height/2,
       )
     when Oid::Enum::OriginType::BottomLeft
       RayLib::Vector2.new(
-        x: height,
-        y: 0.0f32,
+        x: 0.0f32,
+        y: height,
       )
     when Oid::Enum::OriginType::BottomCenter
       RayLib::Vector2.new(
-        x: height,
-        y: width/2,
+        x: width/2,
+        y: height,
       )
     when Oid::Enum::OriginType::BottomRight
       RayLib::Vector2.new(
-        x: height,
-        y: width,
+        x: width,
+        y: height,
       )
     else
       RayLib::Vector2.new(

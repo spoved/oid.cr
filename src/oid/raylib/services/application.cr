@@ -11,7 +11,7 @@ class RayLib::ApplicationService
 
   def draw(contexts : Contexts, render_group : Entitas::Group(StageEntity))
     render_group.each do |e|
-      if e.asset? && e.asset_loaded?
+      if (e.asset? && e.asset_loaded?) || e.view_element?
         e.view.value.draw
       end
     end

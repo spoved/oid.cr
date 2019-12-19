@@ -23,23 +23,56 @@ class Example::WorldSystem
       .add_camera
       .add_position(Oid::Vector3.zero)
 
-    context.create_entity
-      .add_actor(name: "player")
-      .add_camera_target
-      .add_position(Oid::Vector3.new(400.0, 300.0, 0.0))
-      .add_asset(
-        name: "Blocker.png",
-        type: Oid::Enum::AssetType::Texture,
-        origin: Oid::Enum::OriginType::Center
-      )
+    # context.create_entity
+    #   .add_actor(name: "player")
+    #   .add_camera_target
+    #   .add_position(Oid::Vector3.new(400.0, 300.0, 0.0))
+    #   .add_asset(
+    #     name: "Blocker.png",
+    #     type: Oid::Enum::AssetType::Texture,
+    #     origin: Oid::Enum::OriginType::Center
+    #   )
+    #   .add_view_element(
+    #     value: Oid::Element::Rectangle.new(
+    #       width: 128.0,
+    #       height: 110.0,
+    #       color: Oid::Color::BLUE
+    #     ),
+    #     origin: Oid::Enum::OriginType::Center
+    #   )
 
     context.create_entity
       .add_actor(name: "block01")
-      .add_position(Oid::Vector3.new(100.0, 100.0, 0.0))
-      .add_asset(
-        name: "Piece0.png",
-        type: Oid::Enum::AssetType::Texture,
-        origin: Oid::Enum::OriginType::Center
+      .add_position(Oid::Vector3.new(400.0, 300.0, 0.0))
+      .add_view_element(
+        value: Oid::Element::Rectangle.new(
+          width: 128.0,
+          height: 110.0,
+          color: Oid::Color::RED
+        ),
+        origin: Oid::Enum::OriginType::BottomRight
+      )
+
+    context.create_entity
+      .add_actor(name: "line_x")
+      .add_position(Oid::Vector3.new(x: 0.0, y: 300.0, z: 0.0))
+      .add_view_element(
+        value: Oid::Element::Line.new(
+          end_pos: Oid::Vector2.new(x: 800.0, y: 300.0),
+          color: Oid::Color::GREEN,
+        ),
+        origin: Oid::Enum::OriginType::UpperCenter,
+      )
+
+    context.create_entity
+      .add_actor(name: "line_y")
+      .add_position(Oid::Vector3.new(x: 400.0, y: 0.0, z: 0.0))
+      .add_view_element(
+        value: Oid::Element::Line.new(
+          end_pos: Oid::Vector2.new(x: 400.0, y: 600.0),
+          color: Oid::Color::GREEN,
+        ),
+        origin: Oid::Enum::OriginType::UpperCenter,
       )
   end
 

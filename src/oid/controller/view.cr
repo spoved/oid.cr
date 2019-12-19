@@ -1,3 +1,5 @@
+require "../resources/**"
+
 module Oid
   module Controller
     module View
