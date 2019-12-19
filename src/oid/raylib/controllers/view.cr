@@ -74,20 +74,23 @@ class RayLib::ViewController
 
   private def draw_element(e : Oid::RenderableEntity)
     object = e.view_element.value
+    rotation = e.rotation.value
+    scale = e.scale.value.to_f32
+
     case object
     when Oid::Element::Rectangle
       rectangle = RayLib::Rectangle.new(
         x: e.position.value.x.to_f32,
         y: e.position.value.y.to_f32,
-        width: object.width.to_f32,
-        height: object.height.to_f32,
+        width: object.width.to_f32 * scale,
+        height: object.height.to_f32 * scale,
       )
       origin = calc_origin(e.view_element.origin, width: rectangle.width, height: rectangle.height)
 
       RayLib.draw_rectangle_pro(
         rec: rectangle,
         origin: origin,
-        rotation: e.rotation.value.magnitude.to_f32,
+        rotation: rotation.magnitude.to_f32,
         color: object.color.to_unsafe,
       )
     when Oid::Element::Line
@@ -101,17 +104,17 @@ class RayLib::ViewController
     when Oid::Element::Cube
       RayLib.draw_cube(
         position: RayLib::Vector3.new(e.position.value),
-        width: object.size.x.to_f32,
-        height: object.size.y.to_f32,
-        length: object.size.z.to_f32,
+        width: object.size.x.to_f32 * scale,
+        height: object.size.y.to_f32 * scale,
+        length: object.size.z.to_f32 * scale,
         color: object.color.to_unsafe,
       )
     when Oid::Element::CubeWires
       RayLib.draw_cube_wires(
         position: RayLib::Vector3.new(e.position.value),
-        width: object.size.x.to_f32,
-        height: object.size.y.to_f32,
-        length: object.size.z.to_f32,
+        width: object.size.x.to_f32 * scale,
+        height: object.size.y.to_f32 * scale,
+        length: object.size.z.to_f32 * scale,
         color: object.color.to_unsafe,
       )
     when Oid::Element::Grid
