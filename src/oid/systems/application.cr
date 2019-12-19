@@ -74,6 +74,8 @@ module Oid
 
           application_controller.draw_ui do
             application_service.draw_ui_hook.call(contexts, renderable_entities)
+
+            application_service.render_fps if config_service.show_fps?
           end
         end
 

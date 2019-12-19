@@ -21,57 +21,107 @@ class Example::WorldSystem
     # ////////////////////////////////////////////////////
 
     # Create player
+    player = create_player
+
+    outline = create_outline
+    player.add_child(outline)
+
+    label = create_label
+    outline.add_child(label)
+
+    # Create Block1
+    # context.create_entity
+    #   .add_actor(name: "block01")
+    #   .add_position(Oid::Vector3.new(0.0, 0.0, 0.0))
+    #   .add_view_element(
+    #     value: Oid::Element::Rectangle.new(
+    #       width: 128.0,
+    #       height: 110.0,
+    #       color: Oid::Color::RED
+    #     ),
+    #     origin: Oid::Enum::OriginType::Center
+    #   )
+    # .add_asset(
+    #   name: "Blocker.png",
+    #   type: Oid::Enum::AssetType::Texture,
+    #   origin: Oid::Enum::OriginType::Center
+    # )
+
+    # context.create_entity
+    # .add_prop(name: "text_01")
+    # .add_position(Oid::Vector3.new(0.0, -100.0, 100.0))
+    # .add_view_element(value: Oid::Element::Text.new(
+    #   text: "Hello World",
+    #   font_size: 20,
+    #   color: Oid::Color::BLUE
+    # ))
+
+    generate_origin_grid
+    generate_2d_grid(1000, 20.0)
+  end
+
+  def execute
+    actors.each do |entity|
+      entity = entity.as(StageEntity)
+      if entity.actor? && entity.actor.name == "player"
+        # Rotate
+        # entity.rotate_x(1.0)
+
+        # Zoom
+        # scale(entity)
+
+        # Random move
+        random_move(entity)
+      end
+    end
+  end
+
+  def create_player
     context.create_entity
       .add_actor(name: "player")
       .add_camera_target
-      .add_position(Oid::Vector3.new(0.0, 0.0, 10.0))
-      .add_asset(
-        name: "Blocker.png",
-        type: Oid::Enum::AssetType::Texture,
-        origin: Oid::Enum::OriginType::Center
-      )
+      .add_position(Oid::Vector3.new(20.0, 20.0, 10.0))
+      .add_position_type(Oid::Enum::Position::Relative)
       .add_view_element(
         value: Oid::Element::Rectangle.new(
-          width: 128.0,
-          height: 110.0,
+          width: 20.0,
+          height: 20.0,
           color: Oid::Color::BLUE
         ),
         origin: Oid::Enum::OriginType::Center
       )
-      .add_scale(0.5)
+      .add_scale(1.0)
+  end
 
+  def create_label
     context.create_entity
       .add_prop(name: "player_label")
-      .add_view_element(value: Oid::Element::Text.new(
-        text: "player",
-        font_size: 20,
-        color: Oid::Color::BLUE
-      ))
+      .add_position(Oid::Vector3.new(2.5 - (68.0/2), 0.0, 10.0))
+      .add_position_type(Oid::Enum::Position::Relative)
+      .add_view_element(
+        value: Oid::Element::Text.new(
+          text: "player",
+          font_size: 20,
+          color: Oid::Color::BLACK
+        ),
+        origin: Oid::Enum::OriginType::UpperLeft
+      )
       .add_scale(1.0)
+  end
 
-    # Create Block1
+  def create_outline
     context.create_entity
-      .add_actor(name: "block01")
-      .add_position(Oid::Vector3.new(0.0, 0.0, 0.0))
+      .add_position(Oid::Vector3.new(0.0, 10.0, 10.0))
+      .add_position_type(Oid::Enum::Position::Relative)
       .add_view_element(
         value: Oid::Element::Rectangle.new(
-          width: 128.0,
-          height: 110.0,
-          color: Oid::Color::RED
+          width: 68.0,
+          height: 20.0,
+          color: Oid::Color::GOLD
         ),
-        origin: Oid::Enum::OriginType::Center
+        origin: Oid::Enum::OriginType::UpperCenter
       )
-
-    context.create_entity
-      .add_prop(name: "text_01")
-      .add_position(Oid::Vector3.new(0.0, -100.0, 100.0))
-      .add_view_element(value: Oid::Element::Text.new(
-        text: "Hello World",
-        font_size: 20,
-        color: Oid::Color::BLUE
-      ))
-    generate_origin_grid
-    generate_2d_grid
+      .add_scale(1.0)
   end
 
   def generate_origin_grid
@@ -98,8 +148,8 @@ class Example::WorldSystem
       )
   end
 
-  def generate_2d_grid
-    grid = Oid::Element::Grid.new(size: 1000, spacing: 50.0)
+  def generate_2d_grid(size, spacing)
+    grid = Oid::Element::Grid.new(size: size, spacing: spacing)
     z = -100.0
     (grid.size/grid.spacing).to_i.times do |i|
       # Make X Positive
@@ -136,22 +186,6 @@ class Example::WorldSystem
         ),
         origin: Oid::Enum::OriginType::UpperCenter,
       )
-  end
-
-  def execute
-    actors.each do |entity|
-      entity = entity.as(StageEntity)
-      if entity.actor? && entity.actor.name == "player"
-        # Rotate
-        # entity.replace_rotation(entity.rotation.rotate_x(1.0))
-
-        # Zoom
-        # scale(entity)
-
-        # Random move
-        random_move(entity)
-      end
-    end
   end
 
   def random_move(entity)

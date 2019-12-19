@@ -47,7 +47,7 @@ class RayLib::ConfigService
     config[:asset_path]
   end
 
-  def camera_3d?
+  def camera_3d? : Bool
     config[:camera_mode] == "3d" ? true : false
   end
 end

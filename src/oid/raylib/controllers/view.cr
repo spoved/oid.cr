@@ -73,6 +73,7 @@ class RayLib::ViewController
   end
 
   private def draw_element(e : Oid::RenderableEntity)
+    position = e.transform
     object = e.view_element.value
     rotation = e.rotation.value
     scale = e.scale.value.to_f32
@@ -80,8 +81,8 @@ class RayLib::ViewController
     case object
     when Oid::Element::Rectangle
       rectangle = RayLib::Rectangle.new(
-        x: e.position.value.x.to_f32,
-        y: e.position.value.y.to_f32,
+        x: position.x.to_f32,
+        y: position.y.to_f32,
         width: object.width.to_f32 * scale,
         height: object.height.to_f32 * scale,
       )
@@ -95,15 +96,15 @@ class RayLib::ViewController
       )
     when Oid::Element::Line
       RayLib.draw_line(
-        start_pos_x: e.position.value.x.to_i,
-        start_pos_y: e.position.value.y.to_i,
+        start_pos_x: position.x.to_i,
+        start_pos_y: position.y.to_i,
         end_pos_x: object.end_pos.x.to_i,
         end_pos_y: object.end_pos.y.to_i,
         color: object.color.to_unsafe,
       )
     when Oid::Element::Cube
       RayLib.draw_cube(
-        position: RayLib::Vector3.new(e.position.value),
+        position: RayLib::Vector3.new(position),
         width: object.size.x.to_f32 * scale,
         height: object.size.y.to_f32 * scale,
         length: object.size.z.to_f32 * scale,
@@ -111,7 +112,7 @@ class RayLib::ViewController
       )
     when Oid::Element::CubeWires
       RayLib.draw_cube_wires(
-        position: RayLib::Vector3.new(e.position.value),
+        position: RayLib::Vector3.new(position),
         width: object.size.x.to_f32 * scale,
         height: object.size.y.to_f32 * scale,
         length: object.size.z.to_f32 * scale,
@@ -125,8 +126,8 @@ class RayLib::ViewController
     when Oid::Element::Text
       RayLib.draw_text(
         text: object.text,
-        pos_x: e.position.value.x.to_i,
-        pos_y: e.position.value.y.to_i,
+        pos_x: position.x.to_i,
+        pos_y: position.y.to_i,
         font_size: (object.font_size * scale).to_i,
         color: object.color.to_unsafe,
       )
@@ -141,6 +142,7 @@ class RayLib::ViewController
   end
 
   private def draw_texture(e : Oid::RenderableEntity)
+    position = e.transform
     texture = view_service.textures[e.asset.name]
     scale = e.scale.value.to_f32
     source_rec = RayLib::Rectangle.new(
@@ -150,8 +152,8 @@ class RayLib::ViewController
       width: texture.width.to_f32,
     )
     dest_rec = RayLib::Rectangle.new(
-      x: e.position.value.x.to_f32,
-      y: e.position.value.y.to_f32,
+      x: position.x.to_f32,
+      y: position.y.to_f32,
       height: source_rec.height * scale,
       width: source_rec.width * scale,
     )

@@ -14,16 +14,22 @@ module Oid
 
       def init
         # Initialize Camera
-        context.create_entity
+        camera = context.create_entity
           .add_camera(
             is_3d: config_service.camera_3d?,
             offset: Oid::Vector3.new(
-              config_service.screen_w/2,
-              config_service.screen_h/2,
-              0.0
-            )
+              x: config_service.screen_w/2,
+              y: config_service.screen_h/2,
+              z: 0.0
+            ),
+            target: Oid::Vector3.zero,
           )
-          .add_position(Oid::Vector3.zero)
+
+        if config_service.camera_3d?
+          camera
+            .add_rotation(Oid::Vector3.zero)
+            .add_position(Oid::Vector3.new(x: 0.0, y: 0.0, z: 100.0))
+        end
 
         if context.camera?
           entity = context.camera_entity.as(StageEntity)

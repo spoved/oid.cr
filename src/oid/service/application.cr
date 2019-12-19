@@ -17,6 +17,8 @@ module Oid
       property exit_hook : Proc(Contexts, Nil) = ->(contexts : Contexts) {}
 
       abstract def init_controller(contexts : Contexts) : Oid::Controller::Application
+
+      abstract def render_fps
     end
   end
 end

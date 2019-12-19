@@ -20,6 +20,8 @@ class SpecApplicationService
   def init_controller(contexts : Contexts) : Oid::Controller::Application
     SpecApplicationController.new(contexts)
   end
+
+  def render_fps; end
 end
 
 class SpecConfigService
