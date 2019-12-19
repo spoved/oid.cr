@@ -2,14 +2,14 @@ require "./services"
 
 class SpecController < Entitas::Controller
   getter services : Oid::Services = Oid::Services.new(
-    application: SpecApplicationSystem.new,
-    logger: SpecLoggerSystem.new,
-    input: SpecInputSystem.new,
-    config: SpecConfigSystem.new,
-    time: SpecTimeSystem.new,
-    view: SpecViewSystem.new,
-    camera: SpecCameraSystem.new,
-    window: SpecWindowSystem.new,
+    application: SpecApplicationService.new,
+    logger: SpecLoggerService.new,
+    input: SpecInputService.new,
+    config: SpecConfigService.new,
+    time: SpecTimeService.new,
+    view: SpecViewService.new,
+    camera: SpecCameraService.new,
+    window: SpecWindowService.new,
   )
 
   def initialize(@contexts); end
@@ -23,17 +23,17 @@ end
 
 class SpecViewController
   include Oid::Controller::View
-  include Oid::Position::Listener
   include Oid::Destroyed::Listener
 
   property destroy_view_was_called : Bool = false
 
-  def initialize(contexts, entity, @active = false, @position = Oid::Vector3.zero, @scale = Oid::Vector3.zero)
+  def initialize(contexts, entity)
     init_view(contexts, entity)
   end
 
   def init_view(contexts, entity)
     register_listeners(entity)
+    entity.asset_loaded = true
   end
 
   def destroy_view
@@ -41,12 +41,7 @@ class SpecViewController
   end
 
   def register_listeners(entity : Entitas::IEntity)
-    entity.add_position_listener(self)
     entity.add_destroyed_listener(self)
-  end
-
-  def on_position(entity, component : Oid::Position)
-    self.position = component.value
   end
 
   def on_destroyed(entity, component : Oid::Destroyed)

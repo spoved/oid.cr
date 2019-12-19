@@ -1,6 +1,6 @@
 require "../../spec_helper"
 
-describe Oid::Systems::LoadAsset do
+describe Oid::Systems::AddView do
   it "adds a view to the entity" do
     controller = new_spec_controller
     controller.start

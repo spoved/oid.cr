@@ -10,7 +10,7 @@ module Oid
       @[JSON::Field(ignore: true)]
       property draw_hook : Proc(Contexts, Entitas::Group(StageEntity), Nil) = ->(contexts : Contexts, render_group : Entitas::Group(StageEntity)) {}
       @[JSON::Field(ignore: true)]
-      property draw_ui_hook : Proc(Contexts, Nil) = ->(contexts : Contexts) {}
+      property draw_ui_hook : Proc(Contexts, Entitas::Group(StageEntity), Nil) = ->(contexts : Contexts, render_group : Entitas::Group(StageEntity)) {}
       @[JSON::Field(ignore: true)]
       property cleanup_hook : Proc(Contexts, Nil) = ->(contexts : Contexts) {}
       @[JSON::Field(ignore: true)]

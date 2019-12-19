@@ -1,8 +1,8 @@
-class SpecCameraSystem
+class SpecCameraService
   include Oid::Service::Camera
 end
 
-class SpecApplicationSystem
+class SpecApplicationService
   include Oid::Service::Application
 
   def init_controller(contexts : Contexts) : Oid::Controller::Application
@@ -10,7 +10,7 @@ class SpecApplicationSystem
   end
 end
 
-class SpecConfigSystem
+class SpecConfigService
   include Oid::Service::Config
 
   def screen_w : Int32
@@ -38,7 +38,7 @@ class SpecConfigSystem
   end
 end
 
-class SpecTimeSystem
+class SpecTimeService
   include Oid::Service::Time
 
   def target_fps=(value : Int32?)
@@ -61,15 +61,15 @@ class SpecTimeSystem
   end
 end
 
-class SpecViewSystem
+class SpecViewService
   include Oid::Service::View
 
-  def load_asset(contexts : Contexts, entity : Entitas::IEntity, asset_type : Oid::Enum::AssetType, asset_name : String)
-    entity.add_view(SpecViewController.new(contexts, entity))
+  def init_controller(contexts : Contexts, entity : Oid::RenderableEntity) : Oid::Controller::View
+    SpecViewController.new(contexts, entity)
   end
 end
 
-class SpecLoggerSystem
+class SpecLoggerService
   include Oid::Service::Logger
   property log_msg : String? = nil
 
@@ -85,7 +85,7 @@ class SpecLoggerSystem
   end
 end
 
-class SpecInputSystem
+class SpecInputService
   include Oid::Service::Input
 
   def key_pressed?(key : Oid::Enum::Key) : Bool
@@ -172,7 +172,7 @@ class SpecInputSystem
   end
 end
 
-class SpecWindowSystem
+class SpecWindowService
   include Oid::Service::Window
 
   def init_controller(contexts : Contexts) : Oid::Controller::Window

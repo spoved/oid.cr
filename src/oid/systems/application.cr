@@ -63,7 +63,7 @@ module Oid
           end
 
           application_controller.draw_ui do
-            application_service.draw_ui_hook.call(contexts)
+            application_service.draw_ui_hook.call(contexts, renderable_entities)
           end
         end
 

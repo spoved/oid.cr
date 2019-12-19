@@ -24,7 +24,6 @@ describe Oid::Service::View do
     view = entity.view.value
     view.should be_a Oid::Controller::View
 
-    entity.add_position(Oid::Vector3.zero)
     entity.add_destroyed
 
     controller.update
