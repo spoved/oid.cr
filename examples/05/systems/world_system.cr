@@ -53,6 +53,14 @@ class Example::WorldSystem
         origin: Oid::Enum::OriginType::Center
       )
 
+    context.create_entity
+      .add_prop(name: "text_01")
+      .add_position(Oid::Vector3.new(0.0, -100.0, 100.0))
+      .add_view_element(value: Oid::Element::Text.new(
+        text: "Hello World",
+        font_size: 20,
+        color: Oid::Color::BLUE
+      ))
     generate_origin_grid
     generate_2d_grid
   end

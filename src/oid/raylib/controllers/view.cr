@@ -122,6 +122,14 @@ class RayLib::ViewController
         slices: object.size,
         spacing: object.spacing.to_f32,
       )
+    when Oid::Element::Text
+      RayLib.draw_text(
+        text: object.text,
+        pos_x: e.position.value.x.to_i,
+        pos_y: e.position.value.y.to_i,
+        font_size: object.font_size,
+        color: object.color.to_unsafe,
+      )
     end
   end
 
