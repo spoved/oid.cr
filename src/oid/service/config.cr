@@ -18,6 +18,8 @@ module Oid
       abstract def enable_mouse? : Bool
 
       abstract def enable_keyboard? : Bool
+
+      abstract def camera_3d? : Bool
     end
   end
 end

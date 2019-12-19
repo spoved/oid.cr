@@ -1,17 +1,14 @@
 require "../../spec_helper"
 
-describe Oid::Systems::CameraTrack do
+describe Oid::Systems::Camera do
   it "should track target" do
     controller = new_spec_controller
     controller.start
 
-    camera = controller.contexts.stage
-      .create_entity
-      .add_camera
+    controller.contexts.stage.camera?.should be_true
+    camera = controller.contexts.stage.camera_entity
 
     controller.update
-
-    camera.position?.should be_false
 
     target = controller.contexts.stage
       .create_entity
@@ -20,14 +17,12 @@ describe Oid::Systems::CameraTrack do
 
     controller.update
 
-    camera.position?.should be_true
-
     5.times do
-      target.replace_position(Oid::Vector3.new(Random.rand, Random.rand, Random.rand))
+      target.replace_position(
+        Oid::Vector3.new(Random.rand, Random.rand, Random.rand)
+      )
       controller.update
-
-      camera.position?.should be_true
-      camera.position.value.should eq target.position.value
+      camera.camera.target.should eq target.position.value
     end
   end
 end

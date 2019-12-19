@@ -10,6 +10,7 @@ class RayLib::ConfigService
     enable_mouse: Bool,
     enable_keyboard: Bool,
     asset_path: String,
+    camera_mode: String,
   )
 
   def initialize(@config); end
@@ -44,5 +45,9 @@ class RayLib::ConfigService
 
   def asset_path : String
     config[:asset_path]
+  end
+
+  def camera_3d?
+    config[:camera_mode] == "3d" ? true : false
   end
 end

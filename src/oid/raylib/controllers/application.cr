@@ -6,8 +6,7 @@ class RayLib::ApplicationController
 
   def initialize(@contexts); end
 
-  def init_application(contexts, entity, config_service : Oid::Service::Config)
-  end
+  def init_application(contexts, entity, config_service : Oid::Service::Config); end
 
   def register_listeners(entity : Entitas::IEntity); end
 
@@ -28,14 +27,12 @@ class RayLib::ApplicationController
 
   def draw(&block)
     # RayLib.trace_log(RayLib::Enum::TraceLog::Debug.value, "RayLib::Application - Starting Draw")
+
     RayLib.begin_drawing
     RayLib.clear_background(Oid::Color::WHITE.to_unsafe)
 
-    # self.view_service.begin_camera_mode
-
     yield
 
-    # self.view_service.end_camera_mode
     # RayLib.trace_log(RayLib::Enum::TraceLog::Debug.value, "RayLib::Application - End Draw")
   end
 

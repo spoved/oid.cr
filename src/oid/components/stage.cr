@@ -37,6 +37,17 @@ module Oid
 
     # 3d
     prop :is_3d, Bool, default: (false)
+
+    def is_2d?
+      !self.is_3d
+    end
+
+    def is_3d?
+      self.is_3d
+    end
+
+    # target
+    prop :target, Oid::Vector3, not_nil: true, default: Oid::Vector3.zero
     # Camera type: Perspective or Orthographic
     prop :type, Oid::Camera::Type, default: Oid::Camera::Type::Perspective
     # Camera mode
@@ -44,7 +55,7 @@ module Oid
     # fov_y
     prop :fov, Float64, default: 50.0
     # zoom
-    prop :zoom, Float64, default: 0.0
+    prop :zoom, Float64, default: 1.0
     # offset
     prop :offset, Oid::Vector3, default: Oid::Vector3.zero
   end

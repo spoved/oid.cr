@@ -49,6 +49,11 @@ module Oid
 
         application_controller.init do
           application_service.init_hook.call(contexts)
+
+          if contexts.stage.camera? && contexts.stage.camera.is_3d
+            camera_service.update_camera(contexts.stage.camera_entity)
+            camera_service.set_camera_mode(contexts.stage.camera.mode)
+          end
         end
       end
 
@@ -56,10 +61,15 @@ module Oid
         unless application_entity.destroyed?
           application_controller.update do
             application_service.update_hook.call(contexts)
+
+            # Update camera
+            camera_service.update_camera(contexts.stage.camera_entity)
           end
 
           application_controller.draw do
+            camera_service.begin_camera_mode
             application_service.draw_hook.call(contexts, renderable_entities)
+            camera_service.end_camera_mode
           end
 
           application_controller.draw_ui do

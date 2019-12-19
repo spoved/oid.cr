@@ -1,5 +1,17 @@
 class SpecCameraService
   include Oid::Service::Camera
+
+  def set_camera_mode(value : Oid::Camera::Mode)
+  end
+
+  def update_camera(entity : StageEntity)
+  end
+
+  def begin_camera_mode
+  end
+
+  def end_camera_mode
+  end
 end
 
 class SpecApplicationService
@@ -35,6 +47,10 @@ class SpecConfigService
 
   def enable_keyboard? : Bool
     true
+  end
+
+  def camera_3d? : Bool
+    false
   end
 end
 

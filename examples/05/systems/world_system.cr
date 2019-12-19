@@ -19,85 +19,106 @@ class Example::WorldSystem
     # ////////////////////////////////////////////////////
     # TODO: Initialize your world here!
     # ////////////////////////////////////////////////////
+
+    # Create player
     context.create_entity
-      .add_camera
-      .add_position(Oid::Vector3.zero)
+      .add_actor(name: "player")
+      .add_camera_target
+      .add_position(Oid::Vector3.new(0.0, 0.0, 10.0))
+      .add_asset(
+        name: "Blocker.png",
+        type: Oid::Enum::AssetType::Texture,
+        origin: Oid::Enum::OriginType::Center
+      )
+      .add_view_element(
+        value: Oid::Element::Rectangle.new(
+          width: 128.0,
+          height: 110.0,
+          color: Oid::Color::BLUE
+        ),
+        origin: Oid::Enum::OriginType::Center
+      )
+      .add_scale(0.5)
 
-    # context.create_entity
-    #   .add_actor(name: "player")
-    #   .add_camera_target
-    #   .add_position(Oid::Vector3.new(400.0, 300.0, 0.0))
-    #   .add_asset(
-    #     name: "Blocker.png",
-    #     type: Oid::Enum::AssetType::Texture,
-    #     origin: Oid::Enum::OriginType::Center
-    #   )
-    #   .add_view_element(
-    #     value: Oid::Element::Rectangle.new(
-    #       width: 128.0,
-    #       height: 110.0,
-    #       color: Oid::Color::BLUE
-    #     ),
-    #     origin: Oid::Enum::OriginType::Center
-    #   )
-
+    # Create Block1
     context.create_entity
       .add_actor(name: "block01")
-      .add_position(Oid::Vector3.new(400.0, 300.0, 0.0))
+      .add_position(Oid::Vector3.new(0.0, 0.0, 0.0))
       .add_view_element(
         value: Oid::Element::Rectangle.new(
           width: 128.0,
           height: 110.0,
           color: Oid::Color::RED
         ),
-        origin: Oid::Enum::OriginType::BottomRight
+        origin: Oid::Enum::OriginType::Center
       )
 
+    generate_origin_grid
+    generate_2d_grid
+  end
+
+  def generate_origin_grid
+    # Create X/Y Lines
     context.create_entity
       .add_actor(name: "line_x")
-      .add_position(Oid::Vector3.new(x: 0.0, y: 300.0, z: 0.0))
+      .add_position(Oid::Vector3.new(x: -2000.0, y: 0.0, z: 100.0))
       .add_view_element(
         value: Oid::Element::Line.new(
-          end_pos: Oid::Vector2.new(x: 800.0, y: 300.0),
+          end_pos: Oid::Vector2.new(x: 2000.0, y: 0.0),
           color: Oid::Color::GREEN,
         ),
         origin: Oid::Enum::OriginType::UpperCenter,
       )
-
     context.create_entity
       .add_actor(name: "line_y")
-      .add_position(Oid::Vector3.new(x: 400.0, y: 0.0, z: 0.0))
+      .add_position(Oid::Vector3.new(x: 0.0, y: -2000.0, z: 100.0))
       .add_view_element(
         value: Oid::Element::Line.new(
-          end_pos: Oid::Vector2.new(x: 400.0, y: 600.0),
+          end_pos: Oid::Vector2.new(x: 0.0, y: 2000.0),
           color: Oid::Color::GREEN,
         ),
         origin: Oid::Enum::OriginType::UpperCenter,
       )
   end
 
-  def random_move(entity)
-    unless entity.move?
-      entity.add_move(target: Oid::Vector3.new(
-        x: Random.rand(0.0...800.0),
-        y: Random.rand(0.0...600.0),
-        z: 0.0
-      ))
+  def generate_2d_grid
+    grid = Oid::Element::Grid.new(size: 1000, spacing: 10.0)
+    z = -100.0
+    (grid.size/grid.spacing).to_i.times do |i|
+      # Make X Positive
+      make_grid_x_entity(2000.0, (i*grid.spacing), z)
+      # Make X Negative
+      make_grid_x_entity(2000.0, -(i*grid.spacing), z)
+
+      # Make Y Positive
+      make_grid_y_entity((i*grid.spacing), 2000.0, z)
+      # Make Y Negative
+      make_grid_y_entity(-(i*grid.spacing), -2000.0, z)
     end
   end
 
-  def zoom(entity)
-    if entity.scale.value <= 0.0
-      self.zoom_out = true
-    elsif entity.scale.value >= 1.0
-      self.zoom_out = false
-    end
+  private def make_grid_y_entity(x, y, z)
+    context.create_entity
+      .add_position(Oid::Vector3.new(x: x, y: -y, z: z))
+      .add_view_element(
+        value: Oid::Element::Line.new(
+          end_pos: Oid::Vector2.new(x: x, y: y),
+          color: Oid::Color::GRAY,
+        ),
+        origin: Oid::Enum::OriginType::UpperCenter,
+      )
+  end
 
-    if zoom_out
-      entity.replace_scale(entity.scale.value + 0.01)
-    else
-      entity.replace_scale(entity.scale.value - 0.01)
-    end
+  private def make_grid_x_entity(x, y, z)
+    context.create_entity
+      .add_position(Oid::Vector3.new(x: -x, y: y, z: z))
+      .add_view_element(
+        value: Oid::Element::Line.new(
+          end_pos: Oid::Vector2.new(x: x, y: y),
+          color: Oid::Color::GRAY,
+        ),
+        origin: Oid::Enum::OriginType::UpperCenter,
+      )
   end
 
   def execute
@@ -108,11 +129,35 @@ class Example::WorldSystem
         # entity.replace_rotation(entity.rotation.rotate_x(1.0))
 
         # Zoom
-        # zoom(entity)
+        # scale(entity)
 
         # Random move
-        # random_move(entity)
+        random_move(entity)
       end
+    end
+  end
+
+  def random_move(entity)
+    unless entity.move?
+      entity.add_move(target: Oid::Vector3.new(
+        x: Random.rand(-400.0...400.0),
+        y: Random.rand(-300.0...300.0),
+        z: entity.position.value.z,
+      ))
+    end
+  end
+
+  def scale(entity)
+    if entity.scale.value <= 0.0
+      self.zoom_out = true
+    elsif entity.scale.value >= 1.0
+      self.zoom_out = false
+    end
+
+    if zoom_out
+      entity.replace_scale(entity.scale.value + 0.01)
+    else
+      entity.replace_scale(entity.scale.value - 0.01)
     end
   end
 end

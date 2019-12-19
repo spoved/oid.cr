@@ -10,6 +10,7 @@ RAYLIB_CONFIG = {
   show_fps:        false,
   enable_mouse:    true,
   enable_keyboard: true,
+  camera_mode:     "2d",
   asset_path:      "./examples/01/assets",
 }
 
