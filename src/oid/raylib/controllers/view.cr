@@ -127,7 +127,7 @@ class RayLib::ViewController
         text: object.text,
         pos_x: e.position.value.x.to_i,
         pos_y: e.position.value.y.to_i,
-        font_size: object.font_size,
+        font_size: (object.font_size * scale).to_i,
         color: object.color.to_unsafe,
       )
     end

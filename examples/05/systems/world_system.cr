@@ -40,6 +40,15 @@ class Example::WorldSystem
       )
       .add_scale(0.5)
 
+    context.create_entity
+      .add_prop(name: "player_label")
+      .add_view_element(value: Oid::Element::Text.new(
+        text: "player",
+        font_size: 20,
+        color: Oid::Color::BLUE
+      ))
+      .add_scale(1.0)
+
     # Create Block1
     context.create_entity
       .add_actor(name: "block01")
@@ -90,7 +99,7 @@ class Example::WorldSystem
   end
 
   def generate_2d_grid
-    grid = Oid::Element::Grid.new(size: 1000, spacing: 10.0)
+    grid = Oid::Element::Grid.new(size: 1000, spacing: 50.0)
     z = -100.0
     (grid.size/grid.spacing).to_i.times do |i|
       # Make X Positive
