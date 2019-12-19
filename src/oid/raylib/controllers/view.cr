@@ -64,15 +64,89 @@ class RayLib::ViewController
     e = entity.as(Oid::RenderableEntity)
     case e.asset.type
     when Oid::Enum::AssetType::Texture
-      RayLib.draw_texture_ex(
-        texture: view_service.textures[e.asset.name],
-        position: RayLib::Vector2.new(
-          e.position.value.x.to_f32,
-          e.position.value.y.to_f32,
-        ),
+      texture = view_service.textures[e.asset.name]
+      scale = e.scale.value.to_f32
+      source_rec = RayLib::Rectangle.new(
+        x: 0.0f32,
+        y: 0.0f32,
+        height: texture.height.to_f32,
+        width: texture.width.to_f32,
+      )
+      dest_rec = RayLib::Rectangle.new(
+        x: e.position.value.x.to_f32,
+        y: e.position.value.y.to_f32,
+        height: source_rec.height * scale,
+        width: source_rec.width * scale,
+      )
+      origin = calc_asset_origin(e.asset.origin, dest_rec.height, dest_rec.width)
+
+      RayLib.draw_texture_pro(
+        texture: texture,
+        # Rectangle on texture
+        source_rec: source_rec,
+        # Rectangle in the world
+        dest_rec: dest_rec,
+        # Origin in relation to dest rectangle
+        origin: origin,
+
         rotation: e.rotation.value.magnitude.to_f32,
-        scale: e.scale.value.to_f32,
+        # scale: e.scale.value.to_f32,
         tint: Oid::Color::WHITE.to_unsafe
+      )
+    end
+  end
+
+  private def calc_asset_origin(origin_type : Oid::Enum::OriginType, width, height) : RayLib::Vector2
+    case origin_type
+    when Oid::Enum::OriginType::UpperLeft
+      RayLib::Vector2.new(
+        x: 0.0f32,
+        y: 0.0f32,
+      )
+    when Oid::Enum::OriginType::UpperCenter
+      RayLib::Vector2.new(
+        x: 0.0f32,
+        y: width/2,
+      )
+    when Oid::Enum::OriginType::UpperRight
+      RayLib::Vector2.new(
+        x: 0.0f32,
+        y: width,
+      )
+    when Oid::Enum::OriginType::CenterLeft
+      RayLib::Vector2.new(
+        x: height/2,
+        y: 0.0f32,
+      )
+    when Oid::Enum::OriginType::Center
+      RayLib::Vector2.new(
+        x: height/2,
+        y: width/2,
+      )
+    when Oid::Enum::OriginType::CenterRight
+      RayLib::Vector2.new(
+        x: height,
+        y: width/2,
+      )
+    when Oid::Enum::OriginType::BottomLeft
+      RayLib::Vector2.new(
+        x: height,
+        y: 0.0f32,
+      )
+    when Oid::Enum::OriginType::BottomCenter
+      RayLib::Vector2.new(
+        x: height,
+        y: width/2,
+      )
+    when Oid::Enum::OriginType::BottomRight
+      RayLib::Vector2.new(
+        x: height,
+        y: width,
+      )
+    else
+      RayLib::Vector2.new(
+        x: 0.0f32,
+        y: 0.0f32,
       )
     end
   end

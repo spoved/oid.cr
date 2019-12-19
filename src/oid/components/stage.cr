@@ -1,3 +1,5 @@
+require "../resources/enum/*"
+
 module Oid
   @[Context(Stage)]
   @[Entitas::Event(EventTarget::Self)]
@@ -63,6 +65,27 @@ module Oid
   @[Context(Stage)]
   class Rotation < Entitas::Component
     prop :value, Oid::Vector3, default: Oid::Vector3.zero
+
+    def rotate(x_angle, y_angle, z_angle)
+      self.value = Oid::Vector3.new(
+        (self.value.x >= 360 ? self.value.x - 360 : self.value.x) + x_angle,
+        (self.value.y >= 360 ? self.value.y - 360 : self.value.y) + y_angle,
+        (self.value.z >= 360 ? self.value.z - 360 : self.value.z) + z_angle,
+      )
+      self
+    end
+
+    def rotate_x(angle)
+      self.rotate(angle, 0, 0)
+    end
+
+    def rotate_y(angle)
+      self.rotate(0, angle, 0)
+    end
+
+    def rotate_z(angle)
+      self.rotate(0, 0, angle)
+    end
   end
 
   @[Context(Stage)]
@@ -72,6 +95,7 @@ module Oid
 
   @[Context(Stage)]
   class Asset < Entitas::Component
+    prop :origin, Oid::Enum::OriginType, default: Oid::Enum::OriginType::UpperLeft
     prop :type, Oid::Enum::AssetType, not_nil: true
     prop :name, String, not_nil: true
   end
