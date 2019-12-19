@@ -96,7 +96,7 @@ class RayLib::ViewController
     end
   end
 
-  private def calc_asset_origin(origin_type : Oid::Enum::OriginType, width, height) : RayLib::Vector2
+  private def calc_asset_origin(origin_type : Oid::Enum::OriginType, width : Float32, height : Float32) : RayLib::Vector2
     case origin_type
     when Oid::Enum::OriginType::UpperLeft
       RayLib::Vector2.new(
