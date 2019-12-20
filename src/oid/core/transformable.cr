@@ -17,6 +17,8 @@ module Oid
     end
 
     def transform : Oid::Vector3
+      transform_position_rel_to(Oid::Vector3.zero) unless self.parent?
+
       case self.position_type.value
       when Oid::Enum::Position::Static
         self.position.value

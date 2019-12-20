@@ -3,6 +3,8 @@ require "../../src/oid/raylib/**"
 require "../helpers/*"
 require "./systems/**"
 
+# Spoved.logger.level = Logger::DEBUG
+
 RAYLIB_CONFIG = {
   app_name:        "Example 05",
   screen_w:        800,

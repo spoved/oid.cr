@@ -4,7 +4,7 @@ module Oid
       Static   # the element's position is used without any translation.
       Relative # this is the default value, the element is positioned relative to its parent.
       Absolute # the element is positioned absolutely to its first parent.
-      # Fixed    # the element is positioned related to the camera.
+      Fixed    # the element is positioned related to the root view.
     end
   end
 end

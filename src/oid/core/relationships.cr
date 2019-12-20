@@ -1,5 +1,7 @@
 module Oid
   module Relationships(T)
+    {% if flag?(:entitas_enable_logging) %}spoved_logger{% end %}
+
     @parent : T? = nil
     private getter children : Set(T) = Set(T).new
 
@@ -33,6 +35,8 @@ module Oid
     # :nodoc:
     # Internal method to set parent
     private def set_parent(parent : T?)
+      {% if flag?(:entitas_enable_logging) %}logger.warn("Adding parent: #{parent}", self) unless parent.nil?{% end %}
+
       @parent = parent
     end
 
@@ -136,18 +140,22 @@ module Oid
     end
 
     # Set the parent
-    def parent=(parent : T)
+    def _parent=(parent : T)
       self.set_parent(parent)
     end
 
     # Add provided object as a child and set `self` as parent to object
     def add_child(child : T)
-      child.parent = self
+      {% if flag?(:entitas_enable_logging) %}logger.warn("Adding child: #{child}", self){% end %}
+
+      child._parent = self
       self.children.add(child)
     end
 
     # Removes parent from `self`
     def clear_parent!
+      {% if flag?(:entitas_enable_logging) %}logger.warn("Clearing parent!", self){% end %}
+
       old_parent = self.parent
       if !old_parent.nil? && old_parent.has_child?(self)
         old_parent.delete_child(self)
@@ -158,6 +166,8 @@ module Oid
 
     # Removes child from `self`
     def delete_child(child : T)
+      {% if flag?(:entitas_enable_logging) %}logger.warn("Deleting child: #{child}", self){% end %}
+
       self.children.delete(child)
 
       if child.parent?

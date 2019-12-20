@@ -4,7 +4,7 @@ module Example::Helper
       .add_actor(name: "player")
       .add_camera_target
       .add_position(Oid::Vector3.new(20.0, 20.0, 10.0))
-      .add_position_type(Oid::Enum::Position::Relative)
+      .add_position_type(Oid::Enum::Position::Absolute)
       .add_view_element(
         value: Oid::Element::Rectangle.new(
           width: 20.0,
@@ -49,8 +49,7 @@ module Example::Helper
 
   def generate_origin_grid
     # Create X/Y Lines
-    context.create_entity
-      .add_actor(name: "line_x")
+    x = context.create_entity
       .add_position(Oid::Vector3.new(x: -2000.0, y: 0.0, z: 100.0))
       .add_view_element(
         value: Oid::Element::Line.new(
@@ -59,8 +58,7 @@ module Example::Helper
         ),
         origin: Oid::Enum::OriginType::UpperCenter,
       )
-    context.create_entity
-      .add_actor(name: "line_y")
+    y = context.create_entity
       .add_position(Oid::Vector3.new(x: 0.0, y: -2000.0, z: 100.0))
       .add_view_element(
         value: Oid::Element::Line.new(
@@ -69,45 +67,57 @@ module Example::Helper
         ),
         origin: Oid::Enum::OriginType::UpperCenter,
       )
+
+    origin = context.create_entity
+      .add_actor(name: "grid_2d")
+      .add_position(Oid::Vector3.zero)
+      .add_position_type(Oid::Enum::Position::Static)
+    origin.add_child(x)
+    origin.add_child(y)
+    origin
   end
 
   def generate_2d_grid(size, spacing)
+    origin = generate_origin_grid
+
     grid = Oid::Element::Grid.new(size: size, spacing: spacing)
     z = -100.0
     (grid.size/grid.spacing).to_i.times do |i|
       # Make X Positive
-      make_grid_x_entity(2000.0, (i*grid.spacing), z)
+      origin.add_child make_grid_x_entity(2000.0, (i*grid.spacing), z)
       # Make X Negative
-      make_grid_x_entity(2000.0, -(i*grid.spacing), z)
+      origin.add_child make_grid_x_entity(2000.0, -(i*grid.spacing), z)
 
       # Make Y Positive
-      make_grid_y_entity((i*grid.spacing), 2000.0, z)
+      origin.add_child make_grid_y_entity((i*grid.spacing), 2000.0, z)
       # Make Y Negative
-      make_grid_y_entity(-(i*grid.spacing), -2000.0, z)
+      origin.add_child make_grid_y_entity(-(i*grid.spacing), -2000.0, z)
     end
+
+    origin
   end
 
   private def make_grid_y_entity(x, y, z)
     context.create_entity
       .add_position(Oid::Vector3.new(x: x, y: -y, z: z))
+      # .add_position_type(Oid::Enum::Position::Static)
       .add_view_element(
         value: Oid::Element::Line.new(
           end_pos: Oid::Vector2.new(x: x, y: y),
           color: Oid::Color::GRAY,
         ),
-        origin: Oid::Enum::OriginType::UpperCenter,
       )
   end
 
   private def make_grid_x_entity(x, y, z)
     context.create_entity
       .add_position(Oid::Vector3.new(x: -x, y: y, z: z))
+      # .add_position_type(Oid::Enum::Position::Static)
       .add_view_element(
         value: Oid::Element::Line.new(
           end_pos: Oid::Vector2.new(x: x, y: y),
           color: Oid::Color::GRAY,
         ),
-        origin: Oid::Enum::OriginType::UpperCenter,
       )
   end
 

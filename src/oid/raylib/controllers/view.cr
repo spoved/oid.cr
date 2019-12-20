@@ -21,7 +21,9 @@ class RayLib::ViewController
   end
 
   def destroy_view
-    unload_asset
+    if entity.asset?
+      unload_asset
+    end
   end
 
   def register_listeners(e : Entitas::IEntity)

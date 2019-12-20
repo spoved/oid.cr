@@ -57,22 +57,27 @@ class Example::WorldSystem
     #   color: Oid::Color::BLUE
     # ))
 
-    generate_origin_grid
-    generate_2d_grid(1000, 20.0)
+    generate_2d_grid(40, 20.0)
   end
 
   def execute
     actors.each do |entity|
       entity = entity.as(StageEntity)
-      if entity.actor? && entity.actor.name == "player"
-        # Rotate
-        # entity.rotate_x(1.0)
+      if entity.actor?
+        case entity.actor.name
+        when "player"
+          # Rotate
+          # entity.rotate_x(1.0)
 
-        # Zoom
-        # scale(entity)
+          # Zoom
+          # scale(entity)
 
-        # Random move
-        random_move(entity)
+          # Random move
+          # random_move(entity)
+        when "grid_2d"
+          # entity.destroyed = true
+        else
+        end
       end
     end
   end

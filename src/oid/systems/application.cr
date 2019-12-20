@@ -15,6 +15,10 @@ module Oid
         @render_group ||= contexts.stage.get_group(
           StageMatcher.all_of(
             StageMatcher.view,
+            StageMatcher.position,
+            StageMatcher.position_type,
+            StageMatcher.rotation,
+            StageMatcher.scale,
           ).none_of(
             StageMatcher.destroyed
           )
@@ -45,6 +49,9 @@ module Oid
 
           # Add destroyed listener
           entity.add_destroyed_listener(self)
+
+          # Create root_view object
+          view_service.get_root_view(contexts)
         end
 
         application_controller.init do

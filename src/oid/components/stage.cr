@@ -69,6 +69,10 @@ module Oid
   ##############################
 
   @[Context(Stage)]
+  @[Component::Unique]
+  class RootView < Entitas::Component; end
+
+  @[Context(Stage)]
   class PositionType < Entitas::Component
     prop :value, Oid::Enum::Position, default: Oid::Enum::Position::Relative
   end

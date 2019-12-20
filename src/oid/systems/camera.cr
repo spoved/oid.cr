@@ -40,19 +40,17 @@ module Oid
       def execute
         if context.camera? && context.camera_target? && context.camera_target_entity.as(StageEntity).position?
           entity = context.camera_entity.as(StageEntity)
-          entity.add_rotation(Oid::Vector3.zero) unless entity.rotation?
-
           target = context.camera_target_entity.as(StageEntity)
+          target_pos = target.transform
 
           if entity.camera.is_2d?
             prev_target_pos = entity.camera.target
-            new_target_pos = target.position.value
-            offset = (new_target_pos - prev_target_pos)
+            offset = (target_pos - prev_target_pos)
             entity.camera.offset = entity.camera.offset - offset
           end
 
           # Update target position
-          entity.camera.target = target.position.value
+          entity.camera.target = target_pos
         end
       end
     end

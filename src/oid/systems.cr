@@ -13,6 +13,6 @@ create_feature Oid, [
   Oid::Systems::AddPositionComponents,
   Oid::Systems::AddView,
   Oid::Systems::Move,
-  Oid::Systems::MultiDestroy,
   Oid::Systems::Application,
+  Oid::Systems::MultiDestroy,
 ]
