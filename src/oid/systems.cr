@@ -10,6 +10,7 @@ create_feature Oid, [
   Oid::Systems::WindowMangement,
   Oid::Systems::Camera,
   Oid::Systems::EmitInput,
+  Oid::Systems::AddPositionComponents,
   Oid::Systems::AddView,
   Oid::Systems::Move,
   Oid::Systems::MultiDestroy,

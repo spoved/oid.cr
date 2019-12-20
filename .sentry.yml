@@ -16,11 +16,11 @@ info: true
 
 build: /usr/local/bin/crystal
 # build_args: docs
-build_args: build ./examples/05/main.cr --exclude-warnings /usr/local/Cellar/crystal --error-trace -o ./bin/example_05
+build_args: build ./examples/04/main.cr --exclude-warnings /usr/local/Cellar/crystal --error-trace -o ./bin/example_04
 
 # The command used to run the compiled application.
 # run: /usr/local/bin/crystal
-run: ./bin/example_05
+run: ./bin/example_04
 # run: ./build.sh
 # Any additional arguments to pass to the run command. Run args may only be
 # given if the run command is a single argument.

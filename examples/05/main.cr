@@ -1,5 +1,6 @@
 require "../../src/oid"
 require "../../src/oid/raylib/**"
+require "../helpers/*"
 require "./systems/**"
 
 RAYLIB_CONFIG = {

@@ -5,7 +5,6 @@ module Oid
       include Oid::Services::Helper
 
       protected property contexts : Contexts
-      protected setter context : StageContext? = nil
 
       def context
         contexts.stage
@@ -14,7 +13,6 @@ module Oid
       def initialize(@contexts); end
 
       def init
-        @context = contexts.stage
         @collector = get_trigger(context)
       end
 
@@ -38,9 +36,6 @@ module Oid
           entity.add_view(view_service.init_controller(contexts, entity))
 
           entity.add_position unless entity.position?
-          entity.add_position_type unless entity.position_type?
-          entity.add_rotation unless entity.rotation?
-          entity.add_scale unless entity.scale?
         end
       end
     end

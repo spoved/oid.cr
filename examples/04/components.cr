@@ -17,7 +17,7 @@
 #   prop :position, Oid::Vector2
 # end
 
-@[Context(Game)]
+@[Context(Stage)]
 @[Component::Unique]
 class State < Entitas::Component
   prop :pause, Bool, default: false

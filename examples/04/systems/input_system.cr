@@ -29,7 +29,6 @@ class Example::InputSystem < Entitas::ReactiveSystem
   end
 
   def execute(entities : Array(Entitas::IEntity))
-    camera = contexts.game.camera.value.as(Oid::Camera2D)
     entities.each do |e|
       e = e.as(InputEntity)
 
@@ -45,10 +44,10 @@ class Example::InputSystem < Entitas::ReactiveSystem
         case e.keyboard.key
         when Oid::Enum::Key::Space
           if e.key_pressed?
-            if contexts.game.state.pause? && contexts.game.state.pause
-              contexts.game.state.pause = false
+            if contexts.stage.state.pause? && contexts.stage.state.pause
+              contexts.stage.state.pause = false
             else
-              contexts.game.state.pause = true
+              contexts.stage.state.pause = true
             end
           end
         else
