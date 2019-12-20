@@ -1,5 +1,5 @@
 module Oid::Element
-  class Grid
+  struct Grid
     include Oid::Element
 
     property size : Int32

@@ -1,5 +1,5 @@
 module Oid::Element
-  class Line
+  struct Line
     include Oid::Element
 
     property end_pos : Oid::Vector2

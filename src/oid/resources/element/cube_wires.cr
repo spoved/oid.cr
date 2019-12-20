@@ -1,5 +1,5 @@
 module Oid::Element
-  class CubeWires
+  struct CubeWires
     include Oid::Element
     property size : Oid::Vector3
     property color : Oid::Color

@@ -25,3 +25,7 @@ class State < Entitas::Component
   prop :screen_upper_limit, Int32, default: 40
   prop :box_a_speed, Float64, default: 4.0
 end
+
+@[Context(Stage)]
+class Oid::Collidable < Entitas::Component
+end

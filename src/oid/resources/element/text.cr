@@ -1,5 +1,5 @@
 module Oid::Element
-  class Text
+  struct Text
     include Oid::Element
 
     property text : String

@@ -5,10 +5,11 @@ class CollisionSystem
   include Oid::Services::Helper
 
   protected property contexts : Contexts
-  protected property context : StageContext
 
-  def initialize(@contexts)
-    @context = @contexts.stage
+  def initialize(@contexts); end
+
+  def context : StageContext
+    contexts.stage
   end
 
   def init
@@ -30,10 +31,11 @@ class CollisionSystem
     box2 = context.get_entities_with_name("box_02")
     collision_box = context.get_entities_with_name("collision_box")
 
-    # return if box1.nil?
-    # return if box2.nil?
-    # return if collision_box.nil?
+    return if box1.nil?
+    return if box2.nil?
+    return if collision_box.nil?
 
+    # puts box1
     # rect = box2.actor.get_child(Oid::Rectangle).first
 
     # if view_service.collision_recs?(box1.actor, box2.actor)

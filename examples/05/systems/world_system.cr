@@ -30,7 +30,9 @@ class Example::WorldSystem
     label = create_label
     outline.add_child(label)
 
-    player.add_child(generate_origin_grid("player_target", Oid::Color::RED))
+    player.add_child(
+      generate_origin_grid("player_target", Oid::Color::RED)
+    )
 
     # Create Block1
     # context.create_entity

@@ -1,5 +1,5 @@
 module Oid::Element
-  class Rectangle
+  struct Rectangle
     include Oid::Element
 
     property width : Float64

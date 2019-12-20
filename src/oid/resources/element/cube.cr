@@ -1,5 +1,5 @@
 module Oid::Element
-  class Cube
+  struct Cube
     include Oid::Element
 
     property size : Oid::Vector3

@@ -25,20 +25,8 @@ class Example::WorldSystem
         pause: false,
         collision: false
       )
-    # context.camera_entity.replace_position(
-    #   Oid::Vector3.new(
-    #     x: config_service.screen_w/2,
-    #     y: config_service.screen_h/2,
-    #     z: 0.0
-    #   )
-    # )
-    # context.camera.offset = Oid::Vector3.new(
-    #   x: config_service.screen_w/2,
-    #   y: config_service.screen_h/2,
-    #   z: 0.0
-    # )
 
-    generate_2d_grid 1000, 20.0
+    generate_2d_grid(1000, 20.0)
   end
 
   def execute

@@ -7,7 +7,7 @@ require "./systems/**"
 RAYLIB_CONFIG = {
   app_name:        "Example 04",
   screen_w:        800,
-  screen_h:        600,
+  screen_h:        480,
   target_fps:      0,
   show_fps:        true,
   enable_mouse:    true,
@@ -16,8 +16,10 @@ RAYLIB_CONFIG = {
   asset_path:      "./examples/01/assets",
 }
 
+Oid::Systems::EmitInput.listen_for_keys Space
+
 create_feature Example, [
-  # Example::InputSystem,
+  Example::InputSystem,
   Example::WorldSystem,
   # Example::UiSystem,
   BoxSystem,
