@@ -82,8 +82,26 @@ end
 class SpecViewService
   include Oid::Service::View
 
+  def get_root_view(contexts : Contexts) : StageEntity
+    contexts.stage.root_view_entity
+  end
+
   def init_controller(contexts : Contexts, entity : Oid::RenderableEntity) : Oid::Controller::View
     SpecViewController.new(contexts, entity)
+  end
+
+  protected setter root_view : StageEntity? = nil
+
+  def get_root_view(contexts : Contexts) : StageEntity
+    @root_view ||= contexts.stage.create_entity
+      .add_position(
+        Oid::Vector3.new(
+          x: -(contexts.meta.config_service.instance.screen_w/2),
+          y: -(contexts.meta.config_service.instance.screen_h/2),
+          z: 0.0
+        )
+      )
+      .add_root_view
   end
 end
 

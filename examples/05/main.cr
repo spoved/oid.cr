@@ -9,7 +9,7 @@ RAYLIB_CONFIG = {
   app_name:        "Example 05",
   screen_w:        800,
   screen_h:        600,
-  target_fps:      0,
+  target_fps:      300,
   show_fps:        true,
   enable_mouse:    true,
   enable_keyboard: true,

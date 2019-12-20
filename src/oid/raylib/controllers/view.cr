@@ -97,11 +97,19 @@ class RayLib::ViewController
         color: object.color.to_unsafe,
       )
     when Oid::Element::Line
+      # Oid::Matrix::Mat4.unit.translate(origin) * self.position.value.to_v4
+      # e.transform_position_rel_to()
+      end_pos = e.transform_position_rel_to(e.transform_origin, Oid::Vector3.new(
+        x: object.end_pos.x,
+        y: object.end_pos.y,
+        z: e.position.value.z,
+      ))
+
       RayLib.draw_line(
         start_pos_x: position.x.to_i,
         start_pos_y: position.y.to_i,
-        end_pos_x: object.end_pos.x.to_i,
-        end_pos_y: object.end_pos.y.to_i,
+        end_pos_x: end_pos.x.to_i,
+        end_pos_y: end_pos.y.to_i,
         color: object.color.to_unsafe,
       )
     when Oid::Element::Cube

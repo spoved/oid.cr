@@ -47,14 +47,14 @@ module Example::Helper
       .add_scale(1.0)
   end
 
-  def generate_origin_grid
+  def generate_origin_grid(name, color = Oid::Color::GREEN)
     # Create X/Y Lines
     x = context.create_entity
       .add_position(Oid::Vector3.new(x: -2000.0, y: 0.0, z: 100.0))
       .add_view_element(
         value: Oid::Element::Line.new(
           end_pos: Oid::Vector2.new(x: 2000.0, y: 0.0),
-          color: Oid::Color::GREEN,
+          color: color,
         ),
         origin: Oid::Enum::OriginType::UpperCenter,
       )
@@ -63,35 +63,36 @@ module Example::Helper
       .add_view_element(
         value: Oid::Element::Line.new(
           end_pos: Oid::Vector2.new(x: 0.0, y: 2000.0),
-          color: Oid::Color::GREEN,
+          color: color,
         ),
         origin: Oid::Enum::OriginType::UpperCenter,
       )
 
     origin = context.create_entity
-      .add_actor(name: "grid_2d")
+      .add_actor(name: name)
       .add_position(Oid::Vector3.zero)
-      .add_position_type(Oid::Enum::Position::Static)
+
+    # .add_position_type(Oid::Enum::Position::Static)
     origin.add_child(x)
     origin.add_child(y)
     origin
   end
 
   def generate_2d_grid(size, spacing)
-    origin = generate_origin_grid
+    origin = generate_origin_grid("grid_2d")
 
     grid = Oid::Element::Grid.new(size: size, spacing: spacing)
     z = -100.0
     (grid.size/grid.spacing).to_i.times do |i|
       # Make X Positive
-      origin.add_child make_grid_x_entity(2000.0, (i*grid.spacing), z)
+      origin.add_child make_grid_x_entity(800.0, (i*grid.spacing), z)
       # Make X Negative
-      origin.add_child make_grid_x_entity(2000.0, -(i*grid.spacing), z)
+      origin.add_child make_grid_x_entity(800.0, -(i*grid.spacing), z)
 
       # Make Y Positive
-      origin.add_child make_grid_y_entity((i*grid.spacing), 2000.0, z)
+      origin.add_child make_grid_y_entity((i*grid.spacing), 800.0, z)
       # Make Y Negative
-      origin.add_child make_grid_y_entity(-(i*grid.spacing), -2000.0, z)
+      origin.add_child make_grid_y_entity(-(i*grid.spacing), -800.0, z)
     end
 
     origin

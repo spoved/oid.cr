@@ -38,7 +38,6 @@ class Example::WorldSystem
     #   z: 0.0
     # )
 
-    generate_origin_grid
     generate_2d_grid 1000, 20.0
   end
 

@@ -12,27 +12,22 @@ module Oid
     abstract def parent : Oid::Transformable
     abstract def root : Oid::Transformable
 
-    private def transform_position_rel_to(origin) : Oid::Vector3
-      (Oid::Matrix::Mat4.unit.translate(origin) * self.position.value.to_v4).to_v3
-    end
-
-    def transform : Oid::Vector3
-      transform_position_rel_to(Oid::Vector3.zero) unless self.parent?
-
+    def transform_origin : Oid::Vector3
+      return Oid::Vector3.zero unless self.parent?
       case self.position_type.value
       when Oid::Enum::Position::Static
-        self.position.value
+        Oid::Vector3.zero
       when Oid::Enum::Position::Relative
         if self.parent?
-          transform_position_rel_to(self.parent.transform)
+          self.parent.transform
         else
-          transform_position_rel_to(Oid::Vector3.zero)
+          Oid::Vector3.zero
         end
       when Oid::Enum::Position::Absolute
         if self.parent?
-          transform_position_rel_to(self.root.position.value)
+          self.root.position.value
         else
-          transform_position_rel_to(Oid::Vector3.zero)
+          Oid::Vector3.zero
         end
         # when Oid::Enum::Position::Fixed
         # FIXME: Finish
@@ -41,6 +36,14 @@ module Oid
       else
         raise "Unsuported positioning #{self.position_type}"
       end
+    end
+
+    def transform_position_rel_to(origin, position) : Oid::Vector3
+      (Oid::Matrix::Mat4.unit.translate(origin) * position.to_v4).to_v3
+    end
+
+    def transform : Oid::Vector3
+      transform_position_rel_to(transform_origin, self.position.value)
     end
 
     def rotate(x_angle, y_angle, z_angle)

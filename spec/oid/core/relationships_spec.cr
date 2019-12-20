@@ -48,21 +48,21 @@ describe Oid::Relationships do
   end
 
   describe "parent" do
-    it "can be set" do
-      parent = RelTestObj.new
-      child = RelTestObj.new
+    # it "can be set" do
+    #   parent = RelTestObj.new
+    #   child = RelTestObj.new
 
-      child.parent?.should be_false
-      child.parent = parent
-      child.parent.should be parent
-    end
+    #   child.parent?.should be_false
+    #   child._parent parent
+    #   child.parent.should be parent
+    # end
 
     it "presence can be checked" do
       parent = RelTestObj.new
       child = RelTestObj.new
 
       child.parent?.should be_falsey
-      child.parent = parent
+      parent.add_child child
       child.parent?.should be_truthy
     end
 

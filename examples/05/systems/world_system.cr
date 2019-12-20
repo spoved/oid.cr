@@ -30,6 +30,8 @@ class Example::WorldSystem
     label = create_label
     outline.add_child(label)
 
+    player.add_child(generate_origin_grid("player_target", Oid::Color::RED))
+
     # Create Block1
     # context.create_entity
     #   .add_actor(name: "block01")
@@ -57,7 +59,7 @@ class Example::WorldSystem
     #   color: Oid::Color::BLUE
     # ))
 
-    generate_2d_grid(40, 20.0)
+    generate_2d_grid(1000, 20.0)
   end
 
   def execute
@@ -73,7 +75,7 @@ class Example::WorldSystem
           # scale(entity)
 
           # Random move
-          # random_move(entity)
+          random_move(entity)
         when "grid_2d"
           # entity.destroyed = true
         else

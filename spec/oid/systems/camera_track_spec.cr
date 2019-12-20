@@ -14,6 +14,7 @@ describe Oid::Systems::Camera do
       .create_entity
       .add_camera_target
       .add_position(Oid::Vector3.zero)
+      .add_position_type
 
     controller.update
 
@@ -22,7 +23,7 @@ describe Oid::Systems::Camera do
         Oid::Vector3.new(Random.rand, Random.rand, Random.rand)
       )
       controller.update
-      camera.camera.target.should eq target.position.value
+      camera.camera.target.should eq target.transform
     end
   end
 end
