@@ -12,6 +12,7 @@ create_feature Oid, [
   Oid::Systems::WindowMangement,
   Oid::Systems::CameraManager,
   Oid::Systems::Application,
+  Oid::Systems::RelationshipManager,
   Oid::Systems::MultiDestroy,
 
   # View systems
