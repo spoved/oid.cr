@@ -40,13 +40,8 @@ class BoxSystem
 
     self.box_two = context.create_entity
       .add_actor(name: "box_02")
-      .add_position(
-        Oid::Vector3.new(
-          config_service.screen_w/2 - 30,
-          config_service.screen_h/2 - 30,
-          0.0
-        )
-      )
+      .add_position(Oid::Vector3.zero)
+      .add_position_type(Oid::Enum::Position::Relative)
       .add_view_element(
         value: Oid::Element::Rectangle.new(
           width: 60.0,
@@ -59,18 +54,6 @@ class BoxSystem
 
     self.box_one.add_child generate_origin_grid("box_01_origin", Oid::Color::GREEN, 60.0)
     self.box_two.add_child generate_origin_grid("box_02_origin", Oid::Color::RED, 60.0)
-
-    context.create_entity
-      .add_actor(name: "collision_box")
-      .add_position(Oid::Vector3.zero)
-      .add_view_element(
-        value: Oid::Element::Rectangle.new(
-          width: 0.0,
-          height: 0.0,
-          color: Oid::Color::BLUE
-        ),
-        origin: Oid::Enum::OriginType::Center
-      )
   end
 
   def execute

@@ -26,7 +26,7 @@ class Example::WorldSystem
         collision: false
       )
 
-    generate_2d_grid(1000, 20.0)
+    # generate_2d_grid(1000, 20.0)
   end
 
   def execute

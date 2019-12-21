@@ -7,7 +7,7 @@ require "./systems/**"
 RAYLIB_CONFIG = {
   app_name:        "Example 04",
   screen_w:        800,
-  screen_h:        480,
+  screen_h:        450,
   target_fps:      0,
   show_fps:        true,
   enable_mouse:    true,
@@ -23,7 +23,7 @@ create_feature Example, [
   Example::WorldSystem,
   # Example::UiSystem,
   BoxSystem,
-  # CollisionSystem,
+  CollisionSystem,
 
   # ////////////////////////////////////////////////////
   # TODO: Place any services created here

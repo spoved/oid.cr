@@ -109,6 +109,19 @@ module Oid
   end
 
   ##############################
+  # Collidable Components
+  ##############################
+
+  @[Context(Stage)]
+  class Collidable < Entitas::Component
+  end
+
+  @[Context(Stage)]
+  class BoundingBox < Entitas::Component
+    prop :value, Oid::Element::BoundingBox
+  end
+
+  ##############################
   # Move Components
   ##############################
 
@@ -175,6 +188,11 @@ module Oid
     include Interactive::Helper
   end
 
+  module CollidableEntity
+    include Oid::ViewableEntity
+    include Oid::Collidable::Helper
+  end
+
   module RenderableEntity
     include Oid::Relationships(RenderableEntity)
     include Oid::Transformable
@@ -185,4 +203,5 @@ end
 
 class StageEntity < Entitas::Entity
   include Oid::RenderableEntity
+  include Oid::CollidableEntity
 end

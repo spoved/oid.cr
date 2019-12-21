@@ -3,13 +3,28 @@ module Example::Helper
     context.create_entity
       .add_actor(name: "player")
       .add_camera_target
-      .add_position(Oid::Vector3.new(20.0, 20.0, 10.0))
-      .add_position_type(Oid::Enum::Position::Absolute)
+      .add_position(Oid::Vector3.new(20.0, 40.0, 10.0))
+      .add_position_type(Oid::Enum::Position::Static)
       .add_view_element(
         value: Oid::Element::Rectangle.new(
           width: 20.0,
           height: 20.0,
           color: Oid::Color::BLUE
+        ),
+        origin: Oid::Enum::OriginType::Center
+      )
+      .add_scale(1.0)
+  end
+
+  def make_dot(position, size = 3.0, color = Oid::Color::BLACK)
+    context.create_entity
+      .add_position(position)
+      .add_position_type(Oid::Enum::Position::Static)
+      .add_view_element(
+        value: Oid::Element::Rectangle.new(
+          width: size,
+          height: size,
+          color: color
         ),
         origin: Oid::Enum::OriginType::Center
       )

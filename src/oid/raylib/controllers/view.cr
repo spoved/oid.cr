@@ -88,7 +88,22 @@ class RayLib::ViewController
         width: object.width.to_f32 * scale,
         height: object.height.to_f32 * scale,
       )
-      origin = calc_origin(e.view_element.origin, width: rectangle.width, height: rectangle.height)
+
+      origin = RayLib::Vector2.new(Oid::CollisionFuncs.calc_rec_origin(
+        e.view_element.origin,
+        width: rectangle.width,
+        height: rectangle.height,
+      ))
+
+      # if e.actor? && e.actor.name == "text_box"
+      #   puts ({
+      #     rec:      rectangle,
+      #     position: position,
+      #     rotation: rotation,
+      #     scale:    scale,
+      #     origin:   origin,
+      #   }).to_json
+      # end
 
       RayLib.draw_rectangle_pro(
         rec: rectangle,
@@ -167,7 +182,11 @@ class RayLib::ViewController
       height: source_rec.height * scale,
       width: source_rec.width * scale,
     )
-    origin = calc_origin(e.asset.origin, width: dest_rec.width, height: dest_rec.height)
+    origin = RayLib::Vector2.new(Oid::CollisionFuncs.calc_rec_origin(
+      e.asset.origin,
+      width: dest_rec.width,
+      height: dest_rec.height
+    ))
 
     RayLib.draw_texture_pro(
       texture: texture,
@@ -182,60 +201,5 @@ class RayLib::ViewController
       # scale: e.scale.value.to_f32,
       tint: Oid::Color::WHITE.to_unsafe
     )
-  end
-
-  private def calc_origin(origin_type : Oid::Enum::OriginType, width : Float32, height : Float32) : RayLib::Vector2
-    case origin_type
-    when Oid::Enum::OriginType::UpperLeft
-      RayLib::Vector2.new(
-        x: 0.0f32,
-        y: 0.0f32,
-      )
-    when Oid::Enum::OriginType::UpperCenter
-      RayLib::Vector2.new(
-        x: width/2,
-        y: 0.0f32,
-      )
-    when Oid::Enum::OriginType::UpperRight
-      RayLib::Vector2.new(
-        x: width,
-        y: 0.0f32,
-      )
-    when Oid::Enum::OriginType::CenterLeft
-      RayLib::Vector2.new(
-        x: 0.0f32,
-        y: height/2,
-      )
-    when Oid::Enum::OriginType::Center
-      RayLib::Vector2.new(
-        x: width/2,
-        y: height/2,
-      )
-    when Oid::Enum::OriginType::CenterRight
-      RayLib::Vector2.new(
-        x: width,
-        y: height/2,
-      )
-    when Oid::Enum::OriginType::BottomLeft
-      RayLib::Vector2.new(
-        x: 0.0f32,
-        y: height,
-      )
-    when Oid::Enum::OriginType::BottomCenter
-      RayLib::Vector2.new(
-        x: width/2,
-        y: height,
-      )
-    when Oid::Enum::OriginType::BottomRight
-      RayLib::Vector2.new(
-        x: width,
-        y: height,
-      )
-    else
-      RayLib::Vector2.new(
-        x: 0.0f32,
-        y: 0.0f32,
-      )
-    end
   end
 end
