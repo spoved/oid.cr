@@ -1,6 +1,6 @@
 require "../../spec_helper"
 
-describe Oid::Systems::Camera do
+describe Oid::Systems::CameraManager do
   it "should track target" do
     controller = new_spec_controller
     controller.start

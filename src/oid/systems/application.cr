@@ -21,6 +21,8 @@ module Oid
             StageMatcher.scale,
           ).none_of(
             StageMatcher.destroyed
+          ).none_of(
+            StageMatcher.hidden
           )
         )
       end

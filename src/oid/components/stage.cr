@@ -108,6 +108,11 @@ module Oid
     prop :origin, Oid::Enum::OriginType, default: Oid::Enum::OriginType::UpperLeft
   end
 
+  @[Context(Stage)]
+  @[Entitas::Event(EventTarget::Self, EventType::Added)]
+  @[Entitas::Event(EventTarget::Self, EventType::Removed)]
+  class Hidden < Entitas::Component; end
+
   ##############################
   # Collidable Components
   ##############################

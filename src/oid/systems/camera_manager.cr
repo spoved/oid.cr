@@ -1,6 +1,6 @@
 module Oid
   module Systems
-    class Camera
+    class CameraManager
       include Entitas::Systems::InitializeSystem
       include Entitas::Systems::ExecuteSystem
       include Oid::Services::Helper

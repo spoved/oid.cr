@@ -3,6 +3,7 @@ module Oid
     class AddPositionComponents < ::Entitas::ReactiveSystem
       include Oid::Services::Helper
       include Oid::Destroyed::Listener
+      include Oid::EventListener
 
       protected property contexts : Contexts
       protected property children_buffer : Set(Oid::RenderableEntity) = Set(Oid::RenderableEntity).new(4)
@@ -27,14 +28,20 @@ module Oid
         entity.position? && !entity.destroyed?
       end
 
+      def register_listeners(entity : Entitas::IEntity)
+        entity.add_destroyed_listener(self)
+      end
+
       def execute(entities : Array(Entitas::IEntity))
         entities.each do |entity|
           entity = entity.as(StageEntity)
 
+          register_listeners(entity)
+
           entity.add_position_type unless entity.position_type?
           entity.add_rotation unless entity.rotation?
           entity.add_scale unless entity.scale?
-          entity.add_destroyed_listener(self)
+
           if !entity.parent? && entity != root_view
             root_view.add_child(entity)
           end

@@ -52,8 +52,8 @@ class BoxSystem
       )
       .add_collidable
 
-    self.box_one.add_child generate_origin_grid("box_01_origin", Oid::Color::GREEN, 60.0)
-    self.box_two.add_child generate_origin_grid("box_02_origin", Oid::Color::RED, 60.0)
+    self.box_one.add_child generate_origin_grid("box_01_origin", Oid::Color::GREEN, 60.0).add_hidden
+    self.box_two.add_child generate_origin_grid("box_02_origin", Oid::Color::RED, 60.0).add_hidden
   end
 
   def execute

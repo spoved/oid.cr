@@ -7,13 +7,21 @@ create_feature Oid::Event, [
 
 create_feature Oid, [
   Oid::EventSystems,
+
+  # Application/Entity management
   Oid::Systems::WindowMangement,
-  Oid::Systems::Camera,
-  Oid::Systems::EmitInput,
+  Oid::Systems::CameraManager,
+  Oid::Systems::Application,
+  Oid::Systems::MultiDestroy,
+
+  # View systems
   Oid::Systems::AddPositionComponents,
   Oid::Systems::AddObjectBounds,
   Oid::Systems::AddView,
+  Oid::Systems::HiddenManger,
+
+  #
   Oid::Systems::Move,
-  Oid::Systems::Application,
-  Oid::Systems::MultiDestroy,
+  Oid::Systems::EmitInput,
+
 ]

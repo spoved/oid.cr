@@ -95,16 +95,6 @@ class RayLib::ViewController
         height: rectangle.height,
       ))
 
-      # if e.actor? && e.actor.name == "text_box"
-      #   puts ({
-      #     rec:      rectangle,
-      #     position: position,
-      #     rotation: rotation,
-      #     scale:    scale,
-      #     origin:   origin,
-      #   }).to_json
-      # end
-
       RayLib.draw_rectangle_pro(
         rec: rectangle,
         origin: origin,

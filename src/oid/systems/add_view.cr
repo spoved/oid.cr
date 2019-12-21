@@ -32,9 +32,9 @@ module Oid
       def execute(entities : Array(Entitas::IEntity))
         entities.each do |entity|
           entity = entity.as(StageEntity)
+
           # call the view service to make a new view
           entity.add_view(view_service.init_controller(contexts, entity))
-
           entity.add_position unless entity.position?
         end
       end
