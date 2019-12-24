@@ -16,11 +16,38 @@ private def bound_entity(position_type, origin)
     )
     .add_collidable
   controller.update
-  entity
+  {entity, controller}
 end
 
 describe Oid::CollisionFuncs do
   describe "#collision_rec" do
+    it "calculates the collision rec" do
+      entity1, controller = bound_entity(Oid::Enum::Position::Static, Oid::Vector3.zero)
+
+      entity2 = controller.contexts.stage.create_entity
+        .add_position(Oid::Vector3.new(10.0, 10.0, 0.0))
+        .add_position_type(Oid::Enum::Position::Static)
+        .add_view_element(
+          value: Oid::Element::Rectangle.new(
+            width: 20.0,
+            height: 20.0,
+            color: Oid::Color::GREEN
+          ),
+          origin: Oid::Vector3.zero
+        )
+        .add_collidable
+
+      controller.update
+
+      Oid::CollisionFuncs.collision_recs?(entity1, entity2).should be_true
+
+      rec = Oid::CollisionFuncs.collision_rec(entity1, entity2)
+
+      rec[:x].should eq 10.0
+      rec[:y].should eq 10.0
+      rec[:width].should eq 10.0
+      rec[:height].should eq 10.0
+    end
   end
 
   describe "#calc_rec_origin" do
@@ -146,7 +173,7 @@ describe Oid::CollisionFuncs do
     describe Oid::Enum::Position::Static do
       describe Oid::Enum::OriginType::UpperLeft do
         it "should calculate correct bounding box" do
-          entity = bound_entity(Oid::Enum::Position::Static, Oid::Enum::OriginType::UpperLeft)
+          entity, _ = bound_entity(Oid::Enum::Position::Static, Oid::Enum::OriginType::UpperLeft)
           bounds_rect = Oid::CollisionFuncs.bounding_box_for_element(entity)
           expected = Oid::Element::BoundingBox.new(
             min: Oid::Vector3.new(
@@ -167,7 +194,7 @@ describe Oid::CollisionFuncs do
 
       describe Oid::Enum::OriginType::UpperCenter do
         it "should calculate correct bounding box" do
-          entity = bound_entity(Oid::Enum::Position::Static, Oid::Enum::OriginType::UpperCenter)
+          entity, _ = bound_entity(Oid::Enum::Position::Static, Oid::Enum::OriginType::UpperCenter)
           bounds_rect = Oid::CollisionFuncs.bounding_box_for_element(entity)
           expected = Oid::Element::BoundingBox.new(
             min: Oid::Vector3.new(
@@ -188,7 +215,7 @@ describe Oid::CollisionFuncs do
 
       describe Oid::Enum::OriginType::UpperRight do
         it "should calculate correct bounding box" do
-          entity = bound_entity(Oid::Enum::Position::Static, Oid::Enum::OriginType::UpperRight)
+          entity, _ = bound_entity(Oid::Enum::Position::Static, Oid::Enum::OriginType::UpperRight)
           bounds_rect = Oid::CollisionFuncs.bounding_box_for_element(entity)
           expected = Oid::Element::BoundingBox.new(
             min: Oid::Vector3.new(
@@ -209,7 +236,7 @@ describe Oid::CollisionFuncs do
 
       describe Oid::Enum::OriginType::CenterLeft do
         it "should calculate correct bounding box" do
-          entity = bound_entity(Oid::Enum::Position::Static, Oid::Enum::OriginType::CenterLeft)
+          entity, _ = bound_entity(Oid::Enum::Position::Static, Oid::Enum::OriginType::CenterLeft)
           bounds_rect = Oid::CollisionFuncs.bounding_box_for_element(entity)
           expected = Oid::Element::BoundingBox.new(
             min: Oid::Vector3.new(
@@ -230,7 +257,7 @@ describe Oid::CollisionFuncs do
 
       describe Oid::Enum::OriginType::Center do
         it "should calculate correct bounding box" do
-          entity = bound_entity(Oid::Enum::Position::Static, Oid::Enum::OriginType::Center)
+          entity, _ = bound_entity(Oid::Enum::Position::Static, Oid::Enum::OriginType::Center)
           bounds_rect = Oid::CollisionFuncs.bounding_box_for_element(entity)
           expected = Oid::Element::BoundingBox.new(
             min: Oid::Vector3.new(
@@ -251,7 +278,7 @@ describe Oid::CollisionFuncs do
 
       describe Oid::Enum::OriginType::CenterRight do
         it "should calculate correct bounding box" do
-          entity = bound_entity(Oid::Enum::Position::Static, Oid::Enum::OriginType::CenterRight)
+          entity, _ = bound_entity(Oid::Enum::Position::Static, Oid::Enum::OriginType::CenterRight)
           bounds_rect = Oid::CollisionFuncs.bounding_box_for_element(entity)
           expected = Oid::Element::BoundingBox.new(
             min: Oid::Vector3.new(
@@ -272,7 +299,7 @@ describe Oid::CollisionFuncs do
 
       describe Oid::Enum::OriginType::BottomLeft do
         it "should calculate correct bounding box" do
-          entity = bound_entity(Oid::Enum::Position::Static, Oid::Enum::OriginType::BottomLeft)
+          entity, _ = bound_entity(Oid::Enum::Position::Static, Oid::Enum::OriginType::BottomLeft)
           bounds_rect = Oid::CollisionFuncs.bounding_box_for_element(entity)
           expected = Oid::Element::BoundingBox.new(
             min: Oid::Vector3.new(
@@ -293,7 +320,7 @@ describe Oid::CollisionFuncs do
 
       describe Oid::Enum::OriginType::BottomCenter do
         it "should calculate correct bounding box" do
-          entity = bound_entity(Oid::Enum::Position::Static, Oid::Enum::OriginType::BottomCenter)
+          entity, _ = bound_entity(Oid::Enum::Position::Static, Oid::Enum::OriginType::BottomCenter)
           bounds_rect = Oid::CollisionFuncs.bounding_box_for_element(entity)
           expected = Oid::Element::BoundingBox.new(
             min: Oid::Vector3.new(
@@ -314,7 +341,7 @@ describe Oid::CollisionFuncs do
 
       describe Oid::Enum::OriginType::BottomRight do
         it "should calculate correct bounding box" do
-          entity = bound_entity(Oid::Enum::Position::Static, Oid::Enum::OriginType::BottomRight)
+          entity, _ = bound_entity(Oid::Enum::Position::Static, Oid::Enum::OriginType::BottomRight)
           bounds_rect = Oid::CollisionFuncs.bounding_box_for_element(entity)
           expected = Oid::Element::BoundingBox.new(
             min: Oid::Vector3.new(
@@ -337,7 +364,7 @@ describe Oid::CollisionFuncs do
     describe Oid::Enum::Position::Relative do
       describe Oid::Enum::OriginType::UpperLeft do
         it "should calculate correct bounding box" do
-          entity = bound_entity(Oid::Enum::Position::Static, Oid::Enum::OriginType::UpperLeft)
+          entity, _ = bound_entity(Oid::Enum::Position::Static, Oid::Enum::OriginType::UpperLeft)
           bounds_rect = Oid::CollisionFuncs.bounding_box_for_element(entity)
           expected = Oid::Element::BoundingBox.new(
             min: Oid::Vector3.new(

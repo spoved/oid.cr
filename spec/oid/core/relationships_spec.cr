@@ -48,15 +48,6 @@ describe Oid::Relationships do
   end
 
   describe "parent" do
-    # it "can be set" do
-    #   parent = RelTestObj.new
-    #   child = RelTestObj.new
-
-    #   child.parent?.should be_false
-    #   child._parent parent
-    #   child.parent.should be parent
-    # end
-
     it "presence can be checked" do
       parent = RelTestObj.new
       child = RelTestObj.new
@@ -149,6 +140,16 @@ describe Oid::Relationships do
   end
 
   describe "children" do
+    it "can be adopted" do
+      parent, child = subject
+      new_parent = RelTestObj.new
+
+      child.parent.should be parent
+
+      new_parent.add_child(child)
+      child.parent.should be new_parent
+    end
+
     it "can be set" do
       parent, child = subject
       parent.children_count.should eq 1
