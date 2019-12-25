@@ -3,7 +3,7 @@ module Example::Helper
     context.create_entity
       .add_actor(name: "player")
       .add_camera_target
-      .add_position(Oid::Vector3.new(20.0, 40.0, 10.0))
+      .add_position(Oid::Vector3.new(0.0, 0.0, 0.0))
       .add_position_type(Oid::Enum::Position::Static)
       .add_view_element(
         value: Oid::Element::Rectangle.new(
@@ -31,14 +31,14 @@ module Example::Helper
       .add_scale(1.0)
   end
 
-  def create_label
+  def create_label(name, text)
     context.create_entity
-      .add_prop(name: "player_label")
+      .add_prop(name: name)
       .add_position(Oid::Vector3.new(2.5 - (68.0/2), 0.0, 10.0))
       .add_position_type(Oid::Enum::Position::Relative)
       .add_view_element(
         value: Oid::Element::Text.new(
-          text: "player",
+          text: text,
           font_size: 20,
           color: Oid::Color::BLACK
         ),

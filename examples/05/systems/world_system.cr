@@ -6,10 +6,12 @@ class Example::WorldSystem
 
   protected property contexts : Contexts
   protected property actors : Entitas::Group(StageEntity)
+  protected property props : Entitas::Group(StageEntity)
   protected property zoom_out : Bool = false
 
   def initialize(@contexts)
     @actors = @contexts.stage.get_group(StageMatcher.all_of(StageMatcher.actor))
+    @props = @contexts.stage.get_group(StageMatcher.all_of(StageMatcher.prop))
   end
 
   def context
@@ -28,23 +30,21 @@ class Example::WorldSystem
       .add_child(generate_origin_grid("real_origin", Oid::Color::RED, 100.0))
 
     # Create player
-    # player = create_player
+    player = create_player
 
-    # outline = create_outline
-    # player.add_child(outline)
+    outline = create_outline
+    player.add_child(outline)
 
-    # label = create_label
-    # outline.add_child(label)
+    label = create_label("player_label", "player")
+    outline.add_child(label)
 
-    # player.add_child(
-    #   generate_origin_grid("player_target", Oid::Color::RED)
-    # )
+    player.add_child(
+      generate_origin_grid("player_target", Oid::Color::RED)
+    )
 
     text_box = contexts.stage.create_entity
       .add_actor("text_box")
-      # .add_position(Oid::Vector3.new(20.0, 0.0, 0.0))
       .add_position(Oid::Vector3.zero)
-
       .add_position_type(Oid::Enum::Position::Static)
       .add_rotation
       .add_scale
@@ -76,7 +76,17 @@ class Example::WorldSystem
           # scale(entity)
 
           # Random move
-          # random_move(entity)
+          random_move(entity)
+
+          contexts.stage.get_entity_with_prop_name("player_label")
+            .replace_view_element(
+              value: Oid::Element::Text.new(
+                text: sprintf("%d, %d", entity.position.value.x, entity.position.value.y),
+                font_size: 20,
+                color: Oid::Color::BLACK
+              ),
+              origin: Oid::Enum::OriginType::UpperLeft
+            )
         when "grid_2d"
           # entity.destroyed = true
         else

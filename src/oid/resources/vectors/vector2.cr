@@ -145,5 +145,9 @@ module Oid
     def to_v3
       Vector3.new(self.x, self.y, 0)
     end
+
+    def to_v4
+      self.to_v3.to_v4
+    end
   end
 end

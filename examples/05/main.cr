@@ -8,7 +8,7 @@ require "./systems/**"
 RAYLIB_CONFIG = {
   app_name:        "Example 05",
   screen_w:        800,
-  screen_h:        600,
+  screen_h:        450,
   target_fps:      300,
   show_fps:        true,
   enable_mouse:    true,
