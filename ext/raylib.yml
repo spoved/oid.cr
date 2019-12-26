@@ -1,10 +1,15 @@
 module: RayLib
 
-# library: "%/{RAY_LIB_LIB}"
-# library: "-lraylib -L%/ext/raylib/src/libraylib.a -lglfw3 -L%/ext/raylib/src/external/glfw/src/"
-library: "-lraylib"
+# library: "%/ext/raylib/src/libraylib.a %/ext/raylib/src/external/glfw/src/libglfw3.a"
+library: "%/ext/raylib/src/libraylib.dylib"
 
 generators:
+  cpp:
+    output: ext/raylib_bindings.cpp
+    preamble: |-
+      #include "bindgen_helper.hpp"
+      #define RAYGUI_IMPLEMENTATION
+      #define RAYGUI_SUPPORT_RICONS
   crystal:
     output: src/raylib/binding/binding.cr
 

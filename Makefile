@@ -244,6 +244,45 @@ format/fast:
 .PHONY : format/fast
 
 #=============================================================================
+# Target rules for targets named intrinsics_gen
+
+# Build rule for target.
+intrinsics_gen: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 intrinsics_gen
+.PHONY : intrinsics_gen
+
+# fast build rule for target.
+intrinsics_gen/fast:
+	$(MAKE) -f ext/CMakeFiles/intrinsics_gen.dir/build.make ext/CMakeFiles/intrinsics_gen.dir/build
+.PHONY : intrinsics_gen/fast
+
+#=============================================================================
+# Target rules for targets named raygui
+
+# Build rule for target.
+raygui: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 raygui
+.PHONY : raygui
+
+# fast build rule for target.
+raygui/fast:
+	$(MAKE) -f ext/CMakeFiles/raygui.dir/build.make ext/CMakeFiles/raygui.dir/build
+.PHONY : raygui/fast
+
+#=============================================================================
+# Target rules for targets named raylib
+
+# Build rule for target.
+raylib: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 raylib
+.PHONY : raylib
+
+# fast build rule for target.
+raylib/fast:
+	$(MAKE) -f ext/raylib/src/CMakeFiles/raylib.dir/build.make ext/raylib/src/CMakeFiles/raylib.dir/build
+.PHONY : raylib/fast
+
+#=============================================================================
 # Target rules for targets named raylib_static
 
 # Build rule for target.
@@ -281,32 +320,6 @@ glfw_objlib: cmake_check_build_system
 glfw_objlib/fast:
 	$(MAKE) -f ext/raylib/src/external/glfw/src/CMakeFiles/glfw_objlib.dir/build.make ext/raylib/src/external/glfw/src/CMakeFiles/glfw_objlib.dir/build
 .PHONY : glfw_objlib/fast
-
-#=============================================================================
-# Target rules for targets named intrinsics_gen
-
-# Build rule for target.
-intrinsics_gen: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 intrinsics_gen
-.PHONY : intrinsics_gen
-
-# fast build rule for target.
-intrinsics_gen/fast:
-	$(MAKE) -f ext/CMakeFiles/intrinsics_gen.dir/build.make ext/CMakeFiles/intrinsics_gen.dir/build
-.PHONY : intrinsics_gen/fast
-
-#=============================================================================
-# Target rules for targets named raygui
-
-# Build rule for target.
-raygui: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 raygui
-.PHONY : raygui
-
-# fast build rule for target.
-raygui/fast:
-	$(MAKE) -f ext/CMakeFiles/raygui.dir/build.make ext/CMakeFiles/raygui.dir/build
-.PHONY : raygui/fast
 
 #=============================================================================
 # Target rules for targets named shards
@@ -366,11 +379,12 @@ help:
 	@echo "... bindings"
 	@echo "... install"
 	@echo "... format"
+	@echo "... intrinsics_gen"
+	@echo "... raygui"
+	@echo "... raylib"
 	@echo "... raylib_static"
 	@echo "... glfw"
 	@echo "... glfw_objlib"
-	@echo "... intrinsics_gen"
-	@echo "... raygui"
 	@echo "... shards"
 	@echo "... bindgen_tool"
 	@echo "... bindgen"

@@ -87,7 +87,7 @@ module RayLib
     end
   end
 
-  @[Link(ldflags: "-lraylib")]
+  @[Link(ldflags: "#{__DIR__}/../../../ext/raylib/src/libraylib.dylib")]
   lib Binding
     alias TextureCubemap = Void
     alias MusicData = Void

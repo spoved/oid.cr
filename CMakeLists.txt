@@ -1,20 +1,7 @@
 project(oid)
 cmake_minimum_required(VERSION 3.14)
 
-set(BUILD_EXAMPLES OFF)
-set(BUILD_GAMES OFF)
-
-# ext/raylib/src/libraylib.a
-# ext/raylib/src/external/glfw/src/libglfw3.a
-
-add_subdirectory(ext/raylib)
 add_subdirectory(ext)
-
-include_directories(
-  ext/raylib/src 
-  ext/raylib/src/external/glfw/src
-  ext/raygui/src
-)
 
 # lib/bindgen/clang/bindgen
 add_subdirectory(lib/bindgen)

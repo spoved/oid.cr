@@ -17,7 +17,6 @@ message(STATUS "LLVM Major version: ${LLVM_VER}")
 # Add llvm version definition
 add_definitions(-D__LLVM_VERSION_${LLVM_VER})
 
-
 # Find the LLVM clang++ path
 message(STATUS "LLVM Tools Dir: ${LLVM_TOOLS_BINARY_DIR}")
 
@@ -55,3 +54,18 @@ include_directories(
 )
 
 add_library(raygui raygui_bindings.cpp)
+target_link_libraries(raygui raylib)
+
+######################
+# RAYLIB Setup
+######################
+
+set(BUILD_EXAMPLES OFF)
+set(BUILD_GAMES OFF)
+
+set(BUILD_EXAMPLES OFF CACHE BOOL "" FORCE) # don't build the supplied examples
+set(BUILD_GAMES    OFF CACHE BOOL "" FORCE) # or games
+set(SHARED_RAYLIB ON)
+
+add_subdirectory(raylib)
+target_link_libraries(raylib glfw)
