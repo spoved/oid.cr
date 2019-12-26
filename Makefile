@@ -56,6 +56,18 @@ CMAKE_BINARY_DIR = /Users/homans/code/gitlab.com/hero-forge/oid.cr
 #=============================================================================
 # Targets provided globally by CMake.
 
+# Special rule for the target install/local
+install/local: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	/usr/local/Cellar/cmake/3.15.5/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local
+
+# Special rule for the target install/local
+install/local/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	/usr/local/Cellar/cmake/3.15.5/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local/fast
+
 # Special rule for the target list_install_components
 list_install_components:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\""
@@ -122,18 +134,6 @@ package/fast: package
 
 .PHONY : package/fast
 
-# Special rule for the target install/local
-install/local: preinstall
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
-	/usr/local/Cellar/cmake/3.15.5/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
-.PHONY : install/local
-
-# Special rule for the target install/local
-install/local/fast: preinstall/fast
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
-	/usr/local/Cellar/cmake/3.15.5/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
-.PHONY : install/local/fast
-
 # Special rule for the target install
 install: preinstall
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
@@ -177,6 +177,19 @@ preinstall/fast:
 depend:
 	$(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
+
+#=============================================================================
+# Target rules for targets named bindings-raygui
+
+# Build rule for target.
+bindings-raygui: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 bindings-raygui
+.PHONY : bindings-raygui
+
+# fast build rule for target.
+bindings-raygui/fast:
+	$(MAKE) -f CMakeFiles/bindings-raygui.dir/build.make CMakeFiles/bindings-raygui.dir/build
+.PHONY : bindings-raygui/fast
 
 #=============================================================================
 # Target rules for targets named example
@@ -270,6 +283,32 @@ glfw_objlib/fast:
 .PHONY : glfw_objlib/fast
 
 #=============================================================================
+# Target rules for targets named intrinsics_gen
+
+# Build rule for target.
+intrinsics_gen: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 intrinsics_gen
+.PHONY : intrinsics_gen
+
+# fast build rule for target.
+intrinsics_gen/fast:
+	$(MAKE) -f ext/CMakeFiles/intrinsics_gen.dir/build.make ext/CMakeFiles/intrinsics_gen.dir/build
+.PHONY : intrinsics_gen/fast
+
+#=============================================================================
+# Target rules for targets named raygui
+
+# Build rule for target.
+raygui: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 raygui
+.PHONY : raygui
+
+# fast build rule for target.
+raygui/fast:
+	$(MAKE) -f ext/CMakeFiles/raygui.dir/build.make ext/CMakeFiles/raygui.dir/build
+.PHONY : raygui/fast
+
+#=============================================================================
 # Target rules for targets named shards
 
 # Build rule for target.
@@ -296,19 +335,6 @@ bindgen_tool/fast:
 .PHONY : bindgen_tool/fast
 
 #=============================================================================
-# Target rules for targets named intrinsics_gen
-
-# Build rule for target.
-intrinsics_gen: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 intrinsics_gen
-.PHONY : intrinsics_gen
-
-# fast build rule for target.
-intrinsics_gen/fast:
-	$(MAKE) -f lib/bindgen/clang/CMakeFiles/intrinsics_gen.dir/build.make lib/bindgen/clang/CMakeFiles/intrinsics_gen.dir/build
-.PHONY : intrinsics_gen/fast
-
-#=============================================================================
 # Target rules for targets named bindgen
 
 # Build rule for target.
@@ -327,7 +353,9 @@ help:
 	@echo "... all (the default if no target is provided)"
 	@echo "... clean"
 	@echo "... depend"
+	@echo "... install/local"
 	@echo "... list_install_components"
+	@echo "... bindings-raygui"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... package_source"
@@ -335,16 +363,16 @@ help:
 	@echo "... package"
 	@echo "... example"
 	@echo "... docs"
-	@echo "... install/local"
 	@echo "... bindings"
 	@echo "... install"
 	@echo "... format"
 	@echo "... raylib_static"
 	@echo "... glfw"
 	@echo "... glfw_objlib"
+	@echo "... intrinsics_gen"
+	@echo "... raygui"
 	@echo "... shards"
 	@echo "... bindgen_tool"
-	@echo "... intrinsics_gen"
 	@echo "... bindgen"
 .PHONY : help
 

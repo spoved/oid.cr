@@ -6,8 +6,15 @@ set(BUILD_GAMES OFF)
 
 # ext/raylib/src/libraylib.a
 # ext/raylib/src/external/glfw/src/libglfw3.a
+
 add_subdirectory(ext/raylib)
-include_directories(ext/raylib/src ext/raylib/src/external/glfw/src)
+add_subdirectory(ext)
+
+include_directories(
+  ext/raylib/src 
+  ext/raylib/src/external/glfw/src
+  ext/raygui/src
+)
 
 # lib/bindgen/clang/bindgen
 add_subdirectory(lib/bindgen)
@@ -49,5 +56,10 @@ add_custom_target(example
 
 add_custom_target(bindings ALL
   COMMAND ${bindgen_tool} ${PROJECT_SOURCE_DIR}/ext/raylib.yml
+  DEPENDS shards glfw_objlib glfw raylib_static bindgen_tool bindgen
+)
+
+add_custom_target(bindings-raygui ALL
+  COMMAND ${bindgen_tool} ${PROJECT_SOURCE_DIR}/ext/raygui.yml
   DEPENDS shards glfw_objlib glfw raylib_static bindgen_tool bindgen
 )

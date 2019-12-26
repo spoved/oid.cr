@@ -8,14 +8,18 @@ generators:
   crystal:
     output: src/raylib/binding/binding.cr
 
-<<: config/enums.yml
-<<: config/classes.yml
-<<: config/macros.yml
 <<: config/find_paths.yml
-<<: config/types.yml
+
+types:
+  <<: config/types.yml
+  <<: config/raylib/types.yml
+
+<<: config/raylib/enums.yml
+<<: config/raylib/classes.yml
+<<: config/raylib/macros.yml
 
 functions:
-  <<: config/functions/camera.yml
+  <<: config/raylib/functions/camera.yml
   ".*":
     destination: "::"
 

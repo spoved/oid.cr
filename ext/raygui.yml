@@ -1,0 +1,57 @@
+module: RayGui
+
+# library: "%/{RAY_LIB_LIB}"
+# library: "-lraylib -L%/ext/raylib/src/libraylib.a -lglfw3 -L%/ext/raylib/src/external/glfw/src/"
+library: "%/ext/raygui.a"
+
+generators:
+  cpp:
+    # Output file path  (Mandatory)
+    output: ext/raygui_bindings.cpp
+    # Output file preamble  (Optional)
+    preamble: |-
+      #include "bindgen_helper.hpp"
+      #define RAYGUI_IMPLEMENTATION
+      #define RAYGUI_SUPPORT_RICONS
+    # Command to run after the generator.  (Optional!)
+    # Will be executed as-written in the output directory.
+    # If the command signals failure, bindgen will halt too.
+    build: make raygui
+
+  crystal:
+    output: src/raygui/binding/binding.cr
+
+<<: config/find_paths.yml
+
+types:
+  <<: config/types.yml
+  __va_list_tag: { ignore: true }
+
+functions:
+  <<: config/raygui/functions.yml
+
+parser:
+  if_BINDGEN_CLANG_BIN_isnt_:
+    binary: "./{BINDGEN_CLANG_BIN}"
+  flags:
+    - "-x"
+    - "c++"
+    - "-std=c++11"
+
+  files:
+    - raygui.h
+  includes:
+    - "%"
+    - "%/raygui/src/"
+    - "%/raylib/src/"
+    - "{LLVM_INCLUDES}"
+  defines:
+    - __STDC_CONSTANT_MACROS
+    - __STDC_LIMIT_MACROS
+    - PLATFORM_DESKTOP
+    - GRAPHICS_API_OPENGL_33
+    - GL_SILENCE_DEPRECATION
+    - __LLVM_VERSION_${LLVM_VERSION}
+    - __OS_TYPE_${OS_TYPE}
+    - RAYGUI_IMPLEMENTATION
+    - RAYGUI_SUPPORT_RICONS

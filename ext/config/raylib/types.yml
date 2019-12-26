@@ -1,0 +1,188 @@
+Color:
+  copy_structure: true
+  generate_binding: true
+  generate_wrapper: false
+  kind: Struct
+  # crystal_type: Color
+CLITERAL:
+  alias_for: Color
+Vector2:
+  copy_structure: true
+  generate_binding: true
+  generate_wrapper: false
+  kind: Struct
+  crystal_type: Vector2
+Vector3:
+  copy_structure: true
+  generate_binding: true
+  generate_wrapper: false
+  kind: Struct
+  crystal_type: Vector3
+Vector4:
+  copy_structure: true
+  generate_binding: true
+  generate_wrapper: false
+  kind: Struct
+  crystal_type: Vector4
+Quaternion:
+  alias_for: Vector4
+Matrix:
+  copy_structure: true
+  generate_binding: true
+  generate_wrapper: false
+  kind: Struct
+  crystal_type: Matrix
+Rectangle:
+  copy_structure: true
+  generate_binding: true
+  generate_wrapper: false
+  kind: Struct
+  crystal_type: Rectangle
+Image:
+  copy_structure: true
+  generate_binding: true
+  generate_wrapper: false
+  kind: Struct
+  crystal_type: Image
+Texture2D:
+  copy_structure: true
+  generate_binding: true
+  generate_wrapper: false
+  kind: Struct
+  crystal_type: Texture2D
+Texture:
+  alias_for: Texture2D
+# TextureCubemap:
+#   alias_for: Texture2D
+RenderTexture2D:
+  copy_structure: true
+  generate_binding: true
+  generate_wrapper: false
+  kind: Struct
+  crystal_type: RenderTexture2D
+NPatchInfo:
+  copy_structure: true
+  generate_binding: true
+  generate_wrapper: false
+  kind: Struct
+  crystal_type: NPatchInfo
+CharInfo:
+  copy_structure: true
+  generate_binding: true
+  generate_wrapper: false
+  kind: Struct
+  crystal_type: CharInfo
+Font:
+  copy_structure: true
+  generate_binding: true
+  generate_wrapper: false
+  kind: Struct
+  crystal_type: Font
+SpriteFont:
+  alias_for: Font
+Camera:
+  alias_for: Camera3D
+Camera3D:
+  copy_structure: true
+  generate_binding: true
+  generate_wrapper: false
+  kind: Struct
+  crystal_type: Camera3D
+# Camera:
+#   alias_for: Camera3D
+Camera2D:
+  copy_structure: true
+  generate_binding: true
+  generate_wrapper: false
+  kind: Struct
+  crystal_type: Camera2D
+Mesh:
+  copy_structure: true
+  generate_binding: true
+  generate_wrapper: false
+  kind: Struct
+  crystal_type: Mesh
+Shader:
+  copy_structure: true
+  generate_binding: true
+  generate_wrapper: false
+  kind: Struct
+  crystal_type: Shader
+MaterialMap:
+  copy_structure: true
+  generate_binding: true
+  generate_wrapper: false
+  kind: Struct
+  crystal_type: MaterialMap
+Material:
+  copy_structure: true
+  generate_binding: true
+  generate_wrapper: false
+  kind: Struct
+  crystal_type: Material
+Transform:
+  copy_structure: true
+  generate_binding: true
+  generate_wrapper: false
+  kind: Struct
+  crystal_type: Transform
+BoneInfo:
+  copy_structure: true
+  generate_binding: true
+  generate_wrapper: false
+  kind: Struct
+  crystal_type: BoneInfo
+Model:
+  copy_structure: true
+  generate_binding: true
+  generate_wrapper: false
+  kind: Struct
+  crystal_type: Model
+ModelAnimation:
+  copy_structure: true
+  generate_binding: true
+  generate_wrapper: false
+  kind: Struct
+  crystal_type: ModelAnimation
+Ray:
+  copy_structure: true
+  generate_binding: true
+  generate_wrapper: false
+  kind: Struct
+  crystal_type: Ray
+RayHitInfo:
+  copy_structure: true
+  generate_binding: true
+  generate_wrapper: false
+  kind: Struct
+  crystal_type: RayHitInfo
+BoundingBox:
+  copy_structure: true
+  generate_binding: true
+  generate_wrapper: false
+  kind: struct
+  crystal_type: BoundingBox
+Wave:
+  copy_structure: true
+  generate_binding: true
+  generate_wrapper: false
+  kind: Struct
+  crystal_type: Wave
+Sound:
+  copy_structure: true
+  generate_binding: true
+  generate_wrapper: false
+  kind: Struct
+  crystal_type: Sound
+AudioStream:
+  copy_structure: true
+  generate_binding: true
+  generate_wrapper: false
+  kind: Struct
+  crystal_type: AudioStream
+VrDeviceInfo:
+  copy_structure: true
+  generate_binding: true
+  generate_wrapper: false
+  kind: Struct
+  crystal_type: VrDeviceInfo
