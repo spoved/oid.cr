@@ -5,11 +5,14 @@
 *.dwarf
 /assets/
 
+/ext/*.a
+
 # Libraries don't need dependency lock
 # Dependencies will be locked in application that uses them
 /shard.lock
 
 .idea
+.vscode
 
 # CMake ignores
 cmake-build-debug
@@ -26,3 +29,4 @@ _deps
 CPack*
 cmake
 build
+Makefile

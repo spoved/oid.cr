@@ -4,7 +4,7 @@ version: 0.1.0
 authors:
   - Holden Omans <holden.omans@gmail.com>
 
-crystal: 0.31.1
+crystal: 0.35.1
 
 license: MIT
 
@@ -42,5 +42,6 @@ development_dependencies:
   ameba:
     github: veelenga/ameba
   bindgen:
-    github: kalinon/bindgen
-    branch: cmake
+    github: Papierkorb/bindgen
+    branch: master
+    # version: ~> 0.7.0
