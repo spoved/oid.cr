@@ -29,11 +29,11 @@ class Oid::Cli < Admiral::Command
       p_path = File.expand_path(arguments.path)
 
       unless File.exists?(t_path)
-        logger.error("Template path #{t_path} does not exist")
+        logger.error { "Template path #{t_path} does not exist" }
       end
 
       unless File.exists?(p_path)
-        logger.error("Project path #{p_path} does not exist")
+        logger.error { "Project path #{p_path} does not exist" }
       end
 
       crinja.loader = Crinja::Loader::FileSystemLoader.new(t_path)
@@ -50,7 +50,7 @@ class Oid::Cli < Admiral::Command
         options["gfx_lib"] = "raylib"
         options["gfx_class"] = "RayLib"
       else
-        logger.error("GFX Backend: #{flags.gfx_backend} not supported")
+        logger.error { "GFX Backend: #{flags.gfx_backend} not supported" }
         exit(1)
       end
 

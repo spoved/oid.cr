@@ -42,11 +42,11 @@ add_custom_target(example
 )
 
 add_custom_target(bindings ALL
-  COMMAND ${bindgen_tool} ${PROJECT_SOURCE_DIR}/ext/raylib.yml
+  COMMAND ${PROJECT_SOURCE_DIR}/lib/bindgen/bin/bindgen ${PROJECT_SOURCE_DIR}/ext/raylib.yml
   DEPENDS shards glfw_objlib glfw raylib_static bindgen
 )
 
 add_custom_target(bindings-raygui ALL
-  COMMAND ${bindgen_tool} ${PROJECT_SOURCE_DIR}/ext/raygui.yml
+  COMMAND ${PROJECT_SOURCE_DIR}/lib/bindgen/bin/bindgen ${PROJECT_SOURCE_DIR}/ext/raygui.yml
   DEPENDS shards glfw_objlib glfw raylib_static bindgen
 )

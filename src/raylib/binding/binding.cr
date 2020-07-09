@@ -58,7 +58,7 @@ module RayLib
     abstract class SequentialContainer(T)
       include Indexable(T)
 
-      # `#unsafe_at` and `#size` will be implemented by the wrapper class.
+      # `#unsafe_fetch` and `#size` will be implemented by the wrapper class.
 
       # Adds an element at the end.  Implemented by the wrapper.
       abstract def push(value)
@@ -2761,9 +2761,9 @@ module RayLib
 
     module NPatch
       enum Type : Int32
-        Digit9PATCH           = 0
-        Digit3PATCHVERTICAL   = 1
-        Digit3PATCHHORIZONTAL = 2
+        Digit9PATCH            = 0
+        Digit3PATCH_VERTICAL   = 1
+        Digit3PATCH_HORIZONTAL = 2
       end
     end
   end
