@@ -1,53 +1,57 @@
 class RayLib::ConfigService
   include Oid::Service::Config
 
-  getter config : NamedTuple(
-    app_name: String,
-    screen_w: Int32,
-    screen_h: Int32,
-    target_fps: Int32,
-    show_fps: Bool,
-    enable_mouse: Bool,
-    enable_keyboard: Bool,
-    asset_path: String,
-    camera_mode: String,
+  add_settings(
+    app_name : String,
+    screen_w : Int32,
+    screen_h : Int32,
+    target_fps : Int32,
+    show_fps : Bool,
+    enable_mouse : Bool,
+    enable_keyboard : Bool,
+    camera_mode : String,
+    asset_path : String,
   )
 
-  def initialize(@config); end
+  def initialize(**args)
+    {% for var in @type.instance_vars %}
+    @{{var}} = args[:{{var}}]
+    {% end %}
+  end
 
   def app_name : String
-    config[:app_name]
+    @app_name
   end
 
   def screen_w : Int32
-    config[:screen_w]
+    @screen_w
   end
 
   def screen_h : Int32
-    config[:screen_h]
+    @screen_h
   end
 
   def target_fps : Int32
-    config[:target_fps]
+    @target_fps
   end
 
   def show_fps? : Bool
-    config[:show_fps]
+    @show_fps
   end
 
   def enable_mouse? : Bool
-    config[:enable_mouse]
+    @enable_mouse
   end
 
   def enable_keyboard? : Bool
-    config[:enable_keyboard]
+    @enable_keyboard
   end
 
   def asset_path : String
-    config[:asset_path]
+    @asset_path
   end
 
   def camera_3d? : Bool
-    config[:camera_mode] == "3d" ? true : false
+    @camera_mode == "3d" ? true : false
   end
 end

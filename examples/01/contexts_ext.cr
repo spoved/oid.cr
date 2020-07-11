@@ -3,25 +3,25 @@ class Entitas::Contexts
 
   @[Entitas::PostConstructor]
   def init_piece_entity_indicies
-    game.add_entity_index(
-      Entitas::PrimaryEntityIndex(GameEntity, Oid::Vector2).new(
+    stage.add_entity_index(
+      Entitas::PrimaryEntityIndex(StageEntity, Oid::Vector2).new(
         PIECE_POSITION_INDEX,
-        game.get_group(
-          GameMatcher
-            .all_of(GameMatcher.piece, GameMatcher.position)
-            .none_of(GameMatcher.destroyed)
+        stage.get_group(
+          StageMatcher
+            .all_of(StageMatcher.piece, StageMatcher.position)
+            .none_of(StageMatcher.destroyed)
         ),
-        ->(entity : GameEntity, component : Entitas::IComponent?) {
-          return entity.position.value.to_v2 unless component.is_a?(Position)
-          component.nil? ? entity.position.value.to_v2 : component.as(Position).value.to_v2
+        ->(entity : StageEntity, component : Entitas::IComponent?) {
+          return entity.position.value.to_v2 unless component.is_a?(Oid::Position)
+          component.nil? ? entity.position.value.to_v2 : component.as(Oid::Position).value.to_v2
         }
       )
     )
   end
 
-  def get_piece_with_position(context : GameContext, position : Oid::Vector2) : GameEntity?
+  def get_piece_with_position(context : StageContext, position : Oid::Vector2) : StageEntity?
     context.get_entity_index(PIECE_POSITION_INDEX)
-      .as(Entitas::PrimaryEntityIndex(GameEntity, Oid::Vector2))
+      .as(Entitas::PrimaryEntityIndex(StageEntity, Oid::Vector2))
       .get_entity(position)
   end
 

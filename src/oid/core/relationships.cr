@@ -1,6 +1,22 @@
 module Oid
   module Relationships(T)
-    {% if flag?(:entitas_enable_logging) %}spoved_logger{% end %}
+    # {% if flag?(:entitas_enable_logging) %}
+    #   @@logger = ::Log.for(Oid::Relationships)
+
+    #   def logger : ::Log
+    #     @@logger
+    #   end
+
+    #   def self.logger
+    #     @@logger
+    #   end
+    # {% end %}
+
+    macro included
+      {% if flag?(:entitas_enable_logging) %}
+      spoved_logger
+      {% end %}
+    end
 
     @parent : T? = nil
     private getter children : Set(T) = Set(T).new
@@ -35,7 +51,7 @@ module Oid
     # :nodoc:
     # Internal method to set parent
     private def set_parent(parent : T?)
-      {% if flag?(:entitas_enable_logging) %}logger.warn { "Adding parent: #{parent}", self }  unless parent.nil?{% end %}
+      {% if flag?(:entitas_enable_logging) %}logger.warn { "#{self} - Adding parent: #{parent}" }  unless parent.nil?{% end %}
 
       @parent = parent
     end
@@ -146,7 +162,7 @@ module Oid
 
     # Add provided object as a child and set `self` as parent to object
     def add_child(child : T)
-      {% if flag?(:entitas_enable_logging) %}logger.warn { "Adding child: #{child}", self } {% end %}
+      {% if flag?(:entitas_enable_logging) %}logger.warn { "#{self} - Adding child: #{child}" } {% end %}
 
       child._parent = self
       self.children.add(child)
@@ -154,7 +170,7 @@ module Oid
 
     # Removes parent from `self`
     def clear_parent!
-      {% if flag?(:entitas_enable_logging) %}logger.warn { "Clearing parent!", self } {% end %}
+      {% if flag?(:entitas_enable_logging) %}logger.warn { "#{self} - Clearing parent!" } {% end %}
 
       old_parent = self.parent
       if !old_parent.nil? && old_parent.has_child?(self)
@@ -166,7 +182,7 @@ module Oid
 
     # Removes child from `self`
     def delete_child(child : T)
-      {% if flag?(:entitas_enable_logging) %}logger.warn { "Deleting child: #{child}", self } {% end %}
+      {% if flag?(:entitas_enable_logging) %}logger.warn { "#{self} - Deleting child: #{child}" } {% end %}
 
       self.children.delete(child)
 

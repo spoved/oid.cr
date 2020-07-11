@@ -53,4 +53,13 @@ class RayLib::ViewService
       texture_links.delete(name)
     end
   end
+
+  def texture(name)
+    textures[name]?
+    # name = e.asset.name
+    # if textures[name]?
+    #   textures[name]
+    # else
+    # end
+  end
 end

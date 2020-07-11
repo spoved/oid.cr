@@ -34,7 +34,7 @@ class AppController < Entitas::Controller
     application: RayLib::ApplicationService.new,
     logger: RayLib::LoggerService.new,
     input: RayLib::InputService.new,
-    config: RayLib::ConfigService.new(RAYLIB_CONFIG),
+    config: RayLib::ConfigService.new(**RAYLIB_CONFIG),
     time: RayLib::TimeService.new,
     view: RayLib::ViewService.new,
     camera: RayLib::CameraService.new,

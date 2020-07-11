@@ -1,7 +1,8 @@
 module Oid
   module Systems
     class ProcessInput < Entitas::ReactiveSystem
-      spoved_logger
+      spoved_logger(bind: true)
+
       include Entitas::Systems::ExecuteSystem
 
       protected property contexts : Contexts
@@ -25,13 +26,13 @@ module Oid
         entity = entities.first.as(InputEntity)
         # FIXME: Need to do correct positioning
         pos = (entity.input.position / Oid::Vector2.new(800, 600))*10
-        e = contexts.game
+        e = contexts.stage
           .get_entity_index(Entitas::Contexts::PIECE_POSITION_INDEX)
-          .as(Entitas::PrimaryEntityIndex(GameEntity, Oid::Vector2))
+          .as(Entitas::PrimaryEntityIndex(StageEntity, Oid::Vector2))
           .get_entity(Oid::Vector2.new(pos.x.to_i, pos.y.to_i))
 
         if !e.nil? && e.interactive?
-          logger.unknown "Destroying #{e}"
+          logger.warn { "Destroying #{e}" }
           e.destroyed = true
         end
       end

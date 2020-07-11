@@ -158,8 +158,14 @@ class RayLib::ViewController
 
   private def draw_texture(e : Oid::RenderableEntity)
     position = e.transform
-    texture = view_service.textures[e.asset.name]
+    texture = view_service.texture(e.asset.name)
+    if texture.nil?
+      e.asset_loaded = false
+      load_asset
+      texture = view_service.textures[e.asset.name]
+    end
     scale = e.scale.value.to_f32
+
     source_rec = RayLib::Rectangle.new(
       x: 0.0f32,
       y: 0.0f32,

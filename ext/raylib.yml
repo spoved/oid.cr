@@ -1,7 +1,8 @@
 module: RayLib
 
 # library: "%/ext/raylib/src/libraylib.a %/ext/raylib/src/external/glfw/src/libglfw3.a"
-library: "%/ext/raylib/src/libraylib.dylib"
+# library: "%/ext/raylib/src/libraylib.dylib"
+library: "-lraylib -L%/ext/raylib/src/libraylib.a -lglfw3 -L%/ext/raylib/src/external/glfw/src/"
 
 generators:
   cpp:

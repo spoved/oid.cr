@@ -6,24 +6,24 @@ module Oid
       protected property contexts : Contexts
 
       def initialize(@contexts)
-        @collector = get_trigger(@contexts.game)
+        @collector = get_trigger(@contexts.stage)
       end
 
       def get_trigger(context : Entitas::Context) : Entitas::ICollector
-        context.create_collector(GameMatcher.destroyed)
+        context.create_collector(StageMatcher.destroyed)
       end
 
-      def filter(entity : GameEntity)
+      def filter(entity : StageEntity)
         entity.piece? && entity.destroyed?
       end
 
       def execute(entities : Array(Entitas::IEntity))
-        board = contexts.game.board.value
+        board = contexts.stage.board.value
         board.x.to_i.times do |x|
           board.y.to_i.times do |y|
             position = Oid::Vector2.new(x, y)
 
-            e = contexts.get_piece_with_position(contexts.game, position)
+            e = contexts.get_piece_with_position(contexts.stage, position)
             if !e.nil? && e.movable?
               move_down(e, position)
             end
@@ -31,7 +31,7 @@ module Oid
         end
       end
 
-      def move_down(entity : GameEntity, position : Oid::Vector2)
+      def move_down(entity : StageEntity, position : Oid::Vector2)
         empty_row = BoardLogic.get_next_empty_row(contexts, position)
 
         if empty_row != position.y

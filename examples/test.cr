@@ -94,6 +94,6 @@ app.start(
   },
   draw_hook: ->(cont : GameController) {
     RayLib.draw_fps(10, 10)
-  # cont.contexts.game.create_entity.add_position(Oid::Vector3.new(1.0, 1.0, 0.0))
+    # cont.contexts.game.create_entity.add_position(Oid::Vector3.new(1.0, 1.0, 0.0))
   },
 )

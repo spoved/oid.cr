@@ -5,64 +5,76 @@ require "./components"
 require "./systems/*"
 require "./contexts_ext"
 
+::Log.builder.clear
+spoved_logger(:debug, bind: true)
+
+RAYLIB_CONFIG = {
+  app_name:            "Eample 01",
+  screen_w:            800,
+  screen_h:            600,
+  target_fps:          120,
+  show_fps:            true,
+  enable_mouse:        true,
+  enable_keyboard:     true,
+  asset_path:          "./examples/01/assets",
+  board_size:          Oid::Vector2.new(10, 10),
+  blocker_probability: 0.1,
+  camera_mode:         "2d",
+}
+
 Oid::Systems::EmitInput.listen_for_keys(B)
 
-class RayLib::ConfigService
+create_feature Example, [
+  Oid::Systems::InputSystem,
+  Oid::Systems::ProcessInput,
+  Oid::Systems::Board,
+  Oid::Systems::Fall,
+  Oid::Systems::Move,
+
+  # ////////////////////////////////////////////////////
+  # TODO: Place any services created here
+  # ////////////////////////////////////////////////////
+]
+
+class ExampleConfigService < RayLib::ConfigService
   add_settings(
-    board_size : Oid::Vector2,
-    blocker_probability : Float64,
-    asset_path : String
+    board_size : Oid::Vector2 = Oid::Vector2.new(10, 10),
+    blocker_probability : Float64 = 0.1,
   )
 end
 
-class ApplicationService
-  include Oid::Service::Application
-  property frame_count = 0
-end
-
-class GameController < Entitas::Controller
-  getter services = Services.new(
-    application: ApplicationService.new,
+class AppController < Entitas::Controller
+  getter services : Oid::Services = Oid::Services.new(
+    application: RayLib::ApplicationService.new,
     logger: RayLib::LoggerService.new,
     input: RayLib::InputService.new,
-    config: RayLib::ConfigService.new,
+    config: ExampleConfigService.new(**RAYLIB_CONFIG),
     time: RayLib::TimeService.new,
     view: RayLib::ViewService.new,
+    camera: RayLib::CameraService.new,
+    window: RayLib::WindowService.new
   )
 
   def create_systems(contexts : Contexts)
     Entitas::Feature.new("Systems")
-      .add(ServiceRegistrationSystems.new(contexts, services))
-      .add(Game::EventSystems.new(contexts))
-      .add(Oid::Systems::LoadAsset.new(contexts))
-      .add(Oid::Systems::EmitInput.new(contexts))
-      .add(Oid::Systems::Input.new(contexts))
-      .add(Oid::Systems::ProcessInput.new(contexts))
-      .add(Oid::Systems::Board.new(contexts))
-      .add(Oid::Systems::Fall.new(contexts))
-      .add(Oid::Systems::Move.new(contexts))
+      .add(Oid::ServiceRegistrationSystems.new(contexts, services))
+      .add(OidSystems.new(contexts))
+      .add(ExampleSystems.new(contexts))
   end
 end
 
-RayLib::ConfigService.configure do |settings|
-  settings.screen_w = 800
-  settings.screen_h = 600
-  settings.target_fps = 120
-  settings.show_fps = true
-  settings.enable_mouse = true
-  settings.enable_keyboard = true
+controller = AppController.new
+controller.start
 
-  settings.asset_path = "examples/01/assets"
-  settings.board_size = Oid::Vector2.new(10, 10)
-  settings.blocker_probability = 0.1
+spawn do
+  controller.start_server
 end
 
-controller = GameController.new
-controller.start_server
-app = RayLib::Application.new("Example 01")
+window_controller = controller.contexts.app.window.value
 
-app.start(
-  controller: controller,
-  init_hook: ->(cont : GameController) {},
-  draw_hook: ->(cont : GameController) {},
-)
+while !window_controller.should_close?
+  controller.update
+  Fiber.yield
+end
+
+puts "DONE"

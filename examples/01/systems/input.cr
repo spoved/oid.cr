@@ -1,6 +1,7 @@
 module Oid
   module Systems
     class Input
+      spoved_logger
       include Entitas::Systems::ExecuteSystem
       include Entitas::Systems::CleanupSystem
 
@@ -45,6 +46,7 @@ module Oid
       def cleanup
         context.entities.each do |e|
           if e.input?
+            logger.warn { "Destroying #{e}" }
             e.destroy
           end
         end

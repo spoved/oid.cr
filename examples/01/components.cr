@@ -1,8 +1,8 @@
 #####################
-# Game components
+# Stage components
 
 @[Component::Unique]
-@[Context(Game)]
+@[Context(Stage)]
 class Board < Entitas::Component
   prop :value, Oid::Vector2, default: Oid::Vector2.new(10, 10)
 end
@@ -14,15 +14,11 @@ end
 class BurstMode < Entitas::Component
 end
 
-@[Context(Game)]
-class Interactive < Entitas::Component
-end
-
-@[Context(Game)]
+@[Context(Stage)]
 class Movable < Entitas::Component
 end
 
-@[Context(Game)]
+@[Context(Stage)]
 class Piece < Entitas::Component
 end
 
@@ -35,9 +31,9 @@ class Input < Entitas::Component
 end
 
 #####################
-# GameState components
+# StageState components
 
-@[Context(GameState)]
+@[Context(StageState)]
 @[Component::Unique]
 @[Entitas::Event(EventTarget::Any)]
 class Score < Entitas::Component
@@ -49,7 +45,7 @@ end
 
 @[Context(Config)]
 @[Component::Unique]
-class GameConfig < Entitas::Component
+class StageConfig < Entitas::Component
   prop :board_size, Oid::Vector2, default: Oid::Vector2.new(10, 10)
   prop :blocker_probability, Float64, default: 0.1
 end

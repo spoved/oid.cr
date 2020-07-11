@@ -20,6 +20,16 @@ module Oid
       abstract def enable_keyboard? : Bool
 
       abstract def camera_3d? : Bool
+
+      def configure
+        yield self
+      end
+
+      macro add_settings(*args)
+        {% for a in args %}
+        getter {{a}}
+        {% end %}
+      end
     end
   end
 end
