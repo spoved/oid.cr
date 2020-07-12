@@ -45,8 +45,3 @@ add_custom_target(bindings ALL
   COMMAND ${bindgen_tool} ${PROJECT_SOURCE_DIR}/ext/raylib.yml && crystal tool format
   DEPENDS shards glfw_objlib glfw raylib_static bindgen parser
 )
-
-add_custom_target(bindings-raygui ALL
-  COMMAND ${bindgen_tool} ${PROJECT_SOURCE_DIR}/ext/raygui.yml && crystal tool format
-  DEPENDS shards glfw_objlib glfw raylib_static bindgen parser
-)

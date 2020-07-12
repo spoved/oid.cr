@@ -2,6 +2,3 @@
 	path = ext/raylib
 	url = git@github.com:raysan5/raylib.git
 	branch = master
-[submodule "ext/raygui"]
-	path = ext/raygui
-	url = git@github.com:raysan5/raygui.git

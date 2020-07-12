@@ -44,19 +44,6 @@ llvm_map_components_to_libnames(llvm_libs all)
 include_directories(/usr/local/Cellar/bdw-gc/8.0.4/include)
 
 ######################
-# RAYGUI Setup
-######################
-
-include_directories(
-  raylib/src 
-  raylib/src/external/glfw/src
-  raygui/src
-)
-
-add_library(raygui raygui_bindings.cpp)
-target_link_libraries(raygui raylib)
-
-######################
 # RAYLIB Setup
 ######################
 

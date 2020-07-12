@@ -301,13 +301,6 @@ module RayLib
       stream : AudioStream
     end
 
-    struct AudioStream
-      sample_rate : Int32
-      sample_size : Int32
-      channels : Int32
-      buffer : Void*
-    end
-
     struct VrDeviceInfo
       h_resolution : Int32
       v_resolution : Int32
@@ -319,6 +312,13 @@ module RayLib
       interpupillary_distance : Float32
       lens_distortion_values : LibC::Float[4]
       chroma_ab_correction : LibC::Float[4]
+    end
+
+    struct AudioStream
+      sample_rate : Int32
+      sample_size : Int32
+      channels : Int32
+      buffer : Void*
     end
 
     fun bg_Color__CONSTRUCT_ : Color*
