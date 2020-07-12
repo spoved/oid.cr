@@ -91,7 +91,7 @@ module Oid
         Fiber.yield
       end
 
-      def on_destroyed(entity, component : Oid::Destroyed)
+      def on_destroyed(entity, component : Oid::Components::Destroyed)
         application_controller.cleanup do
           application_service.cleanup_hook.call(contexts)
         end

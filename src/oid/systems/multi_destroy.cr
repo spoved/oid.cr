@@ -13,7 +13,7 @@ module Oid
         collectors
       end
 
-      def filter(entity : Destroyed::Helper)
+      def filter(entity : Components::Destroyed::Helper)
         entity.destroyed?
       end
 

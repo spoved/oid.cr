@@ -34,7 +34,7 @@ class RayLib::CameraService
     end
   end
 
-  def set_camera_mode(mode : Oid::Camera::Mode)
+  def set_camera_mode(mode : Oid::Components::Camera::Mode)
     # puts "set_camera_mode"
     RayLib.set_camera_mode(camera.as(RayLib::Camera3D), mode.value) if camera.is_a?(RayLib::Camera3D)
   end

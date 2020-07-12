@@ -16,6 +16,13 @@ module Example::Helper
       .add_scale(1.0)
   end
 
+  def mark_real_origin
+    context.create_entity
+      .add_position(Oid::Vector3.new(0.0, 0.0, 0.0))
+      .add_position_type(Oid::Enum::Position::Static)
+      .add_child(generate_origin_grid("real_origin", Oid::Color::RED, 100.0))
+  end
+
   def make_dot(position, size = 3.0, color = Oid::Color::BLACK)
     context.create_entity
       .add_position(position)
@@ -47,9 +54,10 @@ module Example::Helper
       .add_scale(1.0)
   end
 
-  def create_outline(width = 68.0, height = 20.0, color = Oid::Color::GOLD)
+  def create_outline(position = Oid::Vector3.new(0.0, 10.0, 10.0),
+                     width = 68.0, height = 20.0, color = Oid::Color::GOLD)
     context.create_entity
-      .add_position(Oid::Vector3.new(0.0, 10.0, 10.0))
+      .add_position(position)
       .add_position_type(Oid::Enum::Position::Relative)
       .add_view_element(
         value: Oid::Element::Rectangle.new(
@@ -146,12 +154,12 @@ module Example::Helper
     end
   end
 
-  def scale(entity)
-    if entity.scale.value <= 0.0
-      self.zoom_out = true
-    elsif entity.scale.value >= 1.0
-      self.zoom_out = false
-    end
+  def scale_auto(entity)
+    zoom_out = if entity.scale.value <= 0.0
+                 true
+               elsif entity.scale.value >= 1.0
+                 false
+               end
 
     if zoom_out
       entity.replace_scale(entity.scale.value + 0.01)

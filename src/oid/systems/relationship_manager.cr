@@ -36,7 +36,7 @@ module Oid
         end
       end
 
-      def on_destroyed(entity, component : Oid::Destroyed)
+      def on_destroyed(entity, component : Oid::Components::Destroyed)
         # Destroy children
         if entity.is_a?(Oid::RenderableEntity)
           entity.each_child do |child|

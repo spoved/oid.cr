@@ -4,9 +4,9 @@ module Oid
     # property position : Oid::Vector3 = Oid::Vector3.zero
     # property rotation : Oid::Vector3 = Oid::Vector3.zero
 
-    abstract def position_type : Oid::PositionType
-    abstract def position : Oid::Position
-    abstract def rotation : Oid::Rotation
+    abstract def position_type : Oid::Components::PositionType
+    abstract def position : Oid::Components::Position
+    abstract def rotation : Oid::Components::Rotation
     abstract def replace_rotation(value : Oid::Vector3)
 
     abstract def parent : Oid::Transformable

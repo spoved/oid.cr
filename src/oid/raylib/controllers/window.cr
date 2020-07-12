@@ -37,7 +37,7 @@ class RayLib::WindowController
     entity.add_destroyed_listener(self)
   end
 
-  def on_destroyed(entity, component : Oid::Destroyed)
+  def on_destroyed(entity, component : Oid::Components::Destroyed)
     self.destroy_window
   end
 end

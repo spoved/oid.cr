@@ -52,7 +52,7 @@ module Oid
 
     abstract def distance(other)
 
-    # ditto
+    # :ditto:
     def heading
       angle
     end

@@ -32,7 +32,7 @@ module Oid
         entity.add_hidden_removed_listener(self)
       end
 
-      def on_hidden(entity, component : Oid::Hidden)
+      def on_hidden(entity, component : Oid::Components::Hidden)
         entity.each_child do |child|
           child.add_hidden unless child.hidden?
         end

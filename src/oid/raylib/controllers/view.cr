@@ -30,7 +30,7 @@ class RayLib::ViewController
     e.add_destroyed_listener(self)
   end
 
-  def on_destroyed(e, component : Oid::Destroyed)
+  def on_destroyed(e, component : Oid::Components::Destroyed)
     self.destroy_view
   end
 
