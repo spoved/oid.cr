@@ -6,7 +6,7 @@ find_paths:
       - llvm-config
     version:
       min: "4"
-      max: "6"
+      max: "11"
       variable: LLVM_VERSION
       command: "% --version"
       regex: "^([0-9]+)."

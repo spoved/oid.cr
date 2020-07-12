@@ -174,15 +174,21 @@ Sound:
   generate_wrapper: false
   kind: Struct
   crystal_type: Sound
-AudioStream:
-  copy_structure: true
-  generate_binding: true
-  generate_wrapper: false
-  kind: Struct
-  crystal_type: AudioStream
+
 VrDeviceInfo:
   copy_structure: true
   generate_binding: true
   generate_wrapper: false
   kind: Struct
   crystal_type: VrDeviceInfo
+AudioStream:
+  copy_structure: true
+  generate_binding: true
+  generate_wrapper: false
+  kind: Struct
+  crystal_type: AudioStream
+rAudioBuffer:
+  copy_structure: false
+  generate_binding: false
+  generate_wrapper: false
+  binding_type: Void*

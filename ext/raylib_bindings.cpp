@@ -7,3 +7,7 @@ extern "C" TextureCubemap * bg____LoadTextureCubemap_STATIC_Image_int(Image imag
   return new (UseGC) TextureCubemap (::LoadTextureCubemap(image, layoutType));
 }
 
+extern "C" Music * bg____LoadMusicStream_STATIC_const_char_X(const char * fileName) {
+  return new (UseGC) Music (::LoadMusicStream(fileName));
+}
+
