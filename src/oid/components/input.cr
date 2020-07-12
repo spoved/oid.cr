@@ -1,4 +1,4 @@
-module Oid
+module Oid::Components
   ##############################
   # Mouse Components
   ##############################

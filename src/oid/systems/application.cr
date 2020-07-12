@@ -5,7 +5,7 @@ module Oid
 
       include Entitas::Systems::InitializeSystem
       include Entitas::Systems::ExecuteSystem
-      include Oid::Destroyed::Listener
+      include Oid::Components::Destroyed::Listener
 
       protected property contexts : Contexts
       protected getter context : AppContext

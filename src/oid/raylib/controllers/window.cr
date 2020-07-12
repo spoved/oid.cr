@@ -1,6 +1,6 @@
 class RayLib::WindowController
   include Oid::Controller::Window
-  include Oid::Destroyed::Listener
+  include Oid::Components::Destroyed::Listener
 
   getter contexts : ::Contexts
 

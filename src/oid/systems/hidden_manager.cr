@@ -3,8 +3,8 @@ module Oid
     class HiddenManger < ::Entitas::ReactiveSystem
       include Entitas::Systems::InitializeSystem
       include Oid::Services::Helper
-      include Oid::Hidden::Listener
-      include Oid::Hidden::RemovedListener
+      include Oid::Components::Hidden::Listener
+      include Oid::Components::Hidden::RemovedListener
       include Oid::EventListener
 
       protected property contexts : Contexts

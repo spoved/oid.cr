@@ -2,7 +2,7 @@ module Oid
   module Systems
     class RelationshipManager
       include Oid::Services::Helper
-      include Oid::Destroyed::Listener
+      include Oid::Components::Destroyed::Listener
       include Oid::EventListener
       include Entitas::Systems::InitializeSystem
 

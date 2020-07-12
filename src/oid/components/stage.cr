@@ -1,6 +1,6 @@
 require "../resources/enum/*"
 
-module Oid
+module Oid::Components
   @[Context(Stage)]
   @[Entitas::Event(EventTarget::Self)]
   class Actor < Entitas::Component
@@ -49,9 +49,9 @@ module Oid
     # target
     prop :target, Oid::Vector3, not_nil: true, default: Oid::Vector3.zero
     # Camera type: Perspective or Orthographic
-    prop :type, Oid::Camera::Type, default: Oid::Camera::Type::Perspective
+    prop :type, Oid::Components::Camera::Type, default: Oid::Components::Camera::Type::Perspective
     # Camera mode
-    prop :mode, Oid::Camera::Mode, default: Oid::Camera::Mode::Free
+    prop :mode, Oid::Components::Camera::Mode, default: Oid::Components::Camera::Mode::Free
     # fov_y
     prop :fov, Float64, default: 50.0
     # zoom
@@ -165,37 +165,37 @@ end
 
 module Oid
   module DestroyableEntity
-    include Destroyed::Helper
+    include Components::Destroyed::Helper
   end
 
   module ViewableEntity
     include DestroyableEntity
 
-    include Position::Helper
-    include PositionType::Helper
-    include Rotation::Helper
-    include Scale::Helper
-    include Asset::Helper
-    include AssetLoaded::Helper
-    include View::Helper
-    include ViewElement::Helper
+    include Components::Position::Helper
+    include Components::PositionType::Helper
+    include Components::Rotation::Helper
+    include Components::Scale::Helper
+    include Components::Asset::Helper
+    include Components::AssetLoaded::Helper
+    include Components::View::Helper
+    include Components::ViewElement::Helper
   end
 
   module MovableEntity
-    include Moveable::Helper
-    include Direction::Helper
-    include Mover::Helper
-    include Move::Helper
-    include MoveComplete::Helper
+    include Components::Moveable::Helper
+    include Components::Direction::Helper
+    include Components::Mover::Helper
+    include Components::Move::Helper
+    include Components::MoveComplete::Helper
   end
 
   module InteractableEntity
-    include Interactive::Helper
+    include Components::Interactive::Helper
   end
 
   module CollidableEntity
     include Oid::ViewableEntity
-    include Oid::Collidable::Helper
+    include Oid::Components::Collidable::Helper
   end
 
   module RenderableEntity

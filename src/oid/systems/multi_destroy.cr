@@ -6,7 +6,7 @@ module Oid
 
         contexts.all_contexts.each do |ctx|
           if ctx.class.has_component?(Entitas::Component::Index::Destroyed)
-            collectors << ctx.create_collector(Entitas::Matcher.all_of(Destroyed))
+            collectors << ctx.create_collector(Entitas::Matcher.all_of(Components::Destroyed))
           end
         end
 

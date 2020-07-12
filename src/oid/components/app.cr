@@ -1,4 +1,4 @@
-module Oid
+module Oid::Components
   @[Context(App)]
   @[Component::Unique]
   class Application < Entitas::Component

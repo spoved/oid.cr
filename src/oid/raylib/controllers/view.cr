@@ -1,6 +1,6 @@
 class RayLib::ViewController
   include Oid::Controller::View
-  include Oid::Destroyed::Listener
+  include Oid::Components::Destroyed::Listener
   include Oid::Services::Helper
 
   private getter contexts : Contexts
