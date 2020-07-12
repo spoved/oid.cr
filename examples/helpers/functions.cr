@@ -38,10 +38,12 @@ module Example::Helper
       .add_scale(1.0)
   end
 
-  def create_label(name, text)
+  def create_label(name, text,
+                   position = Oid::Vector3.new(2.5 - (68.0/2), 0.0, 10.0),
+                   origin = Oid::Enum::OriginType::UpperLeft)
     context.create_entity
       .add_prop(name: name)
-      .add_position(Oid::Vector3.new(2.5 - (68.0/2), 0.0, 10.0))
+      .add_position(position)
       .add_position_type(Oid::Enum::Position::Relative)
       .add_view_element(
         value: Oid::Element::Text.new(
@@ -49,7 +51,7 @@ module Example::Helper
           font_size: 20,
           color: Oid::Color::BLACK
         ),
-        origin: Oid::Enum::OriginType::UpperLeft
+        origin: origin
       )
       .add_scale(1.0)
   end

@@ -1,6 +1,8 @@
 require "../../src/oid"
 require "../../src/oid/raylib/*"
 require "../helpers/*"
+
+require "./components"
 require "./systems/*"
 
 ::Log.builder.clear
