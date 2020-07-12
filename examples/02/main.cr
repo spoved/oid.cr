@@ -1,44 +1,67 @@
 require "../../src/oid"
-require "../../src/oid/raylib/*"
+require "../../src/oid/raylib/**"
 require "./components"
-require "./config"
-require "./systems/*"
+require "./systems/**"
+
+RAYLIB_CONFIG = {
+  app_name:        "Example 02",
+  screen_w:        800,
+  screen_h:        600,
+  target_fps:      120,
+  show_fps:        true,
+  enable_mouse:    true,
+  enable_keyboard: true,
+  camera_mode:     "2d",
+  asset_path:      "./examples/01/assets",
+}
+
+Oid::Systems::EmitInput.listen_for_keys Space
 
 create_feature Example, [
-  WorldSystem,
-  InputSystem,
+  Example::InputSystem,
+  Example::WorldSystem,
+
+  # ////////////////////////////////////////////////////
+  # TODO: Place any services created here
+  # ////////////////////////////////////////////////////
 ]
 
-class ApplicationService
-  include Oid::Service::Application
-  property frame_count = 0
-end
+class AppController < Entitas::Controller
+  include Oid::Controller::Helper
 
-class GameController < Entitas::Controller
-  getter services = Services.new(
-    application: ApplicationService.new,
+  private property _stop_app : Bool = false
+
+  getter services : Oid::Services = Oid::Services.new(
+    application: RayLib::ApplicationService.new,
     logger: RayLib::LoggerService.new,
     input: RayLib::InputService.new,
-    config: RayLib::ConfigService.new,
+    config: RayLib::ConfigService.new(**RAYLIB_CONFIG),
     time: RayLib::TimeService.new,
     view: RayLib::ViewService.new,
+    camera: RayLib::CameraService.new,
+    window: RayLib::WindowService.new
   )
 
   def create_systems(contexts : Contexts)
     Entitas::Feature.new("Systems")
-      .add(ServiceRegistrationSystems.new(contexts, services))
-      .add(Game::EventSystems.new(contexts))
+      .add(Oid::ServiceRegistrationSystems.new(contexts, services))
       .add(OidSystems.new(contexts))
       .add(ExampleSystems.new(contexts))
   end
 end
 
-controller = GameController.new
-controller.start_server
-app = RayLib::Application.new("Example 02")
+controller = AppController.new
+controller.start
 
-app.start(
-  controller: controller,
-  init_hook: ->(cont : GameController) {},
-  draw_hook: ->(cont : GameController) {},
-)
+spawn do
+  controller.start_server
+end
+
+window_controller = controller.contexts.app.window.value
+
+while !window_controller.should_close?
+  controller.update
+  Fiber.yield
+end
+
+puts "DONE"

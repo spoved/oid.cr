@@ -41,16 +41,9 @@ module Oid
         if context.camera? && context.camera_target? && context.camera_target_entity.as(StageEntity).position?
           entity = context.camera_entity.as(StageEntity)
           target = context.camera_target_entity.as(StageEntity)
-          target_pos = target.transform
-
-          if entity.camera.is_2d?
-            prev_target_pos = entity.camera.target
-            offset = (target_pos - prev_target_pos)
-            entity.camera.offset = entity.camera.offset - offset
-          end
 
           # Update target position
-          entity.camera.target = target_pos
+          entity.camera.target = target.transform
         end
       end
     end

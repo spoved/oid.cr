@@ -73,10 +73,10 @@ class Example::WorldSystem
           # entity.rotate_x(1.0)
 
           # Zoom
-          # scale(entity)
+          # scale_auto(entity)
 
           # Random move
-          random_move(entity)
+          # random_move(entity)
 
           contexts.stage.get_entity_with_prop_name("player_label")
             .replace_view_element(

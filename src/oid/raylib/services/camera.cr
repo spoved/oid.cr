@@ -50,12 +50,12 @@ class RayLib::CameraService
   end
 
   private def update_camera2d(entity)
-    puts @camera
+    # puts @camera
     @camera.as(RayLib::Camera2D).target.x = entity.camera.target.x.to_f32
     @camera.as(RayLib::Camera2D).target.y = entity.camera.target.y.to_f32
     @camera.as(RayLib::Camera2D).offset.x = entity.camera.offset.x.to_f32
     @camera.as(RayLib::Camera2D).offset.y = entity.camera.offset.y.to_f32
-    puts @camera
+    # puts @camera
   end
 
   private def camera2d(entity) : RayLib::Camera2D

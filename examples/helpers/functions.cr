@@ -47,15 +47,15 @@ module Example::Helper
       .add_scale(1.0)
   end
 
-  def create_outline
+  def create_outline(width = 68.0, height = 20.0, color = Oid::Color::GOLD)
     context.create_entity
       .add_position(Oid::Vector3.new(0.0, 10.0, 10.0))
       .add_position_type(Oid::Enum::Position::Relative)
       .add_view_element(
         value: Oid::Element::Rectangle.new(
-          width: 68.0,
-          height: 20.0,
-          color: Oid::Color::GOLD
+          width: width,
+          height: height,
+          color: color
         ),
         origin: Oid::Enum::OriginType::UpperCenter
       )

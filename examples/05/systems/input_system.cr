@@ -1,8 +1,6 @@
 class Example::InputSystem < Entitas::ReactiveSystem
   protected property contexts : Contexts
   protected property context : InputContext
-
-  include Oid::Services::Helper
   include Example::Helper
 
   def initialize(@contexts)
@@ -44,9 +42,18 @@ class Example::InputSystem < Entitas::ReactiveSystem
         # TODO: Add logic for when mouse wheel is scrolled
         # ////////////////////////////////////////////////////
       elsif e.keyboard?
+        player = contexts.stage.camera_target_entity.as(StageEntity)
         case e.keyboard.key
-        when Oid::Enum::Key::B
-          # TODO: Enable BURST
+        when Oid::Enum::Key::W
+          player.position.value += Oid::Vector3.down
+        when Oid::Enum::Key::S
+          player.position.value += Oid::Vector3.up
+        when Oid::Enum::Key::A
+          player.position.value += Oid::Vector3.left
+        when Oid::Enum::Key::D
+          player.position.value += Oid::Vector3.right
+        when Oid::Enum::Key::Q
+          random_move(player)
         else
           puts "Input received from #{e.keyboard.key} !!!"
         end

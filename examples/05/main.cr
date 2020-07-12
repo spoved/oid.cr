@@ -17,9 +17,11 @@ RAYLIB_CONFIG = {
   asset_path:      "./examples/01/assets",
 }
 
-create_feature Example, [
-  Example::WorldSystem,
+Oid::Systems::EmitInput.listen_for_keys A, S, D, W, Q
 
+create_feature Example, [
+  Example::InputSystem,
+  Example::WorldSystem,
   # ////////////////////////////////////////////////////
   # TODO: Place any services created here
   # ////////////////////////////////////////////////////

@@ -1,9 +1,7 @@
 require "../../src/oid"
 require "../../src/oid/raylib/*"
-require "./board_logic"
-require "./components"
+require "../helpers/*"
 require "./systems/*"
-require "./contexts_ext"
 
 ::Log.builder.clear
 spoved_logger(:debug, bind: true)
@@ -16,7 +14,7 @@ RAYLIB_CONFIG = {
   show_fps:            true,
   enable_mouse:        true,
   enable_keyboard:     true,
-  asset_path:          "./examples/01/assets",
+  asset_path:          "./examples/assets",
   board_size:          Oid::Vector2.new(10, 10),
   blocker_probability: 0.1,
   camera_mode:         "2d",
@@ -25,12 +23,8 @@ RAYLIB_CONFIG = {
 Oid::Systems::EmitInput.listen_for_keys(B)
 
 create_feature Example, [
-  Oid::Systems::InputSystem,
-  Oid::Systems::ProcessInput,
-  Oid::Systems::Board,
-  Oid::Systems::Fall,
-  Oid::Systems::Move,
-
+  Example::InputSystem,
+  Example::BoardSystem,
   # ////////////////////////////////////////////////////
   # TODO: Place any services created here
   # ////////////////////////////////////////////////////

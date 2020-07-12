@@ -1,12 +1,12 @@
-class InputSystem < Entitas::ReactiveSystem
+class Example::InputSystem < Entitas::ReactiveSystem
   protected property contexts : Contexts
   protected property context : InputContext
-  protected property player_group : Entitas::Group(GameEntity)
+  protected property player_group : Entitas::Group(StageEntity)
 
   def initialize(@contexts)
     @context = @contexts.input
     @collector = get_trigger(@context)
-    @player_group = @contexts.game.get_group(GameMatcher.all_of(GameMatcher.actor, GameMatcher.player))
+    @player_group = @contexts.stage.get_group(StageMatcher.all_of(StageMatcher.actor, StageMatcher.player))
   end
 
   def get_trigger(context : Entitas::Context) : Entitas::ICollector
@@ -26,7 +26,7 @@ class InputSystem < Entitas::ReactiveSystem
   end
 
   def execute(entities : Array(Entitas::IEntity))
-    camera = contexts.game.camera.value.as(Oid::Camera2D)
+    camera = contexts.stage.camera.value.as(Oid::Camera2D)
 
     entities.each do |e|
       e = e.as(InputEntity)

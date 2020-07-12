@@ -1,16 +1,12 @@
 require "uuid"
 require "uuid/json"
 
-@[Context(Game)]
+@[Context(Stage)]
 class Player < Entitas::Component
   prop :id, UUID, default: UUID.random
 end
 
-@[Context(Game)]
-class Interactive < Entitas::Component
-end
-
-@[Context(Game)]
+@[Context(Stage)]
 class Movable < Entitas::Component
 end
 
