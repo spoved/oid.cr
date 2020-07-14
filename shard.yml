@@ -13,14 +13,15 @@ targets:
     main: src/bin/oid.cr
   example_01:
     main: examples/01/main.cr
-  example_02:
-    main: examples/02/main.cr
-  example_03:
-    main: examples/03/main.cr
+  # example_02:
+  #   main: examples/02/main.cr
+  # example_03:
+  #   main: examples/03/main.cr
   example_04:
     main: examples/04/main.cr
   example_05:
     main: examples/05/main.cr
+
 dependencies:
   spoved:
     github: spoved/spoved.cr
@@ -33,6 +34,10 @@ dependencies:
     github: straight-shoota/crinja
   admiral:
     github: jwaldrip/admiral.cr
+  crsfml:
+    github: oprypin/crsfml
+    version: ~> 2.5.1
+
 development_dependencies:
   sentry:
     github: samueleaton/sentry

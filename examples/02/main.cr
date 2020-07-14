@@ -1,5 +1,5 @@
 require "../../src/oid"
-require "../../src/oid/raylib/**"
+require "../../src/raylib"
 require "./components"
 require "./systems/**"
 
