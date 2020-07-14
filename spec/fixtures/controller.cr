@@ -23,7 +23,7 @@ end
 
 class SpecViewController
   include Oid::Controller::View
-  include Oid::Destroyed::Listener
+  include Oid::Components::Destroyed::Listener
 
   property destroy_view_was_called : Bool = false
 
@@ -44,14 +44,14 @@ class SpecViewController
     entity.add_destroyed_listener(self)
   end
 
-  def on_destroyed(entity, component : Oid::Destroyed)
+  def on_destroyed(entity, component : Oid::Components::Destroyed)
     self.destroy_view
   end
 end
 
 class SpecWindowController
   include Oid::Controller::Window
-  include Oid::Destroyed::Listener
+  include Oid::Components::Destroyed::Listener
 
   getter contexts : ::Contexts
 
@@ -78,7 +78,7 @@ class SpecWindowController
     entity.add_destroyed_listener(self)
   end
 
-  def on_destroyed(entity, component : Oid::Destroyed)
+  def on_destroyed(entity, component : Oid::Components::Destroyed)
     self.destroy_window
   end
 

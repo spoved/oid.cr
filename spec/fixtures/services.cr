@@ -1,7 +1,7 @@
 class SpecCameraService
   include Oid::Service::Camera
 
-  def set_camera_mode(value : Oid::Camera::Mode)
+  def set_camera_mode(value : Oid::Components::Camera::Mode)
   end
 
   def update_camera(entity : StageEntity)
