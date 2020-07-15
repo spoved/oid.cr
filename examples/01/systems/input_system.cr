@@ -16,18 +16,17 @@ class Example::InputSystem < Entitas::ReactiveSystem
   end
 
   def get_trigger(context : Entitas::Context) : Entitas::ICollector
-    context.create_collector(InputMatcher
-      .any_of(
-        InputMatcher.mouse_up,
-        InputMatcher.mouse_down,
-        InputMatcher.mouse_pressed,
-        InputMatcher.mouse_released,
-        InputMatcher.mouse_wheel,
-        InputMatcher.key_up,
-        InputMatcher.key_down,
-        InputMatcher.key_pressed,
-        InputMatcher.key_released
-      ))
+    context.create_collector(InputMatcher.any_of(
+      InputMatcher.mouse_up,
+      InputMatcher.mouse_down,
+      InputMatcher.mouse_pressed,
+      InputMatcher.mouse_released,
+      InputMatcher.mouse_wheel,
+      InputMatcher.key_up,
+      InputMatcher.key_down,
+      InputMatcher.key_pressed,
+      InputMatcher.key_released
+    ))
   end
 
   # Select entities with input components
@@ -45,10 +44,6 @@ class Example::InputSystem < Entitas::ReactiveSystem
       e = e.as(InputEntity)
 
       if e.left_mouse? && e.mouse_pressed?
-        # ////////////////////////////////////////////////////
-        # TODO: Add logic for when left mouse is clicked
-        # ////////////////////////////////////////////////////
-
         # Get translated postion to root view
         position = e.mouse_pressed.position.to_v3 + get_root_position
         pieces.each do |piece|
@@ -59,10 +54,6 @@ class Example::InputSystem < Entitas::ReactiveSystem
             break
           end
         end
-      elsif e.mouse_wheel?
-        # ////////////////////////////////////////////////////
-        # TODO: Add logic for when mouse wheel is scrolled
-        # ////////////////////////////////////////////////////
       elsif e.keyboard?
         case e.keyboard.key
         when Oid::Enum::Key::B

@@ -2,7 +2,7 @@ require "../../src/oid"
 require "../../src/raylib"
 require "../helpers/*"
 
-require "./components"
+require "./*"
 require "./systems/*"
 
 ::Log.builder.clear
@@ -27,6 +27,7 @@ Oid::Systems::EmitInput.listen_for_keys(B)
 create_feature Example, [
   Example::InputSystem,
   Example::BoardSystem,
+  Example::FallSystem,
   # ////////////////////////////////////////////////////
   # TODO: Place any services created here
   # ////////////////////////////////////////////////////
