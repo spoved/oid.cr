@@ -1,10 +1,13 @@
 class RayLib::ApplicationController
   include Oid::Controller::Application
   include Oid::Services::Helper
+  include Oid::Controller::Helper
 
   getter contexts : ::Contexts
 
-  def initialize(@contexts); end
+  def initialize(@contexts)
+    RayLib.set_window_position(0, 0)
+  end
 
   def init_application(contexts, entity, config_service : Oid::Service::Config); end
 

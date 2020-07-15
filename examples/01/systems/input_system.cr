@@ -1,6 +1,7 @@
 class Example::InputSystem < Entitas::ReactiveSystem
   protected property contexts : Contexts
   protected property context : InputContext
+  protected property pieces : Entitas::Group(StageEntity)
 
   include Oid::Services::Helper
   include Example::Helper
@@ -8,6 +9,8 @@ class Example::InputSystem < Entitas::ReactiveSystem
   def initialize(@contexts)
     @context = @contexts.input
     @collector = get_trigger(@context)
+
+    @pieces = @contexts.stage.get_group(StageMatcher.all_of(StageMatcher.piece).none_of(StageMatcher.blocker))
   end
 
   def get_trigger(context : Entitas::Context) : Entitas::ICollector

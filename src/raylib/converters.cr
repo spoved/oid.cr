@@ -1,4 +1,4 @@
-require "../resources/**"
+require "../oid/resources/**"
 
 module RayLib
   struct Vector2

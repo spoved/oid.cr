@@ -146,7 +146,8 @@ module Oid
     def bounding_box_for_element(e : Oid::CollidableEntity) : Oid::Element::BoundingBox
       position = e.transform
       object = e.view_element.value
-      rotation = e.rotation.value
+      # TODO: calculate with rotation
+      # rotation = e.rotation.value
       scale = e.scale.value.to_f32
 
       case object
@@ -177,6 +178,35 @@ module Oid
       else
         raise "Cannot calculate bounding box for #{object.class}"
       end
+    end
+
+    def bounding_box_for_asset(e : Oid::CollidableEntity, asset_width, asset_height) : Oid::Element::BoundingBox
+      position = e.transform
+      # TODO: calculate with rotation
+      # rotation = e.rotation.value
+      scale = e.scale.value.to_f32
+
+      width = asset_width * scale
+      height = asset_height * scale
+
+      origin = Oid::CollisionFuncs.calc_rec_origin(
+        e.asset.origin,
+        width: width,
+        height: height,
+      )
+
+      Oid::Element::BoundingBox.new(
+        min: Oid::Vector3.new(
+          x: position.x - origin.x,
+          y: position.y - origin.y,
+          z: position.z,
+        ),
+        max: Oid::Vector3.new(
+          x: position.x + width - origin.x,
+          y: position.y + height - origin.y,
+          z: position.z,
+        )
+      )
     end
   end
 end

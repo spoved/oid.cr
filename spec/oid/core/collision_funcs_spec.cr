@@ -1,6 +1,6 @@
 require "../../spec_helper"
 
-private def bound_entity(position_type, origin)
+private def bound_entity(position_type, origin, scale = 1.0)
   controller = new_spec_controller
   controller.start
   entity = controller.contexts.stage.create_entity
@@ -14,8 +14,28 @@ private def bound_entity(position_type, origin)
       ),
       origin: origin
     )
+    .add_scale(scale)
     .add_collidable
   controller.update
+
+  {entity, controller}
+end
+
+private def bound_asset_entity(position_type, origin, scale = 1.0)
+  controller = new_spec_controller
+  controller.start
+  entity = controller.contexts.stage.create_entity
+    .add_position(Oid::Vector3.zero)
+    .add_position_type(position_type)
+    .add_scale(scale)
+    .add_asset(
+      name: "asset_01",
+      type: Oid::Enum::AssetType::Image,
+      origin: origin,
+    )
+    .add_collidable
+  controller.update
+
   {entity, controller}
 end
 
@@ -170,11 +190,34 @@ describe Oid::CollisionFuncs do
   end
 
   describe "#bounding_box_for_element" do
+    describe "with scale" do
+      it "should calculate correct bounding box" do
+        entity, _ = bound_entity(Oid::Enum::Position::Static, Oid::Enum::OriginType::UpperLeft, 2.0)
+        bounds_rect = Oid::CollisionFuncs.bounding_box_for_element(entity)
+
+        expected = Oid::Element::BoundingBox.new(
+          min: Oid::Vector3.new(
+            x: 0.0,
+            y: 0.0,
+            z: 0.0,
+          ),
+          max: Oid::Vector3.new(
+            x: 40.0,
+            y: 40.0,
+            z: 0.0,
+          )
+        )
+
+        bounds_rect.should eq expected
+      end
+    end
+
     describe Oid::Enum::Position::Static do
       describe Oid::Enum::OriginType::UpperLeft do
         it "should calculate correct bounding box" do
           entity, _ = bound_entity(Oid::Enum::Position::Static, Oid::Enum::OriginType::UpperLeft)
           bounds_rect = Oid::CollisionFuncs.bounding_box_for_element(entity)
+
           expected = Oid::Element::BoundingBox.new(
             min: Oid::Vector3.new(
               x: 0.0,
@@ -366,6 +409,246 @@ describe Oid::CollisionFuncs do
         it "should calculate correct bounding box" do
           entity, _ = bound_entity(Oid::Enum::Position::Static, Oid::Enum::OriginType::UpperLeft)
           bounds_rect = Oid::CollisionFuncs.bounding_box_for_element(entity)
+          expected = Oid::Element::BoundingBox.new(
+            min: Oid::Vector3.new(
+              x: 0.0,
+              y: 0.0,
+              z: 0.0,
+            ),
+            max: Oid::Vector3.new(
+              x: 20.0,
+              y: 20.0,
+              z: 0.0,
+            )
+          )
+
+          bounds_rect.should eq expected
+        end
+      end
+    end
+  end
+
+  describe "#bounding_box_for_asset" do
+    describe "with scale" do
+      it "should calculate correct bounding box" do
+        entity, _ = bound_asset_entity(Oid::Enum::Position::Static, Oid::Enum::OriginType::UpperLeft, 0.5)
+
+        bounds_rect = Oid::CollisionFuncs.bounding_box_for_asset(entity, 20, 20)
+
+        expected = Oid::Element::BoundingBox.new(
+          min: Oid::Vector3.new(
+            x: 0.0,
+            y: 0.0,
+            z: 0.0,
+          ),
+          max: Oid::Vector3.new(
+            x: 10.0,
+            y: 10.0,
+            z: 0.0,
+          )
+        )
+
+        bounds_rect.should eq expected
+      end
+    end
+
+    describe Oid::Enum::Position::Static do
+      describe Oid::Enum::OriginType::UpperLeft do
+        it "should calculate correct bounding box" do
+          entity, _ = bound_asset_entity(Oid::Enum::Position::Static, Oid::Enum::OriginType::UpperLeft)
+          bounds_rect = Oid::CollisionFuncs.bounding_box_for_asset(entity, 20, 20)
+
+          expected = Oid::Element::BoundingBox.new(
+            min: Oid::Vector3.new(
+              x: 0.0,
+              y: 0.0,
+              z: 0.0,
+            ),
+            max: Oid::Vector3.new(
+              x: 20.0,
+              y: 20.0,
+              z: 0.0,
+            )
+          )
+
+          bounds_rect.should eq expected
+        end
+      end
+
+      describe Oid::Enum::OriginType::UpperCenter do
+        it "should calculate correct bounding box" do
+          entity, _ = bound_asset_entity(Oid::Enum::Position::Static, Oid::Enum::OriginType::UpperCenter)
+          bounds_rect = Oid::CollisionFuncs.bounding_box_for_asset(entity, 20, 20)
+          expected = Oid::Element::BoundingBox.new(
+            min: Oid::Vector3.new(
+              x: -10.0,
+              y: 0.0,
+              z: 0.0,
+            ),
+            max: Oid::Vector3.new(
+              x: 10.0,
+              y: 20.0,
+              z: 0.0,
+            )
+          )
+
+          bounds_rect.should eq expected
+        end
+      end
+
+      describe Oid::Enum::OriginType::UpperRight do
+        it "should calculate correct bounding box" do
+          entity, _ = bound_asset_entity(Oid::Enum::Position::Static, Oid::Enum::OriginType::UpperRight)
+          bounds_rect = Oid::CollisionFuncs.bounding_box_for_asset(entity, 20, 20)
+          expected = Oid::Element::BoundingBox.new(
+            min: Oid::Vector3.new(
+              x: -20.0,
+              y: 0.0,
+              z: 0.0,
+            ),
+            max: Oid::Vector3.new(
+              x: 0.0,
+              y: 20.0,
+              z: 0.0,
+            )
+          )
+
+          bounds_rect.should eq expected
+        end
+      end
+
+      describe Oid::Enum::OriginType::CenterLeft do
+        it "should calculate correct bounding box" do
+          entity, _ = bound_asset_entity(Oid::Enum::Position::Static, Oid::Enum::OriginType::CenterLeft)
+          bounds_rect = Oid::CollisionFuncs.bounding_box_for_asset(entity, 20, 20)
+          expected = Oid::Element::BoundingBox.new(
+            min: Oid::Vector3.new(
+              x: 0.0,
+              y: -10.0,
+              z: 0.0,
+            ),
+            max: Oid::Vector3.new(
+              x: 20.0,
+              y: 10.0,
+              z: 0.0,
+            )
+          )
+
+          bounds_rect.should eq expected
+        end
+      end
+
+      describe Oid::Enum::OriginType::Center do
+        it "should calculate correct bounding box" do
+          entity, _ = bound_asset_entity(Oid::Enum::Position::Static, Oid::Enum::OriginType::Center)
+          bounds_rect = Oid::CollisionFuncs.bounding_box_for_asset(entity, 20, 20)
+          expected = Oid::Element::BoundingBox.new(
+            min: Oid::Vector3.new(
+              x: -10.0,
+              y: -10.0,
+              z: 0.0,
+            ),
+            max: Oid::Vector3.new(
+              x: 10.0,
+              y: 10.0,
+              z: 0.0,
+            )
+          )
+
+          bounds_rect.should eq expected
+        end
+      end
+
+      describe Oid::Enum::OriginType::CenterRight do
+        it "should calculate correct bounding box" do
+          entity, _ = bound_asset_entity(Oid::Enum::Position::Static, Oid::Enum::OriginType::CenterRight)
+          bounds_rect = Oid::CollisionFuncs.bounding_box_for_asset(entity, 20, 20)
+          expected = Oid::Element::BoundingBox.new(
+            min: Oid::Vector3.new(
+              x: -20.0,
+              y: -10.0,
+              z: 0.0,
+            ),
+            max: Oid::Vector3.new(
+              x: 0.0,
+              y: 10.0,
+              z: 0.0,
+            )
+          )
+
+          bounds_rect.should eq expected
+        end
+      end
+
+      describe Oid::Enum::OriginType::BottomLeft do
+        it "should calculate correct bounding box" do
+          entity, _ = bound_asset_entity(Oid::Enum::Position::Static, Oid::Enum::OriginType::BottomLeft)
+          bounds_rect = Oid::CollisionFuncs.bounding_box_for_asset(entity, 20, 20)
+          expected = Oid::Element::BoundingBox.new(
+            min: Oid::Vector3.new(
+              x: 0.0,
+              y: -20.0,
+              z: 0.0,
+            ),
+            max: Oid::Vector3.new(
+              x: 20.0,
+              y: 0.0,
+              z: 0.0,
+            )
+          )
+
+          bounds_rect.should eq expected
+        end
+      end
+
+      describe Oid::Enum::OriginType::BottomCenter do
+        it "should calculate correct bounding box" do
+          entity, _ = bound_asset_entity(Oid::Enum::Position::Static, Oid::Enum::OriginType::BottomCenter)
+          bounds_rect = Oid::CollisionFuncs.bounding_box_for_asset(entity, 20, 20)
+          expected = Oid::Element::BoundingBox.new(
+            min: Oid::Vector3.new(
+              x: -10.0,
+              y: -20.0,
+              z: 0.0,
+            ),
+            max: Oid::Vector3.new(
+              x: 10.0,
+              y: 0.0,
+              z: 0.0,
+            )
+          )
+
+          bounds_rect.should eq expected
+        end
+      end
+
+      describe Oid::Enum::OriginType::BottomRight do
+        it "should calculate correct bounding box" do
+          entity, _ = bound_asset_entity(Oid::Enum::Position::Static, Oid::Enum::OriginType::BottomRight)
+          bounds_rect = Oid::CollisionFuncs.bounding_box_for_asset(entity, 20, 20)
+          expected = Oid::Element::BoundingBox.new(
+            min: Oid::Vector3.new(
+              x: -20.0,
+              y: -20.0,
+              z: 0.0,
+            ),
+            max: Oid::Vector3.new(
+              x: 0.0,
+              y: 0.0,
+              z: 0.0,
+            )
+          )
+
+          bounds_rect.should eq expected
+        end
+      end
+    end
+
+    describe Oid::Enum::Position::Relative do
+      describe Oid::Enum::OriginType::UpperLeft do
+        it "should calculate correct bounding box" do
+          entity, _ = bound_asset_entity(Oid::Enum::Position::Static, Oid::Enum::OriginType::UpperLeft)
+          bounds_rect = Oid::CollisionFuncs.bounding_box_for_asset(entity, 20, 20)
           expected = Oid::Element::BoundingBox.new(
             min: Oid::Vector3.new(
               x: 0.0,

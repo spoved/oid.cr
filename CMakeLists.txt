@@ -17,13 +17,6 @@ if(NOT EXISTS ${shards_bin})
   message(STATUS "Found shards exec: ${shards_bin}")
 endif()
 
-if(NOT EXISTS ${bindgen_tool})
-  find_program(bindgen_tool bindgen
-    PATHS: ${PROJECT_SOURCE_DIR}/lib/bindgen/bin
-  )
-  message(STATUS "Found bindgen tool exec: ${bindgen_tool}")
-endif()
-
 if(NOT EXISTS ${PROJECT_SOURCE_DIR}/bin)
   file(MAKE_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
 endif()
@@ -42,6 +35,6 @@ add_custom_target(example
 )
 
 add_custom_target(bindings ALL
-  COMMAND ${bindgen_tool} ${PROJECT_SOURCE_DIR}/ext/raylib.yml && crystal tool format
+  COMMAND ${PROJECT_SOURCE_DIR}/lib/bindgen/bin/bindgen ${PROJECT_SOURCE_DIR}/ext/raylib.yml && crystal tool format
   DEPENDS shards glfw_objlib glfw raylib_static bindgen parser
 )

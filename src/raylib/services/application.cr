@@ -2,10 +2,7 @@ class RayLib::ApplicationService
   include Oid::Service::Application
 
   def initialize
-    @init_hook = ->(contexts : Contexts) {
-      # RayLib.toggle_fullscreen
-      RayLib.set_window_position(0, 0)
-    }
+    @init_hook = ->(contexts : Contexts) {}
     @draw_hook = ->draw(Contexts, Entitas::Group(StageEntity))
   end
 

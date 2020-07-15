@@ -26,6 +26,17 @@ class RayLib::ViewController
     end
   end
 
+  def bounding_box : Oid::Element::BoundingBox
+    if entity.view_element?
+      Oid::CollisionFuncs.bounding_box_for_element(entity)
+    elsif entity.has_asset?
+      texture = view_service.textures[entity.asset.name]
+      Oid::CollisionFuncs.bounding_box_for_asset(entity, texture.width, texture.height)
+    else
+      raise "Cannot calculate bounding box for #{entity.to_s}"
+    end
+  end
+
   def register_listeners(e : Entitas::IEntity)
     e.add_destroyed_listener(self)
   end

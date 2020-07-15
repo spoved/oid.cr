@@ -7,6 +7,7 @@ module Oid
 
       abstract def init_view(contexts, entity)
       abstract def destroy_view
+      abstract def bounding_box : Oid::Element::BoundingBox
     end
   end
 end

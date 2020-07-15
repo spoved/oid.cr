@@ -24,11 +24,12 @@ end
 class SpecViewController
   include Oid::Controller::View
   include Oid::Components::Destroyed::Listener
+  private getter entity : Oid::RenderableEntity
 
   property destroy_view_was_called : Bool = false
 
-  def initialize(contexts, entity)
-    init_view(contexts, entity)
+  def initialize(contexts, @entity)
+    init_view(contexts, @entity)
   end
 
   def init_view(contexts, entity)
@@ -46,6 +47,16 @@ class SpecViewController
 
   def on_destroyed(entity, component : Oid::Components::Destroyed)
     self.destroy_view
+  end
+
+  def bounding_box : Oid::Element::BoundingBox
+    if entity.view_element?
+      Oid::CollisionFuncs.bounding_box_for_element(entity)
+    elsif entity.has_asset?
+      Oid::CollisionFuncs.bounding_box_for_asset(self.entity, 128, 128)
+    else
+      raise "Cannot calculate bounding box for #{entity.to_s}"
+    end
   end
 end
 

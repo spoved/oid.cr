@@ -2,6 +2,8 @@
 
 set -ex
 
+export CLANG_BINARY=/usr/local/opt/llvm/bin/clang++
+
 root_dir=$(pwd)
 
 cd_root() {
