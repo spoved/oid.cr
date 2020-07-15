@@ -2,6 +2,7 @@ module Oid
   module CollisionFuncs
     extend CollisionFuncs
 
+    # Check collision between two bounding boxes
     def collision_recs?(box1 : Oid::Element::BoundingBox, box2 : Oid::Element::BoundingBox) : Bool
       (
         box1.min.x < box2.max.x &&
@@ -13,13 +14,16 @@ module Oid
 
     # Check collision between two Entites
     def collision_recs?(e1 : Oid::CollidableEntity, e2 : Oid::CollidableEntity) : Bool
-      collision_recs?(bounding_box_for_element(e1), bounding_box_for_element(e2))
+      collision_recs?(
+        bounding_box_for_entity(e1),
+        bounding_box_for_entity(e2)
+      )
     end
 
     # Return a rectangle that is the area of overlap with the collision
     def collision_rec(e1 : Oid::CollidableEntity, e2 : Oid::CollidableEntity)
-      actor1_bounds = bounding_box_for_element(e1)
-      actor2_bounds = bounding_box_for_element(e2)
+      actor1_bounds = bounding_box_for_entity(e1)
+      actor2_bounds = bounding_box_for_entity(e2)
 
       if collision_recs?(actor1_bounds, actor2_bounds)
         data = rec_overlap_data(actor1_bounds, actor2_bounds)
@@ -82,72 +86,6 @@ module Oid
           y: 0.0,
         )
       end
-    end
-
-    def bounding_box_for_element(e : Oid::CollidableEntity) : Oid::Element::BoundingBox
-      position = e.transform
-      object = e.view_element.value
-      # TODO: calculate with rotation
-      # rotation = e.rotation.value
-      scale = e.scale.value.to_f32
-
-      case object
-      when Oid::Element::Rectangle
-        width = object.width * scale
-        height = object.height * scale
-
-        origin = Oid::CollisionFuncs.calc_rec_origin(
-          e.view_element.origin,
-          width: width,
-          height: height,
-        )
-
-        Oid::Element::BoundingBox.new(
-          min: Oid::Vector3.new(
-            x: position.x - origin.x,
-            y: position.y - origin.y,
-            z: position.z,
-          ),
-          max: Oid::Vector3.new(
-            x: position.x + width - origin.x,
-            y: position.y + height - origin.y,
-            z: position.z,
-          )
-        )
-        # when Oid::Element::Cube
-        # when Oid::Element::CubeWires
-      else
-        raise "Cannot calculate bounding box for #{object.class}"
-      end
-    end
-
-    def bounding_box_for_asset(e : Oid::CollidableEntity, asset_width, asset_height) : Oid::Element::BoundingBox
-      position = e.transform
-      # TODO: calculate with rotation
-      # rotation = e.rotation.value
-      scale = e.scale.value.to_f32
-
-      width = asset_width * scale
-      height = asset_height * scale
-
-      origin = Oid::CollisionFuncs.calc_rec_origin(
-        e.asset.origin,
-        width: width,
-        height: height,
-      )
-
-      Oid::Element::BoundingBox.new(
-        min: Oid::Vector3.new(
-          x: position.x - origin.x,
-          y: position.y - origin.y,
-          z: position.z,
-        ),
-        max: Oid::Vector3.new(
-          x: position.x + width - origin.x,
-          y: position.y + height - origin.y,
-          z: position.z,
-        )
-      )
     end
 
     # Formats the overlap data for two `Oid::Element::BoundingBox` objects
@@ -217,6 +155,83 @@ module Oid
       end
 
       {x: x, y: y, width: width, height: height}
+    end
+
+    # Will return a `Oid::Element::BoundingBox` for the provided entity or raise error
+    def bounding_box_for_entity(e : Oid::CollidableEntity) : Oid::Element::BoundingBox
+      if e.has_view_element?
+        bounding_box_for_element(e)
+      elsif e.has_asset? && e.has_view?
+        e.view.value.bounding_box
+      else
+        raise "Cannot calculate bounding box for #{e.to_s}"
+      end
+    end
+
+    def bounding_box_for_element(e : Oid::CollidableEntity) : Oid::Element::BoundingBox
+      position = e.transform
+      object = e.view_element.value
+      # TODO: calculate with rotation
+      # rotation = e.rotation.value
+      scale = e.scale.value.to_f32
+
+      case object
+      when Oid::Element::Rectangle
+        width = object.width * scale
+        height = object.height * scale
+
+        origin = Oid::CollisionFuncs.calc_rec_origin(
+          e.view_element.origin,
+          width: width,
+          height: height,
+        )
+
+        Oid::Element::BoundingBox.new(
+          min: Oid::Vector3.new(
+            x: position.x - origin.x,
+            y: position.y - origin.y,
+            z: position.z,
+          ),
+          max: Oid::Vector3.new(
+            x: position.x + width - origin.x,
+            y: position.y + height - origin.y,
+            z: position.z,
+          )
+        )
+        # when Oid::Element::Cube
+        # when Oid::Element::CubeWires
+      else
+        raise "Cannot calculate bounding box for #{object.class}"
+      end
+    end
+
+    def bounding_box_for_asset(e : Oid::CollidableEntity, asset_width, asset_height) : Oid::Element::BoundingBox
+      position = e.transform
+      # TODO: calculate with rotation
+      # rotation = e.rotation.value
+      scale = e.scale.value.to_f32
+
+      width = asset_width * scale
+      height = asset_height * scale
+
+      origin = Oid::CollisionFuncs.calc_rec_origin(
+        e.asset.origin,
+        width: width,
+        height: height,
+      )
+
+      Oid::Element::BoundingBox.new(
+        min: Oid::Vector3.new(
+          x: position.x - origin.x,
+          y: position.y - origin.y,
+          z: position.z,
+        ),
+        max: Oid::Vector3.new(
+          x: position.x + width - origin.x,
+          y: position.y + height - origin.y,
+          z: position.z,
+        )
+      )
     end
   end
 end

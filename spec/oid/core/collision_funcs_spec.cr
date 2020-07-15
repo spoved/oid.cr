@@ -41,32 +41,68 @@ end
 
 describe Oid::CollisionFuncs do
   describe "#collision_rec" do
-    it "calculates the collision rec" do
-      entity1, controller = bound_entity(Oid::Enum::Position::Static, Oid::Vector3.zero)
+    describe "calculates the collision rec" do
+      it "two rectagles" do
+        entity1, controller = bound_entity(Oid::Enum::Position::Static, Oid::Vector3.zero)
 
-      entity2 = controller.contexts.stage.create_entity
-        .add_position(Oid::Vector3.new(10.0, 10.0, 0.0))
-        .add_position_type(Oid::Enum::Position::Static)
-        .add_view_element(
-          value: Oid::Element::Rectangle.new(
-            width: 20.0,
-            height: 20.0,
-            color: Oid::Color::GREEN
-          ),
-          origin: Oid::Vector3.zero
-        )
-        .add_collidable
+        entity2 = controller.contexts.stage.create_entity
+          .add_position(Oid::Vector3.new(10.0, 10.0, 0.0))
+          .add_position_type(Oid::Enum::Position::Static)
+          .add_view_element(
+            value: Oid::Element::Rectangle.new(
+              width: 20.0,
+              height: 20.0,
+              color: Oid::Color::GREEN
+            ),
+            origin: Oid::Vector3.zero
+          )
+          .add_collidable
 
-      controller.update
+        controller.update
 
-      Oid::CollisionFuncs.collision_recs?(entity1, entity2).should be_true
+        Oid::CollisionFuncs.collision_recs?(entity1, entity2).should be_true
 
-      rec = Oid::CollisionFuncs.collision_rec(entity1, entity2)
+        rec = Oid::CollisionFuncs.collision_rec(entity1, entity2)
 
-      rec[:x].should eq 10.0
-      rec[:y].should eq 10.0
-      rec[:width].should eq 10.0
-      rec[:height].should eq 10.0
+        rec[:x].should eq 10.0
+        rec[:y].should eq 10.0
+        rec[:width].should eq 10.0
+        rec[:height].should eq 10.0
+      end
+
+      it "two assets" do
+        entity1, controller = bound_asset_entity(Oid::Enum::Position::Static, Oid::Vector3.zero)
+
+        entity2, _ = bound_asset_entity(Oid::Enum::Position::Static, Oid::Vector3.zero, 0.5)
+        entity2.replace_position(Oid::Vector3.new(10.0, 10.0, 0.0))
+
+        controller.update
+
+        Oid::CollisionFuncs.collision_recs?(entity1, entity2).should be_true
+
+        rec = Oid::CollisionFuncs.collision_rec(entity1, entity2)
+
+        rec[:x].should eq 10.0
+        rec[:y].should eq 10.0
+        rec[:width].should eq 64.0
+        rec[:height].should eq 64.0
+      end
+
+      it "asset and rec" do
+        entity1, controller = bound_asset_entity(Oid::Enum::Position::Static, Oid::Vector3.zero)
+        entity2, _ = bound_entity(Oid::Enum::Position::Static, Oid::Vector3.zero, 0.5)
+
+        controller.update
+
+        Oid::CollisionFuncs.collision_recs?(entity1, entity2).should be_true
+
+        rec = Oid::CollisionFuncs.collision_rec(entity1, entity2)
+
+        rec[:x].should eq 0.0
+        rec[:y].should eq 0.0
+        rec[:width].should eq 10.0
+        rec[:height].should eq 10.0
+      end
     end
   end
 

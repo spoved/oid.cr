@@ -96,6 +96,17 @@ module Oid
       end
 
       def cleanup
+        cleanup_mouse_entities
+
+        keyboard_group.each do |entity|
+          entity.del_key_down if entity.key_down?
+          entity.del_key_up if entity.key_up?
+          entity.del_key_pressed if entity.key_pressed?
+          entity.del_key_released if entity.key_released?
+        end
+      end
+
+      private def cleanup_mouse_entities
         left_mouse_entity.del_mouse_down if left_mouse_entity.mouse_down?
         left_mouse_entity.del_mouse_up if left_mouse_entity.mouse_up?
         left_mouse_entity.del_mouse_pressed if left_mouse_entity.mouse_pressed?
@@ -105,13 +116,6 @@ module Oid
         right_mouse_entity.del_mouse_up if right_mouse_entity.mouse_up?
         right_mouse_entity.del_mouse_pressed if right_mouse_entity.mouse_pressed?
         right_mouse_entity.del_mouse_released if right_mouse_entity.mouse_released?
-
-        keyboard_group.each do |entity|
-          entity.del_key_down if entity.key_down?
-          entity.del_key_up if entity.key_up?
-          entity.del_key_pressed if entity.key_pressed?
-          entity.del_key_released if entity.key_released?
-        end
       end
 
       private def get_mouse_state(button)

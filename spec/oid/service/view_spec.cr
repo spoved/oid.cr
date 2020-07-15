@@ -69,7 +69,11 @@ describe Oid::Service::View do
       )
 
       view = get_view(controller, entity)
-      view.bounding_box.should eq expected
+      actual = view.bounding_box
+      actual.should eq expected
+
+      Oid::CollisionFuncs.bounding_box_for_entity(entity).should eq expected
+      Oid::CollisionFuncs.bounding_box_for_entity(entity).should eq actual
 
       cleanup(controller, entity)
     end

@@ -2,7 +2,7 @@ class RayLib::ApplicationService
   include Oid::Service::Application
 
   def initialize
-    @init_hook = ->(contexts : Contexts) {}
+    # @init_hook = ->(contexts : Contexts) {}
     @draw_hook = ->draw(Contexts, Entitas::Group(StageEntity))
   end
 
