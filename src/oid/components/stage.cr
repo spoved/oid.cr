@@ -196,6 +196,11 @@ module Oid
   module CollidableEntity
     include Oid::ViewableEntity
     include Oid::Components::Collidable::Helper
+
+    # Shorcut to get `Oid::Element::BoundingBox`
+    def bbox
+      Oid::CollisionFuncs.bounding_box_for_entity(self)
+    end
   end
 
   module RenderableEntity

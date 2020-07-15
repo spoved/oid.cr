@@ -44,11 +44,15 @@ class Example::BoardSystem
       config_service.board_size.y.to_i.times do |y|
         piece = create_piece(x, y, square_size, board_width, board_height, blocker_prob)
         board.add_child(piece)
+        # break
       end
+      # break
     end
 
     score = create_label("score", "Score X",
-      Oid::Vector3.new(0.0, 0.0, 600.0), Oid::Enum::OriginType::BottomCenter)
+      Oid::Vector3.new(0.0, 0.0, 600.0),
+      Oid::Enum::OriginType::BottomCenter
+    )
     board.add_child(score)
   end
 

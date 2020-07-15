@@ -1,4 +1,6 @@
 class Example::InputSystem < Entitas::ReactiveSystem
+  spoved_logger
+
   protected property contexts : Contexts
   protected property context : InputContext
   protected property pieces : Entitas::Group(StageEntity)
@@ -34,6 +36,10 @@ class Example::InputSystem < Entitas::ReactiveSystem
       (entity.mouse_wheel? || entity.mouse_up? || entity.mouse_down? || entity.mouse_pressed? || entity.mouse_released?)
   end
 
+  def get_root_position
+    contexts.stage.root_view_entity.position.value
+  end
+
   def execute(entities : Array(Entitas::IEntity))
     entities.each do |e|
       e = e.as(InputEntity)
@@ -42,6 +48,17 @@ class Example::InputSystem < Entitas::ReactiveSystem
         # ////////////////////////////////////////////////////
         # TODO: Add logic for when left mouse is clicked
         # ////////////////////////////////////////////////////
+
+        # Get translated postion to root view
+        position = e.mouse_pressed.position.to_v3 + get_root_position
+        pieces.each do |piece|
+          # If position is within box, delete the piece
+          if piece.bbox.contains?(position)
+            logger.trace { "Destroying #{piece.to_s}" }
+            piece.destroyed = true
+            break
+          end
+        end
       elsif e.mouse_wheel?
         # ////////////////////////////////////////////////////
         # TODO: Add logic for when mouse wheel is scrolled

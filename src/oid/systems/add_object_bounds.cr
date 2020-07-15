@@ -28,9 +28,8 @@ module Oid
         entities.each do |entity|
           entity = entity.as(StageEntity)
 
-          if entity.view_element?
-            entity.replace_bounding_box Oid::CollisionFuncs.bounding_box_for_element(entity)
-          elsif entity.asset?
+          if entity.view?
+            entity.replace_bounding_box Oid::CollisionFuncs.bounding_box_for_entity(entity)
           else
             # UNKNOWN
           end
