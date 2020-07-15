@@ -13,79 +13,20 @@ module Oid
 
     # Check collision between two Entites
     def collision_recs?(e1 : Oid::CollidableEntity, e2 : Oid::CollidableEntity) : Bool
-      collision_recs?(
-        bounding_box_for_element(e1),
-        bounding_box_for_element(e2)
-      )
+      collision_recs?(bounding_box_for_element(e1), bounding_box_for_element(e2))
     end
 
+    # Return a rectangle that is the area of overlap with the collision
     def collision_rec(e1 : Oid::CollidableEntity, e2 : Oid::CollidableEntity)
-      x = 0.0
-      y = 0.0
-      height = 0.0
-      width = 0.0
-
       actor1_bounds = bounding_box_for_element(e1)
       actor2_bounds = bounding_box_for_element(e2)
 
       if collision_recs?(actor1_bounds, actor2_bounds)
-        data = {
-          rect1: {
-            x:      actor1_bounds.min.x,
-            y:      actor1_bounds.min.y,
-            width:  actor1_bounds.max.x - actor1_bounds.min.x,
-            height: actor1_bounds.max.y - actor1_bounds.min.y,
-          },
-          rect2: {
-            x:      actor2_bounds.min.x,
-            y:      actor2_bounds.min.y,
-            width:  actor2_bounds.max.x - actor2_bounds.min.x,
-            height: actor2_bounds.max.y - actor2_bounds.min.y,
-          },
-          dxx: (actor1_bounds.min.x - actor2_bounds.min.x).abs,
-          dyy: (actor1_bounds.min.y - actor2_bounds.min.y).abs,
-        }
-
-        if data[:rect1][:x] <= data[:rect2][:x]
-          if data[:rect1][:y] <= data[:rect2][:y]
-            x = data[:rect2][:x]
-            y = data[:rect2][:y]
-            width = data[:rect1][:width] - data[:dxx]
-            height = data[:rect1][:height] - data[:dyy]
-          else
-            x = data[:rect2][:x]
-            y = data[:rect1][:y]
-            width = data[:rect1][:width] - data[:dxx]
-            height = data[:rect2][:height] - data[:dyy]
-          end
-        else
-          if data[:rect1][:y] <= data[:rect2][:y]
-            x = data[:rect1][:x]
-            y = data[:rect2][:y]
-            width = data[:rect2][:width] - data[:dxx]
-            height = data[:rect1][:height] - data[:dyy]
-          else
-            x = data[:rect1][:x]
-            y = data[:rect1][:y]
-            width = data[:rect2][:width] - data[:dxx]
-            height = data[:rect2][:height] - data[:dyy]
-          end
-        end
-
-        if data[:rect1][:width] > data[:rect2][:width]
-          width = data[:rect2][:width] if width >= data[:rect2][:width]
-        else
-          width = data[:rect1][:width] if width >= data[:rect1][:width]
-        end
-
-        if data[:rect1][:height] > data[:rect2][:height]
-          height = data[:rect2][:height] if height >= data[:rect2][:height]
-        else
-          height = data[:rect1][:height] if height >= data[:rect1][:height]
-        end
+        data = rec_overlap_data(actor1_bounds, actor2_bounds)
+        return calc_overlap_rec(data)
       end
 
-      {x: x, y: y, width: width, height: height}
+      {x: 0.0, y: 0.0, width: 0.0, height: 0.0}
     end
 
     def calc_rec_origin(origin_type : Oid::Enum::OriginType, width, height) : Oid::Vector2
@@ -207,6 +148,75 @@ module Oid
           z: position.z,
         )
       )
+    end
+
+    # Formats the overlap data for two `Oid::Element::BoundingBox` objects
+    def rec_overlap_data(box1 : Oid::Element::BoundingBox, box2 : Oid::Element::BoundingBox)
+      {
+        rect1: {
+          x:      box1.min.x,
+          y:      box1.min.y,
+          width:  box1.max.x - box1.min.x,
+          height: box1.max.y - box1.min.y,
+        },
+        rect2: {
+          x:      box2.min.x,
+          y:      box2.min.y,
+          width:  box2.max.x - box2.min.x,
+          height: box2.max.y - box2.min.y,
+        },
+        dxx: (box1.min.x - box2.min.x).abs,
+        dyy: (box1.min.y - box2.min.y).abs,
+      }
+    end
+
+    # Calculate the orgin and size of the overlap between two rectangles
+    # see `#rec_overlap_data` for +data+ format
+    def calc_overlap_rec(data)
+      x = 0.0
+      y = 0.0
+      height = 0.0
+      width = 0.0
+
+      if data[:rect1][:x] <= data[:rect2][:x]
+        if data[:rect1][:y] <= data[:rect2][:y]
+          x = data[:rect2][:x]
+          y = data[:rect2][:y]
+          width = data[:rect1][:width] - data[:dxx]
+          height = data[:rect1][:height] - data[:dyy]
+        else
+          x = data[:rect2][:x]
+          y = data[:rect1][:y]
+          width = data[:rect1][:width] - data[:dxx]
+          height = data[:rect2][:height] - data[:dyy]
+        end
+      else
+        if data[:rect1][:y] <= data[:rect2][:y]
+          x = data[:rect1][:x]
+          y = data[:rect2][:y]
+          width = data[:rect2][:width] - data[:dxx]
+          height = data[:rect1][:height] - data[:dyy]
+        else
+          x = data[:rect1][:x]
+          y = data[:rect1][:y]
+          width = data[:rect2][:width] - data[:dxx]
+          height = data[:rect2][:height] - data[:dyy]
+        end
+      end
+
+      if data[:rect1][:width] > data[:rect2][:width]
+        width = data[:rect2][:width] if width >= data[:rect2][:width]
+      else
+        width = data[:rect1][:width] if width >= data[:rect1][:width]
+      end
+
+      if data[:rect1][:height] > data[:rect2][:height]
+        height = data[:rect2][:height] if height >= data[:rect2][:height]
+      else
+        height = data[:rect1][:height] if height >= data[:rect1][:height]
+      end
+
+      {x: x, y: y, width: width, height: height}
     end
   end
 end
