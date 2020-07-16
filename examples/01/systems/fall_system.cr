@@ -6,7 +6,7 @@ class Example::FallSystem < Entitas::ReactiveSystem
 
   def initialize(@contexts)
     @collector = get_trigger(@contexts.stage)
-    @pieces = @contexts.stage.get_group(StageMatcher.all_of(StageMatcher.piece).none_of(StageMatcher.blocker))
+    @pieces = @contexts.stage.get_group(StageMatcher.all_of(StageMatcher.piece))
   end
 
   def get_trigger(context : Entitas::Context) : Entitas::ICollector
@@ -19,37 +19,35 @@ class Example::FallSystem < Entitas::ReactiveSystem
 
   def execute(entities : Array(Entitas::IEntity))
     board = contexts.stage.board
-    board_width = board.width * board.square_size
+    entities.each do |destroyed_e|
+      destroyed_pos = destroyed_e.as(StageEntity).piece.grid_pos
 
-    entities.each do |e|
-      board_pos = e.as(StageEntity).piece.grid_pos
-      board.each_pos do |x, y|
-        if x == board_pos.x && y < board_pos.y
-          e = pieces.find { |pi| pi.piece.grid_pos == Oid::Vector2.new(x, y) }
-          next if e.nil? || e.move?
-
-          new_grid_pos = Oid::Vector2.new(x, y + 1)
-          puts "Need to move piece to pos: #{e.piece.grid_pos} to #{new_grid_pos}"
-
-          # e.replace_piece(new_grid_pos)
-          # pos = piece_position(x, y, board.square_size, board_width)
-          # e.add_move(
-          #   target: pos,
-          #   speed: 1.0,
-          # )
-        end
+      # Gather pieces above
+      ps = pieces.select { |piece| piece.piece.grid_pos.x == destroyed_pos.x && piece.piece.grid_pos.y < destroyed_pos.y }
+      # logger.warn { ps.map &.to_s }
+      ps.sort { |a, b| b.piece.grid_pos.y <=> a.piece.grid_pos.y }.each do |piece|
+        # Break loop if there is a blocker
+        break if piece.blocker?
+        move_down(piece, board)
       end
     end
+  end
 
-    # board.x.to_i.times do |x|
-    #   board.y.to_i.times do |y|
-    #     position = SF::Vector2(Int32).new(x, y)
-    #     e = contexts.get_piece_with_position(contexts.game, position)
-    #     if !e.nil? && e.movable?
-    #       move_down(e, position)
-    #     end
-    #   end
-    # end
+  def move_down(e, board)
+    board_width = board.width * board.square_size
+    new_grid_pos = Oid::Vector2.new(e.piece.grid_pos.x, e.piece.grid_pos.y + 1)
+    logger.info { "Need to move #{e.to_s} at pos: #{e.piece.grid_pos} to #{new_grid_pos}" }
+
+    # Replace the position with its new one
+    e.replace_piece(new_grid_pos)
+
+    # Move piece to its new target pos
+    pos = piece_position(new_grid_pos.x, new_grid_pos.y, board.square_size, board_width)
+    logger.debug { "#{e.position.value} => #{pos}" }
+    e.replace_move(
+      target: pos,
+      speed: 1.0,
+    )
   end
 
   # def move_down(entity : GameEntity, position : SF::Vector2(Int32))
