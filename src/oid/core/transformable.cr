@@ -46,12 +46,45 @@ module Oid
       transform_position_rel_to(transform_origin, self.position.value)
     end
 
+    # Normalize the rotation value between -180 and 180 degrees
+    def rotation_norm : Oid::Vector3
+      rot = self.rotation.value
+
+      while rot.x < -180.0
+        rot.x += 360
+      end
+
+      while rot.y < -180.0
+        rot.y += 360
+      end
+
+      while rot.z < -180.0
+        rot.z += 360
+      end
+
+      while rot.x > 180.0
+        rot.x -= 360
+      end
+
+      while rot.y > 180.0
+        rot.y -= 360
+      end
+
+      while rot.z > 180.0
+        rot.z -= 360
+      end
+
+      rot
+    end
+
+    # Normalize the value between -180 and 180 degrees
     def rotate(x_angle, y_angle, z_angle)
-      self.replace_rotation(Oid::Vector3.new(
-        (self.rotation.value.x >= 360 ? self.rotation.value.x - 360 : self.rotation.value.x) + x_angle,
-        (self.rotation.value.y >= 360 ? self.rotation.value.y - 360 : self.rotation.value.y) + y_angle,
-        (self.rotation.value.z >= 360 ? self.rotation.value.z - 360 : self.rotation.value.z) + z_angle,
-      ))
+      x_angle += 360 if x_angle < -180.0
+      y_angle += 360 if y_angle < -180.0
+      z_angle += 360 if z_angle < -180.0
+
+      rot = Oid::Vector3.new(x_angle, y_angle, z_angle)
+      self.replace_rotation(rotation_norm + rot)
       self
     end
 

@@ -62,8 +62,8 @@ class RayLib::CameraService
     RayLib::Camera2D.new(
       target: RayLib::Vector2.new(entity.camera.target.to_v2),
       offset: RayLib::Vector2.new(entity.camera.offset.to_v2),
-      rotation: entity.rotation.value.magnitude.to_f32,
-      zoom: entity.camera.zoom.to_f32
+      rotation: entity.rotation_norm.x.to_f32,
+      zoom: entity.camera.zoom.to_f32,
     )
   end
 

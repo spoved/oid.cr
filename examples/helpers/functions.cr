@@ -1,9 +1,9 @@
 module Example::Helper
-  def create_player
+  def create_player(position = Oid::Vector3.new(0.0, 0.0, 0.0), origin = Oid::Enum::OriginType::Center)
     context.create_entity
       .add_actor(name: "player")
       .add_camera_target
-      .add_position(Oid::Vector3.new(0.0, 0.0, 0.0))
+      .add_position(position)
       .add_position_type(Oid::Enum::Position::Static)
       .add_view_element(
         value: Oid::Element::Rectangle.new(
@@ -11,7 +11,7 @@ module Example::Helper
           height: 20.0,
           color: Oid::Color::BLUE
         ),
-        origin: Oid::Enum::OriginType::Center
+        origin: origin
       )
       .add_scale(1.0)
   end

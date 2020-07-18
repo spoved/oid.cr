@@ -1,5 +1,6 @@
 require "../../src/oid"
 require "../../src/raylib"
+require "../helpers/functions"
 require "./components"
 require "./systems/**"
 
@@ -15,7 +16,7 @@ RAYLIB_CONFIG = {
   asset_path:      "./examples/01/assets",
 }
 
-Oid::Systems::EmitInput.listen_for_keys Space
+Oid::Systems::EmitInput.listen_for_keys Right, Left, A, S, R
 
 create_feature Example, [
   Example::InputSystem,

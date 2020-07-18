@@ -26,14 +26,13 @@ class Example::InputSystem < Entitas::ReactiveSystem
   end
 
   def execute(entities : Array(Entitas::IEntity))
-    camera = contexts.stage.camera.value.as(Oid::Camera2D)
+    camera = contexts.stage.camera_entity
 
     entities.each do |e|
       e = e.as(InputEntity)
 
       if e.mouse_wheel?
-        # puts e.mouse_wheel.move
-        camera.zoom += e.mouse_wheel.move * 0.05
+        camera.camera.zoom += e.mouse_wheel.move * 0.05
       elsif e.keyboard?
         case e.keyboard.key
         when Oid::Enum::Key::Right
@@ -46,7 +45,7 @@ class Example::InputSystem < Entitas::ReactiveSystem
               z: orig_pos.z
             )
           )
-          camera.offset.x = camera.offset.x - 2
+          camera.camera.offset.x = camera.camera.offset.x - 2
         when Oid::Enum::Key::Left
           # Move player left by 2
           orig_pos = player_group.first.position.value
@@ -58,32 +57,36 @@ class Example::InputSystem < Entitas::ReactiveSystem
             )
           )
 
-          camera.offset.x = camera.offset.x + 2
+          camera.camera.offset.x = camera.camera.offset.x + 2
         when Oid::Enum::Key::A
           camera.rotate_x(-1)
         when Oid::Enum::Key::S
           camera.rotate_x(1)
         when Oid::Enum::Key::R
-          camera.zoom = 1.0
-          camera.rotation = Oid::Vector3.zero
+          camera.camera.zoom = 1.0
+          camera.replace_rotation(Oid::Vector3.zero)
         else
           puts e.keyboard.key.class
         end
       end
     end
 
-    # Set rotation limits
-    if camera.rotation.x > 40
-      camera.rotation.x = 40.0
-    elsif camera.rotation.x < -40
-      camera.rotation.x = -40.0
+    # Set rotation limits. between 320-360 and 0-40
+    rot = camera.rotation.value
+    if camera.rotation.value.x > 40.0
+      rot.x = 40.0
+      camera.replace_rotation(rot)
+    elsif camera.rotation.value.x < -40.0
+      # camera.rotation.value.x = -40.0
+      rot.x = -40.0
+      camera.replace_rotation(rot)
     end
 
     # Set zoom limit
-    if camera.zoom > 3
-      camera.zoom = 3.0
-    elsif camera.zoom < 0.1
-      camera.zoom = 0.1
+    if camera.camera.zoom > 3
+      camera.camera.zoom = 3.0
+    elsif camera.camera.zoom < 0.1
+      camera.camera.zoom = 0.1
     end
   end
 end
