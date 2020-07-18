@@ -150,14 +150,28 @@ class RayLib::ViewController
         spacing: object.spacing.to_f32,
       )
     when Oid::Element::Text
-      RayLib.draw_text(
-        text: object.text,
-        pos_x: position.x.to_i,
-        pos_y: position.y.to_i,
-        font_size: (object.font_size * scale).to_i,
-        color: object.color.to_unsafe,
-      )
+      draw_text(e, object, position, rotation, scale)
     end
+  end
+
+  private def draw_text(e : Oid::RenderableEntity, object, position, rotation, scale)
+    font_size = (object.font_size * scale).to_i
+    text_width = RayLib.measure_text(object.text, font_size)
+
+    origin = Oid::CollisionFuncs.calc_rec_origin(
+      e.view_element.origin,
+      width: text_width,
+      height: font_size,
+    ).to_v3
+    pos = position - origin
+
+    RayLib.draw_text(
+      text: object.text,
+      pos_x: pos.x.to_i,
+      pos_y: pos.y.to_i,
+      font_size: font_size,
+      color: object.color.to_unsafe,
+    )
   end
 
   private def draw_asset(e : Oid::RenderableEntity)

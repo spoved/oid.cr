@@ -22,3 +22,9 @@ end
 @[Context(Stage)]
 class Blocker < Entitas::Component
 end
+
+@[Context(Stage)]
+@[Component::Unique]
+class Score < Entitas::Component
+  prop :value, Int32, default: 0
+end

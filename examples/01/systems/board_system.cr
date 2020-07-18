@@ -48,13 +48,6 @@ class Example::BoardSystem
       piece = create_piece(context, x, y, square_size, board_width, board_height, blocker_prob)
       board.add_child(piece)
     end
-
-    score = create_label("score", "Score X",
-      Oid::Vector3.new(0.0, 0.0, 600.0),
-      Oid::Enum::OriginType::BottomCenter
-    )
-
-    board.add_child(score)
   end
 
   def execute; end

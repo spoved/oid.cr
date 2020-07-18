@@ -28,6 +28,8 @@ create_feature Example, [
   Example::InputSystem,
   Example::BoardSystem,
   Example::FallSystem,
+  Example::ScoreSystem,
+
   # ////////////////////////////////////////////////////
   # TODO: Place any services created here
   # ////////////////////////////////////////////////////

@@ -24,7 +24,6 @@ class Example::FallSystem < Entitas::ReactiveSystem
 
       # Gather pieces above
       ps = pieces.select { |piece| piece.piece.grid_pos.x == destroyed_pos.x && piece.piece.grid_pos.y < destroyed_pos.y }
-      # logger.warn { ps.map &.to_s }
       ps.sort { |a, b| b.piece.grid_pos.y <=> a.piece.grid_pos.y }.each do |piece|
         # Break loop if there is a blocker
         break if piece.blocker?
@@ -49,19 +48,4 @@ class Example::FallSystem < Entitas::ReactiveSystem
       speed: 1.0,
     )
   end
-
-  # def move_down(entity : GameEntity, position : SF::Vector2(Int32))
-  #   empty_row = BoardLogic.get_next_empty_row(contexts, position)
-
-  #   if empty_row != position.y
-  #     entity.add_move(
-  #       target: SF::Vector3(Int32).new(
-  #         x: position.x.to_i,
-  #         y: empty_row,
-  #         z: 0
-  #       ),
-  #       speed: 0.01
-  #     )
-  #   end
-  # end
 end
