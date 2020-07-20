@@ -1,4 +1,10 @@
 module Example::Helper
+  abstract def contexts
+
+  def context
+    contexts.stage
+  end
+
   def create_player(position = Oid::Vector3.new(0.0, 0.0, 0.0), origin = Oid::Enum::OriginType::Center)
     context.create_entity
       .add_actor(name: "player")

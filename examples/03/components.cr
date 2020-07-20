@@ -4,16 +4,11 @@
 
 # Some example components:
 
-@[Context(Game, Ui)]
-class Interactive < Entitas::Component
+@[Context(Ui)]
+class Oid::Components::Interactive < Entitas::Component
 end
 
-@[Context(Input)]
-class Input < Entitas::Component
-  prop :position, Oid::Vector2
-end
-
-@[Context(Game, Ui)]
+@[Context(Stage, Ui)]
 class Collision
   prop :ray, Oid::Ray
   prop :source, Entitas::Entity

@@ -17,8 +17,6 @@ class Example::WorldSystem
   end
 
   def init
-    config_service = contexts.meta.config_service.instance
-
     # Create player
     player = create_player(
       position: Oid::Vector3.new(0.0, 0.0, 100.0),

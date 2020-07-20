@@ -7,6 +7,7 @@ create_feature Oid::Event, [
 
 create_feature Oid, [
   Oid::EventSystems,
+  Oid::Systems::AddPositionComponents,
 
   # Application/Entity management
   Oid::Systems::WindowMangement,
@@ -16,7 +17,6 @@ create_feature Oid, [
   Oid::Systems::MultiDestroy,
 
   # View systems
-  Oid::Systems::AddPositionComponents,
   Oid::Systems::AddObjectBounds,
   Oid::Systems::AddView,
   Oid::Systems::HiddenManger,
@@ -24,5 +24,4 @@ create_feature Oid, [
   #
   Oid::Systems::Move,
   Oid::Systems::EmitInput,
-
 ]

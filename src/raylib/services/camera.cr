@@ -35,27 +35,18 @@ class RayLib::CameraService
   end
 
   def set_camera_mode(mode : Oid::Components::Camera::Mode)
-    # puts "set_camera_mode"
     RayLib.set_camera_mode(camera.as(RayLib::Camera3D), mode.value) if camera.is_a?(RayLib::Camera3D)
   end
 
   def update_camera(entity : StageEntity)
-    # puts "update_camera"
+    # puts "update camera"
     if entity.camera.is_3d?
+      # puts "update 3d camera"
       self.camera = camera3d(entity)
+      RayLib::Camera.update(self.camera.as(RayLib::Camera3D))
     else
       self.camera = camera2d(entity)
-      # update_camera2d(entity)
     end
-  end
-
-  private def update_camera2d(entity)
-    # puts @camera
-    @camera.as(RayLib::Camera2D).target.x = entity.camera.target.x.to_f32
-    @camera.as(RayLib::Camera2D).target.y = entity.camera.target.y.to_f32
-    @camera.as(RayLib::Camera2D).offset.x = entity.camera.offset.x.to_f32
-    @camera.as(RayLib::Camera2D).offset.y = entity.camera.offset.y.to_f32
-    # puts @camera
   end
 
   private def camera2d(entity) : RayLib::Camera2D
@@ -69,7 +60,7 @@ class RayLib::CameraService
 
   private def camera3d(entity) : RayLib::Camera3D
     RayLib::Camera3D.new(
-      target: RayLib::Vector3.new(entity.position.value),
+      target: RayLib::Vector3.new(entity.camera.target),
       position: RayLib::Vector3.new(entity.position.value),
       up: RayLib::Vector3.new(entity.rotation.value),
       fovy: entity.camera.fov.to_f32,

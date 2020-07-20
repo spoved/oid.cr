@@ -77,7 +77,10 @@ module Oid
       rot
     end
 
-    # Normalize the value between -180 and 180 degrees
+    def rotate(vector : Oid::Vector3)
+      rotate(vector.x, vector.y, vector.z)
+    end
+
     def rotate(x_angle, y_angle, z_angle)
       x_angle += 360 if x_angle < -180.0
       y_angle += 360 if y_angle < -180.0

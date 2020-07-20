@@ -1,3 +1,3 @@
-require "./raylib/binding/binding"
+require "./raylib/binding/*"
 require "./raylib/*"
 require "./raylib/**"
