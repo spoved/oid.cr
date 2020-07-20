@@ -56,10 +56,25 @@ class RayLib::ViewService
 
   def texture(name)
     textures[name]?
-    # name = e.asset.name
-    # if textures[name]?
-    #   textures[name]
-    # else
-    # end
+  end
+
+  def get_ray_from(position : Oid::Vector2, camera : StageEntity) : Oid::Ray
+    ray = RayLib.get_mouse_ray(
+      RayLib::Vector2.new(position),
+      RayLib::CameraService.camera3d(camera)
+    )
+
+    Oid::Ray.new(
+      Oid::Vector3.new(
+        ray.position.x,
+        ray.position.y,
+        ray.position.z,
+      ),
+      Oid::Vector3.new(
+        ray.direction.x,
+        ray.direction.y,
+        ray.direction.z,
+      ),
+    )
   end
 end

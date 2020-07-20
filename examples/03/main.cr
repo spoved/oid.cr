@@ -18,6 +18,8 @@ RAYLIB_CONFIG = {
 
 create_feature Example, [
   Example::WorldSystem,
+  Example::CollisionEmitSystem,
+  Example::CollisionProcessSystem,
 
   # ////////////////////////////////////////////////////
   # TODO: Place any services created here

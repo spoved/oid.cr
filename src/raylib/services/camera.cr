@@ -50,6 +50,10 @@ class RayLib::CameraService
   end
 
   private def camera2d(entity) : RayLib::Camera2D
+    self.class.camera2d(entity)
+  end
+
+  def self.camera2d(entity) : RayLib::Camera2D
     RayLib::Camera2D.new(
       target: RayLib::Vector2.new(entity.camera.target.to_v2),
       offset: RayLib::Vector2.new(entity.camera.offset.to_v2),
@@ -59,6 +63,10 @@ class RayLib::CameraService
   end
 
   private def camera3d(entity) : RayLib::Camera3D
+    self.class.camera3d(entity)
+  end
+
+  def self.camera3d(entity) : RayLib::Camera3D
     RayLib::Camera3D.new(
       target: RayLib::Vector3.new(entity.camera.target),
       position: RayLib::Vector3.new(entity.position.value),

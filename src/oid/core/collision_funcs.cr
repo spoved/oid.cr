@@ -2,6 +2,19 @@ module Oid
   module CollisionFuncs
     extend CollisionFuncs
 
+    def collision_ray_box?(ray : Oid::Ray, box : Oid::Element::BoundingBox) : Bool
+      t = Array(Float64).new(8)
+      t << (box.min.x - ray.position.x)/ray.direction.x
+      t << (box.max.x - ray.position.x)/ray.direction.x
+      t << (box.min.y - ray.position.y)/ray.direction.y
+      t << (box.max.y - ray.position.y)/ray.direction.y
+      t << (box.min.z - ray.position.z)/ray.direction.z
+      t << (box.max.z - ray.position.z)/ray.direction.z
+      t << Math.max(Math.max(Math.min(t[0], t[1]), Math.min(t[2], t[3])), Math.min(t[4], t[5]))
+      t << Math.min(Math.min(Math.max(t[0], t[1]), Math.max(t[2], t[3])), Math.max(t[4], t[5]))
+      !(t[7] < 0 || t[6] > t[7])
+    end
+
     # Check collision between two bounding boxes
     def collision_recs?(box1 : Oid::Element::BoundingBox, box2 : Oid::Element::BoundingBox) : Bool
       (
@@ -198,7 +211,19 @@ module Oid
             z: position.z,
           )
         )
-        # when Oid::Element::Cube
+      when Oid::Element::Cube
+        Oid::Element::BoundingBox.new(
+          min: Oid::Vector3.new(
+            x: position.x,
+            y: position.y,
+            z: position.z,
+          ),
+          max: Oid::Vector3.new(
+            x: position.x + (object.size.x * scale),
+            y: position.y + (object.size.y * scale),
+            z: position.z + (object.size.z * scale),
+          )
+        )
         # when Oid::Element::CubeWires
       else
         raise "Cannot calculate bounding box for #{object.class}"
