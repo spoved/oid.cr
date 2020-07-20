@@ -1,4 +1,4 @@
-require "./systems/*"
+require "./systems/**"
 
 create_feature Oid::Event, [
   App::EventSystems,
@@ -21,7 +21,7 @@ create_feature Oid, [
   Oid::Systems::AddView,
   Oid::Systems::HiddenManger,
 
-  #
+  # Stage Systems
   Oid::Systems::Move,
   Oid::Systems::EmitInput,
 ]
