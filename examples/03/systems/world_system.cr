@@ -31,18 +31,41 @@ class Example::WorldSystem
       )
 
     # Create cube
-    context.create_entity
+    cube = context.create_entity
       .add_actor(name: "cube")
       .add_position(Oid::Vector3.new(0.0, 1.0, 0.0))
       .add_position_type(Oid::Enum::Position::Static)
       .add_view_element(
         value: Oid::Element::Cube.new(
           size: Oid::Vector3.new(2.0, 2.0, 2.0),
-          color: Oid::Color::RED,
+          color: Oid::Color::GRAY,
         )
       )
-      .add_scale(3.0)
+      .add_scale(1.0)
       .add_interactive
+
+    cube_wires = context.create_entity
+      .add_actor(name: "cube_wires")
+      .add_position(Oid::Vector3.new(0.0, 0.0, 0.0))
+      .add_view_element(
+        value: Oid::Element::CubeWires.new(
+          size: Oid::Vector3.new(2.0, 2.0, 2.0),
+          color: Oid::Color::DARKGRAY,
+        )
+      )
+    cube.add_child(cube_wires)
+
+    cube_selected_wires = context.create_entity
+      .add_actor(name: "cube_wires")
+      .add_position(Oid::Vector3.new(0.0, 0.0, 0.0))
+      .add_view_element(
+        value: Oid::Element::CubeWires.new(
+          size: Oid::Vector3.new(2.2, 2.2, 2.2),
+          color: Oid::Color::GREEN,
+        )
+      )
+      .add_hidden
+    cube.add_child(cube_selected_wires)
   end
 
   def execute

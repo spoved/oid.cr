@@ -9,8 +9,12 @@ class Oid::Components::Interactive < Entitas::Component
 end
 
 @[Context(Stage, Ui)]
-class Collision
+class Collision < Entitas::Component
   prop :ray, Oid::Ray
   prop :source, Entitas::Entity
   prop :target, Entitas::Entity
+end
+
+@[Context(Stage)]
+class Selected < Entitas::Component
 end
