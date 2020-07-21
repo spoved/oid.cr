@@ -18,6 +18,7 @@ RAYLIB_CONFIG = {
 
 create_feature Example, [
   Example::WorldSystem,
+  Example::UISystem,
   Example::CollisionEmitSystem,
   Example::CollisionProcessSystem,
 

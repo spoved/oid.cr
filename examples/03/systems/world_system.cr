@@ -73,6 +73,7 @@ class Example::WorldSystem
 
     cube = context.get_entity_with_actor_name("cube")
     wires = context.get_entity_with_actor_name("cube_selected_wires")
+    label = context.get_entity_with_prop_name("selected_label")
 
     unless cube.nil?
       element = cube.view_element.value.as(Oid::Element::Cube)
@@ -87,6 +88,10 @@ class Example::WorldSystem
         if !wires.nil? && wires.hidden?
           wires.hidden = false
         end
+
+        if !label.nil? && label.hidden?
+          label.hidden = false
+        end
       elsif element.color == Oid::Color::RED && !cube.selected?
         cube.replace_view_element(
           value: Oid::Element::Cube.new(
@@ -97,6 +102,10 @@ class Example::WorldSystem
 
         if !wires.nil? && !wires.hidden?
           wires.hidden = true
+        end
+
+        if !label.nil? && !label.hidden?
+          label.hidden = true
         end
       end
     end

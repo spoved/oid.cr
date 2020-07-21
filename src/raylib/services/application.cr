@@ -4,6 +4,7 @@ class RayLib::ApplicationService
   def initialize
     # @init_hook = ->(contexts : Contexts) {}
     @draw_hook = ->draw(Contexts, Entitas::Group(StageEntity))
+    @draw_ui_hook = ->draw(Contexts, Entitas::Group(StageEntity))
   end
 
   def init_controller(contexts : Contexts) : Oid::Controller::Application

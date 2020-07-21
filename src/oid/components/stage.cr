@@ -113,6 +113,9 @@ module Oid::Components
   @[Entitas::Event(EventTarget::Self, EventType::Removed)]
   class Hidden < Entitas::Component; end
 
+  @[Context(Stage)]
+  class UiElement < Entitas::Component; end
+
   ##############################
   # Collidable Components
   ##############################
@@ -179,6 +182,7 @@ module Oid
     include Components::AssetLoaded::Helper
     include Components::View::Helper
     include Components::ViewElement::Helper
+    include Components::UiElement::Helper
   end
 
   module MovableEntity

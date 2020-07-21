@@ -10,6 +10,7 @@ module Oid
       protected property contexts : Contexts
       protected getter context : AppContext
       private setter render_group : Entitas::Group(StageEntity)? = nil
+      private setter ui_render_group : Entitas::Group(StageEntity)? = nil
 
       def renderable_entities : Entitas::Group(StageEntity)
         @render_group ||= contexts.stage.get_group(
@@ -19,6 +20,25 @@ module Oid
             StageMatcher.position_type,
             StageMatcher.rotation,
             StageMatcher.scale,
+          ).none_of(
+            StageMatcher.destroyed
+          ).none_of(
+            StageMatcher.hidden
+          ).none_of(
+            StageMatcher.ui_element
+          )
+        )
+      end
+
+      def ui_renderable_entities : Entitas::Group(StageEntity)
+        @ui_render_group ||= contexts.stage.get_group(
+          StageMatcher.all_of(
+            StageMatcher.view,
+            StageMatcher.position,
+            StageMatcher.position_type,
+            StageMatcher.rotation,
+            StageMatcher.scale,
+            StageMatcher.ui_element,
           ).none_of(
             StageMatcher.destroyed
           ).none_of(
@@ -82,8 +102,7 @@ module Oid
           end
 
           application_controller.draw_ui do
-            application_service.draw_ui_hook.call(contexts, renderable_entities)
-
+            application_service.draw_ui_hook.call(contexts, ui_renderable_entities)
             application_service.render_fps if config_service.show_fps?
           end
         end
