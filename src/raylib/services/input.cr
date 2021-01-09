@@ -55,8 +55,8 @@ class RayLib::InputService
     Oid::Vector2.new(x: pos.x, y: pos.y)
   end
 
-  def mouse_wheel_move : Int32
-    RayLib.get_mouse_wheel_move
+  def mouse_wheel_move : Float64
+    RayLib.get_mouse_wheel_move.to_f64
   end
 
   def touch_x : Float64

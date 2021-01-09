@@ -44,22 +44,24 @@ Image:
   generate_wrapper: false
   kind: Struct
   crystal_type: Image
-Texture2D:
+Texture:
   copy_structure: true
   generate_binding: true
   generate_wrapper: false
   kind: Struct
   crystal_type: Texture2D
-Texture:
-  alias_for: Texture2D
+Texture2D:
+  alias_for: Texture
 # TextureCubemap:
 #   alias_for: Texture2D
-RenderTexture2D:
+RenderTexture:
   copy_structure: true
   generate_binding: true
   generate_wrapper: false
   kind: Struct
-  crystal_type: RenderTexture2D
+  crystal_type: RenderTexture
+RenderTexture2D:
+  alias_for: RenderTexture
 NPatchInfo:
   copy_structure: true
   generate_binding: true

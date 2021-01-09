@@ -159,15 +159,14 @@ module RayLib
       format : Int32
     end
 
-    struct RenderTexture2D
+    struct RenderTexture
       id : Int32
       texture : Texture2D
       depth : Texture2D
-      depth_texture : Bool
     end
 
     struct NPatchInfo
-      source_rec : Rectangle
+      source : Rectangle
       left : Int32
       top : Int32
       right : Int32
@@ -186,6 +185,7 @@ module RayLib
     struct Font
       base_size : Int32
       chars_count : Int32
+      chars_padding : Int32
       texture : Texture2D
       recs : Rectangle
       chars : CharInfo
@@ -255,8 +255,8 @@ module RayLib
     struct Model
       transform : Matrix
       mesh_count : Int32
-      meshes : Mesh
       material_count : Int32
+      meshes : Mesh
       materials : Material
       mesh_material : Int32
       bone_count : Int32
@@ -266,8 +266,8 @@ module RayLib
 
     struct ModelAnimation
       bone_count : Int32
-      bones : BoneInfo
       frame_count : Int32
+      bones : BoneInfo
       frame_poses : Transform
     end
 
@@ -297,8 +297,8 @@ module RayLib
     end
 
     struct Sound
-      sample_count : Int32
       stream : AudioStream
+      sample_count : Int32
     end
 
     struct VrDeviceInfo
@@ -315,10 +315,10 @@ module RayLib
     end
 
     struct AudioStream
+      buffer : Void*
       sample_rate : Int32
       sample_size : Int32
       channels : Int32
-      buffer : Void*
     end
 
     fun bg_Color__CONSTRUCT_ : Color*
@@ -328,8 +328,8 @@ module RayLib
     fun bg_Matrix__CONSTRUCT_ : Matrix*
     fun bg_Rectangle__CONSTRUCT_ : Rectangle*
     fun bg_Image__CONSTRUCT_ : Image*
-    fun bg_Texture2D__CONSTRUCT_ : Texture2D*
-    fun bg_RenderTexture2D__CONSTRUCT_ : RenderTexture2D*
+    fun bg_Texture__CONSTRUCT_ : Texture2D*
+    fun bg_RenderTexture__CONSTRUCT_ : RenderTexture*
     fun bg_NPatchInfo__CONSTRUCT_ : NPatchInfo*
     fun bg_CharInfo__CONSTRUCT_ : CharInfo*
     fun bg_Font__CONSTRUCT_ : Font*
@@ -351,10 +351,10 @@ module RayLib
     fun bg_AudioStream__CONSTRUCT_ : AudioStream*
     fun bg_VrDeviceInfo__CONSTRUCT_ : VrDeviceInfo*
     fun bg____SetCameraMode_STATIC_Camera_int = SetCameraMode(camera : Camera3D, mode : Int32) : Void
-    fun bg____SetCameraPanControl_STATIC_int = SetCameraPanControl(pan_key : Int32) : Void
-    fun bg____SetCameraAltControl_STATIC_int = SetCameraAltControl(alt_key : Int32) : Void
-    fun bg____SetCameraSmoothZoomControl_STATIC_int = SetCameraSmoothZoomControl(sz_key : Int32) : Void
-    fun bg____SetCameraMoveControls_STATIC_int_int_int_int_int_int = SetCameraMoveControls(front_key : Int32, back_key : Int32, right_key : Int32, left_key : Int32, up_key : Int32, down_key : Int32) : Void
+    fun bg____SetCameraPanControl_STATIC_int = SetCameraPanControl(key_pan : Int32) : Void
+    fun bg____SetCameraAltControl_STATIC_int = SetCameraAltControl(key_alt : Int32) : Void
+    fun bg____SetCameraSmoothZoomControl_STATIC_int = SetCameraSmoothZoomControl(key_smooth_zoom : Int32) : Void
+    fun bg____SetCameraMoveControls_STATIC_int_int_int_int_int_int = SetCameraMoveControls(key_front : Int32, key_back : Int32, key_right : Int32, key_left : Int32, key_up : Int32, key_down : Int32) : Void
     fun bg____UpdateCamera_STATIC_Camera_X = UpdateCamera(camera : Camera3D*) : Void
     fun bg____BeginMode2D_STATIC_Camera2D = BeginMode2D(camera : Camera2D) : Void
     fun bg____BeginMode3D_STATIC_Camera3D = BeginMode3D(camera : Camera3D) : Void
@@ -364,13 +364,19 @@ module RayLib
     fun bg____WindowShouldClose_STATIC_ = WindowShouldClose : Bool
     fun bg____CloseWindow_STATIC_ = CloseWindow : Void
     fun bg____IsWindowReady_STATIC_ = IsWindowReady : Bool
-    fun bg____IsWindowMinimized_STATIC_ = IsWindowMinimized : Bool
-    fun bg____IsWindowResized_STATIC_ = IsWindowResized : Bool
-    fun bg____IsWindowHidden_STATIC_ = IsWindowHidden : Bool
     fun bg____IsWindowFullscreen_STATIC_ = IsWindowFullscreen : Bool
+    fun bg____IsWindowHidden_STATIC_ = IsWindowHidden : Bool
+    fun bg____IsWindowMinimized_STATIC_ = IsWindowMinimized : Bool
+    fun bg____IsWindowMaximized_STATIC_ = IsWindowMaximized : Bool
+    fun bg____IsWindowFocused_STATIC_ = IsWindowFocused : Bool
+    fun bg____IsWindowResized_STATIC_ = IsWindowResized : Bool
+    fun bg____IsWindowState_STATIC_unsigned_int = IsWindowState(flag : Int32) : Bool
+    fun bg____SetWindowState_STATIC_unsigned_int = SetWindowState(flags : Int32) : Void
+    fun bg____ClearWindowState_STATIC_unsigned_int = ClearWindowState(flags : Int32) : Void
     fun bg____ToggleFullscreen_STATIC_ = ToggleFullscreen : Void
-    fun bg____UnhideWindow_STATIC_ = UnhideWindow : Void
-    fun bg____HideWindow_STATIC_ = HideWindow : Void
+    fun bg____MaximizeWindow_STATIC_ = MaximizeWindow : Void
+    fun bg____MinimizeWindow_STATIC_ = MinimizeWindow : Void
+    fun bg____RestoreWindow_STATIC_ = RestoreWindow : Void
     fun bg____SetWindowIcon_STATIC_Image = SetWindowIcon(image : Image) : Void
     fun bg____SetWindowTitle_STATIC_const_char_X = SetWindowTitle(title : UInt8*) : Void
     fun bg____SetWindowPosition_STATIC_int_int = SetWindowPosition(x : Int32, y : Int32) : Void
@@ -381,19 +387,24 @@ module RayLib
     fun bg____GetScreenWidth_STATIC_ = GetScreenWidth : Int32
     fun bg____GetScreenHeight_STATIC_ = GetScreenHeight : Int32
     fun bg____GetMonitorCount_STATIC_ = GetMonitorCount : Int32
+    fun bg____GetCurrentMonitor_STATIC_ = GetCurrentMonitor : Int32
+    fun bg____GetMonitorPosition_STATIC_int = GetMonitorPosition(monitor : Int32) : Vector2
     fun bg____GetMonitorWidth_STATIC_int = GetMonitorWidth(monitor : Int32) : Int32
     fun bg____GetMonitorHeight_STATIC_int = GetMonitorHeight(monitor : Int32) : Int32
     fun bg____GetMonitorPhysicalWidth_STATIC_int = GetMonitorPhysicalWidth(monitor : Int32) : Int32
     fun bg____GetMonitorPhysicalHeight_STATIC_int = GetMonitorPhysicalHeight(monitor : Int32) : Int32
+    fun bg____GetMonitorRefreshRate_STATIC_int = GetMonitorRefreshRate(monitor : Int32) : Int32
     fun bg____GetWindowPosition_STATIC_ = GetWindowPosition : Vector2
+    fun bg____GetWindowScaleDPI_STATIC_ = GetWindowScaleDPI : Vector2
     fun bg____GetMonitorName_STATIC_int = GetMonitorName(monitor : Int32) : UInt8*
-    fun bg____GetClipboardText_STATIC_ = GetClipboardText : UInt8*
     fun bg____SetClipboardText_STATIC_const_char_X = SetClipboardText(text : UInt8*) : Void
+    fun bg____GetClipboardText_STATIC_ = GetClipboardText : UInt8*
     fun bg____ShowCursor_STATIC_ = ShowCursor : Void
     fun bg____HideCursor_STATIC_ = HideCursor : Void
     fun bg____IsCursorHidden_STATIC_ = IsCursorHidden : Bool
     fun bg____EnableCursor_STATIC_ = EnableCursor : Void
     fun bg____DisableCursor_STATIC_ = DisableCursor : Void
+    fun bg____IsCursorOnScreen_STATIC_ = IsCursorOnScreen : Bool
     fun bg____ClearBackground_STATIC_Color = ClearBackground(color : Color) : Void
     fun bg____BeginDrawing_STATIC_ = BeginDrawing : Void
     fun bg____EndDrawing_STATIC_ = EndDrawing : Void
@@ -401,7 +412,7 @@ module RayLib
     fun bg____EndMode2D_STATIC_ = EndMode2D : Void
     fun bg____BeginMode3D_STATIC_Camera3D = BeginMode3D(camera : Camera3D) : Void
     fun bg____EndMode3D_STATIC_ = EndMode3D : Void
-    fun bg____BeginTextureMode_STATIC_RenderTexture2D = BeginTextureMode(target : RenderTexture2D) : Void
+    fun bg____BeginTextureMode_STATIC_RenderTexture2D = BeginTextureMode(target : RenderTexture) : Void
     fun bg____EndTextureMode_STATIC_ = EndTextureMode : Void
     fun bg____BeginScissorMode_STATIC_int_int_int_int = BeginScissorMode(x : Int32, y : Int32, width : Int32, height : Int32) : Void
     fun bg____EndScissorMode_STATIC_ = EndScissorMode : Void
@@ -416,27 +427,24 @@ module RayLib
     fun bg____GetFPS_STATIC_ = GetFPS : Int32
     fun bg____GetFrameTime_STATIC_ = GetFrameTime : Float32
     fun bg____GetTime_STATIC_ = GetTime : Float64
-    fun bg____ColorToInt_STATIC_Color = ColorToInt(color : Color) : Int32
-    fun bg____ColorNormalize_STATIC_Color = ColorNormalize(color : Color) : Vector4
-    fun bg____ColorFromNormalized_STATIC_Vector4 = ColorFromNormalized(normalized : Vector4) : Color
-    fun bg____ColorToHSV_STATIC_Color = ColorToHSV(color : Color) : Vector3
-    fun bg____ColorFromHSV_STATIC_Vector3 = ColorFromHSV(hsv : Vector3) : Color
-    fun bg____GetColor_STATIC_int = GetColor(hex_value : Int32) : Color
-    fun bg____Fade_STATIC_Color_float = Fade(color : Color, alpha : Float32) : Color
     fun bg____SetConfigFlags_STATIC_unsigned_int = SetConfigFlags(flags : Int32) : Void
     fun bg____SetTraceLogLevel_STATIC_int = SetTraceLogLevel(log_type : Int32) : Void
     fun bg____SetTraceLogExit_STATIC_int = SetTraceLogExit(log_type : Int32) : Void
     fun bg____TraceLog_STATIC_int_const_char_X_ = TraceLog(log_type : Int32, text : UInt8*, ...) : Void
+    fun bg____MemAlloc_STATIC_int = MemAlloc(size : Int32) : Void*
+    fun bg____MemFree_STATIC_void_X = MemFree(ptr : Void*) : Void
     fun bg____TakeScreenshot_STATIC_const_char_X = TakeScreenshot(file_name : UInt8*) : Void
     fun bg____GetRandomValue_STATIC_int_int = GetRandomValue(min : Int32, max : Int32) : Int32
     fun bg____LoadFileData_STATIC_const_char_X_unsigned_int_X = LoadFileData(file_name : UInt8*, bytes_read : Int32*) : UInt8*
-    fun bg____SaveFileData_STATIC_const_char_X_void_X_unsigned_int = SaveFileData(file_name : UInt8*, data : Void*, bytes_to_write : Int32) : Void
+    fun bg____UnloadFileData_STATIC_unsigned_char_X = UnloadFileData(data : UInt8*) : Void
+    fun bg____SaveFileData_STATIC_const_char_X_void_X_unsigned_int = SaveFileData(file_name : UInt8*, data : Void*, bytes_to_write : Int32) : Bool
     fun bg____LoadFileText_STATIC_const_char_X = LoadFileText(file_name : UInt8*) : UInt8*
-    fun bg____SaveFileText_STATIC_const_char_X_char_X = SaveFileText(file_name : UInt8*, text : UInt8*) : Void
+    fun bg____UnloadFileText_STATIC_unsigned_char_X = UnloadFileText(text : UInt8*) : Void
+    fun bg____SaveFileText_STATIC_const_char_X_char_X = SaveFileText(file_name : UInt8*, text : UInt8*) : Bool
     fun bg____FileExists_STATIC_const_char_X = FileExists(file_name : UInt8*) : Bool
-    fun bg____IsFileExtension_STATIC_const_char_X_const_char_X = IsFileExtension(file_name : UInt8*, ext : UInt8*) : Bool
     fun bg____DirectoryExists_STATIC_const_char_X = DirectoryExists(dir_path : UInt8*) : Bool
-    fun bg____GetExtension_STATIC_const_char_X = GetExtension(file_name : UInt8*) : UInt8*
+    fun bg____IsFileExtension_STATIC_const_char_X_const_char_X = IsFileExtension(file_name : UInt8*, ext : UInt8*) : Bool
+    fun bg____GetFileExtension_STATIC_const_char_X = GetFileExtension(file_name : UInt8*) : UInt8*
     fun bg____GetFileName_STATIC_const_char_X = GetFileName(file_path : UInt8*) : UInt8*
     fun bg____GetFileNameWithoutExt_STATIC_const_char_X = GetFileNameWithoutExt(file_path : UInt8*) : UInt8*
     fun bg____GetDirectoryPath_STATIC_const_char_X = GetDirectoryPath(file_path : UInt8*) : UInt8*
@@ -451,7 +459,7 @@ module RayLib
     fun bg____GetFileModTime_STATIC_const_char_X = GetFileModTime(file_name : UInt8*) : LibC::Long
     fun bg____CompressData_STATIC_unsigned_char_X_int_int_X = CompressData(data : UInt8*, data_length : Int32, comp_data_length : Int32*) : UInt8*
     fun bg____DecompressData_STATIC_unsigned_char_X_int_int_X = DecompressData(comp_data : UInt8*, comp_data_length : Int32, data_length : Int32*) : UInt8*
-    fun bg____SaveStorageValue_STATIC_unsigned_int_int = SaveStorageValue(position : Int32, value : Int32) : Void
+    fun bg____SaveStorageValue_STATIC_unsigned_int_int = SaveStorageValue(position : Int32, value : Int32) : Bool
     fun bg____LoadStorageValue_STATIC_unsigned_int = LoadStorageValue(position : Int32) : Int32
     fun bg____OpenURL_STATIC_const_char_X = OpenURL(url : UInt8*) : Void
     fun bg____IsKeyPressed_STATIC_int = IsKeyPressed(key : Int32) : Bool
@@ -460,6 +468,7 @@ module RayLib
     fun bg____IsKeyUp_STATIC_int = IsKeyUp(key : Int32) : Bool
     fun bg____SetExitKey_STATIC_int = SetExitKey(key : Int32) : Void
     fun bg____GetKeyPressed_STATIC_ = GetKeyPressed : Int32
+    fun bg____GetCharPressed_STATIC_ = GetCharPressed : Int32
     fun bg____IsGamepadAvailable_STATIC_int = IsGamepadAvailable(gamepad : Int32) : Bool
     fun bg____IsGamepadName_STATIC_int_const_char_X = IsGamepadName(gamepad : Int32, name : UInt8*) : Bool
     fun bg____GetGamepadName_STATIC_int = GetGamepadName(gamepad : Int32) : UInt8*
@@ -480,7 +489,9 @@ module RayLib
     fun bg____SetMousePosition_STATIC_int_int = SetMousePosition(x : Int32, y : Int32) : Void
     fun bg____SetMouseOffset_STATIC_int_int = SetMouseOffset(offset_x : Int32, offset_y : Int32) : Void
     fun bg____SetMouseScale_STATIC_float_float = SetMouseScale(scale_x : Float32, scale_y : Float32) : Void
-    fun bg____GetMouseWheelMove_STATIC_ = GetMouseWheelMove : Int32
+    fun bg____GetMouseWheelMove_STATIC_ = GetMouseWheelMove : Float32
+    fun bg____GetMouseCursor_STATIC_ = GetMouseCursor : Int32
+    fun bg____SetMouseCursor_STATIC_int = SetMouseCursor(cursor : Int32) : Void
     fun bg____GetTouchX_STATIC_ = GetTouchX : Int32
     fun bg____GetTouchY_STATIC_ = GetTouchY : Int32
     fun bg____GetTouchPosition_STATIC_int = GetTouchPosition(index : Int32) : Vector2
@@ -495,17 +506,18 @@ module RayLib
     fun bg____GetGesturePinchAngle_STATIC_ = GetGesturePinchAngle : Float32
     fun bg____SetCameraMode_STATIC_Camera_int = SetCameraMode(camera : Camera3D, mode : Int32) : Void
     fun bg____UpdateCamera_STATIC_Camera_X = UpdateCamera(camera : Camera3D*) : Void
-    fun bg____SetCameraPanControl_STATIC_int = SetCameraPanControl(pan_key : Int32) : Void
-    fun bg____SetCameraAltControl_STATIC_int = SetCameraAltControl(alt_key : Int32) : Void
-    fun bg____SetCameraSmoothZoomControl_STATIC_int = SetCameraSmoothZoomControl(sz_key : Int32) : Void
-    fun bg____SetCameraMoveControls_STATIC_int_int_int_int_int_int = SetCameraMoveControls(front_key : Int32, back_key : Int32, right_key : Int32, left_key : Int32, up_key : Int32, down_key : Int32) : Void
+    fun bg____SetCameraPanControl_STATIC_int = SetCameraPanControl(key_pan : Int32) : Void
+    fun bg____SetCameraAltControl_STATIC_int = SetCameraAltControl(key_alt : Int32) : Void
+    fun bg____SetCameraSmoothZoomControl_STATIC_int = SetCameraSmoothZoomControl(key_smooth_zoom : Int32) : Void
+    fun bg____SetCameraMoveControls_STATIC_int_int_int_int_int_int = SetCameraMoveControls(key_front : Int32, key_back : Int32, key_right : Int32, key_left : Int32, key_up : Int32, key_down : Int32) : Void
     fun bg____DrawPixel_STATIC_int_int_Color = DrawPixel(pos_x : Int32, pos_y : Int32, color : Color) : Void
     fun bg____DrawPixelV_STATIC_Vector2_Color = DrawPixelV(position : Vector2, color : Color) : Void
     fun bg____DrawLine_STATIC_int_int_int_int_Color = DrawLine(start_pos_x : Int32, start_pos_y : Int32, end_pos_x : Int32, end_pos_y : Int32, color : Color) : Void
     fun bg____DrawLineV_STATIC_Vector2_Vector2_Color = DrawLineV(start_pos : Vector2, end_pos : Vector2, color : Color) : Void
     fun bg____DrawLineEx_STATIC_Vector2_Vector2_float_Color = DrawLineEx(start_pos : Vector2, end_pos : Vector2, thick : Float32, color : Color) : Void
     fun bg____DrawLineBezier_STATIC_Vector2_Vector2_float_Color = DrawLineBezier(start_pos : Vector2, end_pos : Vector2, thick : Float32, color : Color) : Void
-    fun bg____DrawLineStrip_STATIC_Vector2_X_int_Color = DrawLineStrip(points : Vector2*, num_points : Int32, color : Color) : Void
+    fun bg____DrawLineBezierQuad_STATIC_Vector2_Vector2_Vector2_float_Color = DrawLineBezierQuad(start_pos : Vector2, end_pos : Vector2, control_pos : Vector2, thick : Float32, color : Color) : Void
+    fun bg____DrawLineStrip_STATIC_Vector2_X_int_Color = DrawLineStrip(points : Vector2*, points_count : Int32, color : Color) : Void
     fun bg____DrawCircle_STATIC_int_int_float_Color = DrawCircle(center_x : Int32, center_y : Int32, radius : Float32, color : Color) : Void
     fun bg____DrawCircleSector_STATIC_Vector2_float_int_int_int_Color = DrawCircleSector(center : Vector2, radius : Float32, start_angle : Int32, end_angle : Int32, segments : Int32, color : Color) : Void
     fun bg____DrawCircleSectorLines_STATIC_Vector2_float_int_int_int_Color = DrawCircleSectorLines(center : Vector2, radius : Float32, start_angle : Int32, end_angle : Int32, segments : Int32, color : Color) : Void
@@ -529,26 +541,25 @@ module RayLib
     fun bg____DrawRectangleRoundedLines_STATIC_Rectangle_float_int_int_Color = DrawRectangleRoundedLines(rec : Rectangle, roundness : Float32, segments : Int32, line_thick : Int32, color : Color) : Void
     fun bg____DrawTriangle_STATIC_Vector2_Vector2_Vector2_Color = DrawTriangle(v1 : Vector2, v2 : Vector2, v3 : Vector2, color : Color) : Void
     fun bg____DrawTriangleLines_STATIC_Vector2_Vector2_Vector2_Color = DrawTriangleLines(v1 : Vector2, v2 : Vector2, v3 : Vector2, color : Color) : Void
-    fun bg____DrawTriangleFan_STATIC_Vector2_X_int_Color = DrawTriangleFan(points : Vector2*, num_points : Int32, color : Color) : Void
+    fun bg____DrawTriangleFan_STATIC_Vector2_X_int_Color = DrawTriangleFan(points : Vector2*, points_count : Int32, color : Color) : Void
     fun bg____DrawTriangleStrip_STATIC_Vector2_X_int_Color = DrawTriangleStrip(points : Vector2*, points_count : Int32, color : Color) : Void
     fun bg____DrawPoly_STATIC_Vector2_int_float_float_Color = DrawPoly(center : Vector2, sides : Int32, radius : Float32, rotation : Float32, color : Color) : Void
     fun bg____DrawPolyLines_STATIC_Vector2_int_float_float_Color = DrawPolyLines(center : Vector2, sides : Int32, radius : Float32, rotation : Float32, color : Color) : Void
     fun bg____CheckCollisionRecs_STATIC_Rectangle_Rectangle = CheckCollisionRecs(rec1 : Rectangle, rec2 : Rectangle) : Bool
     fun bg____CheckCollisionCircles_STATIC_Vector2_float_Vector2_float = CheckCollisionCircles(center1 : Vector2, radius1 : Float32, center2 : Vector2, radius2 : Float32) : Bool
     fun bg____CheckCollisionCircleRec_STATIC_Vector2_float_Rectangle = CheckCollisionCircleRec(center : Vector2, radius : Float32, rec : Rectangle) : Bool
-    fun bg____GetCollisionRec_STATIC_Rectangle_Rectangle = GetCollisionRec(rec1 : Rectangle, rec2 : Rectangle) : Rectangle
     fun bg____CheckCollisionPointRec_STATIC_Vector2_Rectangle = CheckCollisionPointRec(point : Vector2, rec : Rectangle) : Bool
     fun bg____CheckCollisionPointCircle_STATIC_Vector2_Vector2_float = CheckCollisionPointCircle(point : Vector2, center : Vector2, radius : Float32) : Bool
     fun bg____CheckCollisionPointTriangle_STATIC_Vector2_Vector2_Vector2_Vector2 = CheckCollisionPointTriangle(point : Vector2, p1 : Vector2, p2 : Vector2, p3 : Vector2) : Bool
+    fun bg____CheckCollisionLines_STATIC_Vector2_Vector2_Vector2_Vector2_Vector2_X = CheckCollisionLines(start_pos1 : Vector2, end_pos1 : Vector2, start_pos2 : Vector2, end_pos2 : Vector2, collision_point : Vector2*) : Bool
+    fun bg____GetCollisionRec_STATIC_Rectangle_Rectangle = GetCollisionRec(rec1 : Rectangle, rec2 : Rectangle) : Rectangle
     fun bg____LoadImage_STATIC_const_char_X = LoadImage(file_name : UInt8*) : Image
-    fun bg____LoadImageEx_STATIC_Color_X_int_int = LoadImageEx(pixels : Color*, width : Int32, height : Int32) : Image
-    fun bg____LoadImagePro_STATIC_void_X_int_int_int = LoadImagePro(data : Void*, width : Int32, height : Int32, format : Int32) : Image
     fun bg____LoadImageRaw_STATIC_const_char_X_int_int_int_int = LoadImageRaw(file_name : UInt8*, width : Int32, height : Int32, format : Int32, header_size : Int32) : Image
+    fun bg____LoadImageAnim_STATIC_const_char_X_int_X = LoadImageAnim(file_name : UInt8*, frames : Int32*) : Image
+    fun bg____LoadImageFromMemory_STATIC_const_char_X_const_unsigned_char_X_int = LoadImageFromMemory(file_type : UInt8*, file_data : UInt8*, data_size : Int32) : Image
     fun bg____UnloadImage_STATIC_Image = UnloadImage(image : Image) : Void
-    fun bg____ExportImage_STATIC_Image_const_char_X = ExportImage(image : Image, file_name : UInt8*) : Void
-    fun bg____ExportImageAsCode_STATIC_Image_const_char_X = ExportImageAsCode(image : Image, file_name : UInt8*) : Void
-    fun bg____GetImageData_STATIC_Image = GetImageData(image : Image) : Color*
-    fun bg____GetImageDataNormalized_STATIC_Image = GetImageDataNormalized(image : Image) : Vector4*
+    fun bg____ExportImage_STATIC_Image_const_char_X = ExportImage(image : Image, file_name : UInt8*) : Bool
+    fun bg____ExportImageAsCode_STATIC_Image_const_char_X = ExportImageAsCode(image : Image, file_name : UInt8*) : Bool
     fun bg____GenImageColor_STATIC_int_int_Color = GenImageColor(width : Int32, height : Int32, color : Color) : Image
     fun bg____GenImageGradientV_STATIC_int_int_Color_Color = GenImageGradientV(width : Int32, height : Int32, top : Color, bottom : Color) : Image
     fun bg____GenImageGradientH_STATIC_int_int_Color_Color = GenImageGradientH(width : Int32, height : Int32, left : Color, right : Color) : Image
@@ -561,16 +572,16 @@ module RayLib
     fun bg____ImageFromImage_STATIC_Image_Rectangle = ImageFromImage(image : Image, rec : Rectangle) : Image
     fun bg____ImageText_STATIC_const_char_X_int_Color = ImageText(text : UInt8*, font_size : Int32, color : Color) : Image
     fun bg____ImageTextEx_STATIC_Font_const_char_X_float_float_Color = ImageTextEx(font : Font, text : UInt8*, font_size : Float32, spacing : Float32, tint : Color) : Image
-    fun bg____ImageToPOT_STATIC_Image_X_Color = ImageToPOT(image : Image*, fill_color : Color) : Void
     fun bg____ImageFormat_STATIC_Image_X_int = ImageFormat(image : Image*, new_format : Int32) : Void
-    fun bg____ImageAlphaMask_STATIC_Image_X_Image = ImageAlphaMask(image : Image*, alpha_mask : Image) : Void
-    fun bg____ImageAlphaClear_STATIC_Image_X_Color_float = ImageAlphaClear(image : Image*, color : Color, threshold : Float32) : Void
-    fun bg____ImageAlphaCrop_STATIC_Image_X_float = ImageAlphaCrop(image : Image*, threshold : Float32) : Void
-    fun bg____ImageAlphaPremultiply_STATIC_Image_X = ImageAlphaPremultiply(image : Image*) : Void
+    fun bg____ImageToPOT_STATIC_Image_X_Color = ImageToPOT(image : Image*, fill : Color) : Void
     fun bg____ImageCrop_STATIC_Image_X_Rectangle = ImageCrop(image : Image*, crop : Rectangle) : Void
+    fun bg____ImageAlphaCrop_STATIC_Image_X_float = ImageAlphaCrop(image : Image*, threshold : Float32) : Void
+    fun bg____ImageAlphaClear_STATIC_Image_X_Color_float = ImageAlphaClear(image : Image*, color : Color, threshold : Float32) : Void
+    fun bg____ImageAlphaMask_STATIC_Image_X_Image = ImageAlphaMask(image : Image*, alpha_mask : Image) : Void
+    fun bg____ImageAlphaPremultiply_STATIC_Image_X = ImageAlphaPremultiply(image : Image*) : Void
     fun bg____ImageResize_STATIC_Image_X_int_int = ImageResize(image : Image*, new_width : Int32, new_height : Int32) : Void
     fun bg____ImageResizeNN_STATIC_Image_X_int_int = ImageResizeNN(image : Image*, new_width : Int32, new_height : Int32) : Void
-    fun bg____ImageResizeCanvas_STATIC_Image_X_int_int_int_int_Color = ImageResizeCanvas(image : Image*, new_width : Int32, new_height : Int32, offset_x : Int32, offset_y : Int32, color : Color) : Void
+    fun bg____ImageResizeCanvas_STATIC_Image_X_int_int_int_int_Color = ImageResizeCanvas(image : Image*, new_width : Int32, new_height : Int32, offset_x : Int32, offset_y : Int32, fill : Color) : Void
     fun bg____ImageMipmaps_STATIC_Image_X = ImageMipmaps(image : Image*) : Void
     fun bg____ImageDither_STATIC_Image_X_int_int_int_int = ImageDither(image : Image*, r_bpp : Int32, g_bpp : Int32, b_bpp : Int32, a_bpp : Int32) : Void
     fun bg____ImageFlipVertical_STATIC_Image_X = ImageFlipVertical(image : Image*) : Void
@@ -583,7 +594,10 @@ module RayLib
     fun bg____ImageColorContrast_STATIC_Image_X_float = ImageColorContrast(image : Image*, contrast : Float32) : Void
     fun bg____ImageColorBrightness_STATIC_Image_X_int = ImageColorBrightness(image : Image*, brightness : Int32) : Void
     fun bg____ImageColorReplace_STATIC_Image_X_Color_Color = ImageColorReplace(image : Image*, color : Color, replace : Color) : Void
-    fun bg____ImageExtractPalette_STATIC_Image_int_int_X = ImageExtractPalette(image : Image, max_palette_size : Int32, extract_count : Int32*) : Color*
+    fun bg____LoadImageColors_STATIC_Image = LoadImageColors(image : Image) : Color*
+    fun bg____LoadImagePalette_STATIC_Image_int_int_X = LoadImagePalette(image : Image, max_palette_size : Int32, colors_count : Int32*) : Color*
+    fun bg____UnloadImageColors_STATIC_Color_X = UnloadImageColors(colors : Color*) : Void
+    fun bg____UnloadImagePalette_STATIC_Color_X = UnloadImagePalette(colors : Color*) : Void
     fun bg____GetImageAlphaBorder_STATIC_Image_float = GetImageAlphaBorder(image : Image, threshold : Float32) : Rectangle
     fun bg____ImageClearBackground_STATIC_Image_X_Color = ImageClearBackground(dst : Image*, color : Color) : Void
     fun bg____ImageDrawPixel_STATIC_Image_X_int_int_Color = ImageDrawPixel(dst : Image*, pos_x : Int32, pos_y : Int32, color : Color) : Void
@@ -597,15 +611,16 @@ module RayLib
     fun bg____ImageDrawRectangleRec_STATIC_Image_X_Rectangle_Color = ImageDrawRectangleRec(dst : Image*, rec : Rectangle, color : Color) : Void
     fun bg____ImageDrawRectangleLines_STATIC_Image_X_Rectangle_int_Color = ImageDrawRectangleLines(dst : Image*, rec : Rectangle, thick : Int32, color : Color) : Void
     fun bg____ImageDraw_STATIC_Image_X_Image_Rectangle_Rectangle_Color = ImageDraw(dst : Image*, src : Image, src_rec : Rectangle, dst_rec : Rectangle, tint : Color) : Void
-    fun bg____ImageDrawText_STATIC_Image_X_Vector2_const_char_X_int_Color = ImageDrawText(dst : Image*, position : Vector2, text : UInt8*, font_size : Int32, color : Color) : Void
-    fun bg____ImageDrawTextEx_STATIC_Image_X_Vector2_Font_const_char_X_float_float_Color = ImageDrawTextEx(dst : Image*, position : Vector2, font : Font, text : UInt8*, font_size : Float32, spacing : Float32, color : Color) : Void
+    fun bg____ImageDrawText_STATIC_Image_X_const_char_X_int_int_int_Color = ImageDrawText(dst : Image*, text : UInt8*, pos_x : Int32, pos_y : Int32, font_size : Int32, color : Color) : Void
+    fun bg____ImageDrawTextEx_STATIC_Image_X_Font_const_char_X_Vector2_float_float_Color = ImageDrawTextEx(dst : Image*, font : Font, text : UInt8*, position : Vector2, font_size : Float32, spacing : Float32, tint : Color) : Void
     fun bg____LoadTexture_STATIC_const_char_X = LoadTexture(file_name : UInt8*) : Texture2D
     fun bg____LoadTextureFromImage_STATIC_Image = LoadTextureFromImage(image : Image) : Texture2D
     fun bg____LoadTextureCubemap_STATIC_Image_int(image : Image, layout_type : Int32) : TextureCubemap*
-    fun bg____LoadRenderTexture_STATIC_int_int = LoadRenderTexture(width : Int32, height : Int32) : RenderTexture2D
+    fun bg____LoadRenderTexture_STATIC_int_int = LoadRenderTexture(width : Int32, height : Int32) : RenderTexture
     fun bg____UnloadTexture_STATIC_Texture2D = UnloadTexture(texture : Texture2D) : Void
-    fun bg____UnloadRenderTexture_STATIC_RenderTexture2D = UnloadRenderTexture(target : RenderTexture2D) : Void
+    fun bg____UnloadRenderTexture_STATIC_RenderTexture2D = UnloadRenderTexture(target : RenderTexture) : Void
     fun bg____UpdateTexture_STATIC_Texture2D_const_void_X = UpdateTexture(texture : Texture2D, pixels : Void*) : Void
+    fun bg____UpdateTextureRec_STATIC_Texture2D_Rectangle_const_void_X = UpdateTextureRec(texture : Texture2D, rec : Rectangle, pixels : Void*) : Void
     fun bg____GetTextureData_STATIC_Texture2D = GetTextureData(texture : Texture2D) : Image
     fun bg____GetScreenData_STATIC_ = GetScreenData : Image
     fun bg____GenTextureMipmaps_STATIC_Texture2D_X = GenTextureMipmaps(texture : Texture2D*) : Void
@@ -614,24 +629,38 @@ module RayLib
     fun bg____DrawTexture_STATIC_Texture2D_int_int_Color = DrawTexture(texture : Texture2D, pos_x : Int32, pos_y : Int32, tint : Color) : Void
     fun bg____DrawTextureV_STATIC_Texture2D_Vector2_Color = DrawTextureV(texture : Texture2D, position : Vector2, tint : Color) : Void
     fun bg____DrawTextureEx_STATIC_Texture2D_Vector2_float_float_Color = DrawTextureEx(texture : Texture2D, position : Vector2, rotation : Float32, scale : Float32, tint : Color) : Void
-    fun bg____DrawTextureRec_STATIC_Texture2D_Rectangle_Vector2_Color = DrawTextureRec(texture : Texture2D, source_rec : Rectangle, position : Vector2, tint : Color) : Void
+    fun bg____DrawTextureRec_STATIC_Texture2D_Rectangle_Vector2_Color = DrawTextureRec(texture : Texture2D, source : Rectangle, position : Vector2, tint : Color) : Void
     fun bg____DrawTextureQuad_STATIC_Texture2D_Vector2_Vector2_Rectangle_Color = DrawTextureQuad(texture : Texture2D, tiling : Vector2, offset : Vector2, quad : Rectangle, tint : Color) : Void
-    fun bg____DrawTexturePro_STATIC_Texture2D_Rectangle_Rectangle_Vector2_float_Color = DrawTexturePro(texture : Texture2D, source_rec : Rectangle, dest_rec : Rectangle, origin : Vector2, rotation : Float32, tint : Color) : Void
-    fun bg____DrawTextureNPatch_STATIC_Texture2D_NPatchInfo_Rectangle_Vector2_float_Color = DrawTextureNPatch(texture : Texture2D, n_patch_info : NPatchInfo, dest_rec : Rectangle, origin : Vector2, rotation : Float32, tint : Color) : Void
+    fun bg____DrawTextureTiled_STATIC_Texture2D_Rectangle_Rectangle_Vector2_float_float_Color = DrawTextureTiled(texture : Texture2D, source : Rectangle, dest : Rectangle, origin : Vector2, rotation : Float32, scale : Float32, tint : Color) : Void
+    fun bg____DrawTexturePro_STATIC_Texture2D_Rectangle_Rectangle_Vector2_float_Color = DrawTexturePro(texture : Texture2D, source : Rectangle, dest : Rectangle, origin : Vector2, rotation : Float32, tint : Color) : Void
+    fun bg____DrawTextureNPatch_STATIC_Texture2D_NPatchInfo_Rectangle_Vector2_float_Color = DrawTextureNPatch(texture : Texture2D, n_patch_info : NPatchInfo, dest : Rectangle, origin : Vector2, rotation : Float32, tint : Color) : Void
+    fun bg____Fade_STATIC_Color_float = Fade(color : Color, alpha : Float32) : Color
+    fun bg____ColorToInt_STATIC_Color = ColorToInt(color : Color) : Int32
+    fun bg____ColorNormalize_STATIC_Color = ColorNormalize(color : Color) : Vector4
+    fun bg____ColorFromNormalized_STATIC_Vector4 = ColorFromNormalized(normalized : Vector4) : Color
+    fun bg____ColorToHSV_STATIC_Color = ColorToHSV(color : Color) : Vector3
+    fun bg____ColorFromHSV_STATIC_float_float_float = ColorFromHSV(hue : Float32, saturation : Float32, value : Float32) : Color
+    fun bg____ColorAlpha_STATIC_Color_float = ColorAlpha(color : Color, alpha : Float32) : Color
+    fun bg____ColorAlphaBlend_STATIC_Color_Color_Color = ColorAlphaBlend(dst : Color, src : Color, tint : Color) : Color
+    fun bg____GetColor_STATIC_int = GetColor(hex_value : Int32) : Color
+    fun bg____GetPixelColor_STATIC_void_X_int = GetPixelColor(src_ptr : Void*, format : Int32) : Color
+    fun bg____SetPixelColor_STATIC_void_X_Color_int = SetPixelColor(dst_ptr : Void*, color : Color, format : Int32) : Void
     fun bg____GetPixelDataSize_STATIC_int_int_int = GetPixelDataSize(width : Int32, height : Int32, format : Int32) : Int32
     fun bg____GetFontDefault_STATIC_ = GetFontDefault : Font
     fun bg____LoadFont_STATIC_const_char_X = LoadFont(file_name : UInt8*) : Font
     fun bg____LoadFontEx_STATIC_const_char_X_int_int_X_int = LoadFontEx(file_name : UInt8*, font_size : Int32, font_chars : Int32*, chars_count : Int32) : Font
     fun bg____LoadFontFromImage_STATIC_Image_Color_int = LoadFontFromImage(image : Image, key : Color, first_char : Int32) : Font
-    fun bg____LoadFontData_STATIC_const_char_X_int_int_X_int_int = LoadFontData(file_name : UInt8*, font_size : Int32, font_chars : Int32*, chars_count : Int32, type : Int32) : CharInfo*
+    fun bg____LoadFontFromMemory_STATIC_const_char_X_const_unsigned_char_X_int_int_int_X_int = LoadFontFromMemory(file_type : UInt8*, file_data : UInt8*, data_size : Int32, font_size : Int32, font_chars : Int32*, chars_count : Int32) : Font
+    fun bg____LoadFontData_STATIC_const_unsigned_char_X_int_int_int_X_int_int = LoadFontData(file_data : UInt8*, data_size : Int32, font_size : Int32, font_chars : Int32*, chars_count : Int32, type : Int32) : CharInfo*
     fun bg____GenImageFontAtlas_STATIC_const_CharInfo_X_Rectangle_XX_int_int_int_int = GenImageFontAtlas(chars : CharInfo*, recs : Rectangle**, chars_count : Int32, font_size : Int32, padding : Int32, pack_method : Int32) : Image
+    fun bg____UnloadFontData_STATIC_CharInfo_X_int = UnloadFontData(chars : CharInfo*, chars_count : Int32) : Void
     fun bg____UnloadFont_STATIC_Font = UnloadFont(font : Font) : Void
     fun bg____DrawFPS_STATIC_int_int = DrawFPS(pos_x : Int32, pos_y : Int32) : Void
     fun bg____DrawText_STATIC_const_char_X_int_int_int_Color = DrawText(text : UInt8*, pos_x : Int32, pos_y : Int32, font_size : Int32, color : Color) : Void
     fun bg____DrawTextEx_STATIC_Font_const_char_X_Vector2_float_float_Color = DrawTextEx(font : Font, text : UInt8*, position : Vector2, font_size : Float32, spacing : Float32, tint : Color) : Void
     fun bg____DrawTextRec_STATIC_Font_const_char_X_Rectangle_float_float_bool_Color = DrawTextRec(font : Font, text : UInt8*, rec : Rectangle, font_size : Float32, spacing : Float32, word_wrap : Bool, tint : Color) : Void
     fun bg____DrawTextRecEx_STATIC_Font_const_char_X_Rectangle_float_float_bool_Color_int_int_Color_Color = DrawTextRecEx(font : Font, text : UInt8*, rec : Rectangle, font_size : Float32, spacing : Float32, word_wrap : Bool, tint : Color, select_start : Int32, select_length : Int32, select_tint : Color, select_back_tint : Color) : Void
-    fun bg____DrawTextCodepoint_STATIC_Font_int_Vector2_float_Color = DrawTextCodepoint(font : Font, codepoint : Int32, position : Vector2, scale : Float32, tint : Color) : Void
+    fun bg____DrawTextCodepoint_STATIC_Font_int_Vector2_float_Color = DrawTextCodepoint(font : Font, codepoint : Int32, position : Vector2, font_size : Float32, tint : Color) : Void
     fun bg____MeasureText_STATIC_const_char_X_int = MeasureText(text : UInt8*, font_size : Int32) : Int32
     fun bg____MeasureTextEx_STATIC_Font_const_char_X_float_float = MeasureTextEx(font : Font, text : UInt8*, font_size : Float32, spacing : Float32) : Vector2
     fun bg____GetGlyphIndex_STATIC_Font_int = GetGlyphIndex(font : Font, codepoint : Int32) : Int32
@@ -658,6 +687,8 @@ module RayLib
     fun bg____DrawLine3D_STATIC_Vector3_Vector3_Color = DrawLine3D(start_pos : Vector3, end_pos : Vector3, color : Color) : Void
     fun bg____DrawPoint3D_STATIC_Vector3_Color = DrawPoint3D(position : Vector3, color : Color) : Void
     fun bg____DrawCircle3D_STATIC_Vector3_float_Vector3_float_Color = DrawCircle3D(center : Vector3, radius : Float32, rotation_axis : Vector3, rotation_angle : Float32, color : Color) : Void
+    fun bg____DrawTriangle3D_STATIC_Vector3_Vector3_Vector3_Color = DrawTriangle3D(v1 : Vector3, v2 : Vector3, v3 : Vector3, color : Color) : Void
+    fun bg____DrawTriangleStrip3D_STATIC_Vector3_X_int_Color = DrawTriangleStrip3D(points : Vector3*, points_count : Int32, color : Color) : Void
     fun bg____DrawCube_STATIC_Vector3_float_float_float_Color = DrawCube(position : Vector3, width : Float32, height : Float32, length : Float32, color : Color) : Void
     fun bg____DrawCubeV_STATIC_Vector3_Vector3_Color = DrawCubeV(position : Vector3, size : Vector3, color : Color) : Void
     fun bg____DrawCubeWires_STATIC_Vector3_float_float_float_Color = DrawCubeWires(position : Vector3, width : Float32, height : Float32, length : Float32, color : Color) : Void
@@ -675,9 +706,10 @@ module RayLib
     fun bg____LoadModel_STATIC_const_char_X = LoadModel(file_name : UInt8*) : Model
     fun bg____LoadModelFromMesh_STATIC_Mesh = LoadModelFromMesh(mesh : Mesh) : Model
     fun bg____UnloadModel_STATIC_Model = UnloadModel(model : Model) : Void
+    fun bg____UnloadModelKeepMeshes_STATIC_Model = UnloadModelKeepMeshes(model : Model) : Void
     fun bg____LoadMeshes_STATIC_const_char_X_int_X = LoadMeshes(file_name : UInt8*, mesh_count : Int32*) : Mesh*
-    fun bg____ExportMesh_STATIC_Mesh_const_char_X = ExportMesh(mesh : Mesh, file_name : UInt8*) : Void
     fun bg____UnloadMesh_STATIC_Mesh = UnloadMesh(mesh : Mesh) : Void
+    fun bg____ExportMesh_STATIC_Mesh_const_char_X = ExportMesh(mesh : Mesh, file_name : UInt8*) : Bool
     fun bg____LoadMaterials_STATIC_const_char_X_int_X = LoadMaterials(file_name : UInt8*, material_count : Int32*) : Material*
     fun bg____LoadMaterialDefault_STATIC_ = LoadMaterialDefault : Material
     fun bg____UnloadMaterial_STATIC_Material = UnloadMaterial(material : Material) : Void
@@ -700,19 +732,21 @@ module RayLib
     fun bg____MeshBoundingBox_STATIC_Mesh = MeshBoundingBox(mesh : Mesh) : BoundingBox
     fun bg____MeshTangents_STATIC_Mesh_X = MeshTangents(mesh : Mesh*) : Void
     fun bg____MeshBinormals_STATIC_Mesh_X = MeshBinormals(mesh : Mesh*) : Void
+    fun bg____MeshNormalsSmooth_STATIC_Mesh_X = MeshNormalsSmooth(mesh : Mesh*) : Void
     fun bg____DrawModel_STATIC_Model_Vector3_float_Color = DrawModel(model : Model, position : Vector3, scale : Float32, tint : Color) : Void
     fun bg____DrawModelEx_STATIC_Model_Vector3_Vector3_float_Vector3_Color = DrawModelEx(model : Model, position : Vector3, rotation_axis : Vector3, rotation_angle : Float32, scale : Vector3, tint : Color) : Void
     fun bg____DrawModelWires_STATIC_Model_Vector3_float_Color = DrawModelWires(model : Model, position : Vector3, scale : Float32, tint : Color) : Void
     fun bg____DrawModelWiresEx_STATIC_Model_Vector3_Vector3_float_Vector3_Color = DrawModelWiresEx(model : Model, position : Vector3, rotation_axis : Vector3, rotation_angle : Float32, scale : Vector3, tint : Color) : Void
     fun bg____DrawBoundingBox_STATIC_BoundingBox_Color = DrawBoundingBox(box : BoundingBox, color : Color) : Void
     fun bg____DrawBillboard_STATIC_Camera_Texture2D_Vector3_float_Color = DrawBillboard(camera : Camera3D, texture : Texture2D, center : Vector3, size : Float32, tint : Color) : Void
-    fun bg____DrawBillboardRec_STATIC_Camera_Texture2D_Rectangle_Vector3_float_Color = DrawBillboardRec(camera : Camera3D, texture : Texture2D, source_rec : Rectangle, center : Vector3, size : Float32, tint : Color) : Void
-    fun bg____CheckCollisionSpheres_STATIC_Vector3_float_Vector3_float = CheckCollisionSpheres(center_a : Vector3, radius_a : Float32, center_b : Vector3, radius_b : Float32) : Bool
+    fun bg____DrawBillboardRec_STATIC_Camera_Texture2D_Rectangle_Vector3_float_Color = DrawBillboardRec(camera : Camera3D, texture : Texture2D, source : Rectangle, center : Vector3, size : Float32, tint : Color) : Void
+    fun bg____CheckCollisionSpheres_STATIC_Vector3_float_Vector3_float = CheckCollisionSpheres(center1 : Vector3, radius1 : Float32, center2 : Vector3, radius2 : Float32) : Bool
     fun bg____CheckCollisionBoxes_STATIC_BoundingBox_BoundingBox = CheckCollisionBoxes(box1 : BoundingBox, box2 : BoundingBox) : Bool
     fun bg____CheckCollisionBoxSphere_STATIC_BoundingBox_Vector3_float = CheckCollisionBoxSphere(box : BoundingBox, center : Vector3, radius : Float32) : Bool
     fun bg____CheckCollisionRaySphere_STATIC_Ray_Vector3_float = CheckCollisionRaySphere(ray : Ray, center : Vector3, radius : Float32) : Bool
     fun bg____CheckCollisionRaySphereEx_STATIC_Ray_Vector3_float_Vector3_X = CheckCollisionRaySphereEx(ray : Ray, center : Vector3, radius : Float32, collision_point : Vector3*) : Bool
     fun bg____CheckCollisionRayBox_STATIC_Ray_BoundingBox = CheckCollisionRayBox(ray : Ray, box : BoundingBox) : Bool
+    fun bg____GetCollisionRayMesh_STATIC_Ray_Mesh_Matrix = GetCollisionRayMesh(ray : Ray, mesh : Mesh, transform : Matrix) : RayHitInfo
     fun bg____GetCollisionRayModel_STATIC_Ray_Model = GetCollisionRayModel(ray : Ray, model : Model) : RayHitInfo
     fun bg____GetCollisionRayTriangle_STATIC_Ray_Vector3_Vector3_Vector3 = GetCollisionRayTriangle(ray : Ray, p1 : Vector3, p2 : Vector3, p3 : Vector3) : RayHitInfo
     fun bg____GetCollisionRayGround_STATIC_Ray_float = GetCollisionRayGround(ray : Ray, ground_height : Float32) : RayHitInfo
@@ -725,6 +759,7 @@ module RayLib
     fun bg____GetShapesTextureRec_STATIC_ = GetShapesTextureRec : Rectangle
     fun bg____SetShapesTexture_STATIC_Texture2D_Rectangle = SetShapesTexture(texture : Texture2D, source : Rectangle) : Void
     fun bg____GetShaderLocation_STATIC_Shader_const_char_X = GetShaderLocation(shader : Shader, uniform_name : UInt8*) : Int32
+    fun bg____GetShaderLocationAttrib_STATIC_Shader_const_char_X = GetShaderLocationAttrib(shader : Shader, attrib_name : UInt8*) : Int32
     fun bg____SetShaderValue_STATIC_Shader_int_const_void_X_int = SetShaderValue(shader : Shader, uniform_loc : Int32, value : Void*, uniform_type : Int32) : Void
     fun bg____SetShaderValueV_STATIC_Shader_int_const_void_X_int_int = SetShaderValueV(shader : Shader, uniform_loc : Int32, value : Void*, uniform_type : Int32, count : Int32) : Void
     fun bg____SetShaderValueMatrix_STATIC_Shader_int_Matrix = SetShaderValueMatrix(shader : Shader, uniform_loc : Int32, mat : Matrix) : Void
@@ -733,9 +768,9 @@ module RayLib
     fun bg____SetMatrixModelview_STATIC_Matrix = SetMatrixModelview(view : Matrix) : Void
     fun bg____GetMatrixModelview_STATIC_ = GetMatrixModelview : Matrix
     fun bg____GetMatrixProjection_STATIC_ = GetMatrixProjection : Matrix
-    fun bg____GenTextureCubemap_STATIC_Shader_Texture2D_int = GenTextureCubemap(shader : Shader, map : Texture2D, size : Int32) : Texture2D
-    fun bg____GenTextureIrradiance_STATIC_Shader_Texture2D_int = GenTextureIrradiance(shader : Shader, cubemap : Texture2D, size : Int32) : Texture2D
-    fun bg____GenTexturePrefilter_STATIC_Shader_Texture2D_int = GenTexturePrefilter(shader : Shader, cubemap : Texture2D, size : Int32) : Texture2D
+    fun bg____GenTextureCubemap_STATIC_Shader_Texture2D_int_int(shader : Shader, panorama : Texture2D, size : Int32, format : Int32) : TextureCubemap*
+    fun bg____GenTextureIrradiance_STATIC_Shader_TextureCubemap_int(shader : Shader, cubemap : TextureCubemap*, size : Int32) : TextureCubemap*
+    fun bg____GenTexturePrefilter_STATIC_Shader_TextureCubemap_int(shader : Shader, cubemap : TextureCubemap*, size : Int32) : TextureCubemap*
     fun bg____GenTextureBRDF_STATIC_Shader_int = GenTextureBRDF(shader : Shader, size : Int32) : Texture2D
     fun bg____BeginShaderMode_STATIC_Shader = BeginShaderMode(shader : Shader) : Void
     fun bg____EndShaderMode_STATIC_ = EndShaderMode : Void
@@ -754,13 +789,14 @@ module RayLib
     fun bg____IsAudioDeviceReady_STATIC_ = IsAudioDeviceReady : Bool
     fun bg____SetMasterVolume_STATIC_float = SetMasterVolume(volume : Float32) : Void
     fun bg____LoadWave_STATIC_const_char_X = LoadWave(file_name : UInt8*) : Wave
+    fun bg____LoadWaveFromMemory_STATIC_const_char_X_const_unsigned_char_X_int = LoadWaveFromMemory(file_type : UInt8*, file_data : UInt8*, data_size : Int32) : Wave
     fun bg____LoadSound_STATIC_const_char_X = LoadSound(file_name : UInt8*) : Sound
     fun bg____LoadSoundFromWave_STATIC_Wave = LoadSoundFromWave(wave : Wave) : Sound
     fun bg____UpdateSound_STATIC_Sound_const_void_X_int = UpdateSound(sound : Sound, data : Void*, samples_count : Int32) : Void
     fun bg____UnloadWave_STATIC_Wave = UnloadWave(wave : Wave) : Void
     fun bg____UnloadSound_STATIC_Sound = UnloadSound(sound : Sound) : Void
-    fun bg____ExportWave_STATIC_Wave_const_char_X = ExportWave(wave : Wave, file_name : UInt8*) : Void
-    fun bg____ExportWaveAsCode_STATIC_Wave_const_char_X = ExportWaveAsCode(wave : Wave, file_name : UInt8*) : Void
+    fun bg____ExportWave_STATIC_Wave_const_char_X = ExportWave(wave : Wave, file_name : UInt8*) : Bool
+    fun bg____ExportWaveAsCode_STATIC_Wave_const_char_X = ExportWaveAsCode(wave : Wave, file_name : UInt8*) : Bool
     fun bg____PlaySound_STATIC_Sound = PlaySound(sound : Sound) : Void
     fun bg____StopSound_STATIC_Sound = StopSound(sound : Sound) : Void
     fun bg____PauseSound_STATIC_Sound = PauseSound(sound : Sound) : Void
@@ -774,7 +810,8 @@ module RayLib
     fun bg____WaveFormat_STATIC_Wave_X_int_int_int = WaveFormat(wave : Wave*, sample_rate : Int32, sample_size : Int32, channels : Int32) : Void
     fun bg____WaveCopy_STATIC_Wave = WaveCopy(wave : Wave) : Wave
     fun bg____WaveCrop_STATIC_Wave_X_int_int = WaveCrop(wave : Wave*, init_sample : Int32, final_sample : Int32) : Void
-    fun bg____GetWaveData_STATIC_Wave = GetWaveData(wave : Wave) : Float32*
+    fun bg____LoadWaveSamples_STATIC_Wave = LoadWaveSamples(wave : Wave) : Float32*
+    fun bg____UnloadWaveSamples_STATIC_float_X = UnloadWaveSamples(samples : Float32*) : Void
     fun bg____LoadMusicStream_STATIC_const_char_X(file_name : UInt8*) : Music*
     fun bg____UnloadMusicStream_STATIC_Music = UnloadMusicStream(music : Music*) : Void
     fun bg____PlayMusicStream_STATIC_Music = PlayMusicStream(music : Music*) : Void
@@ -785,7 +822,6 @@ module RayLib
     fun bg____IsMusicPlaying_STATIC_Music = IsMusicPlaying(music : Music*) : Bool
     fun bg____SetMusicVolume_STATIC_Music_float = SetMusicVolume(music : Music*, volume : Float32) : Void
     fun bg____SetMusicPitch_STATIC_Music_float = SetMusicPitch(music : Music*, pitch : Float32) : Void
-    fun bg____SetMusicLoopCount_STATIC_Music_int = SetMusicLoopCount(music : Music*, count : Int32) : Void
     fun bg____GetMusicTimeLength_STATIC_Music = GetMusicTimeLength(music : Music*) : Float32
     fun bg____GetMusicTimePlayed_STATIC_Music = GetMusicTimePlayed(music : Music*) : Float32
     fun bg____InitAudioStream_STATIC_unsigned_int_unsigned_int_unsigned_int = InitAudioStream(sample_rate : Int32, sample_size : Int32, channels : Int32) : AudioStream
@@ -802,27 +838,25 @@ module RayLib
     fun bg____SetAudioStreamBufferSizeDefault_STATIC_int = SetAudioStreamBufferSizeDefault(size : Int32) : Void
   end
 
-  MAX_TOUCH_POINTS = 10
-
   module Camera
     def self.mode(camera : Camera3D, mode : Int32) : Void
       Binding.bg____SetCameraMode_STATIC_Camera_int(camera, mode)
     end
 
-    def self.pan_control(pan_key : Int32) : Void
-      Binding.bg____SetCameraPanControl_STATIC_int(pan_key)
+    def self.pan_control(key_pan : Int32) : Void
+      Binding.bg____SetCameraPanControl_STATIC_int(key_pan)
     end
 
-    def self.alt_control(alt_key : Int32) : Void
-      Binding.bg____SetCameraAltControl_STATIC_int(alt_key)
+    def self.alt_control(key_alt : Int32) : Void
+      Binding.bg____SetCameraAltControl_STATIC_int(key_alt)
     end
 
-    def self.smooth_zoom_control(sz_key : Int32) : Void
-      Binding.bg____SetCameraSmoothZoomControl_STATIC_int(sz_key)
+    def self.smooth_zoom_control(key_smooth_zoom : Int32) : Void
+      Binding.bg____SetCameraSmoothZoomControl_STATIC_int(key_smooth_zoom)
     end
 
-    def self.move_controls(front_key : Int32, back_key : Int32, right_key : Int32, left_key : Int32, up_key : Int32, down_key : Int32) : Void
-      Binding.bg____SetCameraMoveControls_STATIC_int_int_int_int_int_int(front_key, back_key, right_key, left_key, up_key, down_key)
+    def self.move_controls(key_front : Int32, key_back : Int32, key_right : Int32, key_left : Int32, key_up : Int32, key_down : Int32) : Void
+      Binding.bg____SetCameraMoveControls_STATIC_int_int_int_int_int_int(key_front, key_back, key_right, key_left, key_up, key_down)
     end
 
     def self.update(camera : Camera3D*) : Void
@@ -862,32 +896,56 @@ module RayLib
     Binding.bg____IsWindowReady_STATIC_
   end
 
-  def self.is_window_minimized : Bool
-    Binding.bg____IsWindowMinimized_STATIC_
-  end
-
-  def self.is_window_resized : Bool
-    Binding.bg____IsWindowResized_STATIC_
+  def self.is_window_fullscreen : Bool
+    Binding.bg____IsWindowFullscreen_STATIC_
   end
 
   def self.is_window_hidden : Bool
     Binding.bg____IsWindowHidden_STATIC_
   end
 
-  def self.is_window_fullscreen : Bool
-    Binding.bg____IsWindowFullscreen_STATIC_
+  def self.is_window_minimized : Bool
+    Binding.bg____IsWindowMinimized_STATIC_
+  end
+
+  def self.is_window_maximized : Bool
+    Binding.bg____IsWindowMaximized_STATIC_
+  end
+
+  def self.is_window_focused : Bool
+    Binding.bg____IsWindowFocused_STATIC_
+  end
+
+  def self.is_window_resized : Bool
+    Binding.bg____IsWindowResized_STATIC_
+  end
+
+  def self.is_window_state(flag : Int32) : Bool
+    Binding.bg____IsWindowState_STATIC_unsigned_int(flag)
+  end
+
+  def self.set_window_state(flags : Int32) : Void
+    Binding.bg____SetWindowState_STATIC_unsigned_int(flags)
+  end
+
+  def self.clear_window_state(flags : Int32) : Void
+    Binding.bg____ClearWindowState_STATIC_unsigned_int(flags)
   end
 
   def self.toggle_fullscreen : Void
     Binding.bg____ToggleFullscreen_STATIC_
   end
 
-  def self.unhide_window : Void
-    Binding.bg____UnhideWindow_STATIC_
+  def self.maximize_window : Void
+    Binding.bg____MaximizeWindow_STATIC_
   end
 
-  def self.hide_window : Void
-    Binding.bg____HideWindow_STATIC_
+  def self.minimize_window : Void
+    Binding.bg____MinimizeWindow_STATIC_
+  end
+
+  def self.restore_window : Void
+    Binding.bg____RestoreWindow_STATIC_
   end
 
   def self.set_window_icon(image : Image) : Void
@@ -930,6 +988,14 @@ module RayLib
     Binding.bg____GetMonitorCount_STATIC_
   end
 
+  def self.get_current_monitor : Int32
+    Binding.bg____GetCurrentMonitor_STATIC_
+  end
+
+  def self.get_monitor_position(monitor : Int32) : Vector2
+    Vector2.new(unwrap: Binding.bg____GetMonitorPosition_STATIC_int(monitor))
+  end
+
   def self.get_monitor_width(monitor : Int32) : Int32
     Binding.bg____GetMonitorWidth_STATIC_int(monitor)
   end
@@ -946,20 +1012,28 @@ module RayLib
     Binding.bg____GetMonitorPhysicalHeight_STATIC_int(monitor)
   end
 
+  def self.get_monitor_refresh_rate(monitor : Int32) : Int32
+    Binding.bg____GetMonitorRefreshRate_STATIC_int(monitor)
+  end
+
   def self.get_window_position : Vector2
     Vector2.new(unwrap: Binding.bg____GetWindowPosition_STATIC_)
+  end
+
+  def self.get_window_scale_dpi : Vector2
+    Vector2.new(unwrap: Binding.bg____GetWindowScaleDPI_STATIC_)
   end
 
   def self.get_monitor_name(monitor : Int32) : String
     Binding.bg____GetMonitorName_STATIC_int(monitor)
   end
 
-  def self.get_clipboard_text : String
-    Binding.bg____GetClipboardText_STATIC_
-  end
-
   def self.set_clipboard_text(text : String) : Void
     Binding.bg____SetClipboardText_STATIC_const_char_X(text)
+  end
+
+  def self.get_clipboard_text : String
+    Binding.bg____GetClipboardText_STATIC_
   end
 
   def self.show_cursor : Void
@@ -980,6 +1054,10 @@ module RayLib
 
   def self.disable_cursor : Void
     Binding.bg____DisableCursor_STATIC_
+  end
+
+  def self.is_cursor_on_screen : Bool
+    Binding.bg____IsCursorOnScreen_STATIC_
   end
 
   def self.clear_background(color : Binding::Color) : Void
@@ -1010,7 +1088,7 @@ module RayLib
     Binding.bg____EndMode3D_STATIC_
   end
 
-  def self.begin_texture_mode(target : RenderTexture2D) : Void
+  def self.begin_texture_mode(target : RenderTexture) : Void
     Binding.bg____BeginTextureMode_STATIC_RenderTexture2D(target)
   end
 
@@ -1070,34 +1148,6 @@ module RayLib
     Binding.bg____GetTime_STATIC_
   end
 
-  def self.color_to_int(color : Binding::Color) : Int32
-    Binding.bg____ColorToInt_STATIC_Color(color)
-  end
-
-  def self.color_normalize(color : Binding::Color) : Vector4
-    Vector4.new(unwrap: Binding.bg____ColorNormalize_STATIC_Color(color))
-  end
-
-  def self.color_from_normalized(normalized : Vector4) : Binding::Color
-    Binding.bg____ColorFromNormalized_STATIC_Vector4(normalized)
-  end
-
-  def self.color_to_hsv(color : Binding::Color) : Vector3
-    Vector3.new(unwrap: Binding.bg____ColorToHSV_STATIC_Color(color))
-  end
-
-  def self.color_from_hsv(hsv : Vector3) : Binding::Color
-    Binding.bg____ColorFromHSV_STATIC_Vector3(hsv)
-  end
-
-  def self.get_color(hex_value : Int32) : Binding::Color
-    Binding.bg____GetColor_STATIC_int(hex_value)
-  end
-
-  def self.fade(color : Binding::Color, alpha : Float32) : Binding::Color
-    Binding.bg____Fade_STATIC_Color_float(color, alpha)
-  end
-
   def self.set_config_flags(flags : Int32) : Void
     Binding.bg____SetConfigFlags_STATIC_unsigned_int(flags)
   end
@@ -1114,6 +1164,14 @@ module RayLib
     Binding.bg____TraceLog_STATIC_int_const_char_X_(log_type, text, *va_args)
   end
 
+  def self.mem_alloc(size : Int32) : Void*
+    Binding.bg____MemAlloc_STATIC_int(size)
+  end
+
+  def self.mem_free(ptr : Void*) : Void
+    Binding.bg____MemFree_STATIC_void_X(ptr)
+  end
+
   def self.take_screenshot(file_name : String) : Void
     Binding.bg____TakeScreenshot_STATIC_const_char_X(file_name)
   end
@@ -1126,7 +1184,11 @@ module RayLib
     Binding.bg____LoadFileData_STATIC_const_char_X_unsigned_int_X(file_name, bytes_read)
   end
 
-  def self.save_file_data(file_name : String, data : Void*, bytes_to_write : Int32) : Void
+  def self.unload_file_data(data : UInt8) : Void
+    Binding.bg____UnloadFileData_STATIC_unsigned_char_X(data)
+  end
+
+  def self.save_file_data(file_name : String, data : Void*, bytes_to_write : Int32) : Bool
     Binding.bg____SaveFileData_STATIC_const_char_X_void_X_unsigned_int(file_name, data, bytes_to_write)
   end
 
@@ -1134,7 +1196,11 @@ module RayLib
     Binding.bg____LoadFileText_STATIC_const_char_X(file_name)
   end
 
-  def self.save_file_text(file_name : String, text : String) : Void
+  def self.unload_file_text(text : UInt8) : Void
+    Binding.bg____UnloadFileText_STATIC_unsigned_char_X(text)
+  end
+
+  def self.save_file_text(file_name : String, text : String) : Bool
     Binding.bg____SaveFileText_STATIC_const_char_X_char_X(file_name, text)
   end
 
@@ -1142,16 +1208,16 @@ module RayLib
     Binding.bg____FileExists_STATIC_const_char_X(file_name)
   end
 
-  def self.is_file_extension(file_name : String, ext : String) : Bool
-    Binding.bg____IsFileExtension_STATIC_const_char_X_const_char_X(file_name, ext)
-  end
-
   def self.directory_exists(dir_path : String) : Bool
     Binding.bg____DirectoryExists_STATIC_const_char_X(dir_path)
   end
 
-  def self.get_extension(file_name : String) : String
-    Binding.bg____GetExtension_STATIC_const_char_X(file_name)
+  def self.is_file_extension(file_name : String, ext : String) : Bool
+    Binding.bg____IsFileExtension_STATIC_const_char_X_const_char_X(file_name, ext)
+  end
+
+  def self.get_file_extension(file_name : String) : String
+    Binding.bg____GetFileExtension_STATIC_const_char_X(file_name)
   end
 
   def self.get_file_name(file_path : String) : String
@@ -1210,7 +1276,7 @@ module RayLib
     Binding.bg____DecompressData_STATIC_unsigned_char_X_int_int_X(comp_data, comp_data_length, data_length)
   end
 
-  def self.save_storage_value(position : Int32, value : Int32) : Void
+  def self.save_storage_value(position : Int32, value : Int32) : Bool
     Binding.bg____SaveStorageValue_STATIC_unsigned_int_int(position, value)
   end
 
@@ -1244,6 +1310,10 @@ module RayLib
 
   def self.get_key_pressed : Int32
     Binding.bg____GetKeyPressed_STATIC_
+  end
+
+  def self.get_char_pressed : Int32
+    Binding.bg____GetCharPressed_STATIC_
   end
 
   def self.is_gamepad_available(gamepad : Int32) : Bool
@@ -1326,8 +1396,16 @@ module RayLib
     Binding.bg____SetMouseScale_STATIC_float_float(scale_x, scale_y)
   end
 
-  def self.get_mouse_wheel_move : Int32
+  def self.get_mouse_wheel_move : Float32
     Binding.bg____GetMouseWheelMove_STATIC_
+  end
+
+  def self.get_mouse_cursor : Int32
+    Binding.bg____GetMouseCursor_STATIC_
+  end
+
+  def self.set_mouse_cursor(cursor : Int32) : Void
+    Binding.bg____SetMouseCursor_STATIC_int(cursor)
   end
 
   def self.get_touch_x : Int32
@@ -1386,20 +1464,20 @@ module RayLib
     Binding.bg____UpdateCamera_STATIC_Camera_X(camera)
   end
 
-  def self.set_camera_pan_control(pan_key : Int32) : Void
-    Binding.bg____SetCameraPanControl_STATIC_int(pan_key)
+  def self.set_camera_pan_control(key_pan : Int32) : Void
+    Binding.bg____SetCameraPanControl_STATIC_int(key_pan)
   end
 
-  def self.set_camera_alt_control(alt_key : Int32) : Void
-    Binding.bg____SetCameraAltControl_STATIC_int(alt_key)
+  def self.set_camera_alt_control(key_alt : Int32) : Void
+    Binding.bg____SetCameraAltControl_STATIC_int(key_alt)
   end
 
-  def self.set_camera_smooth_zoom_control(sz_key : Int32) : Void
-    Binding.bg____SetCameraSmoothZoomControl_STATIC_int(sz_key)
+  def self.set_camera_smooth_zoom_control(key_smooth_zoom : Int32) : Void
+    Binding.bg____SetCameraSmoothZoomControl_STATIC_int(key_smooth_zoom)
   end
 
-  def self.set_camera_move_controls(front_key : Int32, back_key : Int32, right_key : Int32, left_key : Int32, up_key : Int32, down_key : Int32) : Void
-    Binding.bg____SetCameraMoveControls_STATIC_int_int_int_int_int_int(front_key, back_key, right_key, left_key, up_key, down_key)
+  def self.set_camera_move_controls(key_front : Int32, key_back : Int32, key_right : Int32, key_left : Int32, key_up : Int32, key_down : Int32) : Void
+    Binding.bg____SetCameraMoveControls_STATIC_int_int_int_int_int_int(key_front, key_back, key_right, key_left, key_up, key_down)
   end
 
   def self.draw_pixel(pos_x : Int32, pos_y : Int32, color : Binding::Color) : Void
@@ -1426,8 +1504,12 @@ module RayLib
     Binding.bg____DrawLineBezier_STATIC_Vector2_Vector2_float_Color(start_pos, end_pos, thick, color)
   end
 
-  def self.draw_line_strip(points : Vector2*, num_points : Int32, color : Binding::Color) : Void
-    Binding.bg____DrawLineStrip_STATIC_Vector2_X_int_Color(points, num_points, color)
+  def self.draw_line_bezier_quad(start_pos : Vector2, end_pos : Vector2, control_pos : Vector2, thick : Float32, color : Binding::Color) : Void
+    Binding.bg____DrawLineBezierQuad_STATIC_Vector2_Vector2_Vector2_float_Color(start_pos, end_pos, control_pos, thick, color)
+  end
+
+  def self.draw_line_strip(points : Vector2*, points_count : Int32, color : Binding::Color) : Void
+    Binding.bg____DrawLineStrip_STATIC_Vector2_X_int_Color(points, points_count, color)
   end
 
   def self.draw_circle(center_x : Int32, center_y : Int32, radius : Float32, color : Binding::Color) : Void
@@ -1522,8 +1604,8 @@ module RayLib
     Binding.bg____DrawTriangleLines_STATIC_Vector2_Vector2_Vector2_Color(v1, v2, v3, color)
   end
 
-  def self.draw_triangle_fan(points : Vector2*, num_points : Int32, color : Binding::Color) : Void
-    Binding.bg____DrawTriangleFan_STATIC_Vector2_X_int_Color(points, num_points, color)
+  def self.draw_triangle_fan(points : Vector2*, points_count : Int32, color : Binding::Color) : Void
+    Binding.bg____DrawTriangleFan_STATIC_Vector2_X_int_Color(points, points_count, color)
   end
 
   def self.draw_triangle_strip(points : Vector2*, points_count : Int32, color : Binding::Color) : Void
@@ -1550,10 +1632,6 @@ module RayLib
     Binding.bg____CheckCollisionCircleRec_STATIC_Vector2_float_Rectangle(center, radius, rec)
   end
 
-  def self.get_collision_rec(rec1 : Rectangle, rec2 : Rectangle) : Rectangle
-    Rectangle.new(unwrap: Binding.bg____GetCollisionRec_STATIC_Rectangle_Rectangle(rec1, rec2))
-  end
-
   def self.check_collision_point_rec(point : Vector2, rec : Rectangle) : Bool
     Binding.bg____CheckCollisionPointRec_STATIC_Vector2_Rectangle(point, rec)
   end
@@ -1566,40 +1644,40 @@ module RayLib
     Binding.bg____CheckCollisionPointTriangle_STATIC_Vector2_Vector2_Vector2_Vector2(point, p1, p2, p3)
   end
 
+  def self.check_collision_lines(start_pos1 : Vector2, end_pos1 : Vector2, start_pos2 : Vector2, end_pos2 : Vector2, collision_point : Vector2*) : Bool
+    Binding.bg____CheckCollisionLines_STATIC_Vector2_Vector2_Vector2_Vector2_Vector2_X(start_pos1, end_pos1, start_pos2, end_pos2, collision_point)
+  end
+
+  def self.get_collision_rec(rec1 : Rectangle, rec2 : Rectangle) : Rectangle
+    Rectangle.new(unwrap: Binding.bg____GetCollisionRec_STATIC_Rectangle_Rectangle(rec1, rec2))
+  end
+
   def self.load_image(file_name : String) : Image
     Image.new(unwrap: Binding.bg____LoadImage_STATIC_const_char_X(file_name))
-  end
-
-  def self.load_image_ex(pixels : Binding::Color*, width : Int32, height : Int32) : Image
-    Image.new(unwrap: Binding.bg____LoadImageEx_STATIC_Color_X_int_int(pixels, width, height))
-  end
-
-  def self.load_image_pro(data : Void*, width : Int32, height : Int32, format : Int32) : Image
-    Image.new(unwrap: Binding.bg____LoadImagePro_STATIC_void_X_int_int_int(data, width, height, format))
   end
 
   def self.load_image_raw(file_name : String, width : Int32, height : Int32, format : Int32, header_size : Int32) : Image
     Image.new(unwrap: Binding.bg____LoadImageRaw_STATIC_const_char_X_int_int_int_int(file_name, width, height, format, header_size))
   end
 
+  def self.load_image_anim(file_name : String, frames : Int32*) : Image
+    Image.new(unwrap: Binding.bg____LoadImageAnim_STATIC_const_char_X_int_X(file_name, frames))
+  end
+
+  def self.load_image_from_memory(file_type : String, file_data : UInt8, data_size : Int32) : Image
+    Image.new(unwrap: Binding.bg____LoadImageFromMemory_STATIC_const_char_X_const_unsigned_char_X_int(file_type, file_data, data_size))
+  end
+
   def self.unload_image(image : Image) : Void
     Binding.bg____UnloadImage_STATIC_Image(image)
   end
 
-  def self.export_image(image : Image, file_name : String) : Void
+  def self.export_image(image : Image, file_name : String) : Bool
     Binding.bg____ExportImage_STATIC_Image_const_char_X(image, file_name)
   end
 
-  def self.export_image_as_code(image : Image, file_name : String) : Void
+  def self.export_image_as_code(image : Image, file_name : String) : Bool
     Binding.bg____ExportImageAsCode_STATIC_Image_const_char_X(image, file_name)
-  end
-
-  def self.get_image_data(image : Image) : Binding::Color*
-    Binding.bg____GetImageData_STATIC_Image(image)
-  end
-
-  def self.get_image_data_normalized(image : Image) : Vector4*
-    Vector4.new(unwrap: Binding.bg____GetImageDataNormalized_STATIC_Image(image))
   end
 
   def self.gen_image_color(width : Int32, height : Int32, color : Binding::Color) : Image
@@ -1650,32 +1728,32 @@ module RayLib
     Image.new(unwrap: Binding.bg____ImageTextEx_STATIC_Font_const_char_X_float_float_Color(font, text, font_size, spacing, tint))
   end
 
-  def self.image_to_pot(image : Image*, fill_color : Binding::Color) : Void
-    Binding.bg____ImageToPOT_STATIC_Image_X_Color(image, fill_color)
-  end
-
   def self.image_format(image : Image*, new_format : Int32) : Void
     Binding.bg____ImageFormat_STATIC_Image_X_int(image, new_format)
   end
 
-  def self.image_alpha_mask(image : Image*, alpha_mask : Image) : Void
-    Binding.bg____ImageAlphaMask_STATIC_Image_X_Image(image, alpha_mask)
+  def self.image_to_pot(image : Image*, fill : Binding::Color) : Void
+    Binding.bg____ImageToPOT_STATIC_Image_X_Color(image, fill)
   end
 
-  def self.image_alpha_clear(image : Image*, color : Binding::Color, threshold : Float32) : Void
-    Binding.bg____ImageAlphaClear_STATIC_Image_X_Color_float(image, color, threshold)
+  def self.image_crop(image : Image*, crop : Rectangle) : Void
+    Binding.bg____ImageCrop_STATIC_Image_X_Rectangle(image, crop)
   end
 
   def self.image_alpha_crop(image : Image*, threshold : Float32) : Void
     Binding.bg____ImageAlphaCrop_STATIC_Image_X_float(image, threshold)
   end
 
-  def self.image_alpha_premultiply(image : Image*) : Void
-    Binding.bg____ImageAlphaPremultiply_STATIC_Image_X(image)
+  def self.image_alpha_clear(image : Image*, color : Binding::Color, threshold : Float32) : Void
+    Binding.bg____ImageAlphaClear_STATIC_Image_X_Color_float(image, color, threshold)
   end
 
-  def self.image_crop(image : Image*, crop : Rectangle) : Void
-    Binding.bg____ImageCrop_STATIC_Image_X_Rectangle(image, crop)
+  def self.image_alpha_mask(image : Image*, alpha_mask : Image) : Void
+    Binding.bg____ImageAlphaMask_STATIC_Image_X_Image(image, alpha_mask)
+  end
+
+  def self.image_alpha_premultiply(image : Image*) : Void
+    Binding.bg____ImageAlphaPremultiply_STATIC_Image_X(image)
   end
 
   def self.image_resize(image : Image*, new_width : Int32, new_height : Int32) : Void
@@ -1686,8 +1764,8 @@ module RayLib
     Binding.bg____ImageResizeNN_STATIC_Image_X_int_int(image, new_width, new_height)
   end
 
-  def self.image_resize_canvas(image : Image*, new_width : Int32, new_height : Int32, offset_x : Int32, offset_y : Int32, color : Binding::Color) : Void
-    Binding.bg____ImageResizeCanvas_STATIC_Image_X_int_int_int_int_Color(image, new_width, new_height, offset_x, offset_y, color)
+  def self.image_resize_canvas(image : Image*, new_width : Int32, new_height : Int32, offset_x : Int32, offset_y : Int32, fill : Binding::Color) : Void
+    Binding.bg____ImageResizeCanvas_STATIC_Image_X_int_int_int_int_Color(image, new_width, new_height, offset_x, offset_y, fill)
   end
 
   def self.image_mipmaps(image : Image*) : Void
@@ -1738,8 +1816,20 @@ module RayLib
     Binding.bg____ImageColorReplace_STATIC_Image_X_Color_Color(image, color, replace)
   end
 
-  def self.image_extract_palette(image : Image, max_palette_size : Int32, extract_count : Int32*) : Binding::Color*
-    Binding.bg____ImageExtractPalette_STATIC_Image_int_int_X(image, max_palette_size, extract_count)
+  def self.load_image_colors(image : Image) : Binding::Color*
+    Binding.bg____LoadImageColors_STATIC_Image(image)
+  end
+
+  def self.load_image_palette(image : Image, max_palette_size : Int32, colors_count : Int32*) : Binding::Color*
+    Binding.bg____LoadImagePalette_STATIC_Image_int_int_X(image, max_palette_size, colors_count)
+  end
+
+  def self.unload_image_colors(colors : Binding::Color*) : Void
+    Binding.bg____UnloadImageColors_STATIC_Color_X(colors)
+  end
+
+  def self.unload_image_palette(colors : Binding::Color*) : Void
+    Binding.bg____UnloadImagePalette_STATIC_Color_X(colors)
   end
 
   def self.get_image_alpha_border(image : Image, threshold : Float32) : Rectangle
@@ -1794,12 +1884,12 @@ module RayLib
     Binding.bg____ImageDraw_STATIC_Image_X_Image_Rectangle_Rectangle_Color(dst, src, src_rec, dst_rec, tint)
   end
 
-  def self.image_draw_text(dst : Image*, position : Vector2, text : String, font_size : Int32, color : Binding::Color) : Void
-    Binding.bg____ImageDrawText_STATIC_Image_X_Vector2_const_char_X_int_Color(dst, position, text, font_size, color)
+  def self.image_draw_text(dst : Image*, text : String, pos_x : Int32, pos_y : Int32, font_size : Int32, color : Binding::Color) : Void
+    Binding.bg____ImageDrawText_STATIC_Image_X_const_char_X_int_int_int_Color(dst, text, pos_x, pos_y, font_size, color)
   end
 
-  def self.image_draw_text_ex(dst : Image*, position : Vector2, font : Font, text : String, font_size : Float32, spacing : Float32, color : Binding::Color) : Void
-    Binding.bg____ImageDrawTextEx_STATIC_Image_X_Vector2_Font_const_char_X_float_float_Color(dst, position, font, text, font_size, spacing, color)
+  def self.image_draw_text_ex(dst : Image*, font : Font, text : String, position : Vector2, font_size : Float32, spacing : Float32, tint : Binding::Color) : Void
+    Binding.bg____ImageDrawTextEx_STATIC_Image_X_Font_const_char_X_Vector2_float_float_Color(dst, font, text, position, font_size, spacing, tint)
   end
 
   def self.load_texture(file_name : String) : Texture2D
@@ -1814,20 +1904,24 @@ module RayLib
     Binding.bg____LoadTextureCubemap_STATIC_Image_int(image, layout_type)
   end
 
-  def self.load_render_texture(width : Int32, height : Int32) : RenderTexture2D
-    RenderTexture2D.new(unwrap: Binding.bg____LoadRenderTexture_STATIC_int_int(width, height))
+  def self.load_render_texture(width : Int32, height : Int32) : RenderTexture
+    RenderTexture.new(unwrap: Binding.bg____LoadRenderTexture_STATIC_int_int(width, height))
   end
 
   def self.unload_texture(texture : Texture2D) : Void
     Binding.bg____UnloadTexture_STATIC_Texture2D(texture)
   end
 
-  def self.unload_render_texture(target : RenderTexture2D) : Void
+  def self.unload_render_texture(target : RenderTexture) : Void
     Binding.bg____UnloadRenderTexture_STATIC_RenderTexture2D(target)
   end
 
   def self.update_texture(texture : Texture2D, pixels : Void*) : Void
     Binding.bg____UpdateTexture_STATIC_Texture2D_const_void_X(texture, pixels)
+  end
+
+  def self.update_texture_rec(texture : Texture2D, rec : Rectangle, pixels : Void*) : Void
+    Binding.bg____UpdateTextureRec_STATIC_Texture2D_Rectangle_const_void_X(texture, rec, pixels)
   end
 
   def self.get_texture_data(texture : Texture2D) : Image
@@ -1862,20 +1956,68 @@ module RayLib
     Binding.bg____DrawTextureEx_STATIC_Texture2D_Vector2_float_float_Color(texture, position, rotation, scale, tint)
   end
 
-  def self.draw_texture_rec(texture : Texture2D, source_rec : Rectangle, position : Vector2, tint : Binding::Color) : Void
-    Binding.bg____DrawTextureRec_STATIC_Texture2D_Rectangle_Vector2_Color(texture, source_rec, position, tint)
+  def self.draw_texture_rec(texture : Texture2D, source : Rectangle, position : Vector2, tint : Binding::Color) : Void
+    Binding.bg____DrawTextureRec_STATIC_Texture2D_Rectangle_Vector2_Color(texture, source, position, tint)
   end
 
   def self.draw_texture_quad(texture : Texture2D, tiling : Vector2, offset : Vector2, quad : Rectangle, tint : Binding::Color) : Void
     Binding.bg____DrawTextureQuad_STATIC_Texture2D_Vector2_Vector2_Rectangle_Color(texture, tiling, offset, quad, tint)
   end
 
-  def self.draw_texture_pro(texture : Texture2D, source_rec : Rectangle, dest_rec : Rectangle, origin : Vector2, rotation : Float32, tint : Binding::Color) : Void
-    Binding.bg____DrawTexturePro_STATIC_Texture2D_Rectangle_Rectangle_Vector2_float_Color(texture, source_rec, dest_rec, origin, rotation, tint)
+  def self.draw_texture_tiled(texture : Texture2D, source : Rectangle, dest : Rectangle, origin : Vector2, rotation : Float32, scale : Float32, tint : Binding::Color) : Void
+    Binding.bg____DrawTextureTiled_STATIC_Texture2D_Rectangle_Rectangle_Vector2_float_float_Color(texture, source, dest, origin, rotation, scale, tint)
   end
 
-  def self.draw_texture_n_patch(texture : Texture2D, n_patch_info : NPatchInfo, dest_rec : Rectangle, origin : Vector2, rotation : Float32, tint : Binding::Color) : Void
-    Binding.bg____DrawTextureNPatch_STATIC_Texture2D_NPatchInfo_Rectangle_Vector2_float_Color(texture, n_patch_info, dest_rec, origin, rotation, tint)
+  def self.draw_texture_pro(texture : Texture2D, source : Rectangle, dest : Rectangle, origin : Vector2, rotation : Float32, tint : Binding::Color) : Void
+    Binding.bg____DrawTexturePro_STATIC_Texture2D_Rectangle_Rectangle_Vector2_float_Color(texture, source, dest, origin, rotation, tint)
+  end
+
+  def self.draw_texture_n_patch(texture : Texture2D, n_patch_info : NPatchInfo, dest : Rectangle, origin : Vector2, rotation : Float32, tint : Binding::Color) : Void
+    Binding.bg____DrawTextureNPatch_STATIC_Texture2D_NPatchInfo_Rectangle_Vector2_float_Color(texture, n_patch_info, dest, origin, rotation, tint)
+  end
+
+  def self.fade(color : Binding::Color, alpha : Float32) : Binding::Color
+    Binding.bg____Fade_STATIC_Color_float(color, alpha)
+  end
+
+  def self.color_to_int(color : Binding::Color) : Int32
+    Binding.bg____ColorToInt_STATIC_Color(color)
+  end
+
+  def self.color_normalize(color : Binding::Color) : Vector4
+    Vector4.new(unwrap: Binding.bg____ColorNormalize_STATIC_Color(color))
+  end
+
+  def self.color_from_normalized(normalized : Vector4) : Binding::Color
+    Binding.bg____ColorFromNormalized_STATIC_Vector4(normalized)
+  end
+
+  def self.color_to_hsv(color : Binding::Color) : Vector3
+    Vector3.new(unwrap: Binding.bg____ColorToHSV_STATIC_Color(color))
+  end
+
+  def self.color_from_hsv(hue : Float32, saturation : Float32, value : Float32) : Binding::Color
+    Binding.bg____ColorFromHSV_STATIC_float_float_float(hue, saturation, value)
+  end
+
+  def self.color_alpha(color : Binding::Color, alpha : Float32) : Binding::Color
+    Binding.bg____ColorAlpha_STATIC_Color_float(color, alpha)
+  end
+
+  def self.color_alpha_blend(dst : Binding::Color, src : Binding::Color, tint : Binding::Color) : Binding::Color
+    Binding.bg____ColorAlphaBlend_STATIC_Color_Color_Color(dst, src, tint)
+  end
+
+  def self.get_color(hex_value : Int32) : Binding::Color
+    Binding.bg____GetColor_STATIC_int(hex_value)
+  end
+
+  def self.get_pixel_color(src_ptr : Void*, format : Int32) : Binding::Color
+    Binding.bg____GetPixelColor_STATIC_void_X_int(src_ptr, format)
+  end
+
+  def self.set_pixel_color(dst_ptr : Void*, color : Binding::Color, format : Int32) : Void
+    Binding.bg____SetPixelColor_STATIC_void_X_Color_int(dst_ptr, color, format)
   end
 
   def self.get_pixel_data_size(width : Int32, height : Int32, format : Int32) : Int32
@@ -1898,12 +2040,20 @@ module RayLib
     Font.new(unwrap: Binding.bg____LoadFontFromImage_STATIC_Image_Color_int(image, key, first_char))
   end
 
-  def self.load_font_data(file_name : String, font_size : Int32, font_chars : Int32*, chars_count : Int32, type : Int32) : CharInfo*
-    CharInfo.new(unwrap: Binding.bg____LoadFontData_STATIC_const_char_X_int_int_X_int_int(file_name, font_size, font_chars, chars_count, type))
+  def self.load_font_from_memory(file_type : String, file_data : UInt8, data_size : Int32, font_size : Int32, font_chars : Int32*, chars_count : Int32) : Font
+    Font.new(unwrap: Binding.bg____LoadFontFromMemory_STATIC_const_char_X_const_unsigned_char_X_int_int_int_X_int(file_type, file_data, data_size, font_size, font_chars, chars_count))
+  end
+
+  def self.load_font_data(file_data : UInt8, data_size : Int32, font_size : Int32, font_chars : Int32*, chars_count : Int32, type : Int32) : CharInfo*
+    CharInfo.new(unwrap: Binding.bg____LoadFontData_STATIC_const_unsigned_char_X_int_int_int_X_int_int(file_data, data_size, font_size, font_chars, chars_count, type))
   end
 
   def self.gen_image_font_atlas(chars : CharInfo*, recs : Rectangle**, chars_count : Int32, font_size : Int32, padding : Int32, pack_method : Int32) : Image
     Image.new(unwrap: Binding.bg____GenImageFontAtlas_STATIC_const_CharInfo_X_Rectangle_XX_int_int_int_int(chars, recs, chars_count, font_size, padding, pack_method))
+  end
+
+  def self.unload_font_data(chars : CharInfo*, chars_count : Int32) : Void
+    Binding.bg____UnloadFontData_STATIC_CharInfo_X_int(chars, chars_count)
   end
 
   def self.unload_font(font : Font) : Void
@@ -1930,8 +2080,8 @@ module RayLib
     Binding.bg____DrawTextRecEx_STATIC_Font_const_char_X_Rectangle_float_float_bool_Color_int_int_Color_Color(font, text, rec, font_size, spacing, word_wrap, tint, select_start, select_length, select_tint, select_back_tint)
   end
 
-  def self.draw_text_codepoint(font : Font, codepoint : Int32, position : Vector2, scale : Float32, tint : Binding::Color) : Void
-    Binding.bg____DrawTextCodepoint_STATIC_Font_int_Vector2_float_Color(font, codepoint, position, scale, tint)
+  def self.draw_text_codepoint(font : Font, codepoint : Int32, position : Vector2, font_size : Float32, tint : Binding::Color) : Void
+    Binding.bg____DrawTextCodepoint_STATIC_Font_int_Vector2_float_Color(font, codepoint, position, font_size, tint)
   end
 
   def self.measure_text(text : String, font_size : Int32) : Int32
@@ -2038,6 +2188,14 @@ module RayLib
     Binding.bg____DrawCircle3D_STATIC_Vector3_float_Vector3_float_Color(center, radius, rotation_axis, rotation_angle, color)
   end
 
+  def self.draw_triangle3_d(v1 : Vector3, v2 : Vector3, v3 : Vector3, color : Binding::Color) : Void
+    Binding.bg____DrawTriangle3D_STATIC_Vector3_Vector3_Vector3_Color(v1, v2, v3, color)
+  end
+
+  def self.draw_triangle_strip3_d(points : Vector3*, points_count : Int32, color : Binding::Color) : Void
+    Binding.bg____DrawTriangleStrip3D_STATIC_Vector3_X_int_Color(points, points_count, color)
+  end
+
   def self.draw_cube(position : Vector3, width : Float32, height : Float32, length : Float32, color : Binding::Color) : Void
     Binding.bg____DrawCube_STATIC_Vector3_float_float_float_Color(position, width, height, length, color)
   end
@@ -2106,16 +2264,20 @@ module RayLib
     Binding.bg____UnloadModel_STATIC_Model(model)
   end
 
+  def self.unload_model_keep_meshes(model : Model) : Void
+    Binding.bg____UnloadModelKeepMeshes_STATIC_Model(model)
+  end
+
   def self.load_meshes(file_name : String, mesh_count : Int32*) : Mesh*
     Mesh.new(unwrap: Binding.bg____LoadMeshes_STATIC_const_char_X_int_X(file_name, mesh_count))
   end
 
-  def self.export_mesh(mesh : Mesh, file_name : String) : Void
-    Binding.bg____ExportMesh_STATIC_Mesh_const_char_X(mesh, file_name)
-  end
-
   def self.unload_mesh(mesh : Mesh) : Void
     Binding.bg____UnloadMesh_STATIC_Mesh(mesh)
+  end
+
+  def self.export_mesh(mesh : Mesh, file_name : String) : Bool
+    Binding.bg____ExportMesh_STATIC_Mesh_const_char_X(mesh, file_name)
   end
 
   def self.load_materials(file_name : String, material_count : Int32*) : Material*
@@ -2206,6 +2368,10 @@ module RayLib
     Binding.bg____MeshBinormals_STATIC_Mesh_X(mesh)
   end
 
+  def self.mesh_normals_smooth(mesh : Mesh*) : Void
+    Binding.bg____MeshNormalsSmooth_STATIC_Mesh_X(mesh)
+  end
+
   def self.draw_model(model : Model, position : Vector3, scale : Float32, tint : Binding::Color) : Void
     Binding.bg____DrawModel_STATIC_Model_Vector3_float_Color(model, position, scale, tint)
   end
@@ -2230,12 +2396,12 @@ module RayLib
     Binding.bg____DrawBillboard_STATIC_Camera_Texture2D_Vector3_float_Color(camera, texture, center, size, tint)
   end
 
-  def self.draw_billboard_rec(camera : Camera3D, texture : Texture2D, source_rec : Rectangle, center : Vector3, size : Float32, tint : Binding::Color) : Void
-    Binding.bg____DrawBillboardRec_STATIC_Camera_Texture2D_Rectangle_Vector3_float_Color(camera, texture, source_rec, center, size, tint)
+  def self.draw_billboard_rec(camera : Camera3D, texture : Texture2D, source : Rectangle, center : Vector3, size : Float32, tint : Binding::Color) : Void
+    Binding.bg____DrawBillboardRec_STATIC_Camera_Texture2D_Rectangle_Vector3_float_Color(camera, texture, source, center, size, tint)
   end
 
-  def self.check_collision_spheres(center_a : Vector3, radius_a : Float32, center_b : Vector3, radius_b : Float32) : Bool
-    Binding.bg____CheckCollisionSpheres_STATIC_Vector3_float_Vector3_float(center_a, radius_a, center_b, radius_b)
+  def self.check_collision_spheres(center1 : Vector3, radius1 : Float32, center2 : Vector3, radius2 : Float32) : Bool
+    Binding.bg____CheckCollisionSpheres_STATIC_Vector3_float_Vector3_float(center1, radius1, center2, radius2)
   end
 
   def self.check_collision_boxes(box1 : BoundingBox, box2 : BoundingBox) : Bool
@@ -2256,6 +2422,10 @@ module RayLib
 
   def self.check_collision_ray_box(ray : Ray, box : BoundingBox) : Bool
     Binding.bg____CheckCollisionRayBox_STATIC_Ray_BoundingBox(ray, box)
+  end
+
+  def self.get_collision_ray_mesh(ray : Ray, mesh : Mesh, transform : Matrix) : RayHitInfo
+    RayHitInfo.new(unwrap: Binding.bg____GetCollisionRayMesh_STATIC_Ray_Mesh_Matrix(ray, mesh, transform))
   end
 
   def self.get_collision_ray_model(ray : Ray, model : Model) : RayHitInfo
@@ -2306,6 +2476,10 @@ module RayLib
     Binding.bg____GetShaderLocation_STATIC_Shader_const_char_X(shader, uniform_name)
   end
 
+  def self.get_shader_location_attrib(shader : Shader, attrib_name : String) : Int32
+    Binding.bg____GetShaderLocationAttrib_STATIC_Shader_const_char_X(shader, attrib_name)
+  end
+
   def self.set_shader_value(shader : Shader, uniform_loc : Int32, value : Void*, uniform_type : Int32) : Void
     Binding.bg____SetShaderValue_STATIC_Shader_int_const_void_X_int(shader, uniform_loc, value, uniform_type)
   end
@@ -2338,16 +2512,16 @@ module RayLib
     Matrix.new(unwrap: Binding.bg____GetMatrixProjection_STATIC_)
   end
 
-  def self.gen_texture_cubemap(shader : Shader, map : Texture2D, size : Int32) : Texture2D
-    Texture2D.new(unwrap: Binding.bg____GenTextureCubemap_STATIC_Shader_Texture2D_int(shader, map, size))
+  def self.gen_texture_cubemap(shader : Shader, panorama : Texture2D, size : Int32, format : Int32) : Binding::TextureCubemap*
+    Binding.bg____GenTextureCubemap_STATIC_Shader_Texture2D_int_int(shader, panorama, size, format)
   end
 
-  def self.gen_texture_irradiance(shader : Shader, cubemap : Texture2D, size : Int32) : Texture2D
-    Texture2D.new(unwrap: Binding.bg____GenTextureIrradiance_STATIC_Shader_Texture2D_int(shader, cubemap, size))
+  def self.gen_texture_irradiance(shader : Shader, cubemap : Binding::TextureCubemap*, size : Int32) : Binding::TextureCubemap*
+    Binding.bg____GenTextureIrradiance_STATIC_Shader_TextureCubemap_int(shader, cubemap, size)
   end
 
-  def self.gen_texture_prefilter(shader : Shader, cubemap : Texture2D, size : Int32) : Texture2D
-    Texture2D.new(unwrap: Binding.bg____GenTexturePrefilter_STATIC_Shader_Texture2D_int(shader, cubemap, size))
+  def self.gen_texture_prefilter(shader : Shader, cubemap : Binding::TextureCubemap*, size : Int32) : Binding::TextureCubemap*
+    Binding.bg____GenTexturePrefilter_STATIC_Shader_TextureCubemap_int(shader, cubemap, size)
   end
 
   def self.gen_texture_brdf(shader : Shader, size : Int32) : Texture2D
@@ -2422,6 +2596,10 @@ module RayLib
     Wave.new(unwrap: Binding.bg____LoadWave_STATIC_const_char_X(file_name))
   end
 
+  def self.load_wave_from_memory(file_type : String, file_data : UInt8, data_size : Int32) : Wave
+    Wave.new(unwrap: Binding.bg____LoadWaveFromMemory_STATIC_const_char_X_const_unsigned_char_X_int(file_type, file_data, data_size))
+  end
+
   def self.load_sound(file_name : String) : Sound
     Sound.new(unwrap: Binding.bg____LoadSound_STATIC_const_char_X(file_name))
   end
@@ -2442,11 +2620,11 @@ module RayLib
     Binding.bg____UnloadSound_STATIC_Sound(sound)
   end
 
-  def self.export_wave(wave : Wave, file_name : String) : Void
+  def self.export_wave(wave : Wave, file_name : String) : Bool
     Binding.bg____ExportWave_STATIC_Wave_const_char_X(wave, file_name)
   end
 
-  def self.export_wave_as_code(wave : Wave, file_name : String) : Void
+  def self.export_wave_as_code(wave : Wave, file_name : String) : Bool
     Binding.bg____ExportWaveAsCode_STATIC_Wave_const_char_X(wave, file_name)
   end
 
@@ -2502,8 +2680,12 @@ module RayLib
     Binding.bg____WaveCrop_STATIC_Wave_X_int_int(wave, init_sample, final_sample)
   end
 
-  def self.get_wave_data(wave : Wave) : Float32*
-    Binding.bg____GetWaveData_STATIC_Wave(wave)
+  def self.load_wave_samples(wave : Wave) : Float32*
+    Binding.bg____LoadWaveSamples_STATIC_Wave(wave)
+  end
+
+  def self.unload_wave_samples(samples : Float32*) : Void
+    Binding.bg____UnloadWaveSamples_STATIC_float_X(samples)
   end
 
   def self.load_music_stream(file_name : String) : Binding::Music*
@@ -2544,10 +2726,6 @@ module RayLib
 
   def self.set_music_pitch(music : Binding::Music*, pitch : Float32) : Void
     Binding.bg____SetMusicPitch_STATIC_Music_float(music, pitch)
-  end
-
-  def self.set_music_loop_count(music : Binding::Music*, count : Int32) : Void
-    Binding.bg____SetMusicLoopCount_STATIC_Music_int(music, count)
   end
 
   def self.get_music_time_length(music : Binding::Music*) : Float32
@@ -2715,15 +2893,20 @@ module RayLib
       KpEqual      = 336
     end
     enum Config : Int32
-      Reserved          =   1
-      FullscreenMode    =   2
-      WindowResizable   =   4
-      WindowUndecorated =   8
-      WindowTransparent =  16
-      WindowHidden      = 128
-      WindowAlwaysRun   = 256
-      Msaa4xHint        =  32
-      VsyncHint         =  64
+      VsyncHint         =    64
+      FullscreenMode    =     2
+      WindowResizable   =     4
+      WindowUndecorated =     8
+      WindowHidden      =   128
+      WindowMinimized   =   512
+      WindowMaximized   =  1024
+      WindowUnfocused   =  2048
+      WindowTopmost     =  4096
+      WindowAlwaysRun   =   256
+      WindowTransparent =    16
+      WindowHighdpi     =  8192
+      Msaa4xHint        =    32
+      InterlacedHint    = 65536
     end
     enum TraceLog : Int32
       All     = 0
@@ -2781,13 +2964,12 @@ module RayLib
         RightThumb     = 17
       end
       enum Axis : Int32
-        Unknown      = 0
-        LeftX        = 1
-        LeftY        = 2
-        RightX       = 3
-        RightY       = 4
-        LeftTrigger  = 5
-        RightTrigger = 6
+        LeftX        = 0
+        LeftY        = 1
+        RightX       = 2
+        RightY       = 3
+        LeftTrigger  = 4
+        RightTrigger = 5
       end
     end
 
@@ -2922,9 +3104,12 @@ module RayLib
 
     module Blend
       enum Mode : Int32
-        Alpha      = 0
-        Additive   = 1
-        Multiplied = 2
+        Alpha          = 0
+        Additive       = 1
+        Multiplied     = 2
+        AddColors      = 3
+        SubtractColors = 4
+        Custom         = 5
       end
     end
 

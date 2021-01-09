@@ -6,8 +6,8 @@ classes:
   Matrix: Matrix
   Rectangle: Rectangle
   Image: Image
-  Texture2D: Texture2D
-  RenderTexture2D: RenderTexture2D
+  Texture: Texture
+  RenderTexture: RenderTexture
   NPatchInfo: NPatchInfo
   CharInfo: CharInfo
   Font: Font

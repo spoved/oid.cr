@@ -212,9 +212,9 @@ class RayLib::ViewController
     RayLib.draw_texture_pro(
       texture: texture,
       # Rectangle on texture
-      source_rec: source_rec,
+      source: source_rec,
       # Rectangle in the world
-      dest_rec: dest_rec,
+      dest: dest_rec,
       # Origin in relation to dest rectangle
       origin: origin,
 

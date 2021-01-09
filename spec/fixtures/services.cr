@@ -103,6 +103,22 @@ class SpecViewService
       )
       .add_root_view
   end
+
+  def get_ray_from(position : Oid::Vector2, camera : StageEntity) : Oid::Ray
+    Oid::Ray.new(
+      Oid::Vector3.new(
+        position.x,
+        position.y,
+        position.z,
+      ),
+        # FIXME: direction should not be zero
+      Oid::Vector3.new(
+        0,
+        0,
+        0,
+      ),
+    )
+  end
 end
 
 class SpecLoggerService
@@ -172,12 +188,12 @@ class SpecInputService
 
   # Returns mouse position X
   def mouse_x : Float64
-    0.5
+    0.5_f64
   end
 
   # Returns mouse position Y
   def mouse_y : Float64
-    100.0
+    100_f64
   end
 
   # Returns mouse position XY
@@ -186,8 +202,8 @@ class SpecInputService
   end
 
   # Returns mouse wheel move
-  def mouse_wheel_move : Int32
-    10
+  def mouse_wheel_move : Float64
+    10_f64
   end
 
   # # Input-related functions: touch

@@ -47,6 +47,7 @@ development_dependencies:
   ameba:
     github: veelenga/ameba
   bindgen:
-    github: Papierkorb/bindgen
-    branch: master
+    github: kalinon/bindgen
+    branch: fixes
+    # github: Papierkorb/bindgen
     # version: ~> 0.7.0

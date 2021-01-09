@@ -6,7 +6,7 @@ module Oid::Components
   @[Context(Input)]
   @[Component::Unique]
   class MouseWheel < Entitas::Component
-    prop :move, Int32
+    prop :move, Float64
   end
 
   @[Context(Input)]
