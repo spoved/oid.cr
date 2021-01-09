@@ -44,7 +44,7 @@ module Oid
       abstract def mouse_position : Oid::Vector2
 
       # Returns mouse wheel move
-      abstract def mouse_wheel_move : Int32
+      abstract def mouse_wheel_move : Float64
 
       # # Input-related functions: touch
 
