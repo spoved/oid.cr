@@ -13,10 +13,10 @@ targets:
     main: src/bin/oid.cr
   example_01:
     main: examples/01/main.cr
-  # example_02:
-  #   main: examples/02/main.cr
-  # example_03:
-  #   main: examples/03/main.cr
+  example_02:
+    main: examples/02/main.cr
+  example_03:
+    main: examples/03/main.cr
   example_04:
     main: examples/04/main.cr
   example_05:
@@ -48,6 +48,6 @@ development_dependencies:
     github: veelenga/ameba
   bindgen:
     github: kalinon/bindgen
-    branch: fixes
+    branch: working
     # github: Papierkorb/bindgen
     # version: ~> 0.7.0
