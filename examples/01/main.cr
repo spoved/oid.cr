@@ -9,7 +9,7 @@ require "./systems/*"
 spoved_logger(:debug, bind: true)
 
 RAYLIB_CONFIG = {
-  app_name:            "Eample 01",
+  app_name:            "Example 01",
   screen_w:            800,
   screen_h:            600,
   target_fps:          120,

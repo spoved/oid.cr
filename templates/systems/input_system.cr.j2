@@ -29,8 +29,6 @@ class {{ name_module }}::InputSystem < Entitas::ReactiveSystem
   end
 
   def execute(entities : Array(Entitas::IEntity))
-    camera = contexts.game.camera.value.as(Oid::Camera{{ camera_type }})
-
     entities.each do |e|
       e = e.as(InputEntity)
 

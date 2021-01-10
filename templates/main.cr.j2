@@ -1,48 +1,54 @@
-require "../../src/oid"
-require "../../src/oid/{{ gfx_lib }}/*"
+require "oid"
+require "oid/{{ gfx_lib }}"
 require "./components"
 require "./config"
 require "./systems/*"
 
+::Log.builder.clear
+spoved_logger(:debug, bind: true)
+
 create_feature {{ name_module }}, [
   {{ name_module }}::InputSystem,
   {{ name_module }}::WorldSystem,
-  {{ name_module }}::UiSystem,
 
   # ////////////////////////////////////////////////////
   # TODO: Place any services created here
   # ////////////////////////////////////////////////////
 ]
 
-class {{ name_module }}::ApplicationService
-  include Oid::Service::Application
-end
+class AppController < Entitas::Controller
+  include Oid::Controller::Helper
 
-class GameController < Entitas::Controller
-  getter services = Services.new(
-    application: {{ name_module }}::ApplicationService.new,
-    logger: {{ gfx_class }}::LoggerSystem.new,
-    input: {{ gfx_class }}::InputSystem.new,
-    config: {{ gfx_class }}::ConfigSystem.new,
-    time: {{ gfx_class }}::TimeSystem.new,
-    view: {{ gfx_class }}::ViewSystem.new,
+  getter services = Oid::Services.new(
+    application: {{ gfx_class }}::ApplicationService.new,
+    logger: {{ gfx_class }}::LoggerService.new,
+    input: {{ gfx_class }}::InputService.new,
+    config: {{ name_module }}::ConfigService.new(**CONFIG),
+    time: {{ gfx_class }}::TimeService.new,
+    view: {{ gfx_class }}::ViewService.new,
+    camera: {{ gfx_class }}::CameraService.new,
+    window: {{ gfx_class }}::WindowService.new
   )
 
   def create_systems(contexts : Contexts)
     Entitas::Feature.new("Systems")
-      .add(ServiceRegistrationSystems.new(contexts, services))
-      .add(Game::EventSystems.new(contexts))
+      .add(Oid::ServiceRegistrationSystems.new(contexts, services))
       .add(OidSystems.new(contexts))
       .add({{ name_module }}Systems.new(contexts))
   end
 end
 
-controller = GameController.new
+controller = AppController.new
+controller.start
 
-app = {{ gfx_class }}::Application.new("{{ name_raw }}")
+# Enable this if you would like to use the entitas debug server
+# spawn do
+#   controller.start_server
+# end
 
-app.start(
-  controller: controller,
-  init_hook: ->(cont : GameController) {},
-  draw_hook: ->(cont : GameController) {},
-)
+window_controller = controller.contexts.app.window.value
+
+while !window_controller.should_close?
+  controller.update
+  Fiber.yield
+end

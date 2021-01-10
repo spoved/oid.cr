@@ -1,52 +1,46 @@
 class {{ name_module }}::WorldSystem
+  include Oid::Services::Helper
   include Entitas::Systems::InitializeSystem
   include Entitas::Systems::ExecuteSystem
 
   protected property contexts : Contexts
-  protected property actors : Entitas::Group(GameEntity)
-
-  include_services Config
+  protected property actors : Entitas::Group(StageEntity)
+  protected property props : Entitas::Group(StageEntity)
 
   def initialize(@contexts)
-    @actors = @contexts.game.get_group(GameMatcher.all_of(GameMatcher.actor))
+    @actors = @contexts.stage.get_group(StageMatcher.all_of(StageMatcher.actor))
+    @props = @contexts.stage.get_group(StageMatcher.all_of(StageMatcher.prop))
+  end
+
+  def context
+    contexts.stage
   end
 
   def init
-    _init_services
-
     # ////////////////////////////////////////////////////
     # TODO: Initialize your world here!
     # ////////////////////////////////////////////////////
 
     # Create player
-    player = contexts.game
-      .create_entity
+    player = context.create_entity
       .add_actor(name: "player")
-      .add_position(Oid::Vector3.zero)
-
-    # Create camera
-    camera = contexts.game.create_entity
-      .add_camera(
-        {% if camera_3d %}
-        value: Oid::Camera3D.new(
-          position: Oid::Vector3.new(10, 10, 10),
-          target: player.actor,
-          rotation: Oid::Vector3.new(0, 1, 0),
-          fov_y: 45.0,
-          type: Oid::Camera::Type::Perspective
-        )
-        {% else %}
-        value: Oid::Camera2D.new(
-          target: player.actor,
-          offset: Oid::Vector2.zero,
-        )
-        {% endif %}
+      .add_camera_target
+      .add_position(Oid::Vector3.new(0.0, 0.0, 0.0))
+      .add_position_type(Oid::Enum::Position::Static)
+      .add_view_element(
+        value: Oid::Element::Rectangle.new(
+          width: 20.0,
+          height: 20.0,
+          color: Oid::Color::BLUE
+        ),
+        origin: Oid::Enum::OriginType::Center
       )
+      .add_scale(1.0)
   end
 
   def execute
     actors.each do |entity|
-      entity = entity.as(GameEntity)
+      entity = entity.as(StageEntity)
 
       # ////////////////////////////////////////////////////
       # TODO: Add game logic!

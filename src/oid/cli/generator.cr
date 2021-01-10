@@ -67,7 +67,6 @@ class Oid::Cli < Admiral::Command
         "components.cr"           => "components.cr.j2",
         "systems/input_system.cr" => "systems/input_system.cr.j2",
         "systems/world_system.cr" => "systems/world_system.cr.j2",
-        "systems/ui_system.cr"    => "systems/ui_system.cr.j2",
       }
 
       templates.each do |f, t|

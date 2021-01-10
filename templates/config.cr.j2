@@ -1,22 +1,20 @@
-class {{ gfx_class }}::ConfigSystem
-  add_settings(
-    asset_path : String
-  )
-end
-
-{{ gfx_class }}::ConfigSystem.configure do |settings|
-  settings.screen_w = 800
-  settings.screen_h = 600
-  settings.target_fps = 120
-  settings.show_fps = true
-  settings.enable_mouse = true
-  settings.enable_keyboard = true
+# Define default settings here
+CONFIG = {
+  app_name:            "{{ name_module }}",
+  screen_w:            800,
+  screen_h:            600,
+  target_fps:          120,
+  show_fps:            true,
+  enable_mouse:        true,
+  enable_keyboard:     true,
+  camera_mode:         "2d",
 
   # ////////////////////////////////////////////////////
   # TODO: Set your asset path here
   # ////////////////////////////////////////////////////
-  settings.asset_path = "examples/02/assets"
-end
+  asset_path:          "./assets",
+
+}
 
 Oid::Systems::EmitInput.listen_for_keys(
 
@@ -29,3 +27,13 @@ Oid::Systems::EmitInput.listen_for_keys(
   Up,
   Down
 )
+
+class {{ name_module }}::ConfigService < {{ gfx_class }}::ConfigService
+  # ////////////////////////////////////////////////////
+  # TODO: Add custom settings here
+  # add_settings(
+  #   board_size : Oid::Vector2 = Oid::Vector2.new(10, 10),
+  #   blocker_probability : Float64 = 0.1,
+  # )
+  # ////////////////////////////////////////////////////
+end
