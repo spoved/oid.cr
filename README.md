@@ -8,7 +8,7 @@ TODO: Write a description here
 ```yaml
 dependencies:
   oid:
-    github: your-github-user/oid
+    github: spoved/oid.cr
 ```
 2. Run `shards install`
 
@@ -26,7 +26,7 @@ To pull submodules: `git submodule update --init --recursive`
 
 ## Contributing
 
-1. Fork it (<https://github.com/your-github-user/oid/fork>)
+1. Fork it (<https://github.com/spoved/oid/fork>)
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
@@ -42,4 +42,4 @@ https://github.com/unn4m3d/crystaledge
 
 ## Contributors
 
-- [Holden Omans](https://github.com/your-github-user) - creator and maintainer
+- [Holden Omans](https://github.com/kalinon) - creator and maintainer
