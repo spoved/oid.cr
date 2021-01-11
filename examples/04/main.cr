@@ -49,7 +49,7 @@ class AppController < Entitas::Controller
   def create_systems(contexts : Contexts)
     Entitas::Feature.new("Systems")
       .add(Oid::ServiceRegistrationSystems.new(contexts, services))
-      .add(OidSystems.new(contexts))
+      .add(Oid::BaseSystems.new(contexts))
       .add(ExampleSystems.new(contexts))
   end
 end

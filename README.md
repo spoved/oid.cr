@@ -1,6 +1,6 @@
-# oid
+# OID
 
-TODO: Write a description here
+A graphics library that is designed from the ground up to use Entity based architecture ([entitas.cr](https://github.com/spoved/entitas.cr)). Still a work in progress.
 
 ## Installation
 
@@ -16,15 +16,50 @@ TODO: Write a description here
 
 ## Usage
 
-```crystal
-require "oid"
+To generate an app shell, use the `oid-cli` to generate the base system and controllers.
+
+From the root of your project:
+
+```shell
+cd ./lib/oid
+./bin/oid-cli gen <project_name> ../../src
 ```
 
-TODO: Write usage instructions here
+Then simply require the generated `main.cr` into your entrypoint. Check the `TODO`s in each of the generated files for
+places to add your code and examples.
 
 ## Development
 
-To pull submodules: `git submodule update --init --recursive`
+Required tools/libs:
+
+* llvm >= 8
+* cmake >= 3.14
+* raylib ~> 3.4.0
+
+### Mac OSX
+
+```shell
+brew install llvm cmake raylib
+```
+
+Build raylib bindings:
+
+```shell
+git submodule update --init --recursive
+export CLANG_BINARY=/usr/local/opt/llvm/bin/clang++
+cmake .
+make bindings
+```
+
+or run `./build.sh`
+
+### Linux
+
+Will add instructions in the future
+
+### Windows
+
+Not supported at this time
 
 ## Contributing
 
