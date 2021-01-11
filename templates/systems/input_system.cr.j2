@@ -41,15 +41,20 @@ class {{ name_module }}::InputSystem < Entitas::ReactiveSystem
         # TODO: Add logic for when mouse wheel is scrolled
         # ////////////////////////////////////////////////////
       elsif e.keyboard?
+        # Get camera target
+        player = contexts.stage.camera_target_entity.as(StageEntity)
+
         case e.keyboard.key
         when Oid::Enum::Key::Right
           # ////////////////////////////////////////////////////
-          # TODO: Add logic for when right key is pressed
+          # TODO: Customize logic for when right key is pressed
           # ////////////////////////////////////////////////////
+          player.position.value += Oid::Vector3.right
         when Oid::Enum::Key::Left
           # ////////////////////////////////////////////////////
-          # TODO: Add logic for when left key is pressed
+          # TODO: Customize logic for when left key is pressed
           # ////////////////////////////////////////////////////
+          player.position.value += Oid::Vector3.left
         else
           puts "Input received from #{e.keyboard.key} !!!"
         end

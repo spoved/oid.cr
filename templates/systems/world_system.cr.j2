@@ -36,6 +36,19 @@ class {{ name_module }}::WorldSystem
         origin: Oid::Enum::OriginType::Center
       )
       .add_scale(1.0)
+
+    # Add reference object so movement can be seen
+    context.create_entity
+      .add_position(Oid::Vector3.new(0.0, -20.0, 0.0))
+      .add_position_type(Oid::Enum::Position::Static)
+      .add_view_element(
+        value: Oid::Element::Rectangle.new(
+          width: 20.0,
+          height: 20.0,
+          color: Oid::Color::RED
+        ),
+        origin: Oid::Enum::OriginType::Center
+      )
   end
 
   def execute
