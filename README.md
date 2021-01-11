@@ -5,11 +5,13 @@ TODO: Write a description here
 ## Installation
 
 1. Add the dependency to your `shard.yml`:
-```yaml
-dependencies:
-  oid:
-    github: spoved/oid.cr
-```
+
+  ```yaml
+  dependencies:
+    oid:
+      github: spoved/oid.cr
+  ```
+
 2. Run `shards install`
 
 ## Usage
