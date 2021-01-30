@@ -34,6 +34,7 @@ targets:
 dependencies:
   spoved:
     github: spoved/spoved.cr
+    version: ~> 0.4.0
   entitas:
     github: spoved/entitas.cr
     branch: master

@@ -44,12 +44,12 @@ module Oid
     end
 
     # Returns dot product of two vectors
-    def dot(other : Vector2)
+    def dot(other)
       x*other.x + y*other.y
     end
 
     # Returns cross product of two vectors
-    def cross(other : Vector2)
+    def cross(other)
       Vector2.new(self.x*other.y - self.y*other.x, self.y*other.x - self.x*other.y)
     end
 
@@ -59,7 +59,7 @@ module Oid
     end
 
     # Returns angle between two vectors
-    def angle(other : Vector2)
+    def angle(other : Vector)
       self**other / (self.magnitude * other.magnitude)
     end
 
@@ -69,7 +69,7 @@ module Oid
     end
 
     # Performs component addition
-    def +(other : Vector2)
+    def +(other : Vector)
       Vector2.new(self.x + other.x, self.y + other.y)
     end
 
@@ -79,7 +79,7 @@ module Oid
     end
 
     # Performs component subtraction
-    def -(other : Vector2)
+    def -(other : Vector)
       Vector2.new(self.x - other.x, self.y - other.y)
     end
 
@@ -94,7 +94,7 @@ module Oid
     end
 
     # Performs component multiplication (for dot product see `#dot`)
-    def *(other : Vector2)
+    def *(other : Vector)
       Vector2.new(self.x*other.x, self.y*other.y)
     end
 
@@ -104,7 +104,7 @@ module Oid
     end
 
     # Performs component division
-    def /(other : Vector2)
+    def /(other : Vector)
       Vector2.new(self.x/other.x, self.y/other.y)
     end
 
@@ -125,20 +125,20 @@ module Oid
     end
 
     # Finds normal axis between two vectors
-    def find_normal_axis(other : Vector2)
+    def find_normal_axis(other)
       (self % other).normalize
     end
 
     # Finds distance between two vectors
-    def distance(other : Vector2)
+    def distance(other : Vector)
       (self - other).magnitude
     end
 
-    def ==(other : Vector2)
+    def ==(other)
       self.x == other.x && self.y == other.y
     end
 
-    def !=(other : Vector2)
+    def !=(other)
       self.x != other.x || self.y != other.y
     end
 

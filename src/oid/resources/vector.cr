@@ -18,7 +18,7 @@ module Oid
     end
 
     # Performs component multiplication (for dot product see `#dot`)
-    abstract def *(other)
+    abstract def *(other : Vector)
     # Performs multiplication
     abstract def *(other : Float64)
 
@@ -27,14 +27,14 @@ module Oid
     end
 
     # Performs component addition
-    abstract def +(other)
+    abstract def +(other : Vector)
     # Performs component addition
     abstract def +(other : Float64)
     # Returns negated vector
     abstract def -
     # Performs component subtraction
-    abstract def -(other)
-    abstract def /(other)
+    abstract def -(other : Vector)
+    abstract def /(other : Vector)
 
     def /(other : Float64)
       # Multiply by the inverse => only do 1 division instead of 3
@@ -50,7 +50,7 @@ module Oid
       c
     end
 
-    abstract def distance(other)
+    abstract def distance(other : Vector)
 
     # :ditto:
     def heading

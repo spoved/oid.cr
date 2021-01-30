@@ -50,12 +50,12 @@ module Oid
     end
 
     # Dot product
-    def dot(other : Vector3)
+    def dot(other)
       x*other.x + y*other.y + z*other.z
     end
 
     # Cross product
-    def cross(other : Vector3)
+    def cross(other)
       Vector3.new(
         y*other.z - z*other.y,
         z*other.x - x*other.z,
@@ -67,11 +67,11 @@ module Oid
       ::Math.sqrt(self.x**2 + self.y**2 + self.z**2)
     end
 
-    def angle(other : Vector3)
+    def angle(other : Vector)
       2.0 * Math.acos(self**other / (self.magnitude * other.magnitude))
     end
 
-    def +(other : Vector3)
+    def +(other : Vector)
       Vector3.new(self.x + other.x, self.y + other.y, self.z + other.z)
     end
 
@@ -79,7 +79,7 @@ module Oid
       Vector3.new(self.x + other, self.y + other, self.z + other)
     end
 
-    def -(other : Vector3)
+    def -(other : Vector)
       Vector3.new(self.x - other.x, self.y - other.y, self.z - other.z)
     end
 
@@ -91,7 +91,7 @@ module Oid
       Vector3.new(-self.x, -self.y, -self.z)
     end
 
-    def *(other : Vector3)
+    def *(other : Vector)
       Vector3.new(self.x*other.x, self.y*other.y, self.z*other.z)
     end
 
@@ -99,7 +99,7 @@ module Oid
       Vector3.new(self.x*other, self.y * other, self.z*other)
     end
 
-    def /(other : Vector3)
+    def /(other : Vector)
       Vector3.new(self.x/other.x, self.y/other.y, self.z/other.z)
     end
 
@@ -118,11 +118,11 @@ module Oid
       self
     end
 
-    def find_normal_axis(other : Vector3)
+    def find_normal_axis(other : Vector)
       (self % other).normalize
     end
 
-    def distance(other : Vector3)
+    def distance(other : Vector)
       (self - other).magnitude
     end
 
@@ -132,7 +132,7 @@ module Oid
         (self.z - other.z).abs <= Float64::EPSILON
     end
 
-    def !=(other : Vector3)
+    def !=(other : Vector)
       !(self == other)
     end
 

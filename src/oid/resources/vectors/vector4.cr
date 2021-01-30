@@ -40,12 +40,12 @@ module Oid
     end
 
     # Dot product
-    def dot(other : Vector4)
+    def dot(other)
       x*other.x + y*other.y + z*other.z
     end
 
     # Cross product
-    def cross(other : Vector4)
+    def cross(other)
       Vector4.new(
         self.y*other.z - self.z*other.y,
         self.z*other.x - self.x*other.z,
@@ -58,7 +58,7 @@ module Oid
       ::Math.sqrt(self.x**2 + self.y**2 + self.z**2 + self.w**2)
     end
 
-    def +(other : Vector4)
+    def +(other)
       Vector4.new(self.x + other.x, self.y + other.y, self.z + other.z, self.w + other.w)
     end
 
@@ -66,7 +66,7 @@ module Oid
       Vector4.new(self.x + other, self.y + other, self.z + other, self.w + other)
     end
 
-    def -(other : Vector4)
+    def -(other : Vector)
       Vector4.new(self.x - other.x, self.y - other.y, self.z - other.z, self.w - other.w)
     end
 
@@ -78,7 +78,7 @@ module Oid
       Vector4.new(-self.x, -self.y, -self.z, -self.w)
     end
 
-    def *(other : Vector4)
+    def *(other : Vector)
       Vector4.new(self.x*other.x, self.y*other.y, self.z*other.z, self.w*other.w)
     end
 
@@ -86,7 +86,7 @@ module Oid
       Vector4.new(self.x*other, self.y * other, self.z * other, self.w * other)
     end
 
-    def /(other : Vector4)
+    def /(other : Vector)
       Vector4.new(self.x/other.x, self.y/other.y, self.z/other.z, self.w/other.w)
     end
 
@@ -106,15 +106,15 @@ module Oid
       self
     end
 
-    def distance(other : Vector4)
+    def distance(other : Vector)
       (self - other).magnitude
     end
 
-    def ==(other : Vector4)
+    def ==(other : Vector)
       self.x == other.x && self.y == other.y && self.z == other.z && self.w == other.w # TODO : Comparsion with EPSILON
     end
 
-    def !=(other : Vector4)
+    def !=(other : Vector)
       self.x != other.x || self.y != other.y || self.z != other.z || self.w != other.w # TODO : Comparsion with EPSILON
     end
 

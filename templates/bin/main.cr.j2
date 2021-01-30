@@ -1,0 +1,16 @@
+require "../main"
+
+controller = AppController.new
+controller.start
+
+# Enable this if you would like to use the entitas debug server
+# spawn do
+#   controller.start_server
+# end
+
+window_controller = controller.contexts.app.window.value
+
+while !window_controller.should_close?
+  controller.update
+  Fiber.yield
+end

@@ -129,7 +129,7 @@ class SpecLoggerService
     self.log_msg = nil
   end
 
-  def log(msg : String)
+  def log(msg : String, level : ::Log::Severity = ::Log::Severity::Info)
     self.log_msg = msg
   end
 
