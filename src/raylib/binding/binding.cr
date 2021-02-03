@@ -61,7 +61,7 @@ module RayLib
       # `#unsafe_fetch` and `#size` will be implemented by the wrapper class.
 
       # Adds an element at the end.  Implemented by the wrapper.
-      abstract def push(value)
+      abstract def push(value : T)
 
       # Adds *element* at the end of the container.
       def <<(value : T) : self

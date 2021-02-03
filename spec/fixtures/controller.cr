@@ -32,7 +32,7 @@ class SpecViewController
     init_view(contexts, @entity)
   end
 
-  def init_view(contexts, entity)
+  def init_view(contexts : Contexts, entity)
     register_listeners(entity)
     entity.asset_loaded = true
   end

@@ -111,7 +111,7 @@ class SpecViewService
         position.y,
         position.z,
       ),
-        # FIXME: direction should not be zero
+      # FIXME: direction should not be zero
       Oid::Vector3.new(
         0,
         0,

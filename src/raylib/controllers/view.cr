@@ -10,10 +10,10 @@ class RayLib::ViewController
     init_view(@contexts, @entity)
   end
 
-  def init_view(c : Contexts, e : Oid::RenderableEntity)
-    register_listeners(e)
+  def init_view(contexts : Contexts, entity)
+    register_listeners(entity)
 
-    if e.asset?
+    if entity.asset?
       load_asset
     end
 
