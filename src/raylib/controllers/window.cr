@@ -15,7 +15,7 @@ class RayLib::WindowController
   def init_window(contexts, entity, config_service : Oid::Service::Config)
     register_listeners(self.window_entity)
 
-    RayLib.trace_log(RayLib::Enum::TraceLog::Info.value, "RayLib::WindowController - Initializing Window")
+    RayLib.trace_log(RayLib::Enum::TraceLog::Info, "RayLib::WindowController - Initializing Window")
     RayLib.init_window(
       config_service.screen_w,
       config_service.screen_h,
@@ -31,7 +31,7 @@ class RayLib::WindowController
   end
 
   def destroy_window
-    RayLib.trace_log(RayLib::Enum::TraceLog::Info.value, "RayLib::WindowController - Closing Window")
+    RayLib.trace_log(RayLib::Enum::TraceLog::Info, "RayLib::WindowController - Closing Window")
     RayLib.close_window
   end
 

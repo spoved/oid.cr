@@ -14,49 +14,49 @@ class RayLib::ApplicationController
   def register_listeners(entity : Entitas::IEntity); end
 
   def init(&block)
-    RayLib.trace_log(RayLib::Enum::TraceLog::Info.value, "RayLib::ApplicationController - Starting Init")
+    RayLib.trace_log(RayLib::Enum::TraceLog::Info, "RayLib::ApplicationController - Starting Init")
 
     yield
 
     RayLib.set_target_fps(config_service.target_fps)
-    RayLib.trace_log(RayLib::Enum::TraceLog::Info.value, "RayLib::ApplicationController - End Init")
+    RayLib.trace_log(RayLib::Enum::TraceLog::Info, "RayLib::ApplicationController - End Init")
   end
 
   def update(&block)
-    RayLib.trace_log(RayLib::Enum::TraceLog::Debug.value, "RayLib::Application - Starting Update")
+    RayLib.trace_log(RayLib::Enum::TraceLog::Debug, "RayLib::Application - Starting Update")
     yield
-    RayLib.trace_log(RayLib::Enum::TraceLog::Debug.value, "RayLib::Application - End Update")
+    RayLib.trace_log(RayLib::Enum::TraceLog::Debug, "RayLib::Application - End Update")
   end
 
   def draw(&block)
-    # RayLib.trace_log(RayLib::Enum::TraceLog::Debug.value, "RayLib::Application - Starting Draw")
+    # RayLib.trace_log(RayLib::Enum::TraceLog::Debug, "RayLib::Application - Starting Draw")
 
     RayLib.begin_drawing
     RayLib.clear_background(Oid::Color::WHITE.to_unsafe)
 
     yield
 
-    # RayLib.trace_log(RayLib::Enum::TraceLog::Debug.value, "RayLib::Application - End Draw")
+    # RayLib.trace_log(RayLib::Enum::TraceLog::Debug, "RayLib::Application - End Draw")
   end
 
   def draw_ui(&block)
-    # RayLib.trace_log(RayLib::Enum::TraceLog::Debug.value, "RayLib::Application - Starting Draw UI")
+    # RayLib.trace_log(RayLib::Enum::TraceLog::Debug, "RayLib::Application - Starting Draw UI")
 
     yield
 
     RayLib.end_drawing
-    # RayLib.trace_log(RayLib::Enum::TraceLog::Debug.value, "RayLib::Application - End Draw UI")
+    # RayLib.trace_log(RayLib::Enum::TraceLog::Debug, "RayLib::Application - End Draw UI")
   end
 
   def cleanup(&block)
-    RayLib.trace_log(RayLib::Enum::TraceLog::Info.value, "RayLib::Application - Starting Cleanup")
+    RayLib.trace_log(RayLib::Enum::TraceLog::Info, "RayLib::Application - Starting Cleanup")
     yield
-    RayLib.trace_log(RayLib::Enum::TraceLog::Info.value, "RayLib::Application - End Cleanup")
+    RayLib.trace_log(RayLib::Enum::TraceLog::Info, "RayLib::Application - End Cleanup")
   end
 
   def exit(&block)
-    RayLib.trace_log(RayLib::Enum::TraceLog::Info.value, "RayLib::Application - Starting Exit")
+    RayLib.trace_log(RayLib::Enum::TraceLog::Info, "RayLib::Application - Starting Exit")
     yield
-    RayLib.trace_log(RayLib::Enum::TraceLog::Info.value, "RayLib::Application - End Exit")
+    RayLib.trace_log(RayLib::Enum::TraceLog::Info, "RayLib::Application - End Exit")
   end
 end

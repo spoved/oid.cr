@@ -1,9 +1,25 @@
 module: RayLib
-
-# library: "%/ext/raylib/src/libraylib.a %/ext/raylib/src/external/glfw/src/libglfw3.a"
-# library: "%/ext/raylib/src/libraylib.dylib"
-# library: "-lraylib -L%/ext/raylib/src/libraylib.a -lglfw3 -L%/ext/raylib/src/external/glfw/src/"
 library: "-lraylib"
+
+processors:
+  - default_constructor
+  - function_class
+  - inheritance
+  - copy_structs
+  - macros
+  - functions
+  # - instance_properties
+  # - operators
+  - filter_methods
+  - extern_c
+  - auto_container_instantiation
+  - instantiate_containers
+  - enums
+  - crystal_wrapper
+  - virtual_override
+  - cpp_wrapper
+  - crystal_binding
+  - sanity_check
 
 generators:
   cpp:
@@ -36,7 +52,8 @@ parser:
   flags:
     - "-x"
     - "c++"
-    - "-std=c++11"
+    - "-stdlib=libstdc++"
+    - "-std=c++14"
 
   files:
     - raylib.h

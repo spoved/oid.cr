@@ -4,18 +4,6 @@
 "void (int, const char *, __va_list_tag *)": { ignore: true }
 "void ()": { ignore: true }
 "void (void *)": { ignore: true }
-"void *":
-  builtin: true
-  crystal_type: "Void*"
-"unsigned char":
-  builtin: true
-  crystal_type: UInt8
-"unsigned int":
-  builtin: true
-  crystal_type: Int32
-"unsigned int":
-  builtin: true
-  crystal_type: Int32
 "unsigned int [7]":
   builtin: true
   crystal_type: "LibC::UInt[7]"

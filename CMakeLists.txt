@@ -6,6 +6,11 @@ project(oid VERSION 0.1.1)
 
 cmake_minimum_required(VERSION 3.14)
 
+# To define a specific LLVM install set the path here:
+# set(LLVM_DIR /usr/local/opt/llvm/lib/cmake/llvm)
+# set(LLVM_DIR /usr/local/opt/llvm@7/lib/cmake/llvm)
+# set(LLVM_DIR /usr/local/opt/llvm@9/lib/cmake/llvm)
+
 # set(LLVM_DIR "/usr/local/Cellar/llvm@9/9.0.1_2/lib/cmake/llvm/")
 # GC
 # include_directories(/usr/local/Cellar/bdw-gc/8.0.4_1/include)

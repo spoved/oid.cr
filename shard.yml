@@ -38,6 +38,8 @@ dependencies:
   entitas:
     github: spoved/entitas.cr
     branch: master
+  entitas-web:
+    github: kalinon/entitas-web
   habitat:
     github: luckyframework/habitat
   crinja:

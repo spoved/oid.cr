@@ -16,15 +16,15 @@ class RayLib::LoggerService
   private def convert_log_level(level : ::Log::Severity)
     case level
     when ::Log::Severity::Debug
-      RayLib::Enum::TraceLog::Debug.value
+      RayLib::Enum::TraceLog::Debug.value.to_i
     when ::Log::Severity::Info
-      RayLib::Enum::TraceLog::Info.value
+      RayLib::Enum::TraceLog::Info.value.to_i
     when ::Log::Severity::Warn
-      RayLib::Enum::TraceLog::Warning.value
+      RayLib::Enum::TraceLog::Warning.value.to_i
     when ::Log::Severity::Error
-      RayLib::Enum::TraceLog::Error.value
+      RayLib::Enum::TraceLog::Error.value.to_i
     else
-      RayLib::Enum::TraceLog::Info.value
+      RayLib::Enum::TraceLog::Info.value.to_i
     end
   end
 end

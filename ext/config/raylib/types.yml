@@ -80,8 +80,8 @@ Font:
   generate_wrapper: false
   kind: Struct
   crystal_type: Font
-SpriteFont:
-  alias_for: Font
+# SpriteFont:
+#   alias_for: Font
 Camera:
   alias_for: Camera3D
 Camera3D:
