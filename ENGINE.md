@@ -189,3 +189,42 @@ create_feature MyFeature, [
 ```
 
 This example creates a `MyFeatureSystem` which can be subsituted for `Oid::BaseSystem` which will have no movement and will not listen for input.
+
+
+## Elements
+
+### Texture Atlas
+
+Oid has built in support for basic texture atlases. An atlas file should look like this:
+
+```xml
+<TextureAtlas imagePath="medievalRTS_spritesheet.png">
+  <SubTexture name="medievalEnvironment_01.png" x="534" y="275" width="14" height="32"/>
+  <SubTexture name="medievalEnvironment_02.png" x="515" y="256" width="19" height="46"/>
+  <SubTexture name="medievalEnvironment_03.png" x="516" y="514" width="19" height="33"/>
+</TextureAtlas>
+```
+
+You can then add the atlas as asset to an entity:
+
+```crystal
+ context.create_entity
+      .add_asset(
+        name: "spritesheet/medievalRTS_spritesheet.xml",
+        type: Oid::Enum::AssetType::TextureAtlas
+      )
+```
+
+This will load the texture defined at `imagePath` relitive to the `.xml` atlas. To load sub textures, it is the same as with a `Texture`, only use the `AssetType` of `SubTexture` instead:
+
+```crystal
+      context.create_entity
+      .add_actor(name: "my_sub_texture")
+      .add_position(Oid::Vector3.new(130, 100, 10))
+      .add_position_type(Oid::Enum::Position::Relative)
+      .add_asset(
+        name: "medievalEnvironment_03.png",
+        type: Oid::Enum::AssetType::SubTexture
+      )
+      .add_scale(1.0)
+```

@@ -4,6 +4,8 @@ module Oid
       # Textures
       Image
       Texture
+      TextureAtlas
+      SubTexture
 
       # Text
       Font

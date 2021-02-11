@@ -55,6 +55,13 @@ class RayLib::ViewController
         logger_service.log("Loading #{entity.asset.type} => #{asset_name}")
         view_service.load_texture(config_service.asset_path, asset_name, entity)
       end
+    when Oid::Enum::AssetType::TextureAtlas
+      unless view_service.textures[asset_name]?
+        logger_service.log("Loading #{entity.asset.type} => #{asset_name}")
+        view_service.load_texture_atlas(config_service.asset_path, asset_name, entity)
+      end
+    when Oid::Enum::AssetType::SubTexture
+      # Do nothing
     else
       logger_service.log("Unsupported asset type #{entity.asset.type}")
       return
@@ -64,7 +71,7 @@ class RayLib::ViewController
 
   private def unload_asset
     case entity.asset.type
-    when Oid::Enum::AssetType::Texture
+    when Oid::Enum::AssetType::Texture, Oid::Enum::AssetType::TextureAtlas
       view_service.unload_texture(entity.asset.name, entity)
     else
       logger_service.log("Unsupported asset type #{entity.asset.type}")
@@ -178,11 +185,60 @@ class RayLib::ViewController
     case e.asset.type
     when Oid::Enum::AssetType::Texture
       draw_texture(e)
+    when Oid::Enum::AssetType::SubTexture
+      draw_sub_texture(e)
     end
+  end
+
+  private def draw_sub_texture(e : Oid::RenderableEntity)
+    position = e.transform
+
+    texture, info = view_service.sub_texture(e.asset.name)
+    if texture.nil?
+      e.asset_loaded = false
+      return
+    end
+
+    return if info.nil?
+
+    scale = e.scale.value.to_f32
+
+    source_rec = RayLib::Rectangle.new(
+      x: info[:x],
+      y: info[:y],
+      height: info[:height],
+      width: info[:width],
+    )
+    dest_rec = RayLib::Rectangle.new(
+      x: position.x.to_f32,
+      y: position.y.to_f32,
+      height: source_rec.height * scale,
+      width: source_rec.width * scale,
+    )
+    origin = RayLib::Vector2.new(Oid::CollisionFuncs.calc_rec_origin(
+      e.asset.origin,
+      width: dest_rec.width,
+      height: dest_rec.height
+    ))
+
+    RayLib.draw_texture_pro(
+      texture: texture,
+      # Rectangle on texture
+      source: source_rec,
+      # Rectangle in the world
+      dest: dest_rec,
+      # Origin in relation to dest rectangle
+      origin: origin,
+
+      rotation: e.rotation.value.magnitude.to_f32,
+      # scale: e.scale.value.to_f32,
+      tint: Oid::Color::WHITE.to_unsafe
+    )
   end
 
   private def draw_texture(e : Oid::RenderableEntity)
     position = e.transform
+
     texture = view_service.texture(e.asset.name)
     if texture.nil?
       e.asset_loaded = false
