@@ -1,0 +1,16 @@
+#
+# rTexPacker atlas descriptor file (v1.0)
+#
+# Number of packed sprites:     7
+#
+# Atlas info:    a <imagePath> <width> <height> <spriteCount> <isFont> <fontSize>
+# Sprite info:   s <nameId> <originX> <originY> <positionX> <positionY> <sourceSizeWidth> <sourceSizeHeight> <padding> <trimmed> <trimRecX> <trimRecY> <trimRecWidth> <trimRecHeight>
+#
+a pieces.png 1024 1024 7 0 32
+s Blocker 0 0 768 0 128 110 0 0 0 0 128 110
+s Piece0 0 0 0 0 128 128 0 0 0 0 128 128
+s Piece1 0 0 128 0 128 128 0 0 0 0 128 128
+s Piece2 0 0 256 0 128 128 0 0 0 0 128 128
+s Piece3 0 0 384 0 128 128 0 0 0 0 128 128
+s Piece4 0 0 512 0 128 128 0 0 0 0 128 128
+s Piece5 0 0 640 0 128 128 0 0 0 0 128 128

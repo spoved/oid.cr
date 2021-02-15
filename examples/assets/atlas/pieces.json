@@ -1,0 +1,79 @@
+{
+    "software": {
+        "name": "rTexPacker v1.0",
+        "url": "https://www.raylibtech.com/rtexpacker"
+    },
+    "atlas": {
+        "imagePath": "pieces.png",
+        "width": 1024,
+        "height": 1024,
+        "spriteCount": 7,
+        "isFont": false,
+        "fontSize": 32
+    },
+    "sprites": [
+        {
+            "nameId": "Blocker",
+            "origin": { "x": 0, "y": 0 },
+            "position": { "x": 768, "y": 0 },
+            "sourceSize": { "width": 128, "height": 110 },
+            "padding": 0,
+            "trimmed": false,
+            "trimRec": { "x": 0, "y": 0, "width": 128, "height": 110 }
+        },
+        {
+            "nameId": "Piece0",
+            "origin": { "x": 0, "y": 0 },
+            "position": { "x": 0, "y": 0 },
+            "sourceSize": { "width": 128, "height": 128 },
+            "padding": 0,
+            "trimmed": false,
+            "trimRec": { "x": 0, "y": 0, "width": 128, "height": 128 }
+        },
+        {
+            "nameId": "Piece1",
+            "origin": { "x": 0, "y": 0 },
+            "position": { "x": 128, "y": 0 },
+            "sourceSize": { "width": 128, "height": 128 },
+            "padding": 0,
+            "trimmed": false,
+            "trimRec": { "x": 0, "y": 0, "width": 128, "height": 128 }
+        },
+        {
+            "nameId": "Piece2",
+            "origin": { "x": 0, "y": 0 },
+            "position": { "x": 256, "y": 0 },
+            "sourceSize": { "width": 128, "height": 128 },
+            "padding": 0,
+            "trimmed": false,
+            "trimRec": { "x": 0, "y": 0, "width": 128, "height": 128 }
+        },
+        {
+            "nameId": "Piece3",
+            "origin": { "x": 0, "y": 0 },
+            "position": { "x": 384, "y": 0 },
+            "sourceSize": { "width": 128, "height": 128 },
+            "padding": 0,
+            "trimmed": false,
+            "trimRec": { "x": 0, "y": 0, "width": 128, "height": 128 }
+        },
+        {
+            "nameId": "Piece4",
+            "origin": { "x": 0, "y": 0 },
+            "position": { "x": 512, "y": 0 },
+            "sourceSize": { "width": 128, "height": 128 },
+            "padding": 0,
+            "trimmed": false,
+            "trimRec": { "x": 0, "y": 0, "width": 128, "height": 128 }
+        },
+        {
+            "nameId": "Piece5",
+            "origin": { "x": 0, "y": 0 },
+            "position": { "x": 640, "y": 0 },
+            "sourceSize": { "width": 128, "height": 128 },
+            "padding": 0,
+            "trimmed": false,
+            "trimRec": { "x": 0, "y": 0, "width": 128, "height": 128 }
+        }
+    ]
+}

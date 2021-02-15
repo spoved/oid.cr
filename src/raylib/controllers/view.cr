@@ -190,6 +190,7 @@ class RayLib::ViewController
     end
   end
 
+  # Draw a sub texture from an atlas
   private def draw_sub_texture(e : Oid::RenderableEntity)
     position = e.transform
 
@@ -203,9 +204,11 @@ class RayLib::ViewController
 
     scale = e.scale.value.to_f32
 
+    # TODO: Handle padding...
+
     source_rec = RayLib::Rectangle.new(
-      x: info[:x],
-      y: info[:y],
+      x: info[:pos_x],
+      y: info[:pos_y],
       height: info[:height],
       width: info[:width],
     )

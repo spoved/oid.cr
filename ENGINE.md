@@ -190,32 +190,39 @@ create_feature MyFeature, [
 
 This example creates a `MyFeatureSystem` which can be subsituted for `Oid::BaseSystem` which will have no movement and will not listen for input.
 
-
 ## Elements
 
 ### Texture Atlas
 
-Oid has built in support for basic texture atlases. An atlas file should look like this:
+Oid has built in support for basic texture atlases. Currently it supports the raylib formatting of Texture Atlases, which can be generated using [rTP](https://raylibtech.itch.io/rtexpacker).
+
+An XML based atlas file should look like this:
 
 ```xml
-<TextureAtlas imagePath="medievalRTS_spritesheet.png">
-  <SubTexture name="medievalEnvironment_01.png" x="534" y="275" width="14" height="32"/>
-  <SubTexture name="medievalEnvironment_02.png" x="515" y="256" width="19" height="46"/>
-  <SubTexture name="medievalEnvironment_03.png" x="516" y="514" width="19" height="33"/>
-</TextureAtlas>
+<AtlasTexture imagePath='pieces.png' width='1024' height='1024' spriteCount='7' isFont='0' fontSize='32'>
+    <Sprite nameId='Blocker' originX='0' originY='0' positionX='768' positionY='0' sourceSizeWidth='128' sourceSizeHeight='110' padding='0' trimmed='0' trimRecX='0' trimRecY='0' trimRecWidth='128' trimRecHeight='110' />
+    <Sprite nameId='Piece0' originX='0' originY='0' positionX='0' positionY='0' sourceSizeWidth='128' sourceSizeHeight='128' padding='0' trimmed='0' trimRecX='0' trimRecY='0' trimRecWidth='128' trimRecHeight='128' />
+    <Sprite nameId='Piece1' originX='0' originY='0' positionX='128' positionY='0' sourceSizeWidth='128' sourceSizeHeight='128' padding='0' trimmed='0' trimRecX='0' trimRecY='0' trimRecWidth='128' trimRecHeight='128' />
+    <Sprite nameId='Piece2' originX='0' originY='0' positionX='256' positionY='0' sourceSizeWidth='128' sourceSizeHeight='128' padding='0' trimmed='0' trimRecX='0' trimRecY='0' trimRecWidth='128' trimRecHeight='128' />
+    <Sprite nameId='Piece3' originX='0' originY='0' positionX='384' positionY='0' sourceSizeWidth='128' sourceSizeHeight='128' padding='0' trimmed='0' trimRecX='0' trimRecY='0' trimRecWidth='128' trimRecHeight='128' />
+    <Sprite nameId='Piece4' originX='0' originY='0' positionX='512' positionY='0' sourceSizeWidth='128' sourceSizeHeight='128' padding='0' trimmed='0' trimRecX='0' trimRecY='0' trimRecWidth='128' trimRecHeight='128' />
+    <Sprite nameId='Piece5' originX='0' originY='0' positionX='640' positionY='0' sourceSizeWidth='128' sourceSizeHeight='128' padding='0' trimmed='0' trimRecX='0' trimRecY='0' trimRecWidth='128' trimRecHeight='128' />
+</AtlasTexture>
 ```
+
+Example atlases are found at `examples/assets/atlas`. RayLib atlas formats that are supported are `xml`, `json` and `rtpa`.
 
 You can then add the atlas as asset to an entity:
 
 ```crystal
  context.create_entity
       .add_asset(
-        name: "spritesheet/medievalRTS_spritesheet.xml",
+        name: "atlas/pieces.xml",     # path of atlas file relative to the defined "asset" path
         type: Oid::Enum::AssetType::TextureAtlas
       )
 ```
 
-This will load the texture defined at `imagePath` relitive to the `.xml` atlas. To load sub textures, it is the same as with a `Texture`, only use the `AssetType` of `SubTexture` instead:
+This will load the texture defined at `imagePath` relitive to the atlas file. To load sub textures, it is the same as with a `Texture`, only use the `AssetType` of `SubTexture` instead:
 
 ```crystal
       context.create_entity
@@ -223,7 +230,7 @@ This will load the texture defined at `imagePath` relitive to the `.xml` atlas. 
       .add_position(Oid::Vector3.new(130, 100, 10))
       .add_position_type(Oid::Enum::Position::Relative)
       .add_asset(
-        name: "medievalEnvironment_03.png",
+        name: "Piece0",
         type: Oid::Enum::AssetType::SubTexture
       )
       .add_scale(1.0)
