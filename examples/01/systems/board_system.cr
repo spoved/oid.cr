@@ -33,7 +33,7 @@ class Example::BoardSystem
     board_width = config_service.board_size.x * square_size
     board_height = config_service.board_size.y * square_size
 
-    board = create_outline(
+    board = create_rec(
       Oid::Vector3.new(config_service.screen_w/2, square_size, 0.0),
       width: board_width,
       height: board_height,

@@ -50,9 +50,9 @@ module Oid::Systems::StageHelper
       .add_scale(1.0)
   end
 
-  def create_outline(position = Oid::Vector3.new(0.0, 10.0, 10.0),
-                     width = 68.0, height = 20.0, color = Oid::Color::GOLD,
-                     origin = Oid::Enum::OriginType::UpperCenter, pos_type = Oid::Enum::Position::Relative)
+  def create_rec(position = Oid::Vector3.new(0.0, 10.0, 10.0),
+                 width = 68.0, height = 20.0, color = Oid::Color::GOLD,
+                 origin = Oid::Enum::OriginType::UpperCenter, pos_type = Oid::Enum::Position::Relative)
     context.create_entity
       .add_position(position)
       .add_position_type(pos_type)
@@ -66,6 +66,20 @@ module Oid::Systems::StageHelper
       )
       .add_scale(1.0)
   end
+
+  def create_line(start_pos, end_pos, color = Oid::Color::GRAY)
+    line = context.create_entity
+      .add_position(start_pos)
+      .add_view_element(
+        value: Oid::Element::Line.new(
+          end_pos: end_pos,
+          color: color,
+        ),
+        origin: Oid::Enum::OriginType::UpperLeft,
+      )
+    line
+  end
+
 
   def generate_origin_grid(name, color = Oid::Color::GREEN, length = 4000.0)
     # Create X/Y Lines

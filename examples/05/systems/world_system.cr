@@ -32,7 +32,7 @@ class Example::WorldSystem
     # Create player
     player = create_player
 
-    outline = create_outline
+    outline = create_rec
     player.add_child(outline)
 
     label = create_label("player_label", "player")
