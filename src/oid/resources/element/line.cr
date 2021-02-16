@@ -4,7 +4,7 @@ module Oid::Element
 
     property end_pos : Oid::Vector2
     property color : Oid::Color
-
-    def initialize(@end_pos, @color); end
+    property thickness : Float64 = 1.0
+    def initialize(@end_pos, @color, @thickness = 1.0); end
   end
 end

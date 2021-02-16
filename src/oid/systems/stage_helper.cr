@@ -67,19 +67,61 @@ module Oid::Systems::StageHelper
       .add_scale(1.0)
   end
 
-  def create_line(start_pos, end_pos, color = Oid::Color::GRAY)
+  # Draw a line
+  def create_line(start_pos : Oid::Vector3, end_pos : Oid::Vector2, thickness = 1.0, color = Oid::Color::GRAY)
     line = context.create_entity
       .add_position(start_pos)
       .add_view_element(
         value: Oid::Element::Line.new(
           end_pos: end_pos,
           color: color,
+          thickness: thickness,
         ),
         origin: Oid::Enum::OriginType::UpperLeft,
       )
     line
   end
 
+  # Draw a rectangle outline
+  def create_outline(position = Oid::Vector3.new(0.0, 10.0, 10.0),
+                     width = 68.0, height = 20.0, thickness = 1.0,
+                     color = Oid::Color::GOLD,
+                     origin = Oid::Enum::OriginType::UpperCenter, pos_type = Oid::Enum::Position::Relative)
+    outline = context.create_entity
+      .add_position(position)
+      .add_position_type(pos_type)
+
+    # Draw top
+    outline.add_child create_line(
+      Oid::Vector3.new(0.0, 0.0, 0.0),
+      Oid::Vector2.new(width, 0.0),
+      thickness,
+      color
+    )
+    # Draw bottom
+    outline.add_child create_line(
+      Oid::Vector3.new(0.0, height, 0.0),
+      Oid::Vector2.new(width, height),
+      thickness,
+      color
+    )
+    # Draw left
+    outline.add_child create_line(
+      Oid::Vector3.new(0.0, 0.0, 0.0),
+      Oid::Vector2.new(0.0, height),
+      thickness,
+      color
+    )
+    # Draw right
+    outline.add_child create_line(
+      Oid::Vector3.new(width, 0.0, 0.0),
+      Oid::Vector2.new(width, height),
+      thickness,
+      color
+    )
+
+    outline
+  end
 
   def generate_origin_grid(name, color = Oid::Color::GREEN, length = 4000.0)
     # Create X/Y Lines

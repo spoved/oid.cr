@@ -128,11 +128,10 @@ class RayLib::ViewController
         z: e.position.value.z,
       ))
 
-      RayLib.draw_line(
-        start_pos_x: position.x.to_i,
-        start_pos_y: position.y.to_i,
-        end_pos_x: end_pos.x.to_i,
-        end_pos_y: end_pos.y.to_i,
+      RayLib.draw_line_ex(
+        start_pos: RayLib::Vector2.new(position.to_v2),
+        end_pos: RayLib::Vector2.new(end_pos.to_v2),
+        thick: object.thickness.to_f32,
         color: object.color.to_unsafe,
       )
     when Oid::Element::Cube
