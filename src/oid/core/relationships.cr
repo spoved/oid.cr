@@ -1,17 +1,5 @@
 module Oid
   module Relationships(T)
-    # {% if flag?(:entitas_enable_logging) %}
-    #   @@logger = ::Log.for(Oid::Relationships)
-
-    #   def logger : ::Log
-    #     @@logger
-    #   end
-
-    #   def self.logger
-    #     @@logger
-    #   end
-    # {% end %}
-
     macro included
       {% if flag?(:entitas_enable_logging) %}
       spoved_logger

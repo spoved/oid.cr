@@ -15,7 +15,9 @@ module RayLib
       abstract def textures : Hash(String, RayLib::Texture2D)
 
       @[JSON::Field(ignore: true)]
-      getter texture_atlases : Hash(String, Hash(String, AtlasSubTexture)) = Hash(String, Hash(String, AtlasSubTexture)).new
+      getter texture_atlas_map : Hash(String, String) = Hash(String, String).new
+      @[JSON::Field(ignore: true)]
+      getter sub_texture_info : Hash(String, AtlasSubTexture) = Hash(String, AtlasSubTexture).new
 
       def load_texture_atlas(path, name, entity)
         # Atlas already exists
@@ -24,7 +26,6 @@ module RayLib
           texture_links[name].retain(entity)
         else
           filepath = File.join(path, name)
-          texture_atlases[name] = Hash(String, AtlasSubTexture).new
 
           case File.extname(filepath)
           when ".xml"
@@ -62,7 +63,8 @@ module RayLib
           next unless child.name == "Sprite"
 
           t_name = child["nameId"]
-          texture_atlases[name][t_name] = {
+          texture_atlas_map[t_name] = name
+          sub_texture_info[t_name] = {
             name:    t_name,
             padding: child["padding"].to_f32,
             orig_x:  child["originX"].to_f32,
@@ -81,7 +83,8 @@ module RayLib
         atlas = JSON.parse(File.read(filepath))
         atlas["sprites"].as_a.each do |child|
           t_name = child["nameId"].as_s
-          texture_atlases[name][t_name] = {
+          texture_atlas_map[t_name] = name
+          sub_texture_info[t_name] = {
             name:    t_name,
             padding: child["padding"].as_i.to_f32,
             orig_x:  child["origin"]["x"].as_i.to_f32,
@@ -107,7 +110,8 @@ module RayLib
           s_match = /^s (?<nameId>\w+) (?<originX>\d+) (?<originY>\d+) (?<positionX>\d+) (?<positionY>\d+) (?<sourceSizeWidth>\d+) (?<sourceSizeHeight>\d+) (?<padding>\d+) (?<trimmed>\d+) (?<trimRecX>\d+) (?<trimRecY>\d+) (?<trimRecWidth>\d+) (?<trimRecHeight>\d+)$/.match(line)
           if s_match
             t_name = s_match["nameId"]
-            texture_atlases[name][t_name] = {
+            texture_atlas_map[t_name] = name
+            sub_texture_info[t_name] = {
               name:    t_name,
               padding: s_match["padding"].to_f32,
               orig_x:  s_match["originX"].to_f32,

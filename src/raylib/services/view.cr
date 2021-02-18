@@ -1,4 +1,3 @@
-
 class RayLib::ViewService
   include Oid::Service::View
   include RayLib::Handler::TextureAtlas
@@ -57,12 +56,8 @@ class RayLib::ViewService
   end
 
   def sub_texture(name) : Tuple(RayLib::Texture2D?, AtlasSubTexture?)
-    texture_atlases.each do |n, textures|
-      textures.each do |sub_name, info|
-        if sub_name == name
-          return {texture(n), info}
-        end
-      end
+    if texture_atlas_map[name]?
+      return {texture(texture_atlas_map[name]), sub_texture_info[name]}
     end
 
     {nil, nil}

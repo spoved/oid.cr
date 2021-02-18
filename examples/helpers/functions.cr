@@ -1,4 +1,9 @@
 module Example::Helper
+
+  macro included
+    include Oid::Systems::StageHelper
+  end
+
   abstract def contexts
 
   def context

@@ -96,7 +96,7 @@ class RayLib::ViewController
     position = e.transform
     object = e.view_element.value
     rotation = e.rotation.value
-    scale = e.scale.value.to_f32
+    scale = e.rel_scale.to_f32
 
     case object
     when Oid::Element::Rectangle
@@ -120,8 +120,6 @@ class RayLib::ViewController
         color: object.color.to_unsafe,
       )
     when Oid::Element::Line
-      # Oid::Matrix::Mat4.unit.translate(origin) * self.position.value.to_v4
-      # e.transform_position_rel_to()
       end_pos = e.transform_position_rel_to(e.transform_origin, Oid::Vector3.new(
         x: object.end_pos.x,
         y: object.end_pos.y,
@@ -131,7 +129,7 @@ class RayLib::ViewController
       RayLib.draw_line_ex(
         start_pos: RayLib::Vector2.new(position.to_v2),
         end_pos: RayLib::Vector2.new(end_pos.to_v2),
-        thick: object.thickness.to_f32,
+        thick: object.thickness.to_f32 * scale,
         color: object.color.to_unsafe,
       )
     when Oid::Element::Cube
@@ -191,7 +189,6 @@ class RayLib::ViewController
 
   # Draw a sub texture from an atlas
   private def draw_sub_texture(e : Oid::RenderableEntity)
-    position = e.transform
 
     texture, info = view_service.sub_texture(e.asset.name)
     if texture.nil?
@@ -211,6 +208,9 @@ class RayLib::ViewController
       height: info[:height],
       width: info[:width],
     )
+
+    position = e.transform
+
     dest_rec = RayLib::Rectangle.new(
       x: position.x.to_f32,
       y: position.y.to_f32,

@@ -7,19 +7,23 @@ module Oid
     abstract def position_type : Oid::Components::PositionType
     abstract def position : Oid::Components::Position
     abstract def rotation : Oid::Components::Rotation
+    abstract def scale : Oid::Components::Scale
     abstract def replace_rotation(value : Oid::Vector3)
 
     abstract def parent : Oid::Transformable
     abstract def root : Oid::Transformable
 
+    private getter transform_cache : Oid::Vector3 = Oid::Vector3.zero
+
     def transform_origin : Oid::Vector3
       return Oid::Vector3.zero unless self.parent?
+
       case self.position_type.value
       when Oid::Enum::Position::Static
         Oid::Vector3.zero
       when Oid::Enum::Position::Relative
         if self.parent?
-          self.parent.transform
+          self.parent.transform(false)
         else
           Oid::Vector3.zero
         end
@@ -42,8 +46,21 @@ module Oid
       (Oid::Matrix::Mat4.unit.translate(origin) * position.to_v4).to_v3
     end
 
-    def transform : Oid::Vector3
-      transform_position_rel_to(transform_origin, self.position.value)
+    # Calculate and update the cached transform
+    def calculate_transform
+      @transform_cache = transform_position_rel_to(transform_origin, self.position.value)
+    end
+
+    # Return the position in relation to defined parent. Pass `use_cache` as `true` to use
+    # last caclulated value (useful for sort commands)
+    def transform(use_cache = false) : Oid::Vector3
+      calculate_transform unless use_cache
+      @transform_cache
+    end
+
+    # Relative scale compared to its parent
+    def rel_scale : Float64
+      (self.parent? ? self.parent.rel_scale : 1.0) * self.scale.value
     end
 
     # Normalize the rotation value between -180 and 180 degrees

@@ -88,6 +88,9 @@ module Oid
 
       def execute
         unless application_entity.destroyed?
+          # # Update the transform of each item
+          # renderable_entities.each &.calculate_transform
+
           application_controller.update do
             application_service.update_hook.call(contexts)
 
