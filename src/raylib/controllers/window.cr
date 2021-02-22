@@ -16,6 +16,7 @@ class RayLib::WindowController
     register_listeners(self.window_entity)
 
     RayLib.trace_log(RayLib::Enum::TraceLog::Info, "RayLib::WindowController - Initializing Window")
+
     RayLib.init_window(
       config_service.screen_w,
       config_service.screen_h,

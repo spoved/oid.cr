@@ -49,7 +49,11 @@ dependencies:
   crsfml:
     github: oprypin/crsfml
     version: ~> 2.5.1
-
+  baked_file_system:
+    github: schovi/baked_file_system
+    commit: 7183bfd
+    # branch: master
+    # version: 0.9.8
 development_dependencies:
   sentry:
     github: samueleaton/sentry

@@ -21,11 +21,9 @@ module Oid
             StageMatcher.rotation,
             StageMatcher.scale,
           ).none_of(
-            StageMatcher.destroyed
-          ).none_of(
-            StageMatcher.hidden
-          ).none_of(
-            StageMatcher.ui_element
+            StageMatcher.destroyed,
+            StageMatcher.ui_element,
+            StageMatcher.hidden,
           )
         )
       end
@@ -40,9 +38,8 @@ module Oid
             StageMatcher.scale,
             StageMatcher.ui_element,
           ).none_of(
-            StageMatcher.destroyed
-          ).none_of(
-            StageMatcher.hidden
+            StageMatcher.destroyed,
+            StageMatcher.hidden,
           )
         )
       end

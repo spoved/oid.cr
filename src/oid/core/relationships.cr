@@ -154,6 +154,7 @@ module Oid
 
       child._parent = self
       self.children.add(child)
+      self
     end
 
     # Removes parent from `self`

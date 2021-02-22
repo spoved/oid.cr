@@ -37,6 +37,7 @@ module Oid
         if context.camera?
           entity = context.camera_entity.as(StageEntity)
           entity.add_rotation(Oid::Vector3.zero) unless entity.rotation?
+          entity.add_position(Oid::Vector3.new(x: 0.0, y: 0.0, z: 0.0)) unless entity.position?
         end
       end
 

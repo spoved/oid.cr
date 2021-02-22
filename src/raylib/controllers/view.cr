@@ -7,7 +7,9 @@ class RayLib::ViewController
   private getter entity : Oid::RenderableEntity
 
   def initialize(@contexts, @entity)
+    # puts "initialize view controller for #{@entity}"
     init_view(@contexts, @entity)
+    # puts "asset loaded: #{@entity.asset_loaded?} #{@entity}"
   end
 
   def init_view(contexts : Contexts, entity)
@@ -30,8 +32,24 @@ class RayLib::ViewController
     if entity.view_element?
       Oid::CollisionFuncs.bounding_box_for_element(entity)
     elsif entity.has_asset?
-      texture = view_service.textures[entity.asset.name]
-      Oid::CollisionFuncs.bounding_box_for_asset(entity, texture.width, texture.height)
+      # texture = view_service.textures[entity.asset.name]
+      # Oid::CollisionFuncs.bounding_box_for_asset(entity, texture.width, texture.height)
+
+
+      case entity.asset.type
+      when Oid::Enum::AssetType::Texture
+        texture = view_service.texture(entity.asset.name)
+        raise "No texture found for #{entity.asset.name}" if texture.nil?
+        Oid::CollisionFuncs.bounding_box_for_asset(entity, texture.width, texture.height)
+
+      when Oid::Enum::AssetType::SubTexture
+        texture, _ = view_service.sub_texture(entity.asset.name)
+        raise "No sub texture found for #{entity.asset.name}" if texture.nil?
+        Oid::CollisionFuncs.bounding_box_for_asset(entity, texture.width, texture.height)
+
+      else
+        raise "Unable to draw bounding box for asset type: #{entity.asset.type}"
+      end
     else
       raise "Cannot calculate bounding box for #{entity.to_s}"
     end
@@ -43,6 +61,11 @@ class RayLib::ViewController
 
   def on_destroyed(e, component : Oid::Components::Destroyed)
     self.destroy_view
+  end
+
+  def try_load_asset
+    return if entity.asset_loaded?
+    load_asset
   end
 
   private def load_asset
@@ -61,11 +84,19 @@ class RayLib::ViewController
         view_service.load_texture_atlas(config_service.asset_path, asset_name, entity)
       end
     when Oid::Enum::AssetType::SubTexture
-      # Do nothing
+      logger_service.log("Loading #{entity.asset.type} => #{asset_name}")
+      # Check to see if the sub texture exists yet
+      text, _ = view_service.sub_texture(asset_name)
+      if text.nil?
+        logger_service.log("Subtexture #{entity.asset.type} => #{asset_name} is not loaded yet")
+        entity.asset_loaded = false
+        return
+      end
     else
-      logger_service.log("Unsupported asset type #{entity.asset.type}")
+      logger_service.log("Unsupported asset type #{entity.asset.type}", ::Log::Severity::Error)
       return
     end
+
     entity.asset_loaded = true
   end
 
@@ -189,10 +220,10 @@ class RayLib::ViewController
 
   # Draw a sub texture from an atlas
   private def draw_sub_texture(e : Oid::RenderableEntity)
-
     texture, info = view_service.sub_texture(e.asset.name)
     if texture.nil?
       e.asset_loaded = false
+      logger_service.log("No sub texture found for #{e.asset.name}", ::Log::Severity::Warn)
       return
     end
 

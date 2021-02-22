@@ -13,6 +13,10 @@ class RayLib::ApplicationService
 
   def draw(contexts : Contexts, render_group : Entitas::Group(StageEntity))
     render_group.sort { |a, b| a.transform(true).z <=> b.transform(true).z }.each do |e|
+      if e.asset? && !e.asset_loaded?
+        e.view.value.try_load_asset
+      end
+
       if (e.asset? && e.asset_loaded?) || e.view_element?
         e.view.value.draw
       end

@@ -30,6 +30,10 @@ module Oid
         getter {{a}}
         {% end %}
       end
+
+      def file_storage : Oid::FileStorage
+        Oid::FileStorage
+      end
     end
   end
 end

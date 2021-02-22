@@ -6,7 +6,11 @@ class RayLib::ApplicationController
   getter contexts : ::Contexts
 
   def initialize(@contexts)
-    RayLib.set_window_position(0, 0)
+    # FIXME: Doesnt actually work.
+    RayLib.set_window_position(
+      x: (RayLib.get_screen_width/2 - config_service.screen_w/2).to_i,
+      y: (RayLib.get_screen_height/2 - config_service.screen_h/2).to_i,
+    )
   end
 
   def init_application(contexts, entity, config_service : Oid::Service::Config); end
