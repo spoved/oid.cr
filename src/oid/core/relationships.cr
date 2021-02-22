@@ -8,6 +8,7 @@ module Oid
 
     @parent : T? = nil
     private getter children : Set(T) = Set(T).new
+    private getter add_hooks : Array(Proc(T, T, Nil)) = Array(Proc(T, T, Nil)).new
 
     def parent : T
       if @parent.nil?
@@ -154,6 +155,11 @@ module Oid
 
       child._parent = self
       self.children.add(child)
+
+      self.add_hooks.each do |proc|
+        proc.call(self, child)
+      end
+
       self
     end
 
@@ -178,6 +184,18 @@ module Oid
       if child.parent?
         child.clear_parent!
       end
+    end
+
+    def on_child_added(&block : T, T -> Nil)
+      self.add_hooks << block
+    end
+
+    def clear_on_child_added_hooks
+      self.add_hooks.clear
+    end
+
+    def remove_on_child_added_hook(hook : Proc(T, T, Nil))
+      self.add_hooks.delete hook
     end
   end
 end
