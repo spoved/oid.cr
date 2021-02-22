@@ -8,15 +8,12 @@ class TestTextureAtlas
   getter textures : Hash(String, RayLib::Texture2D) = Hash(String, RayLib::Texture2D).new
 
   def _load_xml_atlas(name : String, filepath : String) : String
-    texture_atlases[name] = Hash(String, AtlasSubTexture).new
     load_xml_atlas(name, filepath)
   end
   def _load_json_atlas(name : String, filepath : String) : String
-    texture_atlases[name] = Hash(String, AtlasSubTexture).new
     load_json_atlas(name, filepath)
   end
   def _load_rtpa_atlas(name : String, filepath : String) : String
-    texture_atlases[name] = Hash(String, AtlasSubTexture).new
     load_rtpa_atlas(name, filepath)
   end
 end
@@ -29,7 +26,9 @@ describe RayLib::Handler::TextureAtlas do
 
       filepath = handler._load_xml_atlas("test_xml", path)
       filepath.should eq "examples/assets/atlas/pieces.png"
-      handler.texture_atlases["test_xml"].size.should eq 7
+      handler.texture_atlas_map.keys.size.should eq 7
+      handler.texture_atlas_map["Blocker"].should eq "test_xml"
+      handler.sub_texture_info["Blocker"].should be_a RayLib::Handler::TextureAtlas::AtlasSubTexture
     end
   end
 
@@ -40,7 +39,10 @@ describe RayLib::Handler::TextureAtlas do
 
       filepath = handler._load_json_atlas("test_json", path)
       filepath.should eq "examples/assets/atlas/pieces.png"
-      handler.texture_atlases["test_json"].size.should eq 7
+      handler.texture_atlas_map.keys.size.should eq 7
+      handler.texture_atlas_map["Blocker"].should eq "test_json"
+      handler.sub_texture_info["Blocker"].should be_a RayLib::Handler::TextureAtlas::AtlasSubTexture
+
     end
   end
 
@@ -51,8 +53,10 @@ describe RayLib::Handler::TextureAtlas do
 
       filepath = handler._load_rtpa_atlas("test_rtpa", path)
       filepath.should eq "examples/assets/atlas/pieces.png"
+      handler.texture_atlas_map.keys.size.should eq 7
+      handler.texture_atlas_map["Blocker"].should eq "test_rtpa"
+      handler.sub_texture_info["Blocker"].should be_a RayLib::Handler::TextureAtlas::AtlasSubTexture
 
-      handler.texture_atlases["test_rtpa"].size.should eq 7
     end
   end
 end
