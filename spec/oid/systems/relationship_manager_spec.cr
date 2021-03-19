@@ -15,7 +15,6 @@ describe Oid::Systems::RelationshipManager do
       entity.add_child e2
       e2.ui_element?.should be_true
 
-
       e3 = controller.contexts.stage.create_entity
       e3.ui_element?.should be_false
       e2.add_child e3
@@ -51,7 +50,6 @@ describe Oid::Systems::RelationshipManager do
         c.parent.ui_element?.should be_true
         c.ui_element?.should be_true
       end
-
     end
   end
 end

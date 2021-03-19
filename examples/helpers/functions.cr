@@ -1,5 +1,4 @@
 module Example::Helper
-
   macro included
     include Oid::Systems::StageHelper
   end

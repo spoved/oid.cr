@@ -35,18 +35,15 @@ class RayLib::ViewController
       # texture = view_service.textures[entity.asset.name]
       # Oid::CollisionFuncs.bounding_box_for_asset(entity, texture.width, texture.height)
 
-
       case entity.asset.type
       when Oid::Enum::AssetType::Texture
         texture = view_service.texture(entity.asset.name)
         raise "No texture found for #{entity.asset.name}" if texture.nil?
         Oid::CollisionFuncs.bounding_box_for_asset(entity, texture.width, texture.height)
-
       when Oid::Enum::AssetType::SubTexture
         texture, _ = view_service.sub_texture(entity.asset.name)
         raise "No sub texture found for #{entity.asset.name}" if texture.nil?
         Oid::CollisionFuncs.bounding_box_for_asset(entity, texture.width, texture.height)
-
       else
         raise "Unable to draw bounding box for asset type: #{entity.asset.type}"
       end

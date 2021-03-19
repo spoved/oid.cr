@@ -46,9 +46,9 @@ dependencies:
     github: straight-shoota/crinja
   admiral:
     github: jwaldrip/admiral.cr
-  crsfml:
-    github: oprypin/crsfml
-    version: ~> 2.5.1
+  # crsfml:
+  #   github: oprypin/crsfml
+  #   version: ~> 2.5.1
   baked_file_system:
     github: schovi/baked_file_system
     commit: 7183bfd

@@ -10,9 +10,11 @@ class TestTextureAtlas
   def _load_xml_atlas(name : String, filepath : String) : String
     load_xml_atlas(name, filepath)
   end
+
   def _load_json_atlas(name : String, filepath : String) : String
     load_json_atlas(name, filepath)
   end
+
   def _load_rtpa_atlas(name : String, filepath : String) : String
     load_rtpa_atlas(name, filepath)
   end
@@ -42,7 +44,6 @@ describe RayLib::Handler::TextureAtlas do
       handler.texture_atlas_map.keys.size.should eq 7
       handler.texture_atlas_map["Blocker"].should eq "test_json"
       handler.sub_texture_info["Blocker"].should be_a RayLib::Handler::TextureAtlas::AtlasSubTexture
-
     end
   end
 
@@ -56,7 +57,6 @@ describe RayLib::Handler::TextureAtlas do
       handler.texture_atlas_map.keys.size.should eq 7
       handler.texture_atlas_map["Blocker"].should eq "test_rtpa"
       handler.sub_texture_info["Blocker"].should be_a RayLib::Handler::TextureAtlas::AtlasSubTexture
-
     end
   end
 end

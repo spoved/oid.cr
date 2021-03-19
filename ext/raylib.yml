@@ -52,7 +52,7 @@ parser:
   flags:
     - "-x"
     - "c++"
-    - "-stdlib=libstdc++"
+    - "-stdlib=libc++"
     - "-std=c++14"
 
   files:
