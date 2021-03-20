@@ -1,5 +1,7 @@
 module: RayLib
-library: "-lraylib"
+# library: "-lraylib"
+if_os_is_darwin:
+  library: "%/ext/raylib/src/libraylib.a -framework CoreVideo -framework IOKit -framework Cocoa -framework GLUT -framework OpenGL"
 
 processors:
   - default_constructor
@@ -12,7 +14,7 @@ processors:
   # - operators
   - filter_methods
   - extern_c
-  - auto_container_instantiation
+  # - auto_container_instantiation
   - instantiate_containers
   - enums
   - crystal_wrapper
@@ -25,9 +27,9 @@ generators:
   cpp:
     output: ext/raylib_bindings.cpp
     preamble: |-
-      #include "bindgen_helper.hpp"
       #define RAYGUI_IMPLEMENTATION
-      #define RAYGUI_SUPPORT_RICONS
+      #define RAYGUI_SUPPORT_ICONS
+      #include "bindgen_helper.hpp"
   crystal:
     output: src/raylib/binding/binding.cr
 
@@ -36,15 +38,22 @@ generators:
 types:
   <<: config/types.yml
   <<: config/raylib/types.yml
+  # <<: config/raygui/types.yml
 
-<<: config/raylib/enums.yml
+enums:
+  <<: config/raylib/enums.yml
+  <<: config/raygui/enums.yml
+
 <<: config/raylib/classes.yml
 <<: config/raylib/macros.yml
 
 functions:
-  <<: config/raylib/functions/camera.yml
-  ".*":
+  <<: config/raylib/functions.yml
+  <<: config/raygui/functions.yml
+  # All other (non gui)
+  "^(?!Gui)[A-Z].*":
     destination: "::"
+
 
 parser:
   if_BINDGEN_CLANG_BIN_isnt_:
@@ -57,15 +66,18 @@ parser:
 
   files:
     - raylib.h
+    - raygui.h
+    - ricons.h
   includes:
     - "%"
     - "%/raylib/src/"
+    - "%/raygui/src/"
     - "{LLVM_INCLUDES}"
   defines:
     - __STDC_CONSTANT_MACROS
     - __STDC_LIMIT_MACROS
+    - __LLVM_VERSION_${LLVM_VERSION}
+    - __OS_TYPE_${OS_TYPE}
     - PLATFORM_DESKTOP
     - GRAPHICS_API_OPENGL_33
     - GL_SILENCE_DEPRECATION
-    - __LLVM_VERSION_${LLVM_VERSION}
-    - __OS_TYPE_${OS_TYPE}

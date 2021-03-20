@@ -176,7 +176,6 @@ Sound:
   generate_wrapper: false
   kind: Struct
   crystal_type: Sound
-
 VrDeviceInfo:
   copy_structure: true
   generate_binding: true

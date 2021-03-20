@@ -1,7 +1,9 @@
-#include "bindgen_helper.hpp"
 #define RAYGUI_IMPLEMENTATION
-#define RAYGUI_SUPPORT_RICONS
+#define RAYGUI_SUPPORT_ICONS
+#include "bindgen_helper.hpp"
 #include <raylib.h>
+#include <raygui.h>
+#include <ricons.h>
 
 extern "C" TextureCubemap * bg____LoadTextureCubemap_STATIC_Image_int(Image image, int layoutType) {
   return new (UseGC) TextureCubemap (::LoadTextureCubemap(image, layoutType));

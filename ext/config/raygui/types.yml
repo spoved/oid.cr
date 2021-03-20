@@ -1,0 +1,6 @@
+# GuiStyleProp:
+#   copy_structure: true
+#   generate_binding: true
+#   generate_wrapper: false
+#   kind: Struct
+#   crystal_type: Gui::StyleProp

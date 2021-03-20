@@ -1,0 +1,3 @@
+# RayGui functions
+"^Gui(.*)":
+  destination: Gui

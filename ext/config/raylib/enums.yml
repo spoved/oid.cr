@@ -1,64 +1,63 @@
-enums:
-  KeyboardKey:
-    destination: Enum::Key
-    prefix: KEY_
-  ConfigFlag:
-    destination: Enum::Config
-    prefix: FLAG_
-  TraceLogType:
-    destination: Enum::TraceLog
-    prefix: LOG_
-  AndroidButton:
-    destination: Enum::Android::Key
-    prefix: KEY_
-  MouseButton:
-    destination: Enum::Mouse::Key
-    prefix: MOUSE_
-  GamepadNumber:
-    destination: Enum::Gamepad::Number
-    prefix: GAMEPAD_
-  GamepadButton:
-    destination: Enum::Gamepad::Button
-    prefix: GAMEPAD_BUTTON_
-  GamepadAxis:
-    destination: Enum::Gamepad::Axis
-    prefix: GAMEPAD_AXIS_
-  ShaderLocationIndex:
-    destination: Enum::Shader::Location
-    prefix: LOC_
-  ShaderUniformDataType:
-    destination: Enum::Shader::UniformData::Type
-    prefix: UNIFORM_
-  MaterialMapType:
-    destination: Enum::Material::Map::Type
-    prefix: MAP_
-  PixelFormat:
-    destination: Enum::Pixel::Format
-    # prefix: MAP_
-  TextureFilterMode:
-    destination: Enum::Texture::Filter::Mode
-    prefix: FILTER_
-  CubemapLayoutType:
-    destination: Enum::Cubemap::Layout
-    prefix: CUBEMAP_
-  TextureWrapMode:
-    destination: Enum::Texture::Wrap::Mode
-    prefix: WRAP_
-  FontType:
-    destination: Enum::Font::Type
-    prefix: FONT_
-  BlendMode:
-    destination: Enum::Blend::Mode
-    prefix: BLEND_
-  GestureType:
-    destination: Enum::Gesture::Type
-    prefix: GESTURE_
-  CameraMode:
-    destination: Enum::Camera::Mode
-    prefix: CAMERA_
-  CameraType:
-    destination: Enum::Camera::Type
-    prefix: CAMERA_
-  NPatchType:
-    destination: Enum::NPatch::Type
-    prefix: NPT_
+KeyboardKey:
+  destination: Enum::Key
+  prefix: KEY_
+ConfigFlag:
+  destination: Enum::Config
+  prefix: FLAG_
+TraceLogType:
+  destination: Enum::TraceLog
+  prefix: LOG_
+AndroidButton:
+  destination: Enum::Android::Key
+  prefix: KEY_
+MouseButton:
+  destination: Enum::Mouse::Key
+  prefix: MOUSE_
+GamepadNumber:
+  destination: Enum::Gamepad::Number
+  prefix: GAMEPAD_
+GamepadButton:
+  destination: Enum::Gamepad::Button
+  prefix: GAMEPAD_BUTTON_
+GamepadAxis:
+  destination: Enum::Gamepad::Axis
+  prefix: GAMEPAD_AXIS_
+ShaderLocationIndex:
+  destination: Enum::Shader::Location
+  prefix: LOC_
+ShaderUniformDataType:
+  destination: Enum::Shader::UniformData::Type
+  prefix: UNIFORM_
+MaterialMapType:
+  destination: Enum::Material::Map::Type
+  prefix: MAP_
+PixelFormat:
+  destination: Enum::Pixel::Format
+  # prefix: MAP_
+TextureFilterMode:
+  destination: Enum::Texture::Filter::Mode
+  prefix: FILTER_
+CubemapLayoutType:
+  destination: Enum::Cubemap::Layout
+  prefix: CUBEMAP_
+TextureWrapMode:
+  destination: Enum::Texture::Wrap::Mode
+  prefix: WRAP_
+FontType:
+  destination: Enum::Font::Type
+  prefix: FONT_
+BlendMode:
+  destination: Enum::Blend::Mode
+  prefix: BLEND_
+GestureType:
+  destination: Enum::Gesture::Type
+  prefix: GESTURE_
+CameraMode:
+  destination: Enum::Camera::Mode
+  prefix: CAMERA_
+CameraType:
+  destination: Enum::Camera::Type
+  prefix: CAMERA_
+NPatchType:
+  destination: Enum::NPatch::Type
+  prefix: NPT_

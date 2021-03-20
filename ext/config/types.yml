@@ -1,9 +1,13 @@
 "char *":
   builtin: true
   crystal_type: "String"
+"const char *":
+  builtin: true
+  crystal_type: "String"
 "void (int, const char *, __va_list_tag *)": { ignore: true }
 "void ()": { ignore: true }
 "void (void *)": { ignore: true }
+"void (*)(int)": { ignore: true }
 "unsigned int [7]":
   builtin: true
   crystal_type: "LibC::UInt[7]"

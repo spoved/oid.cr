@@ -87,7 +87,7 @@ module RayLib
     end
   end
 
-  @[Link(ldflags: "-lraylib")]
+  @[Link(ldflags: "#{__DIR__}/../../../ext/raylib/src/libraylib.a -framework CoreVideo -framework IOKit -framework Cocoa -framework GLUT -framework OpenGL")]
   lib Binding
     alias SpriteFont = Void
     alias TextureCubemap = Void
@@ -361,6 +361,54 @@ module RayLib
     fun bg____BeginMode3D_STATIC_Camera3D = BeginMode3D(camera : Camera3D) : Void
     fun bg____EndMode2D_STATIC_ = EndMode2D : Void
     fun bg____EndMode3D_STATIC_ = EndMode3D : Void
+    fun bg____GuiEnable_STATIC_ = GuiEnable : Void
+    fun bg____GuiDisable_STATIC_ = GuiDisable : Void
+    fun bg____GuiLock_STATIC_ = GuiLock : Void
+    fun bg____GuiUnlock_STATIC_ = GuiUnlock : Void
+    fun bg____GuiFade_STATIC_float = GuiFade(alpha : Float32) : Void
+    fun bg____GuiSetState_STATIC_int = GuiSetState(state : Int32) : Void
+    fun bg____GuiGetState_STATIC_ = GuiGetState : Int32
+    fun bg____GuiSetFont_STATIC_Font = GuiSetFont(font : Font) : Void
+    fun bg____GuiGetFont_STATIC_ = GuiGetFont : Font
+    fun bg____GuiSetStyle_STATIC_int_int_int = GuiSetStyle(control : Int32, property : Int32, value : Int32) : Void
+    fun bg____GuiGetStyle_STATIC_int_int = GuiGetStyle(control : Int32, property : Int32) : Int32
+    fun bg____GuiWindowBox_STATIC_Rectangle_const_char_X = GuiWindowBox(bounds : Rectangle, title : UInt8*) : Bool
+    fun bg____GuiGroupBox_STATIC_Rectangle_const_char_X = GuiGroupBox(bounds : Rectangle, text : UInt8*) : Void
+    fun bg____GuiLine_STATIC_Rectangle_const_char_X = GuiLine(bounds : Rectangle, text : UInt8*) : Void
+    fun bg____GuiPanel_STATIC_Rectangle = GuiPanel(bounds : Rectangle) : Void
+    fun bg____GuiScrollPanel_STATIC_Rectangle_Rectangle_Vector2_X = GuiScrollPanel(bounds : Rectangle, content : Rectangle, scroll : Vector2*) : Rectangle
+    fun bg____GuiLabel_STATIC_Rectangle_const_char_X = GuiLabel(bounds : Rectangle, text : UInt8*) : Void
+    fun bg____GuiButton_STATIC_Rectangle_const_char_X = GuiButton(bounds : Rectangle, text : UInt8*) : Bool
+    fun bg____GuiLabelButton_STATIC_Rectangle_const_char_X = GuiLabelButton(bounds : Rectangle, text : UInt8*) : Bool
+    fun bg____GuiImageButton_STATIC_Rectangle_const_char_X_Texture2D = GuiImageButton(bounds : Rectangle, text : UInt8*, texture : Texture2D) : Bool
+    fun bg____GuiImageButtonEx_STATIC_Rectangle_const_char_X_Texture2D_Rectangle = GuiImageButtonEx(bounds : Rectangle, text : UInt8*, texture : Texture2D, tex_source : Rectangle) : Bool
+    fun bg____GuiToggle_STATIC_Rectangle_const_char_X_bool = GuiToggle(bounds : Rectangle, text : UInt8*, active : Bool) : Bool
+    fun bg____GuiToggleGroup_STATIC_Rectangle_const_char_X_int = GuiToggleGroup(bounds : Rectangle, text : UInt8*, active : Int32) : Int32
+    fun bg____GuiCheckBox_STATIC_Rectangle_const_char_X_bool = GuiCheckBox(bounds : Rectangle, text : UInt8*, checked : Bool) : Bool
+    fun bg____GuiComboBox_STATIC_Rectangle_const_char_X_int = GuiComboBox(bounds : Rectangle, text : UInt8*, active : Int32) : Int32
+    fun bg____GuiDropdownBox_STATIC_Rectangle_const_char_X_int_X_bool = GuiDropdownBox(bounds : Rectangle, text : UInt8*, active : Int32*, edit_mode : Bool) : Bool
+    fun bg____GuiSpinner_STATIC_Rectangle_const_char_X_int_X_int_int_bool = GuiSpinner(bounds : Rectangle, text : UInt8*, value : Int32*, min_value : Int32, max_value : Int32, edit_mode : Bool) : Bool
+    fun bg____GuiValueBox_STATIC_Rectangle_const_char_X_int_X_int_int_bool = GuiValueBox(bounds : Rectangle, text : UInt8*, value : Int32*, min_value : Int32, max_value : Int32, edit_mode : Bool) : Bool
+    fun bg____GuiTextBox_STATIC_Rectangle_char_X_int_bool = GuiTextBox(bounds : Rectangle, text : UInt8*, text_size : Int32, edit_mode : Bool) : Bool
+    fun bg____GuiTextBoxMulti_STATIC_Rectangle_char_X_int_bool = GuiTextBoxMulti(bounds : Rectangle, text : UInt8*, text_size : Int32, edit_mode : Bool) : Bool
+    fun bg____GuiSlider_STATIC_Rectangle_const_char_X_const_char_X_float_float_float = GuiSlider(bounds : Rectangle, text_left : UInt8*, text_right : UInt8*, value : Float32, min_value : Float32, max_value : Float32) : Float32
+    fun bg____GuiSliderBar_STATIC_Rectangle_const_char_X_const_char_X_float_float_float = GuiSliderBar(bounds : Rectangle, text_left : UInt8*, text_right : UInt8*, value : Float32, min_value : Float32, max_value : Float32) : Float32
+    fun bg____GuiProgressBar_STATIC_Rectangle_const_char_X_const_char_X_float_float_float = GuiProgressBar(bounds : Rectangle, text_left : UInt8*, text_right : UInt8*, value : Float32, min_value : Float32, max_value : Float32) : Float32
+    fun bg____GuiStatusBar_STATIC_Rectangle_const_char_X = GuiStatusBar(bounds : Rectangle, text : UInt8*) : Void
+    fun bg____GuiDummyRec_STATIC_Rectangle_const_char_X = GuiDummyRec(bounds : Rectangle, text : UInt8*) : Void
+    fun bg____GuiScrollBar_STATIC_Rectangle_int_int_int = GuiScrollBar(bounds : Rectangle, value : Int32, min_value : Int32, max_value : Int32) : Int32
+    fun bg____GuiGrid_STATIC_Rectangle_float_int = GuiGrid(bounds : Rectangle, spacing : Float32, subdivs : Int32) : Vector2
+    fun bg____GuiListView_STATIC_Rectangle_const_char_X_int_X_int = GuiListView(bounds : Rectangle, text : UInt8*, scroll_index : Int32*, active : Int32) : Int32
+    fun bg____GuiListViewEx_STATIC_Rectangle_const_char_XX_int_int_X_int_X_int = GuiListViewEx(bounds : Rectangle, text : UInt8**, count : Int32, focus : Int32*, scroll_index : Int32*, active : Int32) : Int32
+    fun bg____GuiMessageBox_STATIC_Rectangle_const_char_X_const_char_X_const_char_X = GuiMessageBox(bounds : Rectangle, title : UInt8*, message : UInt8*, buttons : UInt8*) : Int32
+    fun bg____GuiTextInputBox_STATIC_Rectangle_const_char_X_const_char_X_const_char_X_char_X = GuiTextInputBox(bounds : Rectangle, title : UInt8*, message : UInt8*, buttons : UInt8*, text : UInt8*) : Int32
+    fun bg____GuiColorPicker_STATIC_Rectangle_Color = GuiColorPicker(bounds : Rectangle, color : Color) : Color
+    fun bg____GuiColorPanel_STATIC_Rectangle_Color = GuiColorPanel(bounds : Rectangle, color : Color) : Color
+    fun bg____GuiColorBarAlpha_STATIC_Rectangle_float = GuiColorBarAlpha(bounds : Rectangle, alpha : Float32) : Float32
+    fun bg____GuiColorBarHue_STATIC_Rectangle_float = GuiColorBarHue(bounds : Rectangle, value : Float32) : Float32
+    fun bg____GuiLoadStyle_STATIC_const_char_X = GuiLoadStyle(file_name : UInt8*) : Void
+    fun bg____GuiLoadStyleDefault_STATIC_ = GuiLoadStyleDefault : Void
+    fun bg____GuiIconText_STATIC_int_const_char_X = GuiIconText(icon_id : Int32, text : UInt8*) : UInt8*
     fun bg____InitWindow_STATIC_int_int_const_char_X = InitWindow(width : Int32, height : Int32, title : UInt8*) : Void
     fun bg____WindowShouldClose_STATIC_ = WindowShouldClose : Bool
     fun bg____CloseWindow_STATIC_ = CloseWindow : Void
@@ -891,6 +939,566 @@ module RayLib
 
     def self.end_mode_3d : Void
       Binding.bg____EndMode3D_STATIC_
+    end
+  end
+
+  module Gui
+    def self.enable : Void
+      Binding.bg____GuiEnable_STATIC_
+    end
+
+    def self.disable : Void
+      Binding.bg____GuiDisable_STATIC_
+    end
+
+    def self.lock : Void
+      Binding.bg____GuiLock_STATIC_
+    end
+
+    def self.unlock : Void
+      Binding.bg____GuiUnlock_STATIC_
+    end
+
+    def self.fade(alpha : Float32) : Void
+      Binding.bg____GuiFade_STATIC_float(alpha)
+    end
+
+    def self.set_state(state : Int32) : Void
+      Binding.bg____GuiSetState_STATIC_int(state)
+    end
+
+    def self.get_state : Int32
+      Binding.bg____GuiGetState_STATIC_
+    end
+
+    def self.set_font(font : Font) : Void
+      Binding.bg____GuiSetFont_STATIC_Font(font)
+    end
+
+    def self.get_font : Font
+      Font.new(unwrap: Binding.bg____GuiGetFont_STATIC_)
+    end
+
+    def self.set_style(control : Int32, property : Int32, value : Int32) : Void
+      Binding.bg____GuiSetStyle_STATIC_int_int_int(control, property, value)
+    end
+
+    def self.get_style(control : Int32, property : Int32) : Int32
+      Binding.bg____GuiGetStyle_STATIC_int_int(control, property)
+    end
+
+    def self.window_box(bounds : Rectangle, title : String) : Bool
+      Binding.bg____GuiWindowBox_STATIC_Rectangle_const_char_X(bounds, title)
+    end
+
+    def self.group_box(bounds : Rectangle, text : String) : Void
+      Binding.bg____GuiGroupBox_STATIC_Rectangle_const_char_X(bounds, text)
+    end
+
+    def self.line(bounds : Rectangle, text : String) : Void
+      Binding.bg____GuiLine_STATIC_Rectangle_const_char_X(bounds, text)
+    end
+
+    def self.panel(bounds : Rectangle) : Void
+      Binding.bg____GuiPanel_STATIC_Rectangle(bounds)
+    end
+
+    def self.scroll_panel(bounds : Rectangle, content : Rectangle, scroll : Vector2*) : Rectangle
+      Rectangle.new(unwrap: Binding.bg____GuiScrollPanel_STATIC_Rectangle_Rectangle_Vector2_X(bounds, content, scroll))
+    end
+
+    def self.label(bounds : Rectangle, text : String) : Void
+      Binding.bg____GuiLabel_STATIC_Rectangle_const_char_X(bounds, text)
+    end
+
+    def self.button(bounds : Rectangle, text : String) : Bool
+      Binding.bg____GuiButton_STATIC_Rectangle_const_char_X(bounds, text)
+    end
+
+    def self.label_button(bounds : Rectangle, text : String) : Bool
+      Binding.bg____GuiLabelButton_STATIC_Rectangle_const_char_X(bounds, text)
+    end
+
+    def self.image_button(bounds : Rectangle, text : String, texture : Texture2D) : Bool
+      Binding.bg____GuiImageButton_STATIC_Rectangle_const_char_X_Texture2D(bounds, text, texture)
+    end
+
+    def self.image_button_ex(bounds : Rectangle, text : String, texture : Texture2D, tex_source : Rectangle) : Bool
+      Binding.bg____GuiImageButtonEx_STATIC_Rectangle_const_char_X_Texture2D_Rectangle(bounds, text, texture, tex_source)
+    end
+
+    def self.toggle(bounds : Rectangle, text : String, active : Bool) : Bool
+      Binding.bg____GuiToggle_STATIC_Rectangle_const_char_X_bool(bounds, text, active)
+    end
+
+    def self.toggle_group(bounds : Rectangle, text : String, active : Int32) : Int32
+      Binding.bg____GuiToggleGroup_STATIC_Rectangle_const_char_X_int(bounds, text, active)
+    end
+
+    def self.check_box(bounds : Rectangle, text : String, checked : Bool) : Bool
+      Binding.bg____GuiCheckBox_STATIC_Rectangle_const_char_X_bool(bounds, text, checked)
+    end
+
+    def self.combo_box(bounds : Rectangle, text : String, active : Int32) : Int32
+      Binding.bg____GuiComboBox_STATIC_Rectangle_const_char_X_int(bounds, text, active)
+    end
+
+    def self.dropdown_box(bounds : Rectangle, text : String, active : Int32*, edit_mode : Bool) : Bool
+      Binding.bg____GuiDropdownBox_STATIC_Rectangle_const_char_X_int_X_bool(bounds, text, active, edit_mode)
+    end
+
+    def self.spinner(bounds : Rectangle, text : String, value : Int32*, min_value : Int32, max_value : Int32, edit_mode : Bool) : Bool
+      Binding.bg____GuiSpinner_STATIC_Rectangle_const_char_X_int_X_int_int_bool(bounds, text, value, min_value, max_value, edit_mode)
+    end
+
+    def self.value_box(bounds : Rectangle, text : String, value : Int32*, min_value : Int32, max_value : Int32, edit_mode : Bool) : Bool
+      Binding.bg____GuiValueBox_STATIC_Rectangle_const_char_X_int_X_int_int_bool(bounds, text, value, min_value, max_value, edit_mode)
+    end
+
+    def self.text_box(bounds : Rectangle, text : String, text_size : Int32, edit_mode : Bool) : Bool
+      Binding.bg____GuiTextBox_STATIC_Rectangle_char_X_int_bool(bounds, text, text_size, edit_mode)
+    end
+
+    def self.text_box_multi(bounds : Rectangle, text : String, text_size : Int32, edit_mode : Bool) : Bool
+      Binding.bg____GuiTextBoxMulti_STATIC_Rectangle_char_X_int_bool(bounds, text, text_size, edit_mode)
+    end
+
+    def self.slider(bounds : Rectangle, text_left : String, text_right : String, value : Float32, min_value : Float32, max_value : Float32) : Float32
+      Binding.bg____GuiSlider_STATIC_Rectangle_const_char_X_const_char_X_float_float_float(bounds, text_left, text_right, value, min_value, max_value)
+    end
+
+    def self.slider_bar(bounds : Rectangle, text_left : String, text_right : String, value : Float32, min_value : Float32, max_value : Float32) : Float32
+      Binding.bg____GuiSliderBar_STATIC_Rectangle_const_char_X_const_char_X_float_float_float(bounds, text_left, text_right, value, min_value, max_value)
+    end
+
+    def self.progress_bar(bounds : Rectangle, text_left : String, text_right : String, value : Float32, min_value : Float32, max_value : Float32) : Float32
+      Binding.bg____GuiProgressBar_STATIC_Rectangle_const_char_X_const_char_X_float_float_float(bounds, text_left, text_right, value, min_value, max_value)
+    end
+
+    def self.status_bar(bounds : Rectangle, text : String) : Void
+      Binding.bg____GuiStatusBar_STATIC_Rectangle_const_char_X(bounds, text)
+    end
+
+    def self.dummy_rec(bounds : Rectangle, text : String) : Void
+      Binding.bg____GuiDummyRec_STATIC_Rectangle_const_char_X(bounds, text)
+    end
+
+    def self.scroll_bar(bounds : Rectangle, value : Int32, min_value : Int32, max_value : Int32) : Int32
+      Binding.bg____GuiScrollBar_STATIC_Rectangle_int_int_int(bounds, value, min_value, max_value)
+    end
+
+    def self.grid(bounds : Rectangle, spacing : Float32, subdivs : Int32) : Vector2
+      Vector2.new(unwrap: Binding.bg____GuiGrid_STATIC_Rectangle_float_int(bounds, spacing, subdivs))
+    end
+
+    def self.list_view(bounds : Rectangle, text : String, scroll_index : Int32*, active : Int32) : Int32
+      Binding.bg____GuiListView_STATIC_Rectangle_const_char_X_int_X_int(bounds, text, scroll_index, active)
+    end
+
+    def self.list_view_ex(bounds : Rectangle, text : String*, count : Int32, focus : Int32*, scroll_index : Int32*, active : Int32) : Int32
+      Binding.bg____GuiListViewEx_STATIC_Rectangle_const_char_XX_int_int_X_int_X_int(bounds, text, count, focus, scroll_index, active)
+    end
+
+    def self.message_box(bounds : Rectangle, title : String, message : String, buttons : String) : Int32
+      Binding.bg____GuiMessageBox_STATIC_Rectangle_const_char_X_const_char_X_const_char_X(bounds, title, message, buttons)
+    end
+
+    def self.text_input_box(bounds : Rectangle, title : String, message : String, buttons : String, text : String) : Int32
+      Binding.bg____GuiTextInputBox_STATIC_Rectangle_const_char_X_const_char_X_const_char_X_char_X(bounds, title, message, buttons, text)
+    end
+
+    def self.color_picker(bounds : Rectangle, color : Binding::Color) : Binding::Color
+      Binding.bg____GuiColorPicker_STATIC_Rectangle_Color(bounds, color)
+    end
+
+    def self.color_panel(bounds : Rectangle, color : Binding::Color) : Binding::Color
+      Binding.bg____GuiColorPanel_STATIC_Rectangle_Color(bounds, color)
+    end
+
+    def self.color_bar_alpha(bounds : Rectangle, alpha : Float32) : Float32
+      Binding.bg____GuiColorBarAlpha_STATIC_Rectangle_float(bounds, alpha)
+    end
+
+    def self.color_bar_hue(bounds : Rectangle, value : Float32) : Float32
+      Binding.bg____GuiColorBarHue_STATIC_Rectangle_float(bounds, value)
+    end
+
+    def self.load_style(file_name : String) : Void
+      Binding.bg____GuiLoadStyle_STATIC_const_char_X(file_name)
+    end
+
+    def self.load_style_default : Void
+      Binding.bg____GuiLoadStyleDefault_STATIC_
+    end
+
+    def self.icon_text(icon_id : Int32, text : String) : String
+      Binding.bg____GuiIconText_STATIC_int_const_char_X(icon_id, text)
+    end
+
+    module Enum
+      enum TextAlignment : UInt32
+        Left   = 0
+        Center = 1
+        Right  = 2
+      end
+      enum ControlState : UInt32
+        Normal   = 0
+        Focused  = 1
+        Pressed  = 2
+        Disabled = 3
+      end
+      enum Control : UInt32
+        Default     =  0
+        Label       =  1
+        Button      =  2
+        Toggle      =  3
+        Slider      =  4
+        Progressbar =  5
+        Checkbox    =  6
+        Combobox    =  7
+        Dropdownbox =  8
+        Textbox     =  9
+        Valuebox    = 10
+        Spinner     = 11
+        Listview    = 12
+        Colorpicker = 13
+        Scrollbar   = 14
+        Statusbar   = 15
+      end
+      enum ControlProperty : UInt32
+        BorderColorNormal   =  0
+        BaseColorNormal     =  1
+        TextColorNormal     =  2
+        BorderColorFocused  =  3
+        BaseColorFocused    =  4
+        TextColorFocused    =  5
+        BorderColorPressed  =  6
+        BaseColorPressed    =  7
+        TextColorPressed    =  8
+        BorderColorDisabled =  9
+        BaseColorDisabled   = 10
+        TextColorDisabled   = 11
+        BorderWidth         = 12
+        TextPadding         = 13
+        TextAlignment       = 14
+        Reserved            = 15
+      end
+      enum DefaultProperty : UInt32
+        TextSize        = 16
+        TextSpacing     = 17
+        LineColor       = 18
+        BackgroundColor = 19
+      end
+      enum ToggleProperty : UInt32
+        GroupPadding = 16
+      end
+      enum SliderProperty : UInt32
+        SliderWidth   = 16
+        SliderPadding = 17
+      end
+      enum ProgressBarProperty : UInt32
+        ProgressPadding = 16
+      end
+      enum CheckBoxProperty : UInt32
+        CheckPadding = 16
+      end
+      enum ComboBoxProperty : UInt32
+        ComboButtonWidth   = 16
+        ComboButtonPadding = 17
+      end
+      enum TextBoxProperty : UInt32
+        TextInnerPadding = 16
+        TextLinesPadding = 17
+        ColorSelectedFg  = 18
+        ColorSelectedBg  = 19
+      end
+      enum SpinnerProperty : UInt32
+        SpinButtonWidth   = 16
+        SpinButtonPadding = 17
+      end
+      enum ScrollBarProperty : UInt32
+        ArrowsSize          = 16
+        ArrowsVisible       = 17
+        ScrollSliderPadding = 18
+        ScrollSliderSize    = 19
+        ScrollPadding       = 20
+        ScrollSpeed         = 21
+      end
+      enum ScrollBarSide : UInt32
+        ScrollbarLeftSide  = 0
+        ScrollbarRightSide = 1
+      end
+      enum ListViewProperty : UInt32
+        ListItemsHeight  = 16
+        ListItemsPadding = 17
+        ScrollbarWidth   = 18
+        ScrollbarSide    = 19
+      end
+      enum ColorPickerProperty : UInt32
+        ColorSelectorSize      = 16
+        HuebarWidth            = 17
+        HuebarPadding          = 18
+        HuebarSelectorHeight   = 19
+        HuebarSelectorOverflow = 20
+      end
+      enum Icon : UInt32
+        None                 =   0
+        FolderFileOpen       =   1
+        FileSaveClassic      =   2
+        FolderOpen           =   3
+        FolderSave           =   4
+        FileOpen             =   5
+        FileSave             =   6
+        FileExport           =   7
+        FileNew              =   8
+        FileDelete           =   9
+        FiletypeText         =  10
+        FiletypeAudio        =  11
+        FiletypeImage        =  12
+        FiletypePlay         =  13
+        FiletypeVideo        =  14
+        FiletypeInfo         =  15
+        FileCopy             =  16
+        FileCut              =  17
+        FilePaste            =  18
+        CursorHand           =  19
+        CursorPointer        =  20
+        CursorClassic        =  21
+        Pencil               =  22
+        PencilBig            =  23
+        BrushClassic         =  24
+        BrushPainter         =  25
+        WaterDrop            =  26
+        ColorPicker          =  27
+        Rubber               =  28
+        ColorBucket          =  29
+        TextT                =  30
+        TextA                =  31
+        Scale                =  32
+        Resize               =  33
+        FilterPoint          =  34
+        FilterBilinear       =  35
+        Crop                 =  36
+        CropAlpha            =  37
+        SquareToggle         =  38
+        Symmetry             =  39
+        SymmetryHorizontal   =  40
+        SymmetryVertical     =  41
+        Lens                 =  42
+        LensBig              =  43
+        EyeOn                =  44
+        EyeOff               =  45
+        FilterTop            =  46
+        Filter               =  47
+        TargetPoint          =  48
+        TargetSmall          =  49
+        TargetBig            =  50
+        TargetMove           =  51
+        CursorMove           =  52
+        CursorScale          =  53
+        CursorScaleRight     =  54
+        CursorScaleLeft      =  55
+        Undo                 =  56
+        Redo                 =  57
+        Reredo               =  58
+        Mutate               =  59
+        Rotate               =  60
+        Repeat               =  61
+        Shuffle              =  62
+        Emptybox             =  63
+        Target               =  64
+        TargetSmallFill      =  65
+        TargetBigFill        =  66
+        TargetMoveFill       =  67
+        CursorMoveFill       =  68
+        CursorScaleFill      =  69
+        CursorScaleRightFill =  70
+        CursorScaleLeftFill  =  71
+        UndoFill             =  72
+        RedoFill             =  73
+        ReredoFill           =  74
+        MutateFill           =  75
+        RotateFill           =  76
+        RepeatFill           =  77
+        ShuffleFill          =  78
+        EmptyboxSmall        =  79
+        Box                  =  80
+        BoxTop               =  81
+        BoxTopRight          =  82
+        BoxRight             =  83
+        BoxBottomRight       =  84
+        BoxBottom            =  85
+        BoxBottomLeft        =  86
+        BoxLeft              =  87
+        BoxTopLeft           =  88
+        BoxCenter            =  89
+        BoxCircleMask        =  90
+        Pot                  =  91
+        AlphaMultiply        =  92
+        AlphaClear           =  93
+        Dithering            =  94
+        Mipmaps              =  95
+        BoxGrid              =  96
+        Grid                 =  97
+        BoxCornersSmall      =  98
+        BoxCornersBig        =  99
+        FourBoxes            = 100
+        GridFill             = 101
+        BoxMultisize         = 102
+        ZoomSmall            = 103
+        ZoomMedium           = 104
+        ZoomBig              = 105
+        ZoomAll              = 106
+        ZoomCenter           = 107
+        BoxDotsSmall         = 108
+        BoxDotsBig           = 109
+        BoxConcentric        = 110
+        BoxGridBig           = 111
+        OkTick               = 112
+        Cross                = 113
+        ArrowLeft            = 114
+        ArrowRight           = 115
+        ArrowBottom          = 116
+        ArrowTop             = 117
+        ArrowLeftFill        = 118
+        ArrowRightFill       = 119
+        ArrowBottomFill      = 120
+        ArrowTopFill         = 121
+        Audio                = 122
+        Fx                   = 123
+        Wave                 = 124
+        WaveSinus            = 125
+        WaveSquare           = 126
+        WaveTriangular       = 127
+        CrossSmall           = 128
+        PlayerPrevious       = 129
+        PlayerPlayBack       = 130
+        PlayerPlay           = 131
+        PlayerPause          = 132
+        PlayerStop           = 133
+        PlayerNext           = 134
+        PlayerRecord         = 135
+        Magnet               = 136
+        LockClose            = 137
+        LockOpen             = 138
+        Clock                = 139
+        Tools                = 140
+        Gear                 = 141
+        GearBig              = 142
+        Bin                  = 143
+        HandPointer          = 144
+        Laser                = 145
+        Coin                 = 146
+        Explosion            = 147
+        Digit1UP             = 148
+        Player               = 149
+        PlayerJump           = 150
+        Key                  = 151
+        Demon                = 152
+        TextPopup            = 153
+        GearEx               = 154
+        Crack                = 155
+        CrackPoints          = 156
+        Star                 = 157
+        Door                 = 158
+        Exit                 = 159
+        Mode2d               = 160
+        Mode3d               = 161
+        Cube                 = 162
+        CubeFaceTop          = 163
+        CubeFaceLeft         = 164
+        CubeFaceFront        = 165
+        CubeFaceBottom       = 166
+        CubeFaceRight        = 167
+        CubeFaceBack         = 168
+        Camera               = 169
+        Special              = 170
+        LinkNet              = 171
+        LinkBoxes            = 172
+        LinkMulti            = 173
+        Link                 = 174
+        LinkBroke            = 175
+        TextNotes            = 176
+        Notebook             = 177
+        Suitcase             = 178
+        SuitcaseZip          = 179
+        Mailbox              = 180
+        Monitor              = 181
+        Printer              = 182
+        PhotoCamera          = 183
+        PhotoCameraFlash     = 184
+        House                = 185
+        Heart                = 186
+        Corner               = 187
+        VerticalBars         = 188
+        VerticalBarsFill     = 189
+        LifeBars             = 190
+        Info                 = 191
+        Crossline            = 192
+        Help                 = 193
+        FiletypeAlpha        = 194
+        FiletypeHome         = 195
+        LayersVisible        = 196
+        Layers               = 197
+        Window               = 198
+        Hidpi                = 199
+        Digit200             = 200
+        Digit201             = 201
+        Digit202             = 202
+        Digit203             = 203
+        Digit204             = 204
+        Digit205             = 205
+        Digit206             = 206
+        Digit207             = 207
+        Digit208             = 208
+        Digit209             = 209
+        Digit210             = 210
+        Digit211             = 211
+        Digit212             = 212
+        Digit213             = 213
+        Digit214             = 214
+        Digit215             = 215
+        Digit216             = 216
+        Digit217             = 217
+        Digit218             = 218
+        Digit219             = 219
+        Digit220             = 220
+        Digit221             = 221
+        Digit222             = 222
+        Digit223             = 223
+        Digit224             = 224
+        Digit225             = 225
+        Digit226             = 226
+        Digit227             = 227
+        Digit228             = 228
+        Digit229             = 229
+        Digit230             = 230
+        Digit231             = 231
+        Digit232             = 232
+        Digit233             = 233
+        Digit234             = 234
+        Digit235             = 235
+        Digit236             = 236
+        Digit237             = 237
+        Digit238             = 238
+        Digit239             = 239
+        Digit240             = 240
+        Digit241             = 241
+        Digit242             = 242
+        Digit243             = 243
+        Digit244             = 244
+        Digit245             = 245
+        Digit246             = 246
+        Digit247             = 247
+        Digit248             = 248
+        Digit249             = 249
+        Digit250             = 250
+        Digit251             = 251
+        Digit252             = 252
+        Digit253             = 253
+        Digit254             = 254
+        Digit255             = 255
+      end
     end
   end
 

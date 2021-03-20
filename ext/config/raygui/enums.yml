@@ -1,0 +1,25 @@
+GuiTextAlignment:
+  destination: Gui::Enum::TextAlignment
+  prefix: GUI_TEXT_ALIGN_
+GuiControlState:
+  destination: Gui::Enum::ControlState
+  prefix: GUI_STATE_
+GuiControl: Gui::Enum::Control
+GuiControlProperty: Gui::Enum::ControlProperty
+GuiDefaultProperty: Gui::Enum::DefaultProperty
+GuiToggleProperty: Gui::Enum::ToggleProperty
+GuiSliderProperty: Gui::Enum::SliderProperty
+GuiProgressBarProperty: Gui::Enum::ProgressBarProperty
+GuiCheckBoxProperty: Gui::Enum::CheckBoxProperty
+GuiComboBoxProperty: Gui::Enum::ComboBoxProperty
+GuiTextBoxProperty: Gui::Enum::TextBoxProperty
+GuiSpinnerProperty: Gui::Enum::SpinnerProperty
+GuiScrollBarProperty: Gui::Enum::ScrollBarProperty
+GuiScrollBarSide: Gui::Enum::ScrollBarSide
+GuiListViewProperty: Gui::Enum::ListViewProperty
+GuiColorPickerProperty: Gui::Enum::ColorPickerProperty
+# GuiPropertyElement: Gui::Enum::PropertyElement
+
+guiIconName:
+    destination: Gui::Enum::Icon
+    prefix: RICON_
