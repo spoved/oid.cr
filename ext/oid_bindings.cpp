@@ -1,5 +1,6 @@
 #define RAYGUI_IMPLEMENTATION
-#define RAYGUI_SUPPORT_ICONS
+// #define RAYGUI_SUPPORT_ICONS
+
 #include "bindgen_helper.hpp"
 #include <raylib.h>
 #include <raygui.h>

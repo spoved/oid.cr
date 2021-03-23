@@ -40,6 +40,8 @@
 #ifndef BINDGEN_HELPER_HPP
 #define BINDGEN_HELPER_HPP
 
+#define GC_NEW_ABORTS_ON_OOM
+
 #include <gc/gc.h> // Boehm GC
 #include <string.h>
 #include <stdlib.h> // abort()

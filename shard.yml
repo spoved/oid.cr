@@ -1,16 +1,11 @@
 name: oid
 version: 0.1.0
-
 authors:
   - Holden Omans <holden.omans@gmail.com>
-
-crystal: 0.36.1
-
+crystal: 1.0.0
 license: MIT
-
 libraries:
   raylib: ~> 3.5.0
-
 scripts:
   postinstall: shards build oid-cli
 

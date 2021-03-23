@@ -87,7 +87,7 @@ module RayLib
     end
   end
 
-  @[Link(ldflags: "#{__DIR__}/../../../ext/raylib/src/libraylib.a -framework CoreVideo -framework IOKit -framework Cocoa -framework GLUT -framework OpenGL")]
+  @[Link(ldflags: "#{__DIR__}/../../../ext/raylib/src/libraylib.a #{__DIR__}/../../../ext/liboid_bindings.a -lc++ -framework CoreVideo -framework IOKit -framework Cocoa -framework GLUT -framework OpenGL")]
   lib Binding
     alias SpriteFont = Void
     alias TextureCubemap = Void

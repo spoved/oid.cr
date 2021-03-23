@@ -1,7 +1,7 @@
 module: RayLib
 # library: "-lraylib"
 if_os_is_darwin:
-  library: "%/ext/raylib/src/libraylib.a -framework CoreVideo -framework IOKit -framework Cocoa -framework GLUT -framework OpenGL"
+  library: "%/ext/raylib/src/libraylib.a %/ext/liboid_bindings.a -lc++ -framework CoreVideo -framework IOKit -framework Cocoa -framework GLUT -framework OpenGL"
 
 processors:
   - default_constructor
@@ -25,10 +25,11 @@ processors:
 
 generators:
   cpp:
-    output: ext/raylib_bindings.cpp
+    output: ext/oid_bindings.cpp
     preamble: |-
       #define RAYGUI_IMPLEMENTATION
-      #define RAYGUI_SUPPORT_ICONS
+      // #define RAYGUI_SUPPORT_ICONS
+
       #include "bindgen_helper.hpp"
   crystal:
     output: src/raylib/binding/binding.cr

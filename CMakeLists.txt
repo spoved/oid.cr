@@ -17,7 +17,6 @@ cmake_minimum_required(VERSION 3.14)
 
 # lib/bindgen/clang/bindgen
 add_subdirectory(lib/bindgen)
-
 add_subdirectory(ext)
 
 # Find crystal bin
@@ -48,13 +47,11 @@ add_custom_target(example
   DEPENDS docs
 )
 
-add_custom_target(bindings ALL
+add_custom_target(gen_bindings ALL
   COMMAND ${PROJECT_SOURCE_DIR}/lib/bindgen/bin/bindgen --debug ${PROJECT_SOURCE_DIR}/ext/raylib.yml && crystal tool format
   DEPENDS shards glfw_objlib glfw raylib_static bindgen parser
 )
 
-# set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/build/bin)
-# set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/build/lib)
-
-# set(USE_RAYGUI On)
-# set(BUILD_EXAMPLES On)
+add_custom_target(bindings ALL
+  DEPENDS oid_bindings gen_bindings 
+)
