@@ -4,7 +4,7 @@ version: 0.1.0
 authors:
   - Holden Omans <holden.omans@gmail.com>
 
-crystal: 0.36.1
+crystal: ">= 0.36.1, < 2.0.0"
 
 license: MIT
 
@@ -34,25 +34,19 @@ targets:
 dependencies:
   spoved:
     github: spoved/spoved.cr
-    version: ~> 0.4.0
+    version: ~> 0.5.1
   entitas:
     github: spoved/entitas.cr
-    branch: master
   entitas-web:
     github: kalinon/entitas-web
-  habitat:
-    github: luckyframework/habitat
   crinja:
     github: straight-shoota/crinja
   admiral:
     github: jwaldrip/admiral.cr
-  # crsfml:
-  #   github: oprypin/crsfml
-  #   version: ~> 2.5.1
   baked_file_system:
     github: schovi/baked_file_system
-    commit: 7183bfd
-    # branch: master
+    # commit: 7183bfd
+    branch: master
     # version: 0.9.8
 development_dependencies:
   sentry:
@@ -69,4 +63,3 @@ development_dependencies:
     branch: crystal-0.36.1
     # github: Papierkorb/bindgen
     # version: ~> 0.7.0
-
