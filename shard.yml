@@ -34,9 +34,10 @@ targets:
 dependencies:
   spoved:
     github: spoved/spoved.cr
-    version: ~> 0.5.1
+    version: ~> 0.6.0
   entitas:
     github: spoved/entitas.cr
+    version: ~> 1.4.4
   entitas-web:
     github: kalinon/entitas-web
   crinja:
