@@ -78,15 +78,16 @@ class Example::WorldSystem
           # Random move
           # random_move(entity)
 
-          contexts.stage.get_entity_with_prop_name("player_label")
-            .replace_view_element(
-              value: Oid::Element::Text.new(
-                text: sprintf("%d, %d", entity.position.value.x, entity.position.value.y),
-                font_size: 20,
-                color: Oid::Color::BLACK
-              ),
-              origin: Oid::Enum::OriginType::UpperLeft
-            )
+          pl = contexts.stage.get_entity_with_prop_name("player_label")
+          break if pl.nil?
+          pl.replace_view_element(
+            value: Oid::Element::Text.new(
+              text: sprintf("%d, %d", entity.position.value.x, entity.position.value.y),
+              font_size: 20,
+              color: Oid::Color::BLACK
+            ),
+            origin: Oid::Enum::OriginType::UpperLeft
+          )
         when "grid_2d"
           # entity.destroyed = true
         else
