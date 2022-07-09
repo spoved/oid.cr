@@ -19,10 +19,16 @@ create_feature Oid::Feature::Input, [
   Oid::Systems::EmitInput,
 ]
 
+# Scene management
+create_feature Oid::Feature::Scenes, [
+  Oid::Systems::SceneManager,
+]
+
 create_feature Oid::Feature::App, [
   Oid::Systems::WindowMangement,
   Oid::Systems::CameraManager,
   Oid::Systems::Application,
+  Oid::Feature::Scenes,
 ]
 
 create_feature Oid::Base, [
