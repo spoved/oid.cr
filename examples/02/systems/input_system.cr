@@ -1,4 +1,11 @@
 class Example::InputSystem < Example::Systems::InputSystem
+  protected property player_group : Entitas::Group(StageEntity)
+
+  def initialize(@contexts)
+    super
+    @player_group = @contexts.stage.get_group(StageMatcher.all_of(StageMatcher.actor, StageMatcher.player))
+  end
+
   def execute(entities : Array(Entitas::IEntity))
     camera = contexts.stage.camera_entity
 

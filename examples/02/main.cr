@@ -1,6 +1,6 @@
 require "../../src/oid"
 require "../../src/raylib"
-require "../helpers/functions"
+require "../helpers/*"
 require "./components"
 require "./systems/**"
 
