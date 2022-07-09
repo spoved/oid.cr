@@ -32,12 +32,14 @@ module Oid
         entity.add_hidden_removed_listener(self)
       end
 
+      # Hide all children of the entity when the hidden component is added
       def on_hidden(entity, component : Oid::Components::Hidden)
         entity.each_child do |child|
           child.add_hidden unless child.hidden?
         end
       end
 
+      # Show all children of the entity when the hidden component is removed
       def on_hidden_removed(entity)
         entity.each_child do |child|
           child.del_hidden if child.hidden?
