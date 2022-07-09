@@ -1,20 +1,4 @@
-class Example::WorldSystem
-  include Oid::Services::Helper
-  include Entitas::Systems::InitializeSystem
-  include Entitas::Systems::ExecuteSystem
-  include Example::Helper
-
-  protected property contexts : Contexts
-  protected property actors : Entitas::Group(StageEntity)
-
-  def initialize(@contexts)
-    @actors = @contexts.stage.get_group(StageMatcher.all_of(StageMatcher.actor))
-  end
-
-  def context
-    contexts.stage
-  end
-
+class Example::WorldSystem < Example::Systems::WorldSystem
   def init
     # ////////////////////////////////////////////////////
     # TODO: Initialize your world here!

@@ -1,30 +1,4 @@
-class Example::InputSystem < Entitas::ReactiveSystem
-  protected property contexts : Contexts
-  protected property context : InputContext
-  protected property player_group : Entitas::Group(StageEntity)
-
-  def initialize(@contexts)
-    @context = @contexts.input
-    @collector = get_trigger(@context)
-    @player_group = @contexts.stage.get_group(StageMatcher.all_of(StageMatcher.actor, StageMatcher.player))
-  end
-
-  def get_trigger(context : Entitas::Context) : Entitas::ICollector
-    context.create_collector(InputMatcher
-      .any_of(
-        InputMatcher.mouse_wheel,
-        InputMatcher.key_up,
-        InputMatcher.key_down,
-        InputMatcher.key_pressed,
-        InputMatcher.key_released
-      ))
-  end
-
-  # Select entities with position and is an actor
-  def filter(entity : InputEntity)
-    (entity.keyboard? && (entity.key_down? || entity.key_pressed? || entity.key_released?)) || entity.mouse_wheel?
-  end
-
+class Example::InputSystem < Example::Systems::InputSystem
   def execute(entities : Array(Entitas::IEntity))
     camera = contexts.stage.camera_entity
 

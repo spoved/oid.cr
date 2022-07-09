@@ -1,34 +1,4 @@
-class Example::InputSystem < Entitas::ReactiveSystem
-  protected property contexts : Contexts
-  protected property context : InputContext
-  include Example::Helper
-
-  def initialize(@contexts)
-    @context = @contexts.input
-    @collector = get_trigger(@context)
-  end
-
-  def get_trigger(context : Entitas::Context) : Entitas::ICollector
-    context.create_collector(InputMatcher
-      .any_of(
-        InputMatcher.mouse_up,
-        InputMatcher.mouse_down,
-        InputMatcher.mouse_pressed,
-        InputMatcher.mouse_released,
-        InputMatcher.mouse_wheel,
-        InputMatcher.key_up,
-        InputMatcher.key_down,
-        InputMatcher.key_pressed,
-        InputMatcher.key_released
-      ))
-  end
-
-  # Select entities with input components
-  def filter(entity : InputEntity)
-    (entity.keyboard? && (entity.key_down? || entity.key_pressed? || entity.key_released?)) ||
-      (entity.mouse_wheel? || entity.mouse_up? || entity.mouse_down? || entity.mouse_pressed? || entity.mouse_released?)
-  end
-
+class Example::InputSystem < Example::Systems::InputSystem
   def execute(entities : Array(Entitas::IEntity))
     entities.each do |e|
       e = e.as(InputEntity)

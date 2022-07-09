@@ -13,14 +13,14 @@ class Example::InputSystem < Example::Systems::InputSystem
         # ////////////////////////////////////////////////////
       elsif e.keyboard?
         case e.keyboard.key
-        when Oid::Enum::Key::Space
-          if e.key_pressed?
-            if contexts.stage.state.pause? && contexts.stage.state.pause
-              contexts.stage.state.pause = false
-            else
-              contexts.stage.state.pause = true
-            end
-          end
+        # when Oid::Enum::Key::W
+        #   player.position.value += Oid::Vector3.down
+        # when Oid::Enum::Key::S
+        #   player.position.value += Oid::Vector3.up
+        # when Oid::Enum::Key::A
+        #   player.position.value += Oid::Vector3.left
+        # when Oid::Enum::Key::D
+        #   player.position.value += Oid::Vector3.right
         else
           puts "Input received from #{e.keyboard.key} !!!"
         end

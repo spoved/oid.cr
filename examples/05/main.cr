@@ -14,7 +14,7 @@ RAYLIB_CONFIG = {
   enable_mouse:    true,
   enable_keyboard: true,
   camera_mode:     "2d",
-  asset_path:      "./examples/01/assets",
+  asset_path:      "./examples/assets",
 }
 
 Oid::Systems::EmitInput.listen_for_keys A, S, D, W, Q
@@ -27,22 +27,7 @@ create_feature Example, [
   # ////////////////////////////////////////////////////
 ]
 
-class AppController < Entitas::Controller
-  include Oid::Controller::Helper
-
-  private property _stop_app : Bool = false
-
-  getter services : Oid::Services = Oid::Services.new(
-    application: RayLib::ApplicationService.new,
-    logger: RayLib::LoggerService.new,
-    input: RayLib::InputService.new,
-    config: RayLib::ConfigService.new(**RAYLIB_CONFIG),
-    time: RayLib::TimeService.new,
-    view: RayLib::ViewService.new,
-    camera: RayLib::CameraService.new,
-    window: RayLib::WindowService.new
-  )
-
+class AppController < Example::AppController
   def create_systems(contexts : Contexts)
     Entitas::Feature.new("Systems")
       .add(Oid::ServiceRegistrationSystems.new(contexts, services))

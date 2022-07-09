@@ -3,7 +3,7 @@ module Oid
     module Camera
       include Oid::Service
 
-      abstract def set_camera_mode(value : Oid::Camera::Mode)
+      abstract def set_camera_mode(mode : Oid::Camera::Mode)
       abstract def update_camera(entity : StageEntity)
 
       abstract def begin_camera_mode

@@ -1,14 +1,13 @@
 require "../../src/oid"
 require "../../src/raylib"
-require "../helpers/functions"
-require "./components"
+require "../helpers/*"
 require "./systems/**"
 
 RAYLIB_CONFIG = {
-  app_name:        "Example 02",
+  app_name:        "Example 06",
   screen_w:        800,
-  screen_h:        600,
-  target_fps:      120,
+  screen_h:        450,
+  target_fps:      60,
   show_fps:        true,
   enable_mouse:    true,
   enable_keyboard: true,
@@ -16,33 +15,15 @@ RAYLIB_CONFIG = {
   asset_path:      "./examples/assets",
 }
 
-Oid::Systems::EmitInput.listen_for_keys Right, Left, A, S, R
-
 create_feature Example, [
   Example::InputSystem,
   Example::WorldSystem,
-
   # ////////////////////////////////////////////////////
   # TODO: Place any services created here
   # ////////////////////////////////////////////////////
 ]
 
-class AppController < Entitas::Controller
-  include Oid::Controller::Helper
-
-  private property _stop_app : Bool = false
-
-  getter services : Oid::Services = Oid::Services.new(
-    application: RayLib::ApplicationService.new,
-    logger: RayLib::LoggerService.new,
-    input: RayLib::InputService.new,
-    config: RayLib::ConfigService.new(**RAYLIB_CONFIG),
-    time: RayLib::TimeService.new,
-    view: RayLib::ViewService.new,
-    camera: RayLib::CameraService.new,
-    window: RayLib::WindowService.new
-  )
-
+class AppController < Example::AppController
   def create_systems(contexts : Contexts)
     Entitas::Feature.new("Systems")
       .add(Oid::ServiceRegistrationSystems.new(contexts, services))

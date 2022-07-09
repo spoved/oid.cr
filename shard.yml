@@ -37,7 +37,7 @@ dependencies:
     version: ~> 0.6.0
   entitas:
     github: spoved/entitas.cr
-    version: ~> 1.4.4
+    version: ~> 1.4.5
   entitas-web:
     github: kalinon/entitas-web
     version: ~> 0.1.2

@@ -1,0 +1,10 @@
+class Example::WorldSystem < Example::Systems::WorldSystem
+  def init
+    # ////////////////////////////////////////////////////
+    # TODO: Initialize your world here!
+    # ////////////////////////////////////////////////////
+  end
+
+  def execute
+  end
+end

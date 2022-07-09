@@ -13,7 +13,7 @@ RAYLIB_CONFIG = {
   enable_mouse:    true,
   enable_keyboard: true,
   camera_mode:     "2d",
-  asset_path:      "./examples/01/assets",
+  asset_path:      "./examples/assets",
 }
 
 Oid::Systems::EmitInput.listen_for_keys Space

@@ -13,7 +13,7 @@ RAYLIB_CONFIG = {
   enable_mouse:    true,
   enable_keyboard: false,
   camera_mode:     "3d",
-  asset_path:      "./examples/01/assets",
+  asset_path:      "./examples/assets",
 }
 
 create_feature Example, [

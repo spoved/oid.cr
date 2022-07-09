@@ -52,11 +52,11 @@ class RayLib::ViewController
     end
   end
 
-  def register_listeners(e : Entitas::IEntity)
-    e.add_destroyed_listener(self)
+  def register_listeners(entity : Entitas::IEntity)
+    entity.add_destroyed_listener(self)
   end
 
-  def on_destroyed(e, component : Oid::Components::Destroyed)
+  def on_destroyed(entity, component : Oid::Components::Destroyed)
     self.destroy_view
   end
 

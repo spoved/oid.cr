@@ -1,17 +1,4 @@
-class Example::WorldSystem
-  spoved_logger
-
-  include Example::Helper
-  include Entitas::Systems::InitializeSystem
-  include Entitas::Systems::ExecuteSystem
-
-  protected property contexts : Contexts
-  protected property actors : Entitas::Group(StageEntity)
-
-  def initialize(@contexts)
-    @actors = @contexts.stage.get_group(StageMatcher.all_of(StageMatcher.actor))
-  end
-
+class Example::WorldSystem < Example::Systems::WorldSystem
   def init
     # Set camera position in 3d
     context.camera_entity.replace_position(Oid::Vector3.new(10.0, 10.0, 10.0))
