@@ -3,6 +3,10 @@
 #define RAYGUI_SUPPORT_RICONS
 #include <raylib.h>
 
+extern "C" SpriteFont * bg_SpriteFont__CONSTRUCT_() {
+  return new (UseGC) SpriteFont();
+}
+
 extern "C" TextureCubemap * bg____LoadTextureCubemap_STATIC_Image_int(Image image, int layoutType) {
   return new (UseGC) TextureCubemap (::LoadTextureCubemap(image, layoutType));
 }

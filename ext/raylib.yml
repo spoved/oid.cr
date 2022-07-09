@@ -45,7 +45,9 @@ functions:
   <<: config/raylib/functions/camera.yml
   ".*":
     destination: "::"
-
+  "SetTraceLogCallback":
+    name: set_log_callback
+    destination: "::"
 parser:
   if_BINDGEN_CLANG_BIN_isnt_:
     binary: "./{BINDGEN_CLANG_BIN}"

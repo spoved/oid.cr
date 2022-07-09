@@ -8,4 +8,4 @@ rm -rf ./docs
 crystal docs ./src/oid.cr ./examples/${example}/main.cr
 
 echo "Starting example ${example}"
-crystal ./examples/${example}/main.cr ${args}
+crystal run ${args} ./examples/${example}/main.cr

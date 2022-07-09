@@ -61,7 +61,7 @@ module RayLib
       # `#unsafe_fetch` and `#size` will be implemented by the wrapper class.
 
       # Adds an element at the end.  Implemented by the wrapper.
-      abstract def push(value : T)
+      abstract def push(value)
 
       # Adds *element* at the end of the container.
       def <<(value : T) : self
@@ -334,6 +334,7 @@ module RayLib
     fun bg_NPatchInfo__CONSTRUCT_ : NPatchInfo*
     fun bg_CharInfo__CONSTRUCT_ : CharInfo*
     fun bg_Font__CONSTRUCT_ : Font*
+    fun bg_SpriteFont__CONSTRUCT_ : SpriteFont*
     fun bg_Camera3D__CONSTRUCT_ : Camera3D*
     fun bg_Camera2D__CONSTRUCT_ : Camera2D*
     fun bg_Mesh__CONSTRUCT_ : Mesh*
@@ -841,6 +842,11 @@ module RayLib
 
   class SpriteFont
     @unwrap : Binding::SpriteFont*
+
+    def initialize
+      result = Binding.bg_SpriteFont__CONSTRUCT_
+      @unwrap = result
+    end
 
     def to_unsafe
       @unwrap

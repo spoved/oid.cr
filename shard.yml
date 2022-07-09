@@ -60,8 +60,6 @@ development_dependencies:
   #   github: veelenga/ameba
   #   branch: master
   #   version: ~> 0.13.0
-  bindgen:
-    github: kalinon/bindgen
-    branch: crystal-0.36.1
-    # github: Papierkorb/bindgen
-    # version: ~> 0.7.0
+  # bindgen:
+  #   github: kalinon/bindgen
+  #   branch: master

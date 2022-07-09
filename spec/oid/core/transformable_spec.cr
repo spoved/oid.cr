@@ -34,7 +34,7 @@ describe Oid::Transformable do
             .add_position_type(Oid::Enum::Position::Relative)
           entity.add_child(entity2)
           entity2.transform.should_not eq position
-          entity2.transform.should eq (position + pos2)
+          entity2.transform.should eq(position + pos2)
 
           pos3 = Oid::Vector3.new(1000.0, -89.0, 20.0)
           entity3 = controller.contexts.stage.create_entity
@@ -42,7 +42,7 @@ describe Oid::Transformable do
             .add_position_type(Oid::Enum::Position::Relative)
           entity2.add_child(entity3)
           entity3.transform.should_not eq position
-          entity3.transform.should eq (position + pos2 + pos3)
+          entity3.transform.should eq(position + pos2 + pos3)
         end
       end
 
@@ -67,7 +67,7 @@ describe Oid::Transformable do
             .add_position_type(Oid::Enum::Position::Absolute)
           entity.add_child(entity2)
           entity2.transform.should_not eq position
-          entity2.transform.should eq (pos2)
+          entity2.transform.should eq(pos2)
 
           pos3 = Oid::Vector3.new(1000.0, -89.0, 20.0)
           entity3 = controller.contexts.stage.create_entity
@@ -75,7 +75,7 @@ describe Oid::Transformable do
             .add_position_type(Oid::Enum::Position::Absolute)
           entity2.add_child(entity3)
           entity3.transform.should_not eq position
-          entity3.transform.should eq (pos3)
+          entity3.transform.should eq(pos3)
         end
       end
 
@@ -98,7 +98,7 @@ describe Oid::Transformable do
             .add_position_type(Oid::Enum::Position::Static)
           entity.add_child(entity2)
           entity2.transform.should_not eq position
-          entity2.transform.should eq (pos2)
+          entity2.transform.should eq(pos2)
 
           pos3 = Oid::Vector3.new(1000.0, -89.0, 20.0)
           entity3 = controller.contexts.stage.create_entity
@@ -106,7 +106,7 @@ describe Oid::Transformable do
             .add_position_type(Oid::Enum::Position::Static)
           entity2.add_child(entity3)
           entity3.transform.should_not eq position
-          entity3.transform.should eq (pos3)
+          entity3.transform.should eq(pos3)
         end
       end
     end
@@ -124,7 +124,7 @@ describe Oid::Transformable do
 
         it "transforms position to root" do
           entity.parent.should be controller.contexts.stage.root_view_entity
-          entity.transform.should eq (root_pos + position)
+          entity.transform.should eq(root_pos + position)
         end
 
         it "transforms position relative to parent" do
@@ -134,7 +134,7 @@ describe Oid::Transformable do
             .add_position_type(Oid::Enum::Position::Relative)
           entity.add_child(entity2)
           entity2.transform.should_not eq position
-          entity2.transform.should eq (root_pos + position + pos2)
+          entity2.transform.should eq(root_pos + position + pos2)
 
           pos3 = Oid::Vector3.new(1000.0, -89.0, 20.0)
           entity3 = controller.contexts.stage.create_entity
@@ -142,7 +142,7 @@ describe Oid::Transformable do
             .add_position_type(Oid::Enum::Position::Relative)
           entity2.add_child(entity3)
           entity3.transform.should_not eq position
-          entity3.transform.should eq (root_pos + position + pos2 + pos3)
+          entity3.transform.should eq(root_pos + position + pos2 + pos3)
         end
       end
 
@@ -158,7 +158,7 @@ describe Oid::Transformable do
 
         it "transforms position to root" do
           entity.parent.should be controller.contexts.stage.root_view_entity
-          entity.transform.should eq (root_pos + position)
+          entity.transform.should eq(root_pos + position)
         end
 
         it "transforms position absolutly to parent" do
@@ -168,7 +168,7 @@ describe Oid::Transformable do
             .add_position_type(Oid::Enum::Position::Absolute)
           entity.add_child(entity2)
           entity2.transform.should_not eq position
-          entity2.transform.should eq (root_pos + pos2)
+          entity2.transform.should eq(root_pos + pos2)
 
           pos3 = Oid::Vector3.new(1000.0, -89.0, 20.0)
           entity3 = controller.contexts.stage.create_entity
@@ -176,7 +176,7 @@ describe Oid::Transformable do
             .add_position_type(Oid::Enum::Position::Absolute)
           entity2.add_child(entity3)
           entity3.transform.should_not eq position
-          entity3.transform.should eq (root_pos + pos3)
+          entity3.transform.should eq(root_pos + pos3)
         end
       end
 
@@ -200,7 +200,7 @@ describe Oid::Transformable do
             .add_position_type(Oid::Enum::Position::Static)
           entity.add_child(entity2)
           entity2.transform.should_not eq position
-          entity2.transform.should eq (pos2)
+          entity2.transform.should eq(pos2)
 
           pos3 = Oid::Vector3.new(1000.0, -89.0, 20.0)
           entity3 = controller.contexts.stage.create_entity
@@ -208,7 +208,7 @@ describe Oid::Transformable do
             .add_position_type(Oid::Enum::Position::Static)
           entity2.add_child(entity3)
           entity3.transform.should_not eq position
-          entity3.transform.should eq (pos3)
+          entity3.transform.should eq(pos3)
         end
       end
     end
