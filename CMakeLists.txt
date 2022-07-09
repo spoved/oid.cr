@@ -16,7 +16,7 @@ cmake_minimum_required(VERSION 3.14)
 # include_directories(/usr/local/Cellar/bdw-gc/8.0.4_1/include)
 
 # lib/bindgen/clang/bindgen
-add_subdirectory(lib/bindgen)
+# add_subdirectory(lib/bindgen)
 
 # add_subdirectory(ext)
 

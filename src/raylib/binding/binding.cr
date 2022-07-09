@@ -840,7 +840,7 @@ module RayLib
     fun bg____SetAudioStreamBufferSizeDefault_STATIC_int = SetAudioStreamBufferSizeDefault(size : Int32) : Void
   end
 
-  class SpriteFont
+  abstract class SpriteFont
     @unwrap : Binding::SpriteFont*
 
     def initialize
@@ -852,6 +852,13 @@ module RayLib
       @unwrap
     end
 
+    def initialize(unwrap : Binding::SpriteFont*)
+      result = unwrap
+      @unwrap = result
+    end
+  end
+
+  class SpriteFontImpl < SpriteFont
     def initialize(unwrap : Binding::SpriteFont*)
       result = unwrap
       @unwrap = result
