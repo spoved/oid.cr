@@ -2,6 +2,7 @@ require "./systems/**"
 
 create_feature Oid::Feature::Event, [
   App::EventSystems,
+  Scene::EventSystems,
   Stage::EventSystems,
 ]
 
@@ -21,6 +22,7 @@ create_feature Oid::Feature::Input, [
 
 # Scene management
 create_feature Oid::Feature::Scenes, [
+  Oid::Systems::AddSceneState,
   Oid::Systems::SceneManager,
 ]
 
@@ -28,7 +30,6 @@ create_feature Oid::Feature::App, [
   Oid::Systems::WindowMangement,
   Oid::Systems::CameraManager,
   Oid::Systems::Application,
-  Oid::Feature::Scenes,
 ]
 
 create_feature Oid::Base, [
@@ -36,6 +37,9 @@ create_feature Oid::Base, [
 
   # Application management
   Oid::Feature::AppSystems,
+
+  # Scene management
+  Oid::Feature::ScenesSystems,
 
   # Entity management
   Oid::Systems::AddPositionComponents,

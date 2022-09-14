@@ -1,5 +1,7 @@
 module Oid
   module Systems
+    # This system will watch for entities that have the `Collidable` component added.
+    # It will then update the bounding box for them by calling `#replace_bounding_box`
     class AddObjectBounds < ::Entitas::ReactiveSystem
       include Oid::Services::Helper
       protected property contexts : Contexts

@@ -5,7 +5,7 @@ example=06
 
 echo "Refreshing docs"
 rm -rf ./docs
-crystal docs ./src/oid.cr ./examples/${example}/main.cr
+crystal docs ./lib/entitas/src/entitas.cr ./src/oid.cr ./examples/${example}/main.cr
 
 echo "Starting example ${example}"
 crystal run ${args} ./examples/${example}/main.cr
